@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral;
+package com.ferreusveritas.cathedral.features.marble;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
