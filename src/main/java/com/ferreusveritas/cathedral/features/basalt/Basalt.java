@@ -1,21 +1,15 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
-import com.cricketcraft.chisel.api.carving.CarvingUtils;
-import com.cricketcraft.chisel.api.carving.ICarvingRegistry;
 import com.ferreusveritas.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.blocks.BaseBlockDef;
 import com.ferreusveritas.cathedral.blocks.BlockCarvable;
 import com.ferreusveritas.cathedral.blocks.BlockCarvableSlab;
 import com.ferreusveritas.cathedral.blocks.BlockGenericStairs;
-import com.ferreusveritas.cathedral.items.ItemCarvableSlab;
 
-import cofh.api.modhelpers.ThermalExpansionHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Basalt {
 
@@ -35,10 +29,10 @@ public class Basalt {
 	public static float marbleResistance = 10f;
 
 	public static void preInit(Cathedral lore){
-		basaltBlock = (BlockCarvable) new BlockCarvable(Material.rock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
+		basaltBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 		basaltSlab = (BlockCarvableSlab) new BlockCarvableSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 
-		checkeredBlock = (BlockCarvable) new BlockCarvable(Material.rock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
+		checkeredBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
 		checkeredSlab = (BlockCarvableSlab) new BlockCarvableSlab(checkeredBlock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
 
 		String basaltNames[] = {
@@ -62,14 +56,14 @@ public class Basalt {
 		BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
 
 		//Basalt Slabs
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
+		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-tiles.name", 6, "basalt-tiles", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-slabs.name", 7, "basalt-slabs", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smallbricks.name", 9, "basalt-smallbricks", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smallchaotic.name", 10, "basalt-smallchaotic", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smalltiles.name", 11, "basalt-smalltiles", Cathedral.MODID);
 		basaltSlab.carverHelper.registerAll(basaltSlab, "basaltslab", ItemCarvableSlab.class);
-		basaltSlab.registerSlabTop();
+		basaltSlab.registerSlabTop();*/
 
 		String names[] = {
 				"checkered", //0
@@ -79,28 +73,28 @@ public class Basalt {
 				"checkered-tiles-small", //4
 		};
 
-		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-plain.name", 0, "checkered", Cathedral.MODID);
+		/*checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-plain.name", 0, "checkered", Cathedral.MODID);
 		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-small.name", 2, "checkered-small", Cathedral.MODID);
 		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-tiles.name", 3, "checkered-tiles", Cathedral.MODID);
 		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-smalltiles.name", 4, "checkered-tiles-small", Cathedral.MODID);
 		checkeredSlab.carverHelper.registerAll(checkeredSlab, "checkeredslab", ItemCarvableSlab.class);
-		checkeredSlab.registerSlabTop();
+		checkeredSlab.registerSlabTop();*/
 
 		BlockCarvable.addBlocks(names, checkeredBlock, "checkered");	
 	}
 
 	public static void init(Cathedral lore){
 		//This must be ran in init because project red doesn't register it's stone until after it's init
-		if(Loader.isModLoaded("ProjRed|Exploration")){
+		/*if(Loader.isModLoaded("ProjRed|Exploration")){
 			basaltBase = GameRegistry.findBlock("ProjRed|Exploration", "projectred.exploration.stone");
 		} else {
 			//basaltBase = GameRegistry.registerBlock(block, "nothing");
-		}
-
+		}*/
+		
 		//Ore Dictionary Registrations
 		OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
 		OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
-
+		
 		BaseBlockDef[] baseBlocks = {
 				new BaseBlockDef(0, basaltBase, 3, "basalt", "Basalt", basaltHardness, basaltResistance),
 				new BaseBlockDef(1, basaltBase, 4, "basalt-brick", "BasaltBrick", basaltHardness, basaltResistance),
@@ -109,18 +103,18 @@ public class Basalt {
 				new BaseBlockDef(4, basaltBlock, 9, "basalt-smallbricks", "BasaltSmallBricks", basaltHardness, basaltResistance),
 				new BaseBlockDef(5, basaltBlock, 11, "basalt-smalltiles", "BasaltSmallTiles", basaltHardness, basaltResistance)
 		};
-
+		
 		//Basalt Stairs
-
+		
 		//Stairs
 		for(int i = 0; i < baseBlocks.length; i++){
 			basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
-			GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
-			GameRegistry.addRecipe(new ItemStack(basaltStairs[baseBlocks[i].select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlocks[i].block, 1, baseBlocks[i].metaData) );
+			//GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
+			//GameRegistry.addRecipe(new ItemStack(basaltStairs[baseBlocks[i].select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlocks[i].block, 1, baseBlocks[i].metaData) );
 		}
-
+		
 		//Explicitly Added Variations
-		{
+		/*{
 			ICarvingRegistry Carving = CarvingUtils.getChiselRegistry();
 			Carving.addVariation("basaltblock", basaltBase, 3, -2);
 			Carving.addVariation("basaltblock", basaltBase, 4, -1);
@@ -128,34 +122,35 @@ public class Basalt {
 			for(int i = 0; i < 6; i++){
 				Carving.addVariation("basaltStairs", basaltStairs[i], 0, 1);
 			}
-		}
-
-		int basaltSlabMetas[] = { 2, 6, 7, 9, 10, 11 };
-
+		}*/
+		
+		//int basaltSlabMetas[] = { 2, 6, 7, 9, 10, 11 };
+		
 		//Basalt Slab Recipes
+		/*
 		for(int i = 0; i < basaltSlabMetas.length; i++){
 			GameRegistry.addRecipe(new ItemStack(basaltSlab, 6, basaltSlabMetas[i]), "XXX", 'X', new ItemStack(basaltBlock, 1, basaltSlabMetas[i]) );
-		}
-
-		GameRegistry.addRecipe(new ItemStack(basaltSlab, 6, 7), "XXX", 'X', new ItemStack(basaltBlock, 1, 1) );//Basalt Paver
-		GameRegistry.addRecipe(new ItemStack(basaltBlock, 1, 7), "X", "X", 'X', new ItemStack(basaltSlab, 1, 7));
-
+		}*/
+		
+		//GameRegistry.addRecipe(new ItemStack(basaltSlab, 6, 7), "XXX", 'X', new ItemStack(basaltBlock, 1, 1) );//Basalt Paver
+		//GameRegistry.addRecipe(new ItemStack(basaltBlock, 1, 7), "X", "X", 'X', new ItemStack(basaltSlab, 1, 7));
+		
 		//Checkered Tile Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"mb", "bm", 'b', "basalt", 'm', "marble"}));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"bm", "mb", 'b', "basalt", 'm', "marble"}));
-
+		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"mb", "bm", 'b', "basalt", 'm', "marble"}));
+		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"bm", "mb", 'b', "basalt", 'm', "marble"}));
+		
 		//Thermal Expansion Capabilities
-		if(Loader.isModLoaded("ThermalExpansion")){//Having thermal expansion adds the ability to create basalt from obsidian dust and stone
+		/*if(Loader.isModLoaded("ThermalExpansion")){//Having thermal expansion adds the ability to create basalt from obsidian dust and stone
 			//ThermalExpansion Smelter recipe for Basalt
 			ItemStack obsidianDust = new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 4);
-
+			
 			ThermalExpansionHelper.addSmelterRecipe(2000, new ItemStack(Blocks.stone, 1, 0), obsidianDust, new ItemStack(basaltBase, 1, 3));
 			ThermalExpansionHelper.addSmelterRecipe(2000, new ItemStack(Blocks.cobblestone, 1, 0), obsidianDust, new ItemStack(basaltBase, 1, 2));
 		} else {
 			GameRegistry.addRecipe(new ItemStack(basaltBase, 1, 2), "XXX", "XOX", "XXX", 'X', new ItemStack(Blocks.stone, 1), 'O', new ItemStack(Blocks.obsidian));
 			GameRegistry.addRecipe(new ItemStack(basaltBase, 1, 3), "XXX", "XOX", "XXX", 'X', new ItemStack(Blocks.cobblestone, 1), 'O', new ItemStack(Blocks.obsidian));
-		}
-
+		}*/
+		
 	}
-
+	
 }
