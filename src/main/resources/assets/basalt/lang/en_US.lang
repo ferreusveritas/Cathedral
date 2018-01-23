@@ -1,0 +1,170 @@
+itemGroup.tabBasalt=Basalt
+itemGroup.tabStoneLore=Stone Lore
+
+tile.chisel.basaltblock.name=Basalt Block
+tile.basalt_basalt.basalt-rosette.name=Basalt Rosette
+tile.basalt_basalt.basalt-paver.name=Basalt Paver
+tile.basalt_basalt.basalt-worn-brick.name=Basalt Worn Brick
+tile.basalt_basalt.basalt-ornate.name=Basalt Ornate
+tile.basalt_basalt.basalt-poison.name=Basalt Poison
+tile.basalt_basalt.basalt-sunken-panel.name=Basalt Sunken Tile
+tile.basalt_basalt.basalt-tiles.name=Basalt Tiles
+tile.basalt_basalt.basalt-slabs.name=Basalt Bevelled Slabs
+tile.basalt_basalt.basalt-vault.name=Basalt Vault
+tile.basalt_basalt.basalt-smallbricks.name=Basalt Small Bricks
+tile.basalt_basalt.basalt-smallchaotic.name=Basalt Chaotic Bricks
+tile.basalt_basalt.basalt-smalltiles.name=Basalt Small Tiles
+tile.basalt_basalt.basalt-block.name=Basalt Bordered Block
+tile.basalt_basalt.basalt-sunken.name=Basalt Sunken
+tile.basalt_basalt.basalt-knot.name=Basalt Knotted
+
+tile.chisel.checkeredblock.name=Checkered
+tile.basalt_checkered_0.name=Checkered
+tile.basalt_checkered_1.name=Checkered Border
+tile.basalt_checkered_2.name=Checkered Small
+tile.basalt_checkered_3.name=Checkered Tiles
+tile.basalt_checkered_4.name=Checkered Small Tiles
+
+tile.basalt_basalt-stairs.name=Basalt Stairs
+tile.basalt_basalt-brick-stairs.name=Basalt Brick Stairs
+tile.basalt_basalt-paver-stairs.name=Basalt Paver Stairs
+tile.basalt_basalt-tiles-stairs.name=Basalt Tiles Stairs
+tile.basalt_basalt-slabs-stairs.name=Basalt Slabs Stairs
+tile.basalt_basalt-smallbricks-stairs.name=Basalt Small Bricks Stairs
+tile.basalt_basalt-smalltiles-stairs.name=Basalt Small Tiles Stairs
+tile.basalt_basalt-block.name=Basalt Block Stairs
+
+tile.chisel.basaltslab.name=Basalt Slab
+tile.basalt_basaltslab-basalt.name=Basalt Slab
+tile.basalt_basaltslab-brick.name=Basalt Bricks Slab
+tile.basalt_basaltslab-tiles.name=Basalt Tiles Slab
+tile.basalt_basaltslab-slabs.name=Basalt Bevelled Slab
+tile.basalt_basaltslab-smallbricks.name=Basalt Small Bricks Slab
+tile.basalt_basaltslab-smalltiles.name=Basalt Small Tiles Slab
+
+tile.chisel.dwemerblock.name=Dwemer Block
+
+tile.basalt_dwemer.dwemer-embedded.name=Dwemer Embedded Plate
+tile.basalt_dwemer.dwemer-pillar.name=Dwemer Bordered Pillar
+tile.basalt_dwemer.dwemer-altar.name=Dwemer Stone Altar
+tile.basalt_dwemer.dwemer-decor.name=Dwemer Gilded Altar
+tile.basalt_dwemer.dwemer-carving-1.name=Dwemer Carved Snake
+tile.basalt_dwemer.dwemer-carving-2.name=Dwemer Carved Figures
+tile.basalt_dwemer.dwemer-layered.name=Dwemer Reinforced Brick
+tile.basalt_dwemer.dwemer-scale-pillar.name=Dwemer Scale Pillar
+tile.basalt_dwemer.dwemer-wormgear.name=Dwemer Worm Gear
+tile.basalt_dwemer.dwemer-rays.name=Dwemer Ray Carving
+tile.basalt_dwemer.dwemer-knot.name=Dwemer Knot
+tile.basalt_dwemer.dwemer-mask.name=Dwemer Mask
+tile.basalt_dwemer.dwemer-doortop.name=Dwemer Door(top)
+tile.basalt_dwemer.dwemer-doorbottom.name=Dwemer Door(bottom)
+tile.basalt_dwemer.dwemer-panel.name=Dwemer Panel
+
+tile.basalt_dwemer.dwemer-glass-fence.name=Dwemer Metal Fence
+tile.basalt_dwemer.dwemer-glass-ornate.name=Dwemer Metal Ornate
+
+tile.chisel.dwemliteblock.name=Dwemer Light
+tile.basalt_dwemlite.dwemer-light-path.name=Dwemer Path Lighting
+tile.basalt_dwemlite.dwemer-light-vent.name=Dwemer Burning Vent
+tile.basalt_dwemlite.dwemer-light-gas.name=Dwemer Gaslit Vent
+
+tile.basalt_bars_0.name=Dwemer Metal Bars
+tile.basalt_bars_1.name=Dwemer Metal Bars Ornate
+tile.basalt_bars_2.name=Dwemer Metal Bars Footer
+tile.basalt_bars_3.name=Dwemer Metal Bars Header
+tile.basalt_bars_4.name=Dwemer Metal Bars Mask
+tile.basalt_bars_5.name=Dwemer Metal Bars Rombus
+
+tile.basalt_dwemercatwalk.name=Dwemer Catwalk
+
+item.basalt_doorShort.name=Short Dwemer Door
+tile.basalt_doorShort.name=Short Dwemer Door
+item.basalt_doorTall.name=Tall Dwemer Door
+tile.basalt_doorTall.name=Tall Dwemer Door
+
+tile.basalt_fantasy-brick-stairs.name=Fantasy Brick Stairs
+tile.basalt_fantasy-disarray-stairs.name=Fantasy Disarray Stairs
+tile.basalt_fantasy-damaged-stairs.name=Fantasy Damaged Stairs
+tile.basalt_endstone-brick-stairs.name=Endstone Brick Stairs
+tile.basalt_endstone-checkered-stairs.name=Endstone Checkered Stairs
+
+tile.basalt_fantasy.fantasypillarlarge.name=Purpled Fantasy Large Pillar
+tile.basalt_fantasy.fantasyknot.name=Purpled Fantasy Carved Knot
+tile.basalt_fantasy.fantasyembedded.name=Purpled Fantasy Embedded Plate
+tile.basalt_fantasy.fantasy2pillarlarge.name=Fantasy Large Pillar
+tile.basalt_fantasy.fantasy2knot.name=Fantasy Carved Knot
+tile.basalt_fantasy.fantasy2embedded.name=Fantasy Embedded Plate
+
+tile.chisel.checkeredslab.name=Checkered Slab
+
+tile.basalt_checkeredslab-plain.name=Checkered Slab
+tile.basalt_checkeredslab-small.name=Checkered Small Slab
+tile.basalt_checkeredslab-tiles.name=Checkered Tiles Slab
+tile.basalt_checkeredslab-smalltiles.name=Checkered Small Tiles Slab
+
+tile.basalt_extraslabs.fantasy-brick.name=Fantasy Brick Slab
+tile.basalt_extraslabs.fantasy-damaged.name=Fantasy Damaged Slab
+tile.basalt_extraslabs.fantasy-disarray.name=Fantasy Disarray Slab
+tile.basalt_extraslabs.endstone-brick.name=Endstone Brick Slab
+tile.basalt_extraslabs.endstone-checkered.name=Endstone Checkered Slab
+
+tile.basalt_stonerailing_0.name=Stone Railing
+tile.basalt_stonerailing_1.name=Sandstone Railing
+tile.basalt_stonerailing_2.name=Netherbrick Railing
+tile.basalt_stonerailing_3.name=Obsidian Railing
+tile.basalt_stonerailing_4.name=Dwemer Railing
+tile.basalt_stonerailing_5.name=Packed Ice Railing
+tile.basalt_stonerailing_6.name=Endstone Railing
+tile.basalt_stonerailing_7.name=Basalt Railing
+tile.basalt_stonerailing_8.name=Marble Railing
+tile.basalt_stonerailing_9.name=Fantasy Stone Railing
+tile.basalt_stonerailing_a.name=Limestone Railing
+tile.basalt_stonerailing_b.name=Quartz Railing
+tile.basalt_stonerailing_c.name=Snow Railing
+
+tile.basalt_chain_0.name=Iron Chain
+tile.basalt_chain_1.name=Gold Chain
+tile.basalt_chain_2.name=Dwemer Chain
+tile.basalt_chain_3.name=Copper Chain
+tile.basalt_chain_4.name=Bronze Chain
+tile.basalt_chain_5.name=Silver Chain
+tile.basalt_chain_6.name=Enderium Chain
+
+tile.basalt_gargoyle_0.name=Stone Gargoyle
+tile.basalt_gargoyle_1.name=Sandstone Gargoyle
+tile.basalt_gargoyle_2.name=Netherbrick Gargoyle
+tile.basalt_gargoyle_3.name=Obsidian Gargoyle
+tile.basalt_gargoyle_4.name=Dwemer Gargoyle
+tile.basalt_gargoyle_5.name=Packed Ice Gargoyle
+tile.basalt_gargoyle_6.name=Endstone Gargoyle
+tile.basalt_gargoyle_7.name=Basalt Gargoyle
+tile.basalt_gargoyle_8.name=Marble Gargoyle
+tile.basalt_gargoyle_9.name=Limestone Gargoyle
+tile.basalt_gargoyle_a.name=Snow Gargoyle
+
+tile.basalt_stone.stone-panel.name=Stone Panel
+tile.basalt_stone.stone-knot.name=Stone Knot
+
+item.clayTile.name=Unfired Clay Tile
+item.firedTile.name=Fired Clay Tile
+tile.basalt_rooftiles_10.name=Natural Terra Cotta Roof
+tile.basalt_rooftiles_0.name=Black Terra Cotta Roof
+tile.basalt_rooftiles_1.name=Red Terra Cotta Roof
+tile.basalt_rooftiles_2.name=Green Terra Cotta Roof
+tile.basalt_rooftiles_3.name=Brown Terra Cotta Roof
+tile.basalt_rooftiles_4.name=Blue Terra Cotta Roof
+tile.basalt_rooftiles_5.name=Purple Terra Cotta Roof
+tile.basalt_rooftiles_6.name=Cyan Terra Cotta Roof
+tile.basalt_rooftiles_7.name=Light Gray Terra Cotta Roof
+tile.basalt_rooftiles_8.name=Gray Terra Cotta Roof
+tile.basalt_rooftiles_9.name=Pink Terra Cotta Roof
+tile.basalt_rooftiles_a.name=Lime Terra Cotta Roof
+tile.basalt_rooftiles_b.name=Yellow Terra Cotta Roof
+tile.basalt_rooftiles_c.name=Light Blue Terra Cotta Roof
+tile.basalt_rooftiles_d.name=Magenta Terra Cotta Roof
+tile.basalt_rooftiles_e.name=Orange Terra Cotta Roof
+tile.basalt_rooftiles_f.name=White Terra Cotta Roof
+
+tile.chisel.stainedglass.name=Stained Cathedral Glass
+tile.basalt_glass.stained-1.name=Fire Taijitu Cathedral Glass
+tile.basalt_glass.stained-2.name=Amber Rhombus Cathedral Glass

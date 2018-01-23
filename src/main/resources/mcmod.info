@@ -1,0 +1,16 @@
+[
+{
+  "modid": "basalt",
+  "name": "Basalt",
+  "description": "A small mod that adds in Chisel-2 variations of basalt, marble, and dwemer blocks.",
+  "version": "1.9.4",
+  "mcversion": "1.7.10",
+  "url": "http://ferreusveritas.com/basalt",
+  "updateUrl": "",
+  "authorList": [ "Ferreus Veritas" ],
+  "credits": "TTerrag and Cricket for reworking the Chisel-2 API and CTM code to accommodate this mod",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
