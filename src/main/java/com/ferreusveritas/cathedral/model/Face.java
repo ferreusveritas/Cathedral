@@ -1,19 +1,7 @@
 package com.ferreusveritas.cathedral.model;
 
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.client.model.obj.TextureCoordinate;
-import net.minecraftforge.client.model.obj.Vertex;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
-
-public class Face
-{
+public class Face {
+	/*
     public Vertex[] vertices;
     public Vertex[] vertexNormals;
     public Vertex faceNormal;
@@ -149,4 +137,5 @@ public class Face
 
         return new Vertex((float) normalVector.xCoord, (float) normalVector.yCoord, (float) normalVector.zCoord);
     }
+    */
 }

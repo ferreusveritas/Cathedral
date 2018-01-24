@@ -1,22 +1,7 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.List;
-
-import com.ferreusveritas.cathedral.Cathedral;
-import com.ferreusveritas.cathedral.renderers.RendererRoofTiles;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.block.state.IBlockState;
 
 /*
 M	8421	F	Desc
@@ -40,6 +25,12 @@ M	8421	F	Desc
 
 public class BlockRoofTiles extends BlockStairs {
 
+	protected BlockRoofTiles(IBlockState modelState) {
+		super(modelState);
+		// TODO Auto-generated constructor stub
+	}
+
+	/*
 	int color;
 	private IIcon sideIcon;
 
@@ -417,5 +408,5 @@ public class BlockRoofTiles extends BlockStairs {
 	public boolean canCreatureSpawn(EnumCreatureType type, IBlockAccess world, int x, int y, int z) {
 		return false;
 	}
-
+*/
 }

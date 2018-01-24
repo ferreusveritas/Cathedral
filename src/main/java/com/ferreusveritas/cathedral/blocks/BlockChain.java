@@ -1,5 +1,7 @@
 package com.ferreusveritas.cathedral.blocks;
 
+import com.ferreusveritas.cathedral.Cathedral;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -34,6 +36,7 @@ public class BlockChain extends Block {
 		setHardness(1.0F);
 		setRegistryName(name);
 		setUnlocalizedName(name);
+		setCreativeTab(Cathedral.tabCathedral);
 	}
 
 	@Override

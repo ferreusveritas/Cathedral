@@ -1,18 +1,8 @@
 package com.ferreusveritas.cathedral.renderers;
 
-import org.lwjgl.opengl.GL11;
-
-import com.ferreusveritas.cathedral.blocks.BlockRoofTiles;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.world.IBlockAccess;
-
 public class RendererRoofTiles implements ISimpleBlockRenderingHandler {
 	
+	/*
 	public static int id;
 
 	public RendererRoofTiles() {
@@ -116,6 +106,6 @@ public class RendererRoofTiles implements ISimpleBlockRenderingHandler {
 		return id;
 	}
 
-
+*/
 	
 }

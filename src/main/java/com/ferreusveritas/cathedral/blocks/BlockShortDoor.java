@@ -1,26 +1,16 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.Random;
-
-import com.ferreusveritas.cathedral.renderers.RendererShortDoor;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.IconFlipped;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockShortDoor extends Block {
 
+	public BlockShortDoor(Material materialIn) {
+		super(materialIn);
+		// TODO Auto-generated constructor stub
+	}
+
+	/*
 	@SideOnly(Side.CLIENT)
 	private IIcon[] upperDoorIcon;
 	@SideOnly(Side.CLIENT)
@@ -55,9 +45,7 @@ public class BlockShortDoor extends Block {
 		this.droppedItem = dropped;
 	}
 
-	/**
-	 * Gets the block's texture. Args: side, meta
-	 */
+	// Gets the block's texture. Args: side, meta
 	 @Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
@@ -134,10 +122,9 @@ public class BlockShortDoor extends Block {
 		 this.lowerDoorIcon[1] = new IconFlipped(this.lowerDoorIcon[0], true, false);
 	 }
 
-	 /**
-	  * Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
-	  * adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
-	  */
+
+	 // Is this block (a) opaque and (b) a full 1m cube?  This determines whether or not to render the shared face of two
+	 // adjacent blocks and also whether the player can attach torches, redstone wire, etc to this block.
 	 @Override
 	public boolean isOpaqueCube() {
 		 return false;
@@ -149,25 +136,19 @@ public class BlockShortDoor extends Block {
 		 return (fullMeta & 4) != 0;
 	 }
 
-	 /**
-	  * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-	  */
+	 // If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
 	 @Override
 	public boolean renderAsNormalBlock() {
 		 return false;
 	 }
 
-	 /**
-	  * The type of render function that is called for this block
-	  */
+	 // The type of render function that is called for this block
 	 @Override
 	public int getRenderType() {
 		 return RendererShortDoor.id;
 	 }
 
-	 /**
-	  * Returns the bounding box of the wired rectangular prism to render.
-	  */
+	//  * Returns the bounding box of the wired rectangular prism to render.
 	 @Override
 	@SideOnly(Side.CLIENT)
 	 public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
@@ -175,19 +156,18 @@ public class BlockShortDoor extends Block {
 		 return super.getSelectedBoundingBoxFromPool(world, x, y, z);
 	 }
 
-	 /**
-	  * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-	  * cleared to be reused)
-	  */
+
+	 // * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
+	//  * cleared to be reused)
+
 	 @Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 		 this.setBlockBoundsBasedOnState(world, x, y, z);
 		 return super.getCollisionBoundingBoxFromPool(world, x, y, z);
 	 }
 
-	 /**
-	  * Updates the blocks bounds based on its current state. Args: world, x, y, z
-	  */
+
+	// Updates the blocks bounds based on its current state. Args: world, x, y, z
 	 @Override
 	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
 		 this.setDoorRotation(this.getFullMetadata(blockAccess, x, y, z));
@@ -257,15 +237,12 @@ public class BlockShortDoor extends Block {
 		 }
 	 }
 
-	 /**
-	  * Called when a player hits the block. Args: world, x, y, z, player
-	  */
+
+	 //Called when a player hits the block. Args: world, x, y, z, player
 	 @Override
 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {}
 
-	 /**
-	  * Called upon block activation (right click on the block.)
-	  */
+	 //Called upon block activation (right click on the block.)
 	 @Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xOffset, float yOffset, float zOffset) {
 		 boolean state = isOpen(world, x, y, z);
@@ -328,10 +305,9 @@ public class BlockShortDoor extends Block {
 		 }
 	 }
 
-	 /**
-	  * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
-	  * their own) Args: x, y, z, neighbor Block
-	  */
+
+	// Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
+	// their own) Args: x, y, z, neighbor Block
 	 @Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block neighBlock) {
 		 int meta = world.getBlockMetadata(x, y, z);
@@ -344,14 +320,14 @@ public class BlockShortDoor extends Block {
 				 broken = true;
 			 }
 
-			 /*if (!World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)) {
-                world.setBlockToAir(x, y, z);
-                broken = true;
-
-                if (world.getBlock(x, y + 1, z) == this) {
-                    world.setBlockToAir(x, y + 1, z);
-                }
-            }*/
+			//if (!World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)) {
+            //    world.setBlockToAir(x, y, z);
+            //    broken = true;
+            //
+            //    if (world.getBlock(x, y + 1, z) == this) {
+            //        world.setBlockToAir(x, y + 1, z);
+            //    }
+            //}
 
 			 if (broken) {
 				 if (!world.isRemote) {
@@ -385,28 +361,22 @@ public class BlockShortDoor extends Block {
 		 return null;
 	 }
 
-	 /**
-	  * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
-	  * x, y, z, startVec, endVec
-	  */
+	 // Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
+	 // x, y, z, startVec, endVec
 	 @Override
 	public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
 		 this.setBlockBoundsBasedOnState(world, x, y, z);
 		 return super.collisionRayTrace(world, x, y, z, startVec, endVec);
 	 }
 
-	 /**
-	  * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
-	  */
+	 // Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
 	 @Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
 		 return y >= world.getHeight() - 1 ? false : super.canPlaceBlockAt(world, x, y, z) && super.canPlaceBlockAt(world, x, y + 1, z);
 	 }
 
-	 /**
-	  * Returns the mobility information of the block, 0 = free, 1 = can't push but can move over, 2 = total immobility
-	  * and stop pistons
-	  */
+	 // Returns the mobility information of the block, 0 = free, 1 = can't push but can move over, 2 = total immobility
+	 // and stop pistons
 	 @Override
 	public int getMobilityFlag() {
 		 return 1;
@@ -430,23 +400,21 @@ public class BlockShortDoor extends Block {
 		 return bottomMeta & 7 | (isTop ? 8 : 0) | (isLeftHinge ? 16 : 0);
 	 }
 
-	 /**
-	  * Gets an item for the block being called on. Args: world, x, y, z
-	  */
+
+	// Gets an item for the block being called on. Args: world, x, y, z
 	 @Override
 	@SideOnly(Side.CLIENT)
 	 public Item getItem(World world, int x, int y, int z) {
 		 return droppedItem;
 	 }
 
-	 /**
-	  * Called when the block is attempted to be harvested
-	  */
+	 
+	 // Called when the block is attempted to be harvested
 	 @Override
 	public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
 		 if (player.capabilities.isCreativeMode && (meta & 8) != 0 && world.getBlock(x, y - 1, z) == this) {
 			 world.setBlockToAir(x, y - 1, z);
 		 }
 	 }
-
+	 */
 }

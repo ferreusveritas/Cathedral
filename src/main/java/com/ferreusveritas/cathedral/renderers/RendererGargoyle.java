@@ -1,25 +1,8 @@
 package com.ferreusveritas.cathedral.renderers;
 
-import org.lwjgl.opengl.GL11;
-
-import com.ferreusveritas.cathedral.Cathedral;
-import com.ferreusveritas.cathedral.features.gargoyle.BlockGargoyle;
-import com.ferreusveritas.cathedral.features.gargoyle.EntityGargoyle;
-import com.ferreusveritas.cathedral.model.QuadWavefrontObject;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-
 public class RendererGargoyle implements ISimpleBlockRenderingHandler {
 
+	/*
 	private QuadWavefrontObject gargoyleModel;
 	public static int id;
 
@@ -106,5 +89,5 @@ public class RendererGargoyle implements ISimpleBlockRenderingHandler {
 	public int getRenderId() {
 		return id;
 	}
-
+*/
 }

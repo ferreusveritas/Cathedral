@@ -1,22 +1,52 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.List;
-
-
-import com.ferreusveritas.cathedral.Cathedral;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
 import team.chisel.api.block.ICarvable;
+import team.chisel.api.block.VariationData;
 
 public class BlockCarvable extends Block implements ICarvable {
 
-	public CarvableHelper carverHelper;
+	public BlockCarvable() {
+		this(Material.ROCK);
+	}
+	
+	public BlockCarvable(Material materialIn) {
+		super(materialIn);
+	}
+
+	@Override
+	public int getIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalVariations() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public VariationData getVariationData(int variation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VariationData[] getVariations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getVariationIndex(IBlockState state) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/*public CarvableHelper carverHelper;
 	private boolean isAlpha;
 
 	public static void addBlocks(String[] names, BlockCarvable block, String name){
@@ -97,16 +127,16 @@ public class BlockCarvable extends Block implements ICarvable {
 		public final String soundNameBreak;
 		public final String soundNamePlace;
 
-		/**
-		 * Creates a SoundType with automatic names for step and break sounds. Sound names dig.soundName and step.soundName must be specified in the sounds.json
-		 * 
-		 * @param soundName
-		 *            block of the sound. Will automatically be expanded to "mod:dig.soundName" and "mod:step.soundName" respectively)
-		 * @param volume
-		 *            default 1.0f
-		 * @param frequency
-		 *            default 1.0f
-		 */
+		//
+		// * Creates a SoundType with automatic names for step and break sounds. Sound names dig.soundName and step.soundName must be specified in the sounds.json
+		// * 
+		// * @param soundName
+		// *            block of the sound. Will automatically be expanded to "mod:dig.soundName" and "mod:step.soundName" respectively)
+		// * @param volume
+		// *            default 1.0f
+		// * @param frequency
+		// *            default 1.0f
+		//
 		public SoundType(String soundName, float volume, float frequency) {
 			super(soundName, volume, frequency);
 			this.soundNameStep = null;
@@ -114,18 +144,17 @@ public class BlockCarvable extends Block implements ICarvable {
 			this.soundNamePlace = null;
 		}
 
-		/**
-		 * Creates a SoundType with manual names for step and break sounds. Sound names must be specified in the sounds.json
-		 * 
-		 * @param soundNameBreak
-		 *            block break sound
-		 * @param soundNameStep
-		 *            block step sound
-		 * @param volume
-		 *            default 1.0f
-		 * @param frequency
-		 *            default 1.0f
-		 */
+		// * Creates a SoundType with manual names for step and break sounds. Sound names must be specified in the sounds.json
+		// * 
+		// * @param soundNameBreak
+		// *            block break sound
+		// * @param soundNameStep
+		// *            block step sound
+		// * @param volume
+		// *            default 1.0f
+		// * @param frequency
+		// *            default 1.0f
+		// 
 		public SoundType(String soundNameBreak, String soundNameStep, float volume, float frequency) {
 			super(soundNameStep, volume, frequency);
 			this.soundNameStep = soundNameStep;
@@ -133,20 +162,20 @@ public class BlockCarvable extends Block implements ICarvable {
 			this.soundNamePlace = null;
 		}
 
-		/**
-		 * Creates a SoundType with manual names for step, break and place sounds. Sound names must be specified in the sounds.json
-		 * 
-		 * @param soundNameBreak
-		 *            block break sound
-		 * @param soundNameStep
-		 *            block step sound
-		 * @param soundNamePlace
-		 *            block place sound
-		 * @param volume
-		 *            default 1.0f
-		 * @param frequency
-		 *            default 1.0f
-		 */
+		//
+		// * Creates a SoundType with manual names for step, break and place sounds. Sound names must be specified in the sounds.json
+		// * 
+		// * @param soundNameBreak
+		// *            block break sound
+		// * @param soundNameStep
+		// *            block step sound
+		// * @param soundNamePlace
+		// *            block place sound
+		// * @param volume
+		// *            default 1.0f
+		// * @param frequency
+		// *            default 1.0f
+		//
 		public SoundType(String soundNameBreak, String soundNameStep, String soundNamePlace, float volume, float frequency) {
 			super(soundNameStep, volume, frequency);
 			this.soundNameStep = soundNameStep;
@@ -178,5 +207,5 @@ public class BlockCarvable extends Block implements ICarvable {
 				return this.soundNamePlace;
 		}
 	}
-
+*/
 }

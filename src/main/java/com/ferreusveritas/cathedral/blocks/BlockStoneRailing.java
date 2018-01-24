@@ -1,30 +1,10 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.List;
-
 import com.ferreusveritas.cathedral.Cathedral;
-import com.ferreusveritas.cathedral.features.dwarven.Dwemer;
-import com.ferreusveritas.cathedral.features.extras.Extras;
-import com.ferreusveritas.cathedral.renderers.RendererStoneRailing;
-import com.ferreusveritas.stonelore.basalt.Basalt;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockStoneRailing extends BlockWall {
 
@@ -50,11 +30,14 @@ public class BlockStoneRailing extends BlockWall {
 	Block chiselLimestone;
 	
 	public BlockStoneRailing() {
-		super(Blocks.stone);
+		super(Blocks.STONE);
         this.setCreativeTab(Cathedral.tabCathedral);
-        this.setBlockName(Cathedral.MODID + "_stonerailing");
+        String name = "stonerailing";
+        setUnlocalizedName(name);
+        setRegistryName(name);
 	}
 
+	/*
 	public void addRecipes() {
 		chiselSandstone = GameRegistry.findBlock("chisel", "sandstone");
 		chiselFantasy = GameRegistry.findBlock("chisel", "fantasyblock2");
@@ -106,9 +89,8 @@ public class BlockStoneRailing extends BlockWall {
         return RendererStoneRailing.renderId;
     }
 	
-    /**
-     * returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
-     */
+    //
+    // returns a list of blocks with the same ID, but different meta (eg: wood returns 4 blocks)
     @Override
 	@SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs p_149666_2_, List list) {
@@ -242,5 +224,5 @@ public class BlockStoneRailing extends BlockWall {
         return AxisAlignedBB.getBoundingBox(x + this.minX, y + this.minY, z + this.minZ, x + this.maxX, y + this.maxY, z + this.maxZ);
 	}
 
-	
+	*/
 }

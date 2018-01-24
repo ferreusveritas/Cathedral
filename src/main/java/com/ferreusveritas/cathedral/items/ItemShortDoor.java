@@ -1,30 +1,22 @@
 package com.ferreusveritas.cathedral.items;
 
-import com.ferreusveritas.cathedral.features.dwarven.Dwemer;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.item.ItemBlock;
 
-	public class ItemShortDoor extends Item	{
+	public class ItemShortDoor extends ItemBlock {
 
-	    public ItemShortDoor(Material material) {
+	    public ItemShortDoor(Block block, Material material) {
+	    	super(block);
 	        this.maxStackSize = 64;
-	        this.setCreativeTab(CreativeTabs.tabRedstone);
+	        this.setCreativeTab(CreativeTabs.REDSTONE);
 	    }
 
-	    /**
-	     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-	     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-	     */
+	    /*
+	    // Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+	    // True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+
 	    @Override
 		public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float px, float py, float pz)
 	    {
@@ -95,5 +87,6 @@ import net.minecraft.world.World;
 	        world.notifyBlocksOfNeighborChange(x, y + 1, z, block);
 	    }
 	}
+	*/
 	
-
+}

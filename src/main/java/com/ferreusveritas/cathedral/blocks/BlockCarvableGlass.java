@@ -1,30 +1,49 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.List;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
-import team.chisel.ctmlib.CTM;
+import net.minecraft.block.state.IBlockState;
+import team.chisel.api.block.ICarvable;
+import team.chisel.api.block.VariationData;
 
-import com.cricketcraft.chisel.api.ChiselTabs;
-import com.cricketcraft.chisel.api.ICarvable;
-import com.cricketcraft.chisel.api.carving.CarvableHelper;
-import com.cricketcraft.chisel.api.carving.IVariationInfo;
-import com.cricketcraft.chisel.api.rendering.ClientUtils;
-import com.ferreusveritas.cathedral.Cathedral;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockCarvableGlass extends BlockGlass implements ICarvable {
 
+	public BlockCarvableGlass() {
+		super(Material.GLASS, false);
+	}
+
+	@Override
+	public int getIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotalVariations() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public VariationData getVariationData(int variation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public VariationData[] getVariations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getVariationIndex(IBlockState state) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/*
 	public CarvableHelper carverHelper;
 	private boolean isAlpha = false;
 	private CTM ctm = CTM.getInstance();
@@ -105,4 +124,5 @@ public class BlockCarvableGlass extends BlockGlass implements ICarvable {
 	public int getRenderBlockPass() {
 		return isAlpha ? 1 : 0;
 	}
+	*/
 }

@@ -1,12 +1,5 @@
 package com.ferreusveritas.cathedral.features.marble;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
 public class MarbleFixer {
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,6 +7,7 @@ public class MarbleFixer {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void init(){
 
+		/*
 		if(Loader.isModLoaded("ProjRed|Exploration")){
 
 			//ProjectRed stone block(Basalt, Marble)
@@ -52,7 +46,7 @@ public class MarbleFixer {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chiselMarble, 1, 0), true, new Object[]{"*", '*', "marble"}));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chiselMarble, 1, 1), true, new Object[]{"*", '*', "marbleBrick"}));
 		}
-
+		*/
 	}
 
 }

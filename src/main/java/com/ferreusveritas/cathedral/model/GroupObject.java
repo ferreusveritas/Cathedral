@@ -1,16 +1,7 @@
 package com.ferreusveritas.cathedral.model;
 
-import java.util.ArrayList;
-
-import org.lwjgl.util.vector.Matrix4f;
-
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-public class GroupObject
-{
+public class GroupObject {
+	/*
     public String name;
     public ArrayList<Face> faces = new ArrayList<Face>();
     public int glDrawingMode;
@@ -60,4 +51,5 @@ public class GroupObject
             }
         }
     }
+    */
 }

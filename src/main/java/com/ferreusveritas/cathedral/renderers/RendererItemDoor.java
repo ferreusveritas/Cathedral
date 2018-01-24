@@ -1,20 +1,8 @@
 package com.ferreusveritas.cathedral.renderers;
 
-import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.ENTITY_BOBBING;
-import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.ENTITY_ROTATION;
-
-import org.lwjgl.opengl.GL11;
-
-import com.ferreusveritas.cathedral.Cathedral;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
-
 public class RendererItemDoor implements IItemRenderer {
 
+	/*
 	private int doorHeight;
 	private float doorThick;
 	private String asset;
@@ -169,5 +157,5 @@ public class RendererItemDoor implements IItemRenderer {
 		
 		GL11.glPopMatrix();
 	}
-
+*/
 }

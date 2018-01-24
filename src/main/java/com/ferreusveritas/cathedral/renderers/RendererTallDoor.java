@@ -1,15 +1,8 @@
 package com.ferreusveritas.cathedral.renderers;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-
 public class RendererTallDoor  implements ISimpleBlockRenderingHandler {
 
+	/*
 	public static int id;
 	
 	public RendererTallDoor(){
@@ -92,5 +85,5 @@ public class RendererTallDoor  implements ISimpleBlockRenderingHandler {
 	public int getRenderId() {
 		return id;
 	}
-
+*/
 }

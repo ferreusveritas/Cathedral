@@ -1,18 +1,8 @@
 package com.ferreusveritas.cathedral.renderers;
 
-import org.lwjgl.opengl.GL11;
-
-import com.ferreusveritas.cathedral.blocks.BlockStoneRailing;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.world.IBlockAccess;
-
 public class RendererStoneRailing implements ISimpleBlockRenderingHandler {
 
+	/*
 	public static int renderId = RenderingRegistry.getNextAvailableRenderId();
 
 	@Override
@@ -282,5 +272,5 @@ public class RendererStoneRailing implements ISimpleBlockRenderingHandler {
 	public int getRenderId() {
 		return renderId;
 	}
-
+*/
 }

@@ -4,22 +4,14 @@ import com.ferreusveritas.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.blocks.BlockBars;
 import com.ferreusveritas.cathedral.blocks.BlockCarvable;
 import com.ferreusveritas.cathedral.blocks.BlockCarvableGlass;
-import com.ferreusveritas.cathedral.blocks.BlockCatwalk;
 import com.ferreusveritas.cathedral.blocks.BlockShortDoor;
 import com.ferreusveritas.cathedral.blocks.BlockTallDoor;
 import com.ferreusveritas.cathedral.items.ItemShortDoor;
-import com.ferreusveritas.cathedral.items.ItemSubBlocks;
 import com.ferreusveritas.cathedral.items.ItemTallDoor;
-import com.ferreusveritas.stonelore.basalt.Basalt;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import team.chisel.ctmlib.ISubmapManager;
 
 public class Dwemer {
 
@@ -38,11 +30,11 @@ public class Dwemer {
 	public static BlockCarvableGlass dwemerGlassBlock;
 
 	public static void preInit(Cathedral basalt){
-		dwemerBlock = (BlockCarvable) new BlockCarvable(Material.rock).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance);
-		dwemerLightBlock = (BlockCarvable) new BlockCarvable(Material.rock).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance).setLightLevel(1.0F);
-		dwemerGlassBlock = (BlockCarvableGlass) new BlockCarvableGlass().setCreativeTab(Cathedral.tabBasalt).setHardness(0.3F).setStepSound(Block.soundTypeGlass);			
-		dwemerCatwalkBlock = new BlockCatwalk(Material.iron).setCreativeTab(Cathedral.tabBasalt).setHardness(2.5f).setResistance(20F).setStepSound(Block.soundTypeMetal).setBlockName(Cathedral.MODID + "_dwemercatwalk").setBlockTextureName("dwemer-catwalk");
-		dwemerBars = new BlockBars();
+		//dwemerBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance);
+		//dwemerLightBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance).setLightLevel(1.0F);
+		//dwemerGlassBlock = (BlockCarvableGlass) new BlockCarvableGlass().setCreativeTab(Cathedral.tabBasalt).setHardness(0.3F).setStepSound(SoundType.GLASS);			
+		//dwemerCatwalkBlock = new BlockCatwalk(Material.IRON).setCreativeTab(Cathedral.tabBasalt).setHardness(2.5f).setResistance(20F).setStepSound(SoundType.METAL).setBlockName(Cathedral.MODID + "_dwemercatwalk").setBlockTextureName("dwemer-catwalk");
+		//dwemerBars = new BlockBars();
 	}
 
 	public static void init(Cathedral basalt){
@@ -66,7 +58,7 @@ public class Dwemer {
 				"dwemer-panel"//14
 		};
 
-		BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
+		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
 
 		//Dwemer Light Blocks
 		String dwemerLightNames[]  = {
@@ -75,34 +67,34 @@ public class Dwemer {
 				"dwemer-light-gas"//2
 		};
 
-		BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
+		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
 
 		//Dwemer Glass Blocks
-		dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-fence.name", 0, "dwemer-glass-fence", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-		dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-ornate.name", 1, "dwemer-glass-ornate", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-		dwemerGlassBlock.carverHelper.registerAll(dwemerGlassBlock, "glass");
+		//dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-fence.name", 0, "dwemer-glass-fence", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
+		//dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-ornate.name", 1, "dwemer-glass-ornate", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
+		//dwemerGlassBlock.carverHelper.registerAll(dwemerGlassBlock, "glass");
 
 		//Dwemer Bars
-		GameRegistry.registerBlock(dwemerBars, ItemSubBlocks.class, "DwemerBars");
-		dwemerBars.addVariations();
+		//GameRegistry.registerBlock(dwemerBars, ItemSubBlocks.class, "DwemerBars");
+		//dwemerBars.addVariations();
 
 		//Dwemer Catwalk
-		GameRegistry.registerBlock(dwemerCatwalkBlock, "dwemcatwalk");
+		//GameRegistry.registerBlock(dwemerCatwalkBlock, "dwemcatwalk");
 
 		//Doors
-		shortDoorBlock = (BlockShortDoor) new BlockShortDoor().setBlockName(Cathedral.MODID + "_doorShort").setBlockTextureName(Cathedral.MODID + ":short").setHardness(3.5f).setResistance(Basalt.basaltResistance);
-		tallDoorBlock = (BlockTallDoor) new BlockTallDoor().setBlockName(Cathedral.MODID + "_doorTall").setBlockTextureName(Cathedral.MODID + ":tall").setHardness(3.5f).setResistance(Basalt.basaltResistance);
+		//shortDoorBlock = (BlockShortDoor) new BlockShortDoor().setBlockName(Cathedral.MODID + "_doorShort").setBlockTextureName(Cathedral.MODID + ":short").setHardness(3.5f).setResistance(Basalt.basaltResistance);
+		//tallDoorBlock = (BlockTallDoor) new BlockTallDoor().setBlockName(Cathedral.MODID + "_doorTall").setBlockTextureName(Cathedral.MODID + ":tall").setHardness(3.5f).setResistance(Basalt.basaltResistance);
 
-		GameRegistry.registerBlock(shortDoorBlock, "ShortDoor");
-		GameRegistry.registerBlock(tallDoorBlock, "TallDoor");
+		//GameRegistry.registerBlock(shortDoorBlock, "ShortDoor");
+		//GameRegistry.registerBlock(tallDoorBlock, "TallDoor");
 
-		shortDoorItem = (ItemShortDoor) new ItemShortDoor(Material.iron).setUnlocalizedName(Cathedral.MODID + "_doorShort").setCreativeTab(Cathedral.tabBasalt);
-		GameRegistry.registerItem(shortDoorItem, "ShortDoorItem");
-		shortDoorBlock.setDroppedItem(shortDoorItem);
+		//shortDoorItem = (ItemShortDoor) new ItemShortDoor(Material.IRON).setUnlocalizedName(Cathedral.MODID + "_doorShort").setCreativeTab(Cathedral.tabBasalt);
+		//GameRegistry.registerItem(shortDoorItem, "ShortDoorItem");
+		//shortDoorBlock.setDroppedItem(shortDoorItem);
 
-		tallDoorItem = (ItemTallDoor) new ItemTallDoor(Material.iron).setUnlocalizedName(Cathedral.MODID + "_doorTall").setCreativeTab(Cathedral.tabBasalt);
-		GameRegistry.registerItem(tallDoorItem, "TallDoorItem");
-		tallDoorBlock.setDroppedItem(tallDoorItem);
+		//tallDoorItem = (ItemTallDoor) new ItemTallDoor(Material.IRON).setUnlocalizedName(Cathedral.MODID + "_doorTall").setCreativeTab(Cathedral.tabBasalt);
+		//GameRegistry.registerItem(tallDoorItem, "TallDoorItem");
+		//tallDoorBlock.setDroppedItem(tallDoorItem);
 
 		//Recipes
 
@@ -121,6 +113,7 @@ public class Dwemer {
 					metalIngot = "ingotGold";//This sucks but whatever
 				}
 
+		/*
 		//Recipe for Dwemer Stone
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBlock, 16, 0), true, new Object[]{"bbb", "bnb", "bbb", 'b', "basalt", 'n', metalIngot}));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBlock, 16, 0), true, new Object[]{"bbb", "bnb", "bbb", 'b', "basaltBrick", 'n', metalIngot}));
@@ -136,6 +129,76 @@ public class Dwemer {
 		//Recipe for Dwemer Doors
 		GameRegistry.addRecipe(new ItemStack(tallDoorItem), "X", "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
 		GameRegistry.addRecipe(new ItemStack(shortDoorItem), "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
+		*/
+
+	}
+	
+	
+	public static enum EnumType implements IStringSerializable {
+		
+		EMBEDDED   	( 0, "embedded"),
+		PILLAR     	( 1, "pillar"),
+		ALTAR     	( 2, "altar"),
+		DECOR      	( 3, "decor"),
+		CARVING1   	( 4, "carving-1"),
+		CARVING2   	( 5, "carving-2"),
+		LAYERED    	( 6, "layered"),
+		SCALEPILLAR	( 7, "scale-pillar"),
+		WORMGEAR   	( 8, "wormgear"),
+		RAYS       	( 9, "rays"),
+		KNOT       	(10, "knot"),
+		MASK       	(11, "mask"),
+		DOORTOP    	(12, "doortop"),
+		DOORBOTTOM 	(13, "doorbottom"),
+		PANEL      	(14, "panel");
+		
+		/** Array of the Block's BlockStates */
+		private static final Dwemer.EnumType[] META_LOOKUP = new Dwemer.EnumType[values().length];
+		/** The BlockState's metadata. */
+		private final int meta;
+		/** The EnumType's name. */
+		private final String name;
+		private final String unlocalizedName;
+		
+		private EnumType(int index, String name) {
+			this.meta = index;
+			this.name = name;
+			this.unlocalizedName = name;
+		}
+		
+		/** Returns the EnumType's metadata value. */
+		public int getMetadata() {
+			return this.meta;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
+		/** Returns an EnumType for the BlockState from a metadata value. */
+		public static Dwemer.EnumType byMetadata(int meta) {
+			if (meta < 0 || meta >= META_LOOKUP.length) {
+				meta = 0;
+			}
+			
+			return META_LOOKUP[meta];
+		}
+		
+		@Override
+		public String getName() {
+			return this.name;
+		}
+		
+		public String getUnlocalizedName() {
+			return this.unlocalizedName;
+		}
+		
+		static {
+			for (Dwemer.EnumType blockdwemer$enumtype : values()) {
+				META_LOOKUP[blockdwemer$enumtype.getMetadata()] = blockdwemer$enumtype;
+			}
+		}
 
 	}
 }

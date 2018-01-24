@@ -58,7 +58,7 @@ public class Cathedral {
 		Basalt.preInit(this);
 		Dwemer.preInit(this);
 		Extras.preInit(this);
-		Gargoyle.preInit(this);
+		Gargoyle.preInit();
 		proxy.preInit();
 	}
 
@@ -69,11 +69,11 @@ public class Cathedral {
 		Dwemer.init(this);
 		MarbleFixer.init();
 		Extras.init(this);
-		Gargoyle.init(this);
+		Gargoyle.init();
 		proxy.init();
 
-		tabBasalt.setTabIconItemStack(new ItemStack(Basalt.basaltBlock, 1, 4));
-		tabCathedral.setTabIconItemStack(new ItemStack(Extras.stoneRailingBlock, 1, 1));
+		//tabBasalt.setTabIconItemStack(new ItemStack(Basalt.basaltBlock, 1, 4));
+		//tabCathedral.setTabIconItemStack(new ItemStack(Extras.stoneRailingBlock, 1, 1));
 	}
 
 	@EventHandler

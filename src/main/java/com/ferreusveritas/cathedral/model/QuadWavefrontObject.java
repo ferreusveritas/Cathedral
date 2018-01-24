@@ -1,35 +1,11 @@
 package com.ferreusveritas.cathedral.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelFormatException;
-import net.minecraftforge.client.model.obj.TextureCoordinate;
-import net.minecraftforge.client.model.obj.Vertex;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 /**
  *  Wavefront Object importer
  *  Based heavily off of the specifications found at http://en.wikipedia.org/wiki/Wavefront_.obj_file
  */
-public class QuadWavefrontObject
-{
+public class QuadWavefrontObject {
+	/*
     private static Pattern vertexPattern = Pattern.compile("(v( (\\-){0,1}\\d+(\\.\\d+)?){3,4} *\\n)|(v( (\\-){0,1}\\d+(\\.\\d+)?){3,4} *$)");
     private static Pattern vertexNormalPattern = Pattern.compile("(vn( (\\-){0,1}\\d+(\\.\\d+)?){3,4} *\\n)|(vn( (\\-){0,1}\\d+(\\.\\d+)?){3,4} *$)");
     private static Pattern textureCoordinatePattern = Pattern.compile("(vt( (\\-){0,1}\\d+\\.\\d+){2,3} *\\n)|(vt( (\\-){0,1}\\d+(\\.\\d+)?){2,3} *$)");
@@ -586,11 +562,11 @@ public class QuadWavefrontObject
         return group;
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid vertex
-     * @param line the line being validated
-     * @return true if the line is a valid vertex, false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid vertex
+    //@param line the line being validated
+    //@return true if the line is a valid vertex, false otherwise
+    //
     private static boolean isValidVertexLine(String line)
     {
         if (vertexMatcher != null)
@@ -602,11 +578,11 @@ public class QuadWavefrontObject
         return vertexMatcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid vertex normal
-     * @param line the line being validated
-     * @return true if the line is a valid vertex normal, false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid vertex normal
+    //@param line the line being validated
+    //@return true if the line is a valid vertex normal, false otherwise
+    //
     private static boolean isValidVertexNormalLine(String line)
     {
         if (vertexNormalMatcher != null)
@@ -618,11 +594,11 @@ public class QuadWavefrontObject
         return vertexNormalMatcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid texture coordinate
-     * @param line the line being validated
-     * @return true if the line is a valid texture coordinate, false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid texture coordinate
+    //@param line the line being validated
+    //@return true if the line is a valid texture coordinate, false otherwise
+    //
     private static boolean isValidTextureCoordinateLine(String line)
     {
         if (textureCoordinateMatcher != null)
@@ -634,11 +610,11 @@ public class QuadWavefrontObject
         return textureCoordinateMatcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices, texture coordinates, and vertex normals
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1/vt1/vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid face that is described by vertices, texture coordinates, and vertex normals
+    //@param line the line being validated
+    //@return true if the line is a valid face that matches the format "f v1/vt1/vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+    //
     private static boolean isValidFace_V_VT_VN_Line(String line)
     {
         if (face_V_VT_VN_Matcher != null)
@@ -650,11 +626,11 @@ public class QuadWavefrontObject
         return face_V_VT_VN_Matcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices and texture coordinates
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1/vt1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid face that is described by vertices and texture coordinates
+    //@param line the line being validated
+    //@return true if the line is a valid face that matches the format "f v1/vt1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+    //
     private static boolean isValidFace_V_VT_Line(String line)
     {
         if (face_V_VT_Matcher != null)
@@ -666,11 +642,11 @@ public class QuadWavefrontObject
         return face_V_VT_Matcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices and vertex normals
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1//vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid face that is described by vertices and vertex normals
+    //@param line the line being validated
+    //@return true if the line is a valid face that matches the format "f v1//vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+    //
     private static boolean isValidFace_V_VN_Line(String line)
     {
         if (face_V_VN_Matcher != null)
@@ -682,11 +658,11 @@ public class QuadWavefrontObject
         return face_V_VN_Matcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by only vertices
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid face that is described by only vertices
+    //@param line the line being validated
+    //@return true if the line is a valid face that matches the format "f v1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+    //
     private static boolean isValidFace_V_Line(String line)
     {
         if (face_V_Matcher != null)
@@ -698,21 +674,19 @@ public class QuadWavefrontObject
         return face_V_Matcher.matches();
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid face of any of the possible face formats
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches any of the valid face formats, false otherwise
-     */
+    //
+    //Verifies that the given line from the model file is a valid face of any of the possible face formats
+    //@param line the line being validated
+    //@return true if the line is a valid face that matches any of the valid face formats, false otherwise
+    //
     private static boolean isValidFaceLine(String line)
     {
         return isValidFace_V_VT_VN_Line(line) || isValidFace_V_VT_Line(line) || isValidFace_V_VN_Line(line) || isValidFace_V_Line(line);
     }
 
-    /***
-     * Verifies that the given line from the model file is a valid group (or object)
-     * @param line the line being validated
-     * @return true if the line is a valid group (or object), false otherwise
-     */
+    // * Verifies that the given line from the model file is a valid group (or object)
+    // * @param line the line being validated
+    // * @return true if the line is a valid group (or object), false otherwise
     private static boolean isValidGroupObjectLine(String line)
     {
         if (groupObjectMatcher != null)
@@ -723,5 +697,5 @@ public class QuadWavefrontObject
         groupObjectMatcher = groupObjectPattern.matcher(line);
         return groupObjectMatcher.matches();
     }
-    
+    */
 }

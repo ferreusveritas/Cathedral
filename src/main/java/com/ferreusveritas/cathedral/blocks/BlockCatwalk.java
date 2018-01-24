@@ -1,16 +1,15 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import com.ferreusveritas.cathedral.Cathedral;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 
 public class BlockCatwalk extends Block {
 
+	public BlockCatwalk(Material materialIn) {
+		super(materialIn);
+	}
+
+	/*
 	@SideOnly(Side.CLIENT)
 	private IIcon topIcon;
 	private IIcon sideIcon;
@@ -37,9 +36,6 @@ public class BlockCatwalk extends Block {
 		return sideIcon;		
 	}
     
-    /**
-     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
-     */
     @Override
 	public boolean renderAsNormalBlock()
     {
@@ -51,4 +47,5 @@ public class BlockCatwalk extends Block {
     {
         return false;
     }
+    */
 }

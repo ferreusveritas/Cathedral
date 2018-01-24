@@ -9,6 +9,7 @@ import com.ferreusveritas.cathedral.blocks.BlockGenericStairs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class Basalt {
@@ -29,13 +30,16 @@ public class Basalt {
 	public static float marbleResistance = 10f;
 
 	public static void preInit(Cathedral lore){
+		
+		basaltBase = new Block(Material.ROCK);
+		
 		basaltBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 		basaltSlab = (BlockCarvableSlab) new BlockCarvableSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 
 		checkeredBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
 		checkeredSlab = (BlockCarvableSlab) new BlockCarvableSlab(checkeredBlock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
 
-		String basaltNames[] = {
+		/*String basaltNames[] = {
 				"basalt-rosette",//0
 				"basalt-paver",//1
 				"basalt-worn-brick",//2
@@ -51,9 +55,9 @@ public class Basalt {
 				"basalt-block",//12
 				"basalt-sunken",//13
 				"basalt-knot"//14
-		};
+		};*/
 
-		BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
+		//BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
 
 		//Basalt Slabs
 		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
@@ -65,22 +69,6 @@ public class Basalt {
 		basaltSlab.carverHelper.registerAll(basaltSlab, "basaltslab", ItemCarvableSlab.class);
 		basaltSlab.registerSlabTop();*/
 
-		String names[] = {
-				"checkered", //0
-				"checkered-border",  //1
-				"checkered-small", //2
-				"checkered-tiles", //3
-				"checkered-tiles-small", //4
-		};
-
-		/*checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-plain.name", 0, "checkered", Cathedral.MODID);
-		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-small.name", 2, "checkered-small", Cathedral.MODID);
-		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-tiles.name", 3, "checkered-tiles", Cathedral.MODID);
-		checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-smalltiles.name", 4, "checkered-tiles-small", Cathedral.MODID);
-		checkeredSlab.carverHelper.registerAll(checkeredSlab, "checkeredslab", ItemCarvableSlab.class);
-		checkeredSlab.registerSlabTop();*/
-
-		BlockCarvable.addBlocks(names, checkeredBlock, "checkered");	
 	}
 
 	public static void init(Cathedral lore){
@@ -108,7 +96,7 @@ public class Basalt {
 		
 		//Stairs
 		for(int i = 0; i < baseBlocks.length; i++){
-			basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
+			//basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
 			//GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
 			//GameRegistry.addRecipe(new ItemStack(basaltStairs[baseBlocks[i].select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlocks[i].block, 1, baseBlocks[i].metaData) );
 		}
@@ -153,4 +141,72 @@ public class Basalt {
 		
 	}
 	
+	
+	public static enum EnumType implements IStringSerializable {
+	
+		ROSETTE		( 0, "rosette"),
+		PAVER		( 1, "paver"),
+		WORNBRICK	( 2, "worn-brick"),
+		ORNATE		( 3, "ornate"),
+		POISON		( 4, "poison"),
+		SUNKENPANEL	( 5, "sunken-panel"),
+		TILES		( 6, "tiles"),
+		SLABS		( 7, "slabs"),
+		VAULT		( 8, "vault"),
+		SMALLBRICKS	( 9, "smallbricks"),
+		SMALLCHAOTI	(10, "smallchaotic"),
+		SMALLTILES	(11, "smalltiles"),
+		BLOCK		(12, "block"),
+		SUNKEN		(13, "sunken"),
+		KNOT		(14, "knot"); 
+		
+		/** Array of the Block's BlockStates */
+		private static final Basalt.EnumType[] META_LOOKUP = new Basalt.EnumType[values().length];
+		/** The BlockState's metadata. */
+		private final int meta;
+		/** The EnumType's name. */
+		private final String name;
+		private final String unlocalizedName;
+		
+		private EnumType(int index, String name) {
+			this.meta = index;
+			this.name = name;
+			this.unlocalizedName = name;
+		}
+		
+		/** Returns the EnumType's metadata value. */
+		public int getMetadata() {
+			return this.meta;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
+		/** Returns an EnumType for the BlockState from a metadata value. */
+		public static Basalt.EnumType byMetadata(int meta) {
+			if (meta < 0 || meta >= META_LOOKUP.length) {
+				meta = 0;
+			}
+			
+			return META_LOOKUP[meta];
+		}
+		
+		@Override
+		public String getName() {
+			return this.name;
+		}
+		
+		public String getUnlocalizedName() {
+			return this.unlocalizedName;
+		}
+		
+		static {
+			for (Basalt.EnumType blockbasalt$enumtype : values()) {
+				META_LOOKUP[blockbasalt$enumtype.getMetadata()] = blockbasalt$enumtype;
+			}
+		}
+
+	}
 }

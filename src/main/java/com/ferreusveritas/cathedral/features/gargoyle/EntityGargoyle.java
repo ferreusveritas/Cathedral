@@ -2,8 +2,7 @@ package com.ferreusveritas.cathedral.features.gargoyle;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class EntityGargoyle extends TileEntity {
@@ -27,34 +26,46 @@ public class EntityGargoyle extends TileEntity {
 		this.material = material;
 	}
 
-	@Override
-	public void readFromNBT(NBTTagCompound tag){
-		super.readFromNBT(tag);
-
-		direction = tag.getInteger("direction");
-		material = tag.getInteger("material");
+	private void read(NBTTagCompound tag) {
+		if(tag.hasKey("species")) {
+			direction = tag.getInteger("direction");
+			material = tag.getInteger("material");
+		}
 	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound tag){
-		super.writeToNBT(tag);
-
+	
+	private void write(NBTTagCompound tag) {
 		tag.setInteger("direction", direction);
 		tag.setInteger("material", material);
 	}
-
+	
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet){
-		this.readFromNBT(packet.func_148857_g());
+	public void readFromNBT(NBTTagCompound tag){
+		super.readFromNBT(tag);
+		read(tag);
 	}
 
 	@Override
-	public Packet getDescriptionPacket(){
-		NBTTagCompound tag = new NBTTagCompound();
-
-		this.writeToNBT(tag);
-
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tag);
+	public NBTTagCompound writeToNBT(NBTTagCompound tag){
+		super.writeToNBT(tag);
+		write(tag);
+		return tag;
 	}
 
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		NBTTagCompound syncData = new NBTTagCompound();
+		this.write(syncData);
+		return new SPacketUpdateTileEntity(this.pos, 1, syncData);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		read(pkt.getNbtCompound());
+	}
+	
+	//Packages up the data on the server to send to the client.  Client handles it with handleUpdateTag() which reads it with readFromNBT()
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+	
 }

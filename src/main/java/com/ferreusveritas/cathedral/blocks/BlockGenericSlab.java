@@ -1,27 +1,15 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ferreusveritas.cathedral.Cathedral;
-
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import static net.minecraftforge.common.util.ForgeDirection.UP;
 
 public class BlockGenericSlab extends Block {
 
+	public BlockGenericSlab(Block baseblock) {
+		super(baseblock.getMaterial(baseblock.getDefaultState()));//TODO handle materials better
+		// TODO Auto-generated constructor stub
+	}
+
+	/*
 	public ArrayList<BaseBlockDef> baseBlocks;
 	public int count;
 	
@@ -121,5 +109,5 @@ public class BlockGenericSlab extends Block {
 		
 		return !isBottom && (side == UP);
 	}
-
+	*/
 }

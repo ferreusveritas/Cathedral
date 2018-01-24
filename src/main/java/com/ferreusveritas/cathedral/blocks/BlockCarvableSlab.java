@@ -1,25 +1,6 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import java.util.List;
-import java.util.Random;
-
-import com.ferreusveritas.cathedral.items.ItemCarvableSlab;
-
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import static net.minecraftforge.common.util.ForgeDirection.UP;
 
 public class BlockCarvableSlab extends BlockCarvable {
 
@@ -28,6 +9,11 @@ public class BlockCarvableSlab extends BlockCarvable {
 	public BlockCarvableSlab top;
 	public boolean isBottom;
 
+	public BlockCarvableSlab(Block master) {
+		
+	}
+	
+	/*
 	public BlockCarvableSlab(BlockCarvable master) {
 		opaque = true;
 
@@ -121,21 +107,21 @@ public class BlockCarvableSlab extends BlockCarvable {
 		//}
 	}
 
-	/**
-	 * Checks if the block is a solid face on the given side, used by placement logic.
-	 *
-	 * @param world
-	 *            The current world
-	 * @param x
-	 *            X Position
-	 * @param y
-	 *            Y position
-	 * @param z
-	 *            Z position
-	 * @param side
-	 *            The side to check
-	 * @return True if the block is solid on the specified side.
-	 */
+	//
+	// * Checks if the block is a solid face on the given side, used by placement logic.
+	// *
+	// * @param world
+	// *            The current world
+	// * @param x
+	// *            X Position
+	// * @param y
+	// *            Y position
+	// * @param z
+	// *            Z position
+	// * @param side
+	// *            The side to check
+	// * @return True if the block is solid on the specified side.
+	// 
 	@Override
 	public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
 		return !isBottom && (side == UP);
@@ -146,5 +132,5 @@ public class BlockCarvableSlab extends BlockCarvable {
 		name = name.substring(name.indexOf(':') + 1) + "_top";
 		GameRegistry.registerBlock(this.top, ItemCarvableSlab.class, name);
 	}
-	
+	*/
 }

@@ -1,13 +1,7 @@
 package com.ferreusveritas.cathedral.items;
 
-import com.ferreusveritas.cathedral.blocks.BlockGenericSlab;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemGenericSlab extends ItemBlock {
 
@@ -15,6 +9,7 @@ public class ItemGenericSlab extends ItemBlock {
 		super(block);
 	}
 
+	/*
 	@Override
 	public boolean func_150936_a(World world, int x, int y, int z, int side, EntityPlayer player, ItemStack stack) {
 		return true;
@@ -92,4 +87,5 @@ public class ItemGenericSlab extends ItemBlock {
 		world.playSoundEffect(x + 0.5f, y + 0.5f, z + 0.5f, this.field_150939_a.stepSound.func_150496_b(), (this.field_150939_a.stepSound.getVolume() + 1.0F) / 2.0F,
 				this.field_150939_a.stepSound.getPitch() * 0.8F);
 	}
+	*/
 }
