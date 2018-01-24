@@ -1,11 +1,48 @@
 package com.ferreusveritas.cathedral.features.marble;
 
-public class MarbleFixer {
+import com.ferreusveritas.cathedral.features.IFeature;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+
+public class MarbleFixer implements IFeature {
+
+	public static final String featureName = "marblefixer";
+	
+	@Override
+	public String getName() {
+		return featureName;
+	}
+
+	@Override
+	public void preInit() {}
+
+	@Override
+	public void createBlocks() {}
+
+	@Override
+	public void createItems() {}
+
+	@Override
+	public void registerBlocks(IForgeRegistry<Block> registry) {}
+
+	@Override
+	public void registerItems(IForgeRegistry<Item> registry) {}
+
+	@Override
+	public void registerRecipes(IForgeRegistry<IRecipe> registry) {}
+
+	@Override
+	public void registerModels(ModelRegistryEvent event) {}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//There's a lot of annoying discrepancies between project red marble and chisel 2 marble.  This is an attempt to fix that.
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static void init(){
+	@Override
+	public void init(){
 
 		/*
 		if(Loader.isModLoaded("ProjRed|Exploration")){
@@ -48,5 +85,8 @@ public class MarbleFixer {
 		}
 		*/
 	}
+
+	@Override
+	public void postInit() {}
 
 }

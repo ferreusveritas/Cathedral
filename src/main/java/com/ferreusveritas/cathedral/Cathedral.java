@@ -1,5 +1,9 @@
 package com.ferreusveritas.cathedral;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
 import com.ferreusveritas.cathedral.features.dwarven.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
@@ -7,24 +11,22 @@ import com.ferreusveritas.cathedral.features.gargoyle.Gargoyle;
 import com.ferreusveritas.cathedral.features.marble.MarbleFixer;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-
-/*Bugs:
- * 
- * Basalt slab recipe doesn't include regular basalt 
- * 
- */
-
-
-
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "required-after:chisel;required-after:ProjRed|Exploration;after:ThermalFoundation")
 public class Cathedral {
@@ -32,6 +34,24 @@ public class Cathedral {
 	public static final String MODID = "cathedral";
 	public static final String VERSION = "1.12.2-1.9.4";
 
+	public static Basalt basalt;
+	public static Dwemer dwemer;
+	public static Gargoyle gargoyle;
+	public static Extras extras;
+	public static MarbleFixer marblefixer;
+	
+	public static ArrayList<IFeature> features = new ArrayList();
+	
+	static {
+		basalt = new Basalt();
+		dwemer = new Dwemer();
+		gargoyle = new Gargoyle();
+		extras = new Extras();
+		marblefixer = new MarbleFixer();
+		
+		Collections.addAll(features, basalt, dwemer, gargoyle, extras, marblefixer);
+	}
+	
 	@Instance(MODID)
 	public static Cathedral instance;
 
@@ -52,33 +72,54 @@ public class Cathedral {
 		}
 	};
 	
-	@EventHandler
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e){
-		//Run before anything else. Read your config, create blocks, items, etc, and register them with the GameRegistry.
-		Basalt.preInit(this);
-		Dwemer.preInit(this);
-		Extras.preInit(this);
-		Gargoyle.preInit();
+		features.forEach(f -> f.preInit());
+		features.forEach(f -> f.createBlocks());
+		features.forEach(f -> f.createItems());
+		
 		proxy.preInit();
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
-		//Do your mod setup. Build whatever data structures you care about. Register recipes.
-		Basalt.init(this);
-		Dwemer.init(this);
-		MarbleFixer.init();
-		Extras.init(this);
-		Gargoyle.init();
+		features.forEach(f -> f.init());
+		
 		proxy.init();
-
-		//tabBasalt.setTabIconItemStack(new ItemStack(Basalt.basaltBlock, 1, 4));
-		//tabCathedral.setTabIconItemStack(new ItemStack(Extras.stoneRailingBlock, 1, 1));
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void PostInit(FMLPostInitializationEvent e){
-		//Handle interaction with other mods, complete your setup based on this.
+		features.forEach(f -> f.init());
 	}
 
+	@Mod.EventBusSubscriber
+	public static class RegistrationHandler {
+		
+		@SubscribeEvent
+		public static void registerBlocks(RegistryEvent.Register<Block> event) {
+			features.forEach(f -> f.registerBlocks(event.getRegistry()));
+		}
+		
+		@SubscribeEvent
+		public static void registerItems(RegistryEvent.Register<Item> event) {
+			features.forEach(f -> f.registerItems(event.getRegistry()));
+		}
+		
+		@SubscribeEvent
+		public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+			features.forEach(f -> f.registerRecipes(event.getRegistry()));
+		}
+		
+		@SubscribeEvent
+		@SideOnly(Side.CLIENT)
+		public static void registerModels(ModelRegistryEvent event) {
+			features.forEach(f -> f.registerModels(event));
+		}
+
+		@SubscribeEvent
+		public static void newRegistry(RegistryEvent.NewRegistry event) {
+		}
+	}
+	
 }

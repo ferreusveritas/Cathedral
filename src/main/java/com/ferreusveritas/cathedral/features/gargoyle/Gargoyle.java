@@ -1,11 +1,30 @@
 package com.ferreusveritas.cathedral.features.gargoyle;
 
-public class Gargoyle {
+import com.ferreusveritas.cathedral.features.IFeature;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+
+public class Gargoyle implements IFeature {
+
+	public static final String featureName = "gargoyle";
+	
 	public static BlockGargoyle gargoyleBlock;
 	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
-	public static void preInit(){
+	@Override
+	public String getName() {
+		return featureName;
+	}
+
+	@Override
+	public void preInit() {}
+
+	@Override
+	public void createBlocks() {
 		gargoyleBlock = new BlockGargoyle();
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
@@ -14,8 +33,26 @@ public class Gargoyle {
 		//GameRegistry.registerBlock(whiteTest, "whitetest");
 	}
 
-	public static void init(){
+	@Override
+	public void createItems() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void registerBlocks(IForgeRegistry<Block> registry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerItems(IForgeRegistry<Item> registry) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 		/*Block chiselMarble = GameRegistry.findBlock("chisel", "marble");
 		Block chiselLimestone = GameRegistry.findBlock("chisel", "limestone");
 
@@ -30,10 +67,18 @@ public class Gargoyle {
 		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 8), "X X", "XXX", " X ", 'X', new ItemStack(chiselMarble, 1, 0));
 		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 9), "X X", "XXX", " X ", 'X', new ItemStack(chiselLimestone, 1, 0));
 		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 10), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.SNOW));*/
-
 	}
 
-	public static void postInit(){
+	@Override
+	public void registerModels(ModelRegistryEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void init() {}
+
+	@Override
+	public void postInit() {}
 
 }
