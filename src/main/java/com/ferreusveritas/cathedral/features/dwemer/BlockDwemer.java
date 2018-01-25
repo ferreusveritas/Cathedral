@@ -1,9 +1,8 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.Cathedral;
 
-import net.minecraft.block.BlockPane;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -13,38 +12,28 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 
-public class BlockBars extends BlockPane {
+public class BlockDwemer extends Block {
+
+	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
-	public static String name = "bars";
-	
-	public static final PropertyEnum<BlockBars.EnumType> VARIANT = PropertyEnum.<BlockBars.EnumType>create("variant", BlockBars.EnumType.class);
-	
-	public BlockBars(String name) {
-		super(Material.IRON, true);
-		
-		setUnlocalizedName("bars");
-		setRegistryName(Cathedral.MODID + "_" + name);
-		setHarvestLevel("pickaxe", 0);
-		setSoundType(SoundType.METAL);
-		setResistance(20.0F);
-		setHardness(2.5F);
+	public BlockDwemer() {
+		super(Material.ROCK);
 		setCreativeTab(Cathedral.tabBasalt);
-	}
-	
-	public BlockBars(){
-		this(name);
+		setHardness(Cathedral.basalt.basaltHardness);
+		setResistance(Cathedral.basalt.basaltResistance);
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, WEST, SOUTH, VARIANT});
+		return new BlockStateContainer(this, new IProperty[] {VARIANT});
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, BlockBars.EnumType.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */
@@ -65,35 +54,26 @@ public class BlockBars extends BlockPane {
 		}
 	}
 	
-	/*public void addVariations(){
-		ICarvingRegistry carving = CarvingUtils.getChiselRegistry();
-		for(int meta = 0; meta < subBlocks; meta++){
-			carving.addVariation("dwemerBars", this, meta, 1);
-		}
-	}*/
-	
-	static {
-		@SuppressWarnings("unused")
-		String names[] = {
-				"dwembars",//0
-				"dwembars-ornate",//1
-				"dwembars-footer",//2
-				"dwembars-header",//3
-				"dwembars-mask",//4
-				"dwembars-rombus",//5
-		};
-	}	
-	
 	public static enum EnumType implements IStringSerializable {
-		NORMAL(0, "normal"),
-		ORNATE(1, "ornate"),
-		FOOTER(2, "footer"),
-		HEADER(3, "header"),
-		MASK(4, "mask"),
-		ROMBUS(5, "rombus");
+		
+		EMBEDDED   	( 0, "embedded"),
+		PILLAR     	( 1, "pillar"),
+		ALTAR     	( 2, "altar"),
+		DECOR      	( 3, "decor"),
+		CARVING1   	( 4, "carving-1"),
+		CARVING2   	( 5, "carving-2"),
+		LAYERED    	( 6, "layered"),
+		SCALEPILLAR	( 7, "scale-pillar"),
+		WORMGEAR   	( 8, "wormgear"),
+		RAYS       	( 9, "rays"),
+		KNOT       	(10, "knot"),
+		MASK       	(11, "mask"),
+		DOORTOP    	(12, "doortop"),
+		DOORBOTTOM 	(13, "doorbottom"),
+		PANEL      	(14, "panel");
 		
 		/** Array of the Block's BlockStates */
-		private static final BlockBars.EnumType[] META_LOOKUP = new BlockBars.EnumType[values().length];
+		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
 		/** The BlockState's metadata. */
 		private final int meta;
 		/** The EnumType's name. */
@@ -117,12 +97,8 @@ public class BlockBars extends BlockPane {
 		}
 		
 		/** Returns an EnumType for the BlockState from a metadata value. */
-		public static BlockBars.EnumType byMetadata(int meta) {
-			if (meta < 0 || meta >= META_LOOKUP.length) {
-				meta = 0;
-			}
-			
-			return META_LOOKUP[meta];
+		public static EnumType byMetadata(int meta) {
+			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
 		}
 		
 		@Override
@@ -135,10 +111,11 @@ public class BlockBars extends BlockPane {
 		}
 		
 		static {
-			for (BlockBars.EnumType blockbars$enumtype : values()) {
-				META_LOOKUP[blockbars$enumtype.getMetadata()] = blockbars$enumtype;
+			for (EnumType type : values()) {
+				META_LOOKUP[type.getMetadata()] = type;
 			}
 		}
+
 	}
-	
+
 }

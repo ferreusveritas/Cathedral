@@ -5,7 +5,7 @@ import java.util.Collections;
 
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
-import com.ferreusveritas.cathedral.features.dwarven.Dwemer;
+import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.gargoyle.Gargoyle;
 import com.ferreusveritas.cathedral.features.marble.MarbleFixer;

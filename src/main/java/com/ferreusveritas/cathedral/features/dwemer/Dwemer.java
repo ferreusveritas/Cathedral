@@ -1,18 +1,17 @@
-package com.ferreusveritas.cathedral.features.dwarven;
+package com.ferreusveritas.cathedral.features.dwemer;
 
-import com.ferreusveritas.cathedral.blocks.BlockBars;
-import com.ferreusveritas.cathedral.blocks.BlockCarvable;
-import com.ferreusveritas.cathedral.blocks.BlockCarvableGlass;
-import com.ferreusveritas.cathedral.blocks.BlockShortDoor;
-import com.ferreusveritas.cathedral.blocks.BlockTallDoor;
+import com.ferreusveritas.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.items.ItemShortDoor;
-import com.ferreusveritas.cathedral.items.ItemTallDoor;
+import com.ferreusveritas.cathedral.features.extras.BlockCatwalk;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockGlass;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemMultiTexture;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -31,126 +30,39 @@ public class Dwemer implements IFeature {
 	public BlockTallDoor	tallDoorBlock;
 	public ItemTallDoor tallDoorItem;
 
-	public BlockCarvable dwemerBlock;
-	public BlockCarvable dwemerLightBlock;
-	public BlockCarvableGlass dwemerGlassBlock;
+	public BlockDwemer dwemerBlock;
+	public BlockDwemerLight dwemerLightBlock;
+	public BlockGlass dwemerGlassBlock;
 	
-	public static enum EnumType implements IStringSerializable {
-		
-		EMBEDDED   	( 0, "embedded"),
-		PILLAR     	( 1, "pillar"),
-		ALTAR     	( 2, "altar"),
-		DECOR      	( 3, "decor"),
-		CARVING1   	( 4, "carving-1"),
-		CARVING2   	( 5, "carving-2"),
-		LAYERED    	( 6, "layered"),
-		SCALEPILLAR	( 7, "scale-pillar"),
-		WORMGEAR   	( 8, "wormgear"),
-		RAYS       	( 9, "rays"),
-		KNOT       	(10, "knot"),
-		MASK       	(11, "mask"),
-		DOORTOP    	(12, "doortop"),
-		DOORBOTTOM 	(13, "doorbottom"),
-		PANEL      	(14, "panel");
-		
-		/** Array of the Block's BlockStates */
-		private static final Dwemer.EnumType[] META_LOOKUP = new Dwemer.EnumType[values().length];
-		/** The BlockState's metadata. */
-		private final int meta;
-		/** The EnumType's name. */
-		private final String name;
-		private final String unlocalizedName;
-		
-		private EnumType(int index, String name) {
-			this.meta = index;
-			this.name = name;
-			this.unlocalizedName = name;
-		}
-		
-		/** Returns the EnumType's metadata value. */
-		public int getMetadata() {
-			return this.meta;
-		}
-		
-		@Override
-		public String toString() {
-			return this.name;
-		}
-		
-		/** Returns an EnumType for the BlockState from a metadata value. */
-		public static Dwemer.EnumType byMetadata(int meta) {
-			if (meta < 0 || meta >= META_LOOKUP.length) {
-				meta = 0;
-			}
-			
-			return META_LOOKUP[meta];
-		}
-		
-		@Override
-		public String getName() {
-			return this.name;
-		}
-		
-		public String getUnlocalizedName() {
-			return this.unlocalizedName;
-		}
-		
-		static {
-			for (Dwemer.EnumType blockdwemer$enumtype : values()) {
-				META_LOOKUP[blockdwemer$enumtype.getMetadata()] = blockdwemer$enumtype;
-			}
-		}
-
-	}
-
-
 	@Override
 	public String getName() {
 		return featureName;
 	}
 
 	@Override
-	public void preInit() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void preInit() {}
 
 	@Override
 	public void createBlocks() {
-		//dwemerBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance);
-		//dwemerLightBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(Basalt.basaltHardness).setResistance(Basalt.basaltResistance).setLightLevel(1.0F);
-		//dwemerGlassBlock = (BlockCarvableGlass) new BlockCarvableGlass().setCreativeTab(Cathedral.tabBasalt).setHardness(0.3F).setStepSound(SoundType.GLASS);			
-		//dwemerCatwalkBlock = new BlockCatwalk(Material.IRON).setCreativeTab(Cathedral.tabBasalt).setHardness(2.5f).setResistance(20F).setStepSound(SoundType.METAL).setBlockName(Cathedral.MODID + "_dwemercatwalk").setBlockTextureName("dwemer-catwalk");
-		//dwemerBars = new BlockBars();		
+		dwemerBlock = new BlockDwemer();
+		dwemerLightBlock = (BlockDwemerLight) new BlockDwemerLight();
+
+		dwemerGlassBlock = (BlockGlass) new BlockGlass(Material.GLASS, false)
+				.setCreativeTab(Cathedral.tabBasalt)
+				//.setStepSound(SoundType.GLASS)
+				.setHardness(0.3F);
 		
-		//Dwemer Blocks
-		String dwemerNames[]  = {
-				"dwemer-embedded",//0
-				"dwemer-pillar",//1
-				"dwemer-altar",//2
-				"dwemer-decor",//3
-				"dwemer-carving-1",//4
-				"dwemer-carving-2",//5
-				"dwemer-layered",//6
-				"dwemer-scale-pillar",//7
-				"dwemer-wormgear",//8
-				"dwemer-rays",//9
-				"dwemer-knot",//10
-				"dwemer-mask",//11
-				"dwemer-doortop",//12
-				"dwemer-doorbottom",//13
-				"dwemer-panel"//14
-		};
 
+		dwemerCatwalkBlock = new BlockCatwalk(Material.IRON)
+				.setCreativeTab(Cathedral.tabBasalt)
+				.setHardness(2.5f)
+				.setResistance(20F)
+				//.setStepSound(SoundType.METAL)
+				.setRegistryName(Cathedral.MODID + "_dwemercatwalk");
+		
+		dwemerBars = new BlockBars();
+		
 		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
-
-		//Dwemer Light Blocks
-		String dwemerLightNames[]  = {
-				"dwemer-light-path",//0
-				"dwemer-light-vent",//1
-				"dwemer-light-gas"//2
-		};
-
 		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
 
 		//Dwemer Glass Blocks
@@ -190,14 +102,25 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(dwemerBars);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		// TODO Auto-generated method stub
+
+		registry.register(new ItemMultiTexture(dwemerBlock, dwemerBlock, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockDwemer.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(dwemerBlock.getRegistryName()));
+
 		
+		registry.register(new ItemMultiTexture(dwemerBars, dwemerBars, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(dwemerBars.getRegistryName()));
+
 	}
 
 	@Override

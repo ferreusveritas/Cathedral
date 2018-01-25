@@ -1,26 +1,24 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.features.extras;
 
 import com.ferreusveritas.cathedral.Cathedral;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 
 public class BlockStoneRailing extends BlockWall {
 
-	//0 Stone
-	//1 Sandstone
-	//2 Netherbrick
-	//3 Obsidian
-	//4 Dwemer
-	//5 Compressed Ice
-	//6 End Stone
-	//7 Basalt
-	//8 Marble
-	//9 Fantasy
-	//10 Limestone
-	//11 Quartz
-	//12 Snow
+	public static final String name = "stonerailing";
+	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
 	Block chiselSandstone;
 	Block chiselFantasy;
@@ -30,13 +28,107 @@ public class BlockStoneRailing extends BlockWall {
 	Block chiselLimestone;
 	
 	public BlockStoneRailing() {
+		this(name);
+	}
+	
+	public BlockStoneRailing(String name) {
 		super(Blocks.STONE);
-        this.setCreativeTab(Cathedral.tabCathedral);
-        String name = "stonerailing";
         setUnlocalizedName(name);
         setRegistryName(name);
+        setCreativeTab(Cathedral.tabCathedral);
 	}
 
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {VARIANT});
+	}
+	
+	/** Convert the given metadata into a BlockState for this Block */
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+	}
+	
+	/** Convert the BlockState into the correct metadata value */
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(VARIANT).getMetadata();
+	}
+	
+	@Override
+	public int damageDropped(IBlockState state) {
+		return state.getValue(VARIANT).getMetadata();
+	}
+	
+	@Override
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		for(EnumType type : EnumType.values()) {
+			items.add(new ItemStack(this, 1, type.getMetadata()));
+		}
+	}
+	
+	
+	public static enum EnumType implements IStringSerializable {
+		
+		 STONE         (0, "stone"),
+		 SANDSTONE     (1, "sandstone"),
+		 NETHERBRICK   (2, "netherbrick"),
+		 OBSIDIAN      (3, "obsidian"),
+		 DWEMER        (4, "dwemer"),
+		 PACKEDICE     (5, "packedice"),
+		 ENDSTONE      (6, "endstone"),
+		 BASALT        (7, "basalt"),
+		 MARBLE        (8, "marble"),
+		 FANTASY       (9, "fantasy"),
+		 LIMESTONE     (10, "limestone"),
+		 QUARTZ        (11, "quartz"),
+		 SNOW          (12, "snow");
+		
+		/** Array of the Block's BlockStates */
+		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
+		/** The BlockState's metadata. */
+		private final int meta;
+		/** The EnumType's name. */
+		private final String name;
+		private final String unlocalizedName;
+		
+		private EnumType(int index, String name) {
+			this.meta = index;
+			this.name = name;
+			this.unlocalizedName = name;
+		}
+		
+		/** Returns the EnumType's metadata value. */
+		public int getMetadata() {
+			return this.meta;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
+		/** Returns an EnumType for the BlockState from a metadata value. */
+		public static EnumType byMetadata(int meta) {
+			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
+		}
+		
+		@Override
+		public String getName() {
+			return this.name;
+		}
+		
+		public String getUnlocalizedName() {
+			return this.unlocalizedName;
+		}
+		
+		static {
+			for (EnumType type : values()) {
+				META_LOOKUP[type.getMetadata()] = type;
+			}
+		}
+	}
+	
 	/*
 	public void addRecipes() {
 		chiselSandstone = GameRegistry.findBlock("chisel", "sandstone");

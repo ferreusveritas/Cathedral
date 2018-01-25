@@ -2,8 +2,7 @@ package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.blocks.BlockCarvable;
-import com.ferreusveritas.cathedral.blocks.BlockCarvableSlab;
+import com.ferreusveritas.cathedral.blocks.BlockGenericSlab;
 import com.ferreusveritas.cathedral.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.features.IFeature;
 
@@ -25,10 +24,10 @@ public class Basalt implements IFeature {
 	public Block basaltBase;//This is assigned from Project Red in PostInit()
 
 	public Block basaltBlock;
-	public BlockCarvable checkeredBlock;
+	public Block checkeredBlock;
 
-	public BlockCarvableSlab basaltSlab;
-	public BlockCarvableSlab checkeredSlab;
+	public BlockGenericSlab basaltSlab;
+	public BlockGenericSlab checkeredSlab;
 
 	public BlockGenericStairs basaltStairs[] = new BlockGenericStairs[8];
 
@@ -118,41 +117,11 @@ public class Basalt implements IFeature {
 	public void createBlocks() {
 		
 		basaltBase = new Block(Material.ROCK);
-		
-		basaltBlock = new Block(Material.ROCK) {
-			public void getSubBlocks(net.minecraft.creativetab.CreativeTabs itemIn, net.minecraft.util.NonNullList<ItemStack> items) {
-					for(Basalt.EnumType type : Basalt.EnumType.values()) {
-						items.add(new ItemStack(this, 1, type.getMetadata()));
-					}
-				};
-			}.setUnlocalizedName("basalt")
-			.setRegistryName("basalt")
-			.setCreativeTab(Cathedral.tabBasalt)
-			.setHardness(basaltHardness)
-			.setResistance(basaltResistance);
-		
-		basaltSlab = (BlockCarvableSlab) new BlockCarvableSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
+		basaltBlock = new BlockBasalt();		
+		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 
-		checkeredBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
-		checkeredSlab = (BlockCarvableSlab) new BlockCarvableSlab(checkeredBlock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
-
-		/*String basaltNames[] = {
-				"basalt-rosette",//0
-				"basalt-paver",//1
-				"basalt-worn-brick",//2
-				"basalt-ornate",//3
-				"basalt-poison",//4
-				"basalt-sunken-panel",//5
-				"basalt-tiles",//6
-				"basalt-slabs",//7
-				"basalt-vault",//8
-				"basalt-smallbricks",//9
-				"basalt-smallchaotic",//10
-				"basalt-smalltiles",//11
-				"basalt-block",//12
-				"basalt-sunken",//13
-				"basalt-knot"//14
-		};*/
+		checkeredBlock = new Block(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
+		checkeredSlab = (BlockGenericSlab) new BlockGenericSlab(checkeredBlock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
 
 		//BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
 
@@ -216,7 +185,12 @@ public class Basalt implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
+		//registry.register(basaltBase);
 		registry.register(basaltBlock);
+		registry.register(basaltSlab);
+		
+		registry.register(checkeredBlock);
+		registry.register(checkeredSlab);
 	}
 
 	@Override
@@ -226,7 +200,7 @@ public class Basalt implements IFeature {
             public String apply(ItemStack stack) {
                 return Basalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(basaltBlock.getRegistryName()));		
+        }).setRegistryName(basaltBlock.getRegistryName()));
 		
 	}
 
@@ -268,14 +242,8 @@ public class Basalt implements IFeature {
 	}
 
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void init() {}
 
 	@Override
-	public void postInit() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void postInit() {}
 }

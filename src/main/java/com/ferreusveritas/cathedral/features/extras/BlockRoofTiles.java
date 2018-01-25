@@ -1,7 +1,11 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.features.extras;
+
+import com.ferreusveritas.cathedral.Cathedral;
 
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 
 /*
 M	8421	F	Desc
@@ -25,9 +29,12 @@ M	8421	F	Desc
 
 public class BlockRoofTiles extends BlockStairs {
 
-	protected BlockRoofTiles(IBlockState modelState) {
-		super(modelState);
-		// TODO Auto-generated constructor stub
+	EnumDyeColor color;
+	
+	public BlockRoofTiles(EnumDyeColor color) {
+		super(Blocks.STONE_STAIRS.getDefaultState());
+		this.color = color;
+		setCreativeTab(Cathedral.tabCathedral);
 	}
 
 	/*

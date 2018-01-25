@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.features.dwemer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.features.extras;
 
 import com.ferreusveritas.cathedral.Cathedral;
 
@@ -15,6 +15,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockChain extends Block {
@@ -98,16 +99,16 @@ public class BlockChain extends Block {
 	}
 
 	public static enum EnumType implements IStringSerializable {
-		IRON	(0, "iron", 0xd7d7d7),
-		GOLD	(1, "gold", 0xe0b820),
-		DWEMER	(2, "dwemer", 0xc3a84e),
-		COPPER	(3, "copper", 0xbe6131),
-		BRONZE	(4, "bronze", 0xa76b21),
-		SILVER	(5, "silver", 0xd6dadd),
-		ENDERIUM(6, "enderium", 0x44b8b8);
+		IRON	(0, "Iron", 0xd7d7d7),
+		GOLD	(1, "Gold", 0xe0b820),
+		DWEMER	(2, "Dwemer", 0xc3a84e),
+		COPPER	(3, "Copper", 0xbe6131),
+		BRONZE	(4, "Bronze", 0xa76b21),
+		SILVER	(5, "Silver", 0xd6dadd),
+		ENDERIUM(6, "Enderium", 0x44b8b8);
 
 		/** Array of the Block's BlockStates */
-		private static final BlockChain.EnumType[] META_LOOKUP = new BlockChain.EnumType[values().length];
+		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
 		/** The BlockState's metadata. */
 		private final int meta;
 		/** The EnumType's name. */
@@ -118,7 +119,7 @@ public class BlockChain extends Block {
 		private EnumType(int index, String name, int color) {
 			this.meta = index;
 			this.name = name;
-			this.unlocalizedName = name;
+			this.unlocalizedName = name.toLowerCase();
 			this.color = color;
 		}
 		
@@ -133,12 +134,8 @@ public class BlockChain extends Block {
 		}
 		
 		/** Returns an EnumType for the BlockState from a metadata value. */
-		public static BlockChain.EnumType byMetadata(int meta) {
-			if (meta < 0 || meta >= META_LOOKUP.length) {
-				meta = 0;
-			}
-			
-			return META_LOOKUP[meta];
+		public static EnumType byMetadata(int meta) {
+			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
 		}
 		
 		@Override
@@ -155,8 +152,8 @@ public class BlockChain extends Block {
 		}
 		
 		static {
-			for (BlockChain.EnumType blockchain$enumtype : values()) {
-				META_LOOKUP[blockchain$enumtype.getMetadata()] = blockchain$enumtype;
+			for (EnumType type : values()) {
+				META_LOOKUP[type.getMetadata()] = type;
 			}
 		}
 	}
