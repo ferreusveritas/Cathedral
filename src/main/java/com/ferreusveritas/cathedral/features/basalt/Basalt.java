@@ -10,6 +10,7 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.IStringSerializable;
@@ -23,7 +24,7 @@ public class Basalt implements IFeature {
 	
 	public Block basaltBase;//This is assigned from Project Red in PostInit()
 
-	public BlockCarvable basaltBlock;
+	public Block basaltBlock;
 	public BlockCarvable checkeredBlock;
 
 	public BlockCarvableSlab basaltSlab;
@@ -118,7 +119,18 @@ public class Basalt implements IFeature {
 		
 		basaltBase = new Block(Material.ROCK);
 		
-		basaltBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
+		basaltBlock = new Block(Material.ROCK) {
+			public void getSubBlocks(net.minecraft.creativetab.CreativeTabs itemIn, net.minecraft.util.NonNullList<ItemStack> items) {
+					for(Basalt.EnumType type : Basalt.EnumType.values()) {
+						items.add(new ItemStack(this, 1, type.getMetadata()));
+					}
+				};
+			}.setUnlocalizedName("basalt")
+			.setRegistryName("basalt")
+			.setCreativeTab(Cathedral.tabBasalt)
+			.setHardness(basaltHardness)
+			.setResistance(basaltResistance);
+		
 		basaltSlab = (BlockCarvableSlab) new BlockCarvableSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
 
 		checkeredBlock = (BlockCarvable) new BlockCarvable(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
@@ -200,18 +212,21 @@ public class Basalt implements IFeature {
 	@Override
 	public void createItems() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(basaltBlock);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		// TODO Auto-generated method stub
+		
+		registry.register(new ItemMultiTexture(basaltBlock, basaltBlock, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return Basalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(basaltBlock.getRegistryName()));		
 		
 	}
 

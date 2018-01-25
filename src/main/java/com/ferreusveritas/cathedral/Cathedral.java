@@ -13,6 +13,7 @@ import com.ferreusveritas.cathedral.proxy.CommonProxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +29,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "required-after:chisel;required-after:ProjRed|Exploration;after:ThermalFoundation")
+@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "after:chisel;after:ProjRed|Exploration;after:ThermalFoundation")
+//@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "required-after:chisel;required-after:ProjRed|Exploration;after:ThermalFoundation")
 public class Cathedral {
 
 	public static final String MODID = "cathedral";
@@ -49,26 +51,33 @@ public class Cathedral {
 		extras = new Extras();
 		marblefixer = new MarbleFixer();
 		
-		Collections.addAll(features, basalt, dwemer, gargoyle, extras, marblefixer);
+		Collections.addAll(features, basalt, extras);
+		//Collections.addAll(features, basalt, dwemer, gargoyle, extras, marblefixer);
 	}
 	
 	@Instance(MODID)
 	public static Cathedral instance;
-
+	
 	@SidedProxy(clientSide = "com.ferreusveritas.cathedral.proxy.ClientProxy", serverSide = "com.ferreusveritas.cathedral.proxy.CommonProxy")
 	public static CommonProxy proxy;
-
+	
 	public static final CreativeTabs tabBasalt = new CreativeTabs("tabBasalt") {
+		ItemStack icon = new ItemStack(Items.BAKED_POTATO);
+		
+        @SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return null;
+			return icon;
 		}
 	};
-
+	
 	public static final CreativeTabs tabCathedral = new CreativeTabs("tabCathedral") {
+		ItemStack icon = new ItemStack(Items.BONE);
+
+        @SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return null;
+			return icon;
 		}
 	};
 	
@@ -80,19 +89,19 @@ public class Cathedral {
 		
 		proxy.preInit();
 	}
-
+	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
 		features.forEach(f -> f.init());
 		
 		proxy.init();
 	}
-
+	
 	@Mod.EventHandler
 	public void PostInit(FMLPostInitializationEvent e){
 		features.forEach(f -> f.init());
 	}
-
+	
 	@Mod.EventBusSubscriber
 	public static class RegistrationHandler {
 		
@@ -116,7 +125,7 @@ public class Cathedral {
 		public static void registerModels(ModelRegistryEvent event) {
 			features.forEach(f -> f.registerModels(event));
 		}
-
+		
 		@SubscribeEvent
 		public static void newRegistry(RegistryEvent.NewRegistry event) {
 		}

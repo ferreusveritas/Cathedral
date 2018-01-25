@@ -98,13 +98,13 @@ public class BlockChain extends Block {
 	}
 
 	public static enum EnumType implements IStringSerializable {
-		IRON(0, "Iron", 0xd7d7d7),
-		GOLD(1, "Gold", 0xe0b820),
-		DWEMER(2, "Dwemer", 0xc3a84e),
-		COPPER(3, "Copper", 0xbe6131),
-		BRONZE(4, "Bronze", 0xa76b21),
-		SILVER(5, "Silver", 0xd6dadd),
-		ENDERIUM(6, "Enderium", 0x44b8b8);
+		IRON	(0, "iron", 0xd7d7d7),
+		GOLD	(1, "gold", 0xe0b820),
+		DWEMER	(2, "dwemer", 0xc3a84e),
+		COPPER	(3, "copper", 0xbe6131),
+		BRONZE	(4, "bronze", 0xa76b21),
+		SILVER	(5, "silver", 0xd6dadd),
+		ENDERIUM(6, "enderium", 0x44b8b8);
 
 		/** Array of the Block's BlockStates */
 		private static final BlockChain.EnumType[] META_LOOKUP = new BlockChain.EnumType[values().length];

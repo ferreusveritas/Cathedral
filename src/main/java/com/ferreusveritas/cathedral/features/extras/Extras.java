@@ -13,7 +13,11 @@ import com.ferreusveritas.cathedral.blocks.BlockStoneRailing;
 import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -21,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Extras implements IFeature {
-
+	
 	public static final String featureName = "extras";
 	
 	public BlockStoneRailing stoneRailingBlock;
@@ -36,31 +40,31 @@ public class Extras implements IFeature {
 	public BlockCarvableGlass stainedGlass;
 	
 	public ArrayList<BaseBlockDef> baseBlocks = new ArrayList<BaseBlockDef>();
-
+	
 	public Item clayTile;
 	public Item firedTile;
-
+	
 	public static void makeMetalChainRecipe(BlockChain chainBlock, String metalName, int subBlockNum){
 		/*if(OreDictionary.doesOreNameExist("nugget" + metalName)){
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chainBlock, 4, subBlockNum), true, new Object[]{" o ", " o ", " o ", 'o', "nugget" + metalName}));
 		}*/
 	}
-
+	
 	@Override
 	public String getName() {
 		return featureName;
 	}
-
+	
 	@Override
 	public void preInit() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void createBlocks() {
-		
-		/*{
+	
+	/*{
 		Block chiselFantasy = GameRegistry.findBlock("chisel", "fantasyblock2");
 		Block chiselEndstone = GameRegistry.findBlock("chisel", "end_Stone");
 
@@ -162,22 +166,25 @@ public class Extras implements IFeature {
 
 	@Override
 	public void createItems() {
-		// TODO Auto-generated method stub
 		
+		
+				
 	}
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(chainBlock);
 	}
-
+	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(new ItemMultiTexture(chainBlock, chainBlock, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(chainBlock.getRegistryName()));		
 	}
-
+	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 		
@@ -199,14 +206,14 @@ public class Extras implements IFeature {
 				"dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray",
 				"dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite",
 		};
-
+		
 		OreDictionary.registerOre("blockClayTile", new ItemStack(roofTiles[16]));//Natural Terra Cotta Roofing
-
+		
 		/*for(int color = 0; color < 16; color++){
 			OreDictionary.registerOre("blockClayTile", new ItemStack(roofTiles[color]));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(roofTiles[color], 8), true, new Object[]{"ttt", "tdt", "ttt", 't', "blockClayTile", 'd', dyes[color]}));
 		}*/
-
+		
 		//stoneRailingBlock.addRecipes();
 		
 		String metalIngot;
@@ -225,7 +232,7 @@ public class Extras implements IFeature {
 				'y', "dyeYellow",
 				'p', "dyePink"
 				}));*/
-
+		
 		//Metal Chains
 		/*String metals[] = {"Iron", "Gold", "Dwemer", "Copper", "Bronze", "Silver", "Enderium"};
 		for(int i = 0; i < 7; i++){
@@ -235,19 +242,19 @@ public class Extras implements IFeature {
 			GameRegistry.addShapelessRecipe(new ItemStack(chainBlock, 1, 2), new ItemStack(chainBlock, 1, 4));
 		}*/
 	}
-
+	
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void postInit() {
 		// TODO Auto-generated method stub
