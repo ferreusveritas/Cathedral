@@ -75,7 +75,7 @@ public class BlockStainedGlass extends BlockGlass {
 		
 		private EnumType(int index, String name) {
 			this.meta = index;
-			this.name = name;
+			this.name = name.toLowerCase();
 			this.unlocalizedName = name;
 		}
 		

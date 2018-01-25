@@ -40,10 +40,10 @@ public class Basalt implements IFeature {
 	
 		ROSETTE		( 0, "rosette"),
 		PAVER		( 1, "paver"),
-		WORNBRICK	( 2, "worn-brick"),
+		WORNBRICK	( 2, "wornbrick"),
 		ORNATE		( 3, "ornate"),
 		POISON		( 4, "poison"),
-		SUNKENPANEL	( 5, "sunken-panel"),
+		SUNKENPANEL	( 5, "sunkenpanel"),
 		TILES		( 6, "tiles"),
 		SLABS		( 7, "slabs"),
 		VAULT		( 8, "vault"),
@@ -118,10 +118,26 @@ public class Basalt implements IFeature {
 		
 		basaltBase = new Block(Material.ROCK);
 		basaltBlock = new BlockBasalt();		
-		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock).setCreativeTab(Cathedral.tabBasalt).setHardness(basaltHardness).setResistance(basaltResistance);
+		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock)
+			.setRegistryName(basaltBlock.getRegistryName() + "_slab")
+			.setUnlocalizedName(basaltBlock.getRegistryName() + "_slab")
+			.setCreativeTab(Cathedral.tabBasalt)
+			.setHardness(basaltHardness)
+			.setResistance(basaltResistance);
 
-		checkeredBlock = new Block(Material.ROCK).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
-		checkeredSlab = (BlockGenericSlab) new BlockGenericSlab(checkeredBlock).setCreativeTab(Cathedral.tabBasalt).setHardness((basaltHardness + marbleHardness) / 2F).setResistance((basaltResistance + marbleResistance) / 2F);
+		checkeredBlock = new Block(Material.ROCK)
+			.setRegistryName("checkered")
+			.setUnlocalizedName("checkered")
+			.setCreativeTab(Cathedral.tabBasalt)
+			.setHardness((basaltHardness + marbleHardness) / 2F)
+			.setResistance((basaltResistance + marbleResistance) / 2F);
+		
+		checkeredSlab = (BlockGenericSlab) new BlockGenericSlab(checkeredBlock)
+			.setRegistryName("checkered_slab")
+			.setUnlocalizedName("checkered_slab")
+			.setCreativeTab(Cathedral.tabBasalt)
+			.setHardness((basaltHardness + marbleHardness) / 2F)
+			.setResistance((basaltResistance + marbleResistance) / 2F);
 
 		//BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
 
@@ -143,8 +159,8 @@ public class Basalt implements IFeature {
 		}*/
 		
 		//Ore Dictionary Registrations
-		OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
-		OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
+		//OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
+		//OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
 		
 		BaseBlockDef[] baseBlocks = {
 				new BaseBlockDef(0, basaltBase, 3, "basalt", "Basalt", basaltHardness, basaltResistance),

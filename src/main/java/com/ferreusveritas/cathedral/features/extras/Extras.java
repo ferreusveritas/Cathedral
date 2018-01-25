@@ -103,7 +103,10 @@ public class Extras implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.registerAll(stainedGlass, stoneRailingBlock, chainBlock);
+		registry.register(stainedGlass);
+		registry.register(stoneRailingBlock);
+		registry.register(chainBlock);
+		//registry.registerAll(stainedGlass, stoneRailingBlock, chainBlock);
 	}
 	
 	@Override

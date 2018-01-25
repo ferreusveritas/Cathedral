@@ -13,7 +13,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 
 public class BlockStoneRailing extends BlockWall {
 
@@ -35,12 +37,19 @@ public class BlockStoneRailing extends BlockWall {
 		super(Blocks.STONE);
         setUnlocalizedName(name);
         setRegistryName(name);
+        setDefaultState(getDefaultState().withProperty(VARIANT, EnumType.STONE));
         setCreativeTab(Cathedral.tabCathedral);
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {VARIANT});
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, new IProperty[] {UP, NORTH, EAST, WEST, SOUTH, VARIANT});
+    }
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		// TODO Auto-generated method stub
+		return super.getActualState(state, worldIn, pos);
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
