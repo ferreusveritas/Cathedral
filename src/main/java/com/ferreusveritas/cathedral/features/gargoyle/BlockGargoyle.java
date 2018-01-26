@@ -1,28 +1,31 @@
 package com.ferreusveritas.cathedral.features.gargoyle;
 
+import com.ferreusveritas.cathedral.Cathedral;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockGargoyle extends Block {
 
-	public BlockGargoyle() {
-		super(Material.ROCK);
-	}
-
 	public static final String name = "gargoyle";
-
-	/*
-	public static IIcon[] icons = new IIcon[Gargoyle.types.length];
 	
 	public BlockGargoyle() {
-		super(Material.rock);
-		setBlockName(Cathedral.MODID + "_" + name);
+		this(name);
+	}
+	
+	public BlockGargoyle(String name) {
+		super(Material.ROCK);
+		setRegistryName(name);
+		setUnlocalizedName(name);
 		//setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1.0F, 0.875F);
-		setStepSound(soundTypeStone);
+		//setStepSound(soundTypeStone);
 		setCreativeTab(Cathedral.tabCathedral);
 		setHardness(1.0f);
 		setResistance(3.0f);
 	}
+
+
+	/*	
 
 	// Called when the block is placed in the world.
 	@Override

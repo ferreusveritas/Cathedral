@@ -13,8 +13,8 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Basalt implements IFeature {
@@ -54,11 +54,7 @@ public class Basalt implements IFeature {
 		SUNKEN		(13, "sunken"),
 		KNOT		(14, "knot"); 
 		
-		/** Array of the Block's BlockStates */
-		private static final Basalt.EnumType[] META_LOOKUP = new Basalt.EnumType[values().length];
-		/** The BlockState's metadata. */
 		private final int meta;
-		/** The EnumType's name. */
 		private final String name;
 		private final String unlocalizedName;
 		
@@ -68,38 +64,26 @@ public class Basalt implements IFeature {
 			this.unlocalizedName = name;
 		}
 		
-		/** Returns the EnumType's metadata value. */
 		public int getMetadata() {
-			return this.meta;
+			return meta;
 		}
 		
 		@Override
 		public String toString() {
-			return this.name;
+			return name;
 		}
 		
-		/** Returns an EnumType for the BlockState from a metadata value. */
 		public static Basalt.EnumType byMetadata(int meta) {
-			if (meta < 0 || meta >= META_LOOKUP.length) {
-				meta = 0;
-			}
-			
-			return META_LOOKUP[meta];
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
 		@Override
 		public String getName() {
-			return this.name;
+			return name;
 		}
 		
 		public String getUnlocalizedName() {
-			return this.unlocalizedName;
-		}
-		
-		static {
-			for (Basalt.EnumType blockbasalt$enumtype : values()) {
-				META_LOOKUP[blockbasalt$enumtype.getMetadata()] = blockbasalt$enumtype;
-			}
+			return unlocalizedName;
 		}
 
 	}
@@ -117,7 +101,9 @@ public class Basalt implements IFeature {
 	public void createBlocks() {
 		
 		basaltBase = new Block(Material.ROCK);
+		
 		basaltBlock = new BlockBasalt();		
+		
 		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock)
 			.setRegistryName(basaltBlock.getRegistryName() + "_slab")
 			.setUnlocalizedName(basaltBlock.getRegistryName() + "_slab")

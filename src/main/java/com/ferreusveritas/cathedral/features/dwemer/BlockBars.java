@@ -17,15 +17,15 @@ import net.minecraft.util.math.MathHelper;
 
 public class BlockBars extends BlockPane {
 	
-	public static String name = "bars";
+	public static final String name = "bars";
 	
-	public static final PropertyEnum<BlockBars.EnumType> VARIANT = PropertyEnum.<BlockBars.EnumType>create("variant", BlockBars.EnumType.class);
+	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
 	public BlockBars(String name) {
 		super(Material.IRON, true);
-		
-		setUnlocalizedName("bars");
-		setRegistryName(Cathedral.MODID + "_" + name);
+		setRegistryName(name);
+		setUnlocalizedName(name);
+		setDefaultState(getDefaultState().withProperty(VARIANT, EnumType.NORMAL));
 		setHarvestLevel("pickaxe", 0);
 		setSoundType(SoundType.METAL);
 		setResistance(20.0F);
@@ -73,18 +73,6 @@ public class BlockBars extends BlockPane {
 		}
 	}*/
 	
-	static {
-		@SuppressWarnings("unused")
-		String names[] = {
-				"dwembars",//0
-				"dwembars-ornate",//1
-				"dwembars-footer",//2
-				"dwembars-header",//3
-				"dwembars-mask",//4
-				"dwembars-rombus",//5
-		};
-	}	
-	
 	public static enum EnumType implements IStringSerializable {
 		NORMAL(0, "normal"),
 		ORNATE(1, "ornate"),
@@ -93,11 +81,7 @@ public class BlockBars extends BlockPane {
 		MASK(4, "mask"),
 		ROMBUS(5, "rombus");
 		
-		/** Array of the Block's BlockStates */
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
-		/** The BlockState's metadata. */
 		private final int meta;
-		/** The EnumType's name. */
 		private final String name;
 		private final String unlocalizedName;
 		
@@ -107,35 +91,28 @@ public class BlockBars extends BlockPane {
 			this.unlocalizedName = name;
 		}
 		
-		/** Returns the EnumType's metadata value. */
 		public int getMetadata() {
-			return this.meta;
+			return meta;
 		}
 		
 		@Override
 		public String toString() {
-			return this.name;
+			return name;
 		}
 		
-		/** Returns an EnumType for the BlockState from a metadata value. */
 		public static EnumType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
 		@Override
 		public String getName() {
-			return this.name;
+			return name;
 		}
 		
 		public String getUnlocalizedName() {
-			return this.unlocalizedName;
+			return unlocalizedName;
 		}
 		
-		static {
-			for (EnumType type : values()) {
-				META_LOOKUP[type.getMetadata()] = type;
-			}
-		}
 	}
 	
 }

@@ -136,14 +136,23 @@ public class Extras implements IFeature {
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 
 		//Stained Glass
-		registry.register(new ShapedOreRecipe(null, new ItemStack(stainedGlass, 16, 0), new Object[]{"cgm", "glg", "ygp", 
-				'l', OreDictionary.doesOreNameExist("ingotLead") ? "ingotLead" : "ingotIron",//Lead is the accurate choice. Iron sucks but whatever, 
-				'g', "blockGlass",
-				'c', "dyeCyan",
-				'm', "dyeMagenta",
-				'y', "dyeYellow",
-				'p', "dyePink"
-				}));
+		registry.register(
+			new ShapedOreRecipe(
+				null,
+				new ItemStack(stainedGlass, 16, 0),
+				new Object[] {
+					"cgm",
+					"glg",
+					"ygp", 
+					'l', OreDictionary.doesOreNameExist("ingotLead") ? "ingotLead" : "ingotIron",//Lead is the accurate choice. Iron sucks but whatever, 
+					'g', "blockGlass",
+					'c', "dyeCyan",
+					'm', "dyeMagenta",
+					'y', "dyeYellow",
+					'p', "dyePink"
+				}
+			).setRegistryName("stainedglass")
+		);
 
 		//Stone Railings
 		//TODO

@@ -22,7 +22,7 @@ public class BlockChain extends Block {
 	
 	public final static String name = "chain"; 
 	
-	public static final PropertyEnum<BlockChain.EnumType> VARIANT = PropertyEnum.<BlockChain.EnumType>create("variant", BlockChain.EnumType.class);
+	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.375f, 0f, 0.375f, 0.625f, 1f, 0.625f);
 	
@@ -107,55 +107,50 @@ public class BlockChain extends Block {
 		SILVER	(5, "Silver", 0xd6dadd),
 		ENDERIUM(6, "Enderium", 0x44b8b8);
 
-		/** Array of the Block's BlockStates */
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
-		/** The BlockState's metadata. */
 		private final int meta;
-		/** The EnumType's name. */
 		private final String name;
 		private final String unlocalizedName;
+		private final String orename;
 		private final int color;
 		
 		private EnumType(int index, String name, int color) {
 			this.meta = index;
-			this.name = name;
+			this.name = name.toLowerCase();
 			this.unlocalizedName = name.toLowerCase();
+			this.orename = name();			
 			this.color = color;
 		}
 		
-		/** Returns the EnumType's metadata value. */
 		public int getMetadata() {
-			return this.meta;
+			return meta;
 		}
 		
 		@Override
 		public String toString() {
-			return this.name;
+			return name;
 		}
 		
-		/** Returns an EnumType for the BlockState from a metadata value. */
+		public String getOreName() {
+			return orename;
+		}
+		
 		public static EnumType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
 		@Override
 		public String getName() {
-			return this.name;
+			return name.toLowerCase();
 		}
 		
 		public String getUnlocalizedName() {
-			return this.unlocalizedName;
+			return unlocalizedName;
 		}
 		
 		public int getColor() {
-			return this.color;
+			return color;
 		}
 		
-		static {
-			for (EnumType type : values()) {
-				META_LOOKUP[type.getMetadata()] = type;
-			}
-		}
 	}
 	
 }

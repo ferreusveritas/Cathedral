@@ -1,0 +1,39 @@
+BASALT
+[ ]basalt:basaltblock
+[ ]basalt:basaltslab
+[ ]basalt:BasaltStairs
+[ ]basalt:BasaltBrickStairs
+[ ]basalt:BasaltSlabsStairs
+[ ]basalt:BasaltTileStairs
+[ ]basalt:BasaltSmallBrickStairs
+[ ]basalt:BasaltSmallTilesStairs
+[ ]basalt:checkeredblock
+[ ]basalt:checkeredslab
+
+DWEMER
+[ ]basalt:TallDoor
+[ ]basalt:ShortDoor
+[ ]basalt:dwemerblock
+[ ]basalt:dwemliteblock
+[ ]basalt:glass
+[ ]basalt:DwemerBars
+
+EXTRA
+[ ]basalt:rooftiles0
+[ ]basalt:rooftilesf
+[ ]basalt:rooftiles10
+[ ]basalt:stainedglass
+[ ]basalt:stonebricksmooth
+[ ]basalt:stonerailing
+[ ]basalt:gargoyle
+[ ]basalt:chainblock
+[ ]basalt:ExtraSlabs
+[ ]basalt:EndstoneBrickStairs
+[ ]basalt:EndstoneCheckeredStairs
+
+FANTASY
+[ ]basalt:fantasyblock
+[ ]basalt:fantasyblock2
+[ ]basalt:FantasyBrickStairs
+[ ]basalt:FantasyDamagedStairs
+[ ]basalt:FantasyDisarrayStairs

@@ -62,14 +62,10 @@ public class BlockStainedGlass extends BlockGlass {
 	
 	public static enum EnumType implements IStringSerializable {
 		
-		FIRETAIJITU  (0, "FireTaijitu"),
-		AMBERRHOMBUS (1, "AmberRhombus");
+		FIRETAIJITU  (0, "firetaijitu"),
+		AMBERRHOMBUS (1, "amberrhombus");
 		
-		/** Array of the Block's BlockStates */
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
-		/** The BlockState's metadata. */
 		private final int meta;
-		/** The EnumType's name. */
 		private final String name;
 		private final String unlocalizedName;
 		
@@ -79,36 +75,28 @@ public class BlockStainedGlass extends BlockGlass {
 			this.unlocalizedName = name;
 		}
 		
-		/** Returns the EnumType's metadata value. */
 		public int getMetadata() {
-			return this.meta;
+			return meta;
 		}
 		
 		@Override
 		public String toString() {
-			return this.name;
+			return name;
 		}
 		
-		/** Returns an EnumType for the BlockState from a metadata value. */
 		public static EnumType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
 		@Override
 		public String getName() {
-			return this.name;
+			return name;
 		}
 		
 		public String getUnlocalizedName() {
-			return this.unlocalizedName;
+			return unlocalizedName;
 		}
 		
-		static {
-			for (EnumType type : values()) {
-				META_LOOKUP[type.getMetadata()] = type;
-			}
-		}
-
 	}
 	
 }

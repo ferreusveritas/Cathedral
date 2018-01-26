@@ -4,6 +4,7 @@ import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -41,14 +42,12 @@ public class Gargoyle implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(gargoyleBlock);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		// TODO Auto-generated method stub
-		
+		registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
 	}
 
 	@Override
@@ -70,10 +69,7 @@ public class Gargoyle implements IFeature {
 	}
 
 	@Override
-	public void registerModels(ModelRegistryEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void registerModels(ModelRegistryEvent event) {}
 
 	@Override
 	public void init() {}

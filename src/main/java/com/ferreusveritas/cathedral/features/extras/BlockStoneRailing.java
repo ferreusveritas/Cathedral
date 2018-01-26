@@ -3,23 +3,33 @@ package com.ferreusveritas.cathedral.features.extras;
 import com.ferreusveritas.cathedral.Cathedral;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.BlockWall;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockStoneRailing extends BlockWall {
+public class BlockStoneRailing extends Block {
 
 	public static final String name = "stonerailing";
+    public static final PropertyBool UP = PropertyBool.create("up");
+    public static final PropertyBool NORTH = PropertyBool.create("north");
+    public static final PropertyBool EAST = PropertyBool.create("east");
+    public static final PropertyBool SOUTH = PropertyBool.create("south");
+    public static final PropertyBool WEST = PropertyBool.create("west");
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
 	Block chiselSandstone;
@@ -34,7 +44,7 @@ public class BlockStoneRailing extends BlockWall {
 	}
 	
 	public BlockStoneRailing(String name) {
-		super(Blocks.STONE);
+		super(Material.ROCK);
         setUnlocalizedName(name);
         setRegistryName(name);
         setDefaultState(getDefaultState().withProperty(VARIANT, EnumType.STONE));
@@ -47,10 +57,48 @@ public class BlockStoneRailing extends BlockWall {
     }
 	
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		// TODO Auto-generated method stub
-		return super.getActualState(state, worldIn, pos);
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		boolean n =  canWallConnectTo(world, pos, EnumFacing.NORTH);
+		boolean e = canWallConnectTo(world, pos, EnumFacing.EAST);
+		boolean s = canWallConnectTo(world, pos, EnumFacing.SOUTH);
+		boolean w = canWallConnectTo(world, pos, EnumFacing.WEST);
+		boolean flag4 = n && !e && s && !w || !n && e && !s && w;
+		return state
+			.withProperty(UP, Boolean.valueOf(!flag4 || !world.isAirBlock(pos.up())))
+			.withProperty(NORTH, Boolean.valueOf(n))
+			.withProperty(EAST, Boolean.valueOf(e))
+			.withProperty(SOUTH, Boolean.valueOf(s))
+			.withProperty(WEST, Boolean.valueOf(w));
 	}
+	
+    private boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        Block block = iblockstate.getBlock();
+        BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, pos, facing);
+        boolean flag = blockfaceshape == BlockFaceShape.MIDDLE_POLE_THICK || blockfaceshape == BlockFaceShape.MIDDLE_POLE && block instanceof BlockFenceGate;
+        return !isExceptionBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID || flag;
+    }
+	
+    protected static boolean isExceptionBlockForAttachWithPiston(Block block) {
+        return Block.isExceptBlockForAttachWithPiston(block)
+        		|| block == Blocks.BARRIER
+        		|| block == Blocks.MELON_BLOCK
+        		|| block == Blocks.PUMPKIN
+        		|| block == Blocks.LIT_PUMPKIN;
+    }
+    
+    @Override
+    public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        Block connector = world.getBlockState(pos.offset(facing)).getBlock();
+        return connector instanceof BlockWall || connector instanceof BlockFenceGate || connector instanceof BlockStoneRailing;
+    }
+
+    private boolean canWallConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+        BlockPos other = pos.offset(facing);
+        Block block = world.getBlockState(other).getBlock();
+        return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
+    }
+
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
@@ -93,11 +141,7 @@ public class BlockStoneRailing extends BlockWall {
 		 QUARTZ        (11, "quartz"),
 		 SNOW          (12, "snow");
 		
-		/** Array of the Block's BlockStates */
-		private static final EnumType[] META_LOOKUP = new EnumType[values().length];
-		/** The BlockState's metadata. */
 		private final int meta;
-		/** The EnumType's name. */
 		private final String name;
 		private final String unlocalizedName;
 		
@@ -107,35 +151,28 @@ public class BlockStoneRailing extends BlockWall {
 			this.unlocalizedName = name;
 		}
 		
-		/** Returns the EnumType's metadata value. */
 		public int getMetadata() {
-			return this.meta;
+			return meta;
 		}
 		
 		@Override
 		public String toString() {
-			return this.name;
+			return name;
 		}
 		
-		/** Returns an EnumType for the BlockState from a metadata value. */
 		public static EnumType byMetadata(int meta) {
-			return META_LOOKUP[MathHelper.clamp(meta, 0, META_LOOKUP.length - 1)];
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
 		@Override
 		public String getName() {
-			return this.name;
+			return name;
 		}
 		
 		public String getUnlocalizedName() {
-			return this.unlocalizedName;
+			return unlocalizedName;
 		}
 		
-		static {
-			for (EnumType type : values()) {
-				META_LOOKUP[type.getMetadata()] = type;
-			}
-		}
 	}
 	
 	/*

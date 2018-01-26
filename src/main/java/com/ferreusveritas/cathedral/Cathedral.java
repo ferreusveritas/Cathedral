@@ -9,6 +9,7 @@ import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.gargoyle.Gargoyle;
 import com.ferreusveritas.cathedral.features.marble.MarbleFixer;
+import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
 
 import net.minecraft.block.Block;
@@ -40,6 +41,7 @@ public class Cathedral {
 	public static Dwemer dwemer;
 	public static Gargoyle gargoyle;
 	public static Extras extras;
+	public static Roofing roofing;
 	public static MarbleFixer marblefixer;
 	
 	public static ArrayList<IFeature> features = new ArrayList();
@@ -49,10 +51,10 @@ public class Cathedral {
 		dwemer = new Dwemer();
 		gargoyle = new Gargoyle();
 		extras = new Extras();
+		roofing = new Roofing();
 		marblefixer = new MarbleFixer();
 		
-		Collections.addAll(features, basalt, extras);
-		//Collections.addAll(features, basalt, dwemer, gargoyle, extras, marblefixer);
+		Collections.addAll(features, basalt, dwemer, gargoyle, extras, roofing, marblefixer);
 	}
 	
 	@Instance(MODID)

@@ -16,10 +16,18 @@ import net.minecraft.util.math.MathHelper;
 
 public class BlockDwemer extends Block {
 
+	public static final String name = "dwemer";
+	
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
 	public BlockDwemer() {
+		this(name);
+	}
+	
+	public BlockDwemer(String name) {
 		super(Material.ROCK);
+		setRegistryName(name);
+		setUnlocalizedName(name);
 		setCreativeTab(Cathedral.tabBasalt);
 		setHardness(Cathedral.basalt.basaltHardness);
 		setResistance(Cathedral.basalt.basaltResistance);
@@ -60,10 +68,10 @@ public class BlockDwemer extends Block {
 		PILLAR     	( 1, "pillar"),
 		ALTAR     	( 2, "altar"),
 		DECOR      	( 3, "decor"),
-		CARVING1   	( 4, "carving-1"),
-		CARVING2   	( 5, "carving-2"),
+		CARVING1   	( 4, "carving1"),
+		CARVING2   	( 5, "carving2"),
 		LAYERED    	( 6, "layered"),
-		SCALEPILLAR	( 7, "scale-pillar"),
+		SCALEPILLAR	( 7, "scalepillar"),
 		WORMGEAR   	( 8, "wormgear"),
 		RAYS       	( 9, "rays"),
 		KNOT       	(10, "knot"),

@@ -6,7 +6,6 @@ import com.ferreusveritas.cathedral.features.extras.BlockCatwalk;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
@@ -20,7 +19,7 @@ public class Dwemer implements IFeature {
 
 	public static final String featureName = "dwemer";
 	
-	public BlockBars	dwemerBars;
+	public BlockBars dwemerBars;
 
 	public Block dwemerCatwalkBlock;
 
@@ -51,14 +50,13 @@ public class Dwemer implements IFeature {
 				.setCreativeTab(Cathedral.tabBasalt)
 				//.setStepSound(SoundType.GLASS)
 				.setHardness(0.3F);
-		
 
 		dwemerCatwalkBlock = new BlockCatwalk(Material.IRON)
 				.setCreativeTab(Cathedral.tabBasalt)
 				.setHardness(2.5f)
 				.setResistance(20F)
 				//.setStepSound(SoundType.METAL)
-				.setRegistryName(Cathedral.MODID + "_dwemercatwalk");
+				.setRegistryName("dwemercatwalk");
 		
 		dwemerBars = new BlockBars();
 		

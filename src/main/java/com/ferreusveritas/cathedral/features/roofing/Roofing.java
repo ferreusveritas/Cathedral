@@ -37,13 +37,13 @@ public class Roofing implements IFeature {
 	
 		for(EnumDyeColor color: EnumDyeColor.values()) {
 			colorRoofTiles[color.getMetadata()] = (BlockRoofTiles) new BlockRoofTiles(color)
-					.setRegistryName("rooftile." + Integer.toHexString(color.getMetadata()))
-					.setUnlocalizedName("rooftile_" + color.getUnlocalizedName());
+				.setRegistryName("rooftile." + Integer.toHexString(color.getMetadata()))
+				.setUnlocalizedName("rooftile_" + color.getUnlocalizedName());
 		}
 		
 		naturalRoofTile = (BlockRoofTiles)new BlockRoofTiles(null)
-				.setRegistryName("rooftile.X")
-				.setUnlocalizedName("rooftile_natural");
+			.setRegistryName("rooftile.X")
+			.setUnlocalizedName("rooftile_natural");
 		
 	}
 
@@ -69,10 +69,10 @@ public class Roofing implements IFeature {
 	public void registerItems(IForgeRegistry<Item> registry) {
 		
 		for(Block roofTile: colorRoofTiles) {
-			registry.register(new ItemBlock(roofTile));
+			registry.register(new ItemBlock(roofTile).setRegistryName(roofTile.getRegistryName()));
 		}
 		
-		registry.register(new ItemBlock(naturalRoofTile));
+		registry.register(new ItemBlock(naturalRoofTile).setRegistryName(naturalRoofTile.getRegistryName()));
 		
 		registry.registerAll(clayTile, firedTile);
 	}
@@ -91,7 +91,7 @@ public class Roofing implements IFeature {
 				"dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite",
 		};
 		
-		OreDictionary.registerOre("blockClayTile", new ItemStack(colorRoofTiles[16]));//Natural Terra Cotta Roofing
+		OreDictionary.registerOre("blockClayTile", new ItemStack(naturalRoofTile));//Natural Terra Cotta Roofing
 		
 		for(int color = 0; color < 16; color++){
 			OreDictionary.registerOre("blockClayTile", new ItemStack(colorRoofTiles[color]));
