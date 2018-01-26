@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.features.gargoyle;
+package com.ferreusveritas.cathedral.features.cathedral;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

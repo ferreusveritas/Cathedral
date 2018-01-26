@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.roofing;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.extras.BlockRoofTiles;
 
@@ -52,11 +52,11 @@ public class Roofing implements IFeature {
 		clayTile = new Item()
 				.setRegistryName("claytile")
 				.setUnlocalizedName("claytile")
-				.setCreativeTab(Cathedral.tabCathedral);
+				.setCreativeTab(CathedralMod.tabCathedral);
 		firedTile = new Item()
 				.setRegistryName("firedtile")
 				.setUnlocalizedName("firedtile")
-				.setCreativeTab(Cathedral.tabCathedral);
+				.setCreativeTab(CathedralMod.tabCathedral);
 	}
 
 	@Override

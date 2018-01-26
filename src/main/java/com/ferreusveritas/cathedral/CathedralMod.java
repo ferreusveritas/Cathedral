@@ -5,9 +5,9 @@ import java.util.Collections;
 
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
+import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
-import com.ferreusveritas.cathedral.features.gargoyle.Gargoyle;
 import com.ferreusveritas.cathedral.features.marble.MarbleFixer;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
@@ -30,16 +30,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "after:chisel;after:ProjRed|Exploration;after:ThermalFoundation")
+@Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "after:chisel;after:ProjRed|Exploration;after:ThermalFoundation")
 //@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "required-after:chisel;required-after:ProjRed|Exploration;after:ThermalFoundation")
-public class Cathedral {
+public class CathedralMod {
 
-	public static final String MODID = "cathedral";
-	public static final String VERSION = "1.12.2-1.9.4";
-
+	public static Cathedral cathedral;
 	public static Basalt basalt;
 	public static Dwemer dwemer;
-	public static Gargoyle gargoyle;
 	public static Extras extras;
 	public static Roofing roofing;
 	public static MarbleFixer marblefixer;
@@ -47,18 +44,18 @@ public class Cathedral {
 	public static ArrayList<IFeature> features = new ArrayList();
 	
 	static {
+		cathedral = new Cathedral();
 		basalt = new Basalt();
 		dwemer = new Dwemer();
-		gargoyle = new Gargoyle();
 		extras = new Extras();
 		roofing = new Roofing();
 		marblefixer = new MarbleFixer();
 		
-		Collections.addAll(features, basalt, dwemer, gargoyle, extras, roofing, marblefixer);
+		Collections.addAll(features, cathedral, basalt, dwemer, extras, roofing, marblefixer);
 	}
 	
-	@Instance(MODID)
-	public static Cathedral instance;
+	@Instance(ModConstants.MODID)
+	public static CathedralMod instance;
 	
 	@SidedProxy(clientSide = "com.ferreusveritas.cathedral.proxy.ClientProxy", serverSide = "com.ferreusveritas.cathedral.proxy.CommonProxy")
 	public static CommonProxy proxy;

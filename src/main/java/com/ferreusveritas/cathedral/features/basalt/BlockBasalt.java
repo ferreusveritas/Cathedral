@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -24,9 +24,9 @@ public class BlockBasalt extends Block {
 		super(Material.ROCK);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(Cathedral.tabBasalt);
-		setHardness(Cathedral.basalt.basaltHardness);
-		setResistance(Cathedral.basalt.basaltResistance);
+		setCreativeTab(CathedralMod.tabBasalt);
+		setHardness(CathedralMod.basalt.basaltHardness);
+		setResistance(CathedralMod.basalt.basaltResistance);
 	}
 	
 	@Override

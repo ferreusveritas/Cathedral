@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.extras;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +34,7 @@ public class BlockRoofTiles extends BlockStairs {
 	public BlockRoofTiles(EnumDyeColor color) {
 		super(Blocks.STONE_STAIRS.getDefaultState());
 		this.color = color;
-		setCreativeTab(Cathedral.tabCathedral);
+		setCreativeTab(CathedralMod.tabCathedral);
 	}
 
 	/*

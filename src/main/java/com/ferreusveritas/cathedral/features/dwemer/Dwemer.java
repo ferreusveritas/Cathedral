@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.extras.BlockCatwalk;
 
@@ -47,12 +47,12 @@ public class Dwemer implements IFeature {
 		dwemerLightBlock = (BlockDwemerLight) new BlockDwemerLight();
 
 		dwemerGlassBlock = (BlockGlass) new BlockGlass(Material.GLASS, false)
-				.setCreativeTab(Cathedral.tabBasalt)
+				.setCreativeTab(CathedralMod.tabBasalt)
 				//.setStepSound(SoundType.GLASS)
 				.setHardness(0.3F);
 
 		dwemerCatwalkBlock = new BlockCatwalk(Material.IRON)
-				.setCreativeTab(Cathedral.tabBasalt)
+				.setCreativeTab(CathedralMod.tabBasalt)
 				.setHardness(2.5f)
 				.setResistance(20F)
 				//.setStepSound(SoundType.METAL)

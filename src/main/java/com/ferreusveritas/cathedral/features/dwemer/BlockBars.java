@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.SoundType;
@@ -30,7 +30,7 @@ public class BlockBars extends BlockPane {
 		setSoundType(SoundType.METAL);
 		setResistance(20.0F);
 		setHardness(2.5F);
-		setCreativeTab(Cathedral.tabBasalt);
+		setCreativeTab(CathedralMod.tabBasalt);
 	}
 	
 	public BlockBars(){

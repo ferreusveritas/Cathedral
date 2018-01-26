@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,9 +20,9 @@ public class BlockDwemerLight extends Block {
 	
 	public BlockDwemerLight() {
 		super(Material.ROCK);
-		setCreativeTab(Cathedral.tabBasalt);
-		setHardness(Cathedral.basalt.basaltHardness);
-		setResistance(Cathedral.basalt.basaltResistance);
+		setCreativeTab(CathedralMod.tabBasalt);
+		setHardness(CathedralMod.basalt.basaltHardness);
+		setResistance(CathedralMod.basalt.basaltResistance);
 		setLightLevel(1.0F);
 	}
 	

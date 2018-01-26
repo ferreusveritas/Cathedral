@@ -1,6 +1,6 @@
-package com.ferreusveritas.cathedral.features.extras;
+package com.ferreusveritas.cathedral.features.cathedral;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
@@ -48,7 +48,7 @@ public class BlockStoneRailing extends Block {
         setUnlocalizedName(name);
         setRegistryName(name);
         setDefaultState(getDefaultState().withProperty(VARIANT, EnumType.STONE));
-        setCreativeTab(Cathedral.tabCathedral);
+        setCreativeTab(CathedralMod.tabCathedral);
 	}
 
 	@Override

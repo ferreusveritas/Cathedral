@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -28,9 +28,9 @@ public class BlockDwemer extends Block {
 		super(Material.ROCK);
 		setRegistryName(name);
 		setUnlocalizedName(name);
-		setCreativeTab(Cathedral.tabBasalt);
-		setHardness(Cathedral.basalt.basaltHardness);
-		setResistance(Cathedral.basalt.basaltResistance);
+		setCreativeTab(CathedralMod.tabBasalt);
+		setHardness(CathedralMod.basalt.basaltHardness);
+		setResistance(CathedralMod.basalt.basaltResistance);
 	}
 	
 	@Override

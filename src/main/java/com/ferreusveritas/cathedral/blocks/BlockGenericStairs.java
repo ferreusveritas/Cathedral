@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.blocks;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +12,7 @@ public class BlockGenericStairs extends BlockStairs {
 		name += "-stairs";
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(Cathedral.tabCathedral);
+		setCreativeTab(CathedralMod.tabCathedral);
 		this.useNeighborBrightness = true;
 	}
 

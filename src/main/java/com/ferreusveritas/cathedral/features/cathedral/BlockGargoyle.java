@@ -1,6 +1,6 @@
-package com.ferreusveritas.cathedral.features.gargoyle;
+package com.ferreusveritas.cathedral.features.cathedral;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,7 +19,7 @@ public class BlockGargoyle extends Block {
 		setUnlocalizedName(name);
 		//setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1.0F, 0.875F);
 		//setStepSound(soundTypeStone);
-		setCreativeTab(Cathedral.tabCathedral);
+		setCreativeTab(CathedralMod.tabCathedral);
 		setHardness(1.0f);
 		setResistance(3.0f);
 	}

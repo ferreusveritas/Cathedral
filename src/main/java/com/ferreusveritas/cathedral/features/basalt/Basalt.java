@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
-import com.ferreusveritas.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.blocks.BaseBlockDef;
 import com.ferreusveritas.cathedral.blocks.BlockGenericSlab;
 import com.ferreusveritas.cathedral.blocks.BlockGenericStairs;
@@ -107,21 +107,21 @@ public class Basalt implements IFeature {
 		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock)
 			.setRegistryName(basaltBlock.getRegistryName() + "_slab")
 			.setUnlocalizedName(basaltBlock.getRegistryName() + "_slab")
-			.setCreativeTab(Cathedral.tabBasalt)
+			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness(basaltHardness)
 			.setResistance(basaltResistance);
 
 		checkeredBlock = new Block(Material.ROCK)
 			.setRegistryName("checkered")
 			.setUnlocalizedName("checkered")
-			.setCreativeTab(Cathedral.tabBasalt)
+			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
 			.setResistance((basaltResistance + marbleResistance) / 2F);
 		
 		checkeredSlab = (BlockGenericSlab) new BlockGenericSlab(checkeredBlock)
 			.setRegistryName("checkered_slab")
 			.setUnlocalizedName("checkered_slab")
-			.setCreativeTab(Cathedral.tabBasalt)
+			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
 			.setResistance((basaltResistance + marbleResistance) / 2F);
 
