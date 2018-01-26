@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.blocks;
+package com.ferreusveritas.cathedral.common.blocks;
 
 import net.minecraft.block.Block;
 

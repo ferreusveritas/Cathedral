@@ -1,9 +1,9 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.blocks.BlockGenericSlab;
-import com.ferreusveritas.cathedral.blocks.BlockGenericStairs;
+import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
+import com.ferreusveritas.cathedral.common.blocks.BlockGenericSlab;
+import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
