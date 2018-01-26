@@ -1,8 +1,10 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.blocks.BlockBase;
+import com.ferreusveritas.cathedral.common.blocks.BlockGlassBase;
+import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.extras.BlockCatwalk;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
@@ -18,20 +20,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class Dwemer implements IFeature {
 
 	public static final String featureName = "dwemer";
-	
-	public BlockBars dwemerBars;
 
-	public Block dwemerCatwalkBlock;
-
-	public BlockShortDoor shortDoorBlock;
-	public ItemShortDoor shortDoorItem;
-
-	public BlockTallDoor	tallDoorBlock;
-	public ItemTallDoor tallDoorItem;
-
-	public BlockDwemer dwemerBlock;
-	public BlockDwemerLight dwemerLightBlock;
-	public BlockGlass dwemerGlassBlock;
+	public Block blockNormal, lightNormal, glassNormal, barsNormal, doorNormal, doorTall;
+	public Item  itemDoorNormal, itemDoorTall;
 	
 	@Override
 	public String getName() {
@@ -43,22 +34,19 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		dwemerBlock = new BlockDwemer();
-		dwemerLightBlock = (BlockDwemerLight) new BlockDwemerLight();
+		blockNormal = new BlockDwemer();
+		lightNormal = (BlockDwemerLight) new BlockDwemerLight(featureObjectName(BlockForm.LIGHT, "normal"));
 
-		dwemerGlassBlock = (BlockGlass) new BlockGlass(Material.GLASS, false)
+		glassNormal = (BlockGlass) new BlockGlassBase(Material.GLASS, false, featureObjectName(BlockForm.GLASS, "normal"))
 				.setCreativeTab(CathedralMod.tabBasalt)
 				//.setStepSound(SoundType.GLASS)
 				.setHardness(0.3F);
 
-		dwemerCatwalkBlock = new BlockCatwalk(Material.IRON)
-				.setCreativeTab(CathedralMod.tabBasalt)
-				.setHardness(2.5f)
-				.setResistance(20F)
-				//.setStepSound(SoundType.METAL)
-				.setRegistryName("dwemercatwalk");
+		barsNormal = new BlockBars(featureObjectName(BlockForm.BARS, "normal"));
 		
-		dwemerBars = new BlockBars();
+		doorNormal = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "normal"));
+
+		doorTall = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "tall"));
 		
 		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
 		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
@@ -100,24 +88,24 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.register(dwemerBars);
+		registry.registerAll(blockNormal, lightNormal, glassNormal, barsNormal, doorNormal, doorTall);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 
-		registry.register(new ItemMultiTexture(dwemerBlock, dwemerBlock, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(blockNormal, blockNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockDwemer.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(dwemerBlock.getRegistryName()));
+        }).setRegistryName(blockNormal.getRegistryName()));
 
 		
-		registry.register(new ItemMultiTexture(dwemerBars, dwemerBars, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(dwemerBars.getRegistryName()));
+        }).setRegistryName(barsNormal.getRegistryName()));
 
 	}
 
@@ -138,6 +126,8 @@ public class Dwemer implements IFeature {
 				} else {
 					metalIngot = "ingotGold";//This sucks but whatever
 				}
+		
+		System.out.println("Ingot: " + metalIngot);
 
 		/*
 		//Recipe for Dwemer Stone

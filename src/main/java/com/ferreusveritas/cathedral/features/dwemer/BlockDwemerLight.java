@@ -1,8 +1,8 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,12 +14,12 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-public class BlockDwemerLight extends Block {
+public class BlockDwemerLight extends BlockBase {
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	
-	public BlockDwemerLight() {
-		super(Material.ROCK);
+	public BlockDwemerLight(String name) {
+		super(Material.ROCK, name);
 		setCreativeTab(CathedralMod.tabBasalt);
 		setHardness(CathedralMod.basalt.basaltHardness);
 		setResistance(CathedralMod.basalt.basaltResistance);

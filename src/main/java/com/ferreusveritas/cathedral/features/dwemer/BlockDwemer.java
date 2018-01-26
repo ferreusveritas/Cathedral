@@ -1,8 +1,8 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,7 +14,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-public class BlockDwemer extends Block {
+public class BlockDwemer extends BlockBase {
 
 	public static final String name = "dwemer";
 	
@@ -25,9 +25,7 @@ public class BlockDwemer extends Block {
 	}
 	
 	public BlockDwemer(String name) {
-		super(Material.ROCK);
-		setRegistryName(name);
-		setUnlocalizedName(name);
+		super(Material.ROCK, name);
 		setCreativeTab(CathedralMod.tabBasalt);
 		setHardness(CathedralMod.basalt.basaltHardness);
 		setResistance(CathedralMod.basalt.basaltResistance);

@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.roofing;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.extras.BlockRoofTiles;
 
@@ -18,8 +19,8 @@ public class Roofing implements IFeature {
 
 	public static final String featureName = "roofing";
 	
-	public BlockRoofTiles colorRoofTiles[] = new BlockRoofTiles[EnumDyeColor.values().length];
-	public BlockRoofTiles naturalRoofTile;
+	public BlockRoofTiles roofingShinglesColored[] = new BlockRoofTiles[EnumDyeColor.values().length];
+	public BlockRoofTiles roofingShinglesNatural;
 	
 	public Item clayTile;
 	public Item firedTile;
@@ -36,15 +37,10 @@ public class Roofing implements IFeature {
 	public void createBlocks() {
 	
 		for(EnumDyeColor color: EnumDyeColor.values()) {
-			colorRoofTiles[color.getMetadata()] = (BlockRoofTiles) new BlockRoofTiles(color)
-				.setRegistryName("rooftile." + Integer.toHexString(color.getMetadata()))
-				.setUnlocalizedName("rooftile_" + color.getUnlocalizedName());
+			roofingShinglesColored[color.getMetadata()] = (BlockRoofTiles) new BlockRoofTiles(color, featureObjectName(BlockForm.SHINGLES, color.getName()));
 		}
 		
-		naturalRoofTile = (BlockRoofTiles)new BlockRoofTiles(null)
-			.setRegistryName("rooftile.X")
-			.setUnlocalizedName("rooftile_natural");
-		
+		roofingShinglesNatural = (BlockRoofTiles)new BlockRoofTiles(null, featureObjectName(BlockForm.SHINGLES, "natural"));
 	}
 
 	@Override
@@ -61,18 +57,18 @@ public class Roofing implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.registerAll(colorRoofTiles);
-		registry.register(naturalRoofTile);
+		registry.registerAll(roofingShinglesColored);
+		registry.register(roofingShinglesNatural);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		
-		for(Block roofTile: colorRoofTiles) {
+		for(Block roofTile: roofingShinglesColored) {
 			registry.register(new ItemBlock(roofTile).setRegistryName(roofTile.getRegistryName()));
 		}
 		
-		registry.register(new ItemBlock(naturalRoofTile).setRegistryName(naturalRoofTile.getRegistryName()));
+		registry.register(new ItemBlock(roofingShinglesNatural).setRegistryName(roofingShinglesNatural.getRegistryName()));
 		
 		registry.registerAll(clayTile, firedTile);
 	}
@@ -86,15 +82,15 @@ public class Roofing implements IFeature {
 		//GameRegistry.addRecipe(new ItemStack(roofTiles[16]), "XX", "XX", 'X', firedTile);
 
 		//Coloring the clay tiles
-		String dyes[] = {
+		/*String dyes[] = {
 				"dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray",
 				"dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite",
-		};
+		};*/
 		
-		OreDictionary.registerOre("blockClayTile", new ItemStack(naturalRoofTile));//Natural Terra Cotta Roofing
+		OreDictionary.registerOre("blockClayTile", new ItemStack(roofingShinglesNatural));//Natural Terra Cotta Roofing
 		
 		for(int color = 0; color < 16; color++){
-			OreDictionary.registerOre("blockClayTile", new ItemStack(colorRoofTiles[color]));
+			OreDictionary.registerOre("blockClayTile", new ItemStack(roofingShinglesColored[color]));
 			//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(roofTiles[color], 8), true, new Object[]{"ttt", "tdt", "ttt", 't', "blockClayTile", 'd', dyes[color]}));
 		}
 		

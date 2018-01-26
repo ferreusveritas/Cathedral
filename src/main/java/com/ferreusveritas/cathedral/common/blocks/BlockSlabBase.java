@@ -2,11 +2,12 @@ package com.ferreusveritas.cathedral.common.blocks;
 
 import net.minecraft.block.Block;
 
-public class BlockGenericSlab extends Block {
+public class BlockSlabBase extends Block {
 
-	public BlockGenericSlab(Block baseblock) {
+	public BlockSlabBase(Block baseblock, String name) {
 		super(baseblock.getMaterial(baseblock.getDefaultState()));//TODO handle materials better
-		// TODO Auto-generated constructor stub
+		setRegistryName(name);
+		setUnlocalizedName(name);
 	}
 
 	/*

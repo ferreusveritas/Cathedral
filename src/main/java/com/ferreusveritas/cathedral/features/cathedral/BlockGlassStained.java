@@ -14,16 +14,16 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
-public class BlockStainedGlass extends BlockGlass {
+public class BlockGlassStained extends BlockGlass {
 
 	public static final String name = "stainedglass";
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
-	public BlockStainedGlass() {
+	public BlockGlassStained() {
 		this(name);
 	}
 	
-	public BlockStainedGlass(String name) {
+	public BlockGlassStained(String name) {
 		super(Material.GLASS, false);
 		setRegistryName(name);
 		setUnlocalizedName(name);

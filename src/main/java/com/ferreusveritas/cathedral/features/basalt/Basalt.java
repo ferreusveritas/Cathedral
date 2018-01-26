@@ -2,8 +2,10 @@ package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.common.blocks.BlockGenericSlab;
+import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
+import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
+import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
@@ -12,8 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -23,76 +23,24 @@ public class Basalt implements IFeature {
 	
 	public Block basaltBase;//This is assigned from Project Red in PostInit()
 
-	public Block basaltBlock;
-	public Block checkeredBlock;
+	public Block blockCarved;
+	public Block blockCheckered;
 
-	public BlockGenericSlab basaltSlab;
-	public BlockGenericSlab checkeredSlab;
+	public BlockSlabBase slabCarved;
+	public BlockSlabBase slabCheckered;
 
-	public BlockGenericStairs basaltStairs[] = new BlockGenericStairs[8];
+	public BlockGenericStairs stairs[] = new BlockGenericStairs[8];
 
 	public final float basaltHardness = 2.5f;
 	public final float basaltResistance = 20f;
 	public final float marbleHardness = 2.0f;
 	public final float marbleResistance = 10f;
 	
-	public static enum EnumType implements IStringSerializable {
-	
-		ROSETTE		( 0, "rosette"),
-		PAVER		( 1, "paver"),
-		WORNBRICK	( 2, "wornbrick"),
-		ORNATE		( 3, "ornate"),
-		POISON		( 4, "poison"),
-		SUNKENPANEL	( 5, "sunkenpanel"),
-		TILES		( 6, "tiles"),
-		SLABS		( 7, "slabs"),
-		VAULT		( 8, "vault"),
-		SMALLBRICKS	( 9, "smallbricks"),
-		SMALLCHAOTI	(10, "smallchaotic"),
-		SMALLTILES	(11, "smalltiles"),
-		BLOCK		(12, "block"),
-		SUNKEN		(13, "sunken"),
-		KNOT		(14, "knot"); 
-		
-		private final int meta;
-		private final String name;
-		private final String unlocalizedName;
-		
-		private EnumType(int index, String name) {
-			this.meta = index;
-			this.name = name;
-			this.unlocalizedName = name;
-		}
-		
-		public int getMetadata() {
-			return meta;
-		}
-		
-		@Override
-		public String toString() {
-			return name;
-		}
-		
-		public static Basalt.EnumType byMetadata(int meta) {
-			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
-		}
-		
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public String getUnlocalizedName() {
-			return unlocalizedName;
-		}
-
-	}
-
 	@Override
 	public String getName() {
 		return featureName;
 	}
-
+	
 	@Override
 	public void preInit() {
 	}
@@ -102,25 +50,19 @@ public class Basalt implements IFeature {
 		
 		basaltBase = new Block(Material.ROCK);
 		
-		basaltBlock = new BlockBasalt();		
+		blockCarved = new BlockBasalt(featureObjectName(BlockForm.BLOCK, "carved"));		
 		
-		basaltSlab = (BlockGenericSlab) new BlockGenericSlab(basaltBlock)
-			.setRegistryName(basaltBlock.getRegistryName() + "_slab")
-			.setUnlocalizedName(basaltBlock.getRegistryName() + "_slab")
+		slabCarved = (BlockSlabBase) new BlockSlabBase(blockCarved, featureObjectName(BlockForm.SLAB, "carved"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness(basaltHardness)
 			.setResistance(basaltResistance);
 
-		checkeredBlock = new Block(Material.ROCK)
-			.setRegistryName("checkered")
-			.setUnlocalizedName("checkered")
+		blockCheckered = new BlockBase(Material.ROCK,featureObjectName(BlockForm.BLOCK, "checkered"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
 			.setResistance((basaltResistance + marbleResistance) / 2F);
 		
-		checkeredSlab = (BlockGenericSlab) new BlockGenericSlab(checkeredBlock)
-			.setRegistryName("checkered_slab")
-			.setUnlocalizedName("checkered_slab")
+		slabCheckered = (BlockSlabBase) new BlockSlabBase(blockCheckered, featureObjectName(BlockForm.SLAB, "checkered"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
 			.setResistance((basaltResistance + marbleResistance) / 2F);
@@ -147,19 +89,18 @@ public class Basalt implements IFeature {
 		//Ore Dictionary Registrations
 		//OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
 		//OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
+
+		//Stairs
 		
 		BaseBlockDef[] baseBlocks = {
 				new BaseBlockDef(0, basaltBase, 3, "basalt", "Basalt", basaltHardness, basaltResistance),
 				new BaseBlockDef(1, basaltBase, 4, "basalt-brick", "BasaltBrick", basaltHardness, basaltResistance),
-				new BaseBlockDef(2, basaltBlock, 6, "basalt-tiles", "BasaltSlabs", basaltHardness, basaltResistance),
-				new BaseBlockDef(3, basaltBlock, 7, "basalt-slabs", "BasaltTiles", basaltHardness, basaltResistance),
-				new BaseBlockDef(4, basaltBlock, 9, "basalt-smallbricks", "BasaltSmallBricks", basaltHardness, basaltResistance),
-				new BaseBlockDef(5, basaltBlock, 11, "basalt-smalltiles", "BasaltSmallTiles", basaltHardness, basaltResistance)
+				new BaseBlockDef(2, blockCarved, 6, "basalt-tiles", "BasaltSlabs", basaltHardness, basaltResistance),
+				new BaseBlockDef(3, blockCarved, 7, "basalt-slabs", "BasaltTiles", basaltHardness, basaltResistance),
+				new BaseBlockDef(4, blockCarved, 9, "basalt-smallbricks", "BasaltSmallBricks", basaltHardness, basaltResistance),
+				new BaseBlockDef(5, blockCarved, 11, "basalt-smalltiles", "BasaltSmallTiles", basaltHardness, basaltResistance)
 		};
-		
-		//Basalt Stairs
-		
-		//Stairs
+				
 		for(int i = 0; i < baseBlocks.length; i++){
 			//basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
 			//GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
@@ -188,21 +129,17 @@ public class Basalt implements IFeature {
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		//registry.register(basaltBase);
-		registry.register(basaltBlock);
-		registry.register(basaltSlab);
-		
-		registry.register(checkeredBlock);
-		registry.register(checkeredSlab);
+		registry.registerAll(blockCarved, slabCarved, blockCheckered, slabCheckered);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		
-		registry.register(new ItemMultiTexture(basaltBlock, basaltBlock, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(blockCarved, blockCarved, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return Basalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(basaltBlock.getRegistryName()));
+        }).setRegistryName(blockCarved.getRegistryName()));
 		
 	}
 

@@ -3,7 +3,7 @@ package com.ferreusveritas.cathedral.features.extras;
 import java.util.ArrayList;
 
 import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.common.blocks.BlockGenericSlab;
+import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.features.IFeature;
 
@@ -17,9 +17,9 @@ public class Extras implements IFeature {
 	
 	public static final String featureName = "extras";
 
-	public BlockGenericStairs extraStairs[] = new BlockGenericStairs[5];
-	public BlockGenericSlab extraSlabs;
-	public Block extraStone;
+	public BlockGenericStairs stairs[] = new BlockGenericStairs[5];
+	public BlockSlabBase slabsVarious;
+	public Block blockStone;
 	
 	public ArrayList<BaseBlockDef> baseBlocks = new ArrayList<BaseBlockDef>();
 	

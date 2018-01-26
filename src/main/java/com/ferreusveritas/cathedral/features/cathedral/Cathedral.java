@@ -1,9 +1,12 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.BlockForm;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -21,11 +24,8 @@ public class Cathedral implements IFeature {
 
 	public static final String featureName = "cathedral";
 	
-	public BlockStainedGlass stainedGlass;
-	public BlockStoneRailing stoneRailingBlock;
-	public BlockChain chainBlock;
-	
-	public static BlockGargoyle gargoyleBlock;
+	public Block	glassStained, railingVarious, chainVarious, catwalkVarious;
+	public BlockGargoyle	gargoyleDemon;
 	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
 	
@@ -42,11 +42,19 @@ public class Cathedral implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		stainedGlass = (BlockStainedGlass) new BlockStainedGlass();
-		stoneRailingBlock = new BlockStoneRailing();
-		chainBlock = new BlockChain();
+		glassStained 	= new BlockGlassStained(featureObjectName(BlockForm.GLASS, "stained"));
+		railingVarious 	= new BlockRailing(featureObjectName(BlockForm.RAILING, "various"));
+		chainVarious 	= new BlockChain(featureObjectName(BlockForm.CHAIN, "various"));
 		
-		gargoyleBlock = new BlockGargoyle();
+		catwalkVarious = new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"))
+				.setCreativeTab(CathedralMod.tabCathedral)
+				.setHardness(2.5f)
+				//.setStepSound(SoundType.METAL)
+				.setResistance(20F);
+		
+		gargoyleDemon	= new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon"));
+
+		
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
 		
@@ -62,32 +70,30 @@ public class Cathedral implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.registerAll(stainedGlass, stoneRailingBlock, chainBlock);
-		
-		registry.register(gargoyleBlock);
+		registry.registerAll(glassStained, railingVarious, chainVarious, catwalkVarious, gargoyleDemon);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		registry.register(new ItemMultiTexture(stainedGlass, stainedGlass, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(glassStained, glassStained, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return BlockStainedGlass.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(stainedGlass.getRegistryName()));
+        }).setRegistryName(glassStained.getRegistryName()));
 		
-		registry.register(new ItemMultiTexture(stoneRailingBlock, stoneRailingBlock, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return BlockStoneRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(stoneRailingBlock.getRegistryName()));
+        }).setRegistryName(railingVarious.getRegistryName()));
 
-		registry.register(new ItemMultiTexture(chainBlock, chainBlock, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(chainBlock.getRegistryName()));
+        }).setRegistryName(chainVarious.getRegistryName()));
 		
-		registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
+		registry.register(new ItemBlock(gargoyleDemon).setRegistryName(gargoyleDemon.getRegistryName()));
 
 	}
 
@@ -98,7 +104,7 @@ public class Cathedral implements IFeature {
 		registry.register(
 			new ShapedOreRecipe(
 				null,
-				new ItemStack(stainedGlass, 16, 0),
+				new ItemStack(glassStained, 16, 0),
 				new Object[] {
 					"cgm",
 					"glg",
@@ -124,7 +130,7 @@ public class Cathedral implements IFeature {
 				registry.register( 
 					new ShapedOreRecipe(
 						null,
-						new ItemStack(chainBlock, 4, type.getMetadata()),
+						new ItemStack(chainVarious, 4, type.getMetadata()),
 						new Object[]{
 							"o",
 							"o",
@@ -140,9 +146,9 @@ public class Cathedral implements IFeature {
 			GameRegistry.addShapelessRecipe(
 				new ResourceLocation(ModConstants.MODID, "chaindwemer"),
 				null,// Group
-				new ItemStack(chainBlock, 1, BlockChain.EnumType.DWEMER.getMetadata()),// Output
+				new ItemStack(chainVarious, 1, BlockChain.EnumType.DWEMER.getMetadata()),// Output
 				new Ingredient[]{ 
-					Ingredient.fromStacks(new ItemStack(chainBlock, 1, BlockChain.EnumType.BRONZE.getMetadata()))
+					Ingredient.fromStacks(new ItemStack(chainVarious, 1, BlockChain.EnumType.BRONZE.getMetadata()))
 				}// Input
 			);
 		}

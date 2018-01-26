@@ -28,4 +28,8 @@ public interface IFeature {
 	
 	public void postInit();
 	
+	default String featureObjectName(BlockForm form, String style) {
+		return getName() + "_" + form + "_" + style;
+	}
+	
 }

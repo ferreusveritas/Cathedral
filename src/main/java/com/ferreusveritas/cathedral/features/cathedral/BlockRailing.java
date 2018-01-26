@@ -22,9 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockStoneRailing extends Block {
+public class BlockRailing extends Block {
 
-	public static final String name = "stonerailing";
+	public static final String name = "railing";
     public static final PropertyBool UP = PropertyBool.create("up");
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
@@ -39,11 +39,11 @@ public class BlockStoneRailing extends Block {
 	Block chiselMarble;
 	Block chiselLimestone;
 	
-	public BlockStoneRailing() {
+	public BlockRailing() {
 		this(name);
 	}
 	
-	public BlockStoneRailing(String name) {
+	public BlockRailing(String name) {
 		super(Material.ROCK);
         setUnlocalizedName(name);
         setRegistryName(name);
@@ -90,7 +90,7 @@ public class BlockStoneRailing extends Block {
     @Override
     public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
         Block connector = world.getBlockState(pos.offset(facing)).getBlock();
-        return connector instanceof BlockWall || connector instanceof BlockFenceGate || connector instanceof BlockStoneRailing;
+        return connector instanceof BlockWall || connector instanceof BlockFenceGate || connector instanceof BlockRailing;
     }
 
     private boolean canWallConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
