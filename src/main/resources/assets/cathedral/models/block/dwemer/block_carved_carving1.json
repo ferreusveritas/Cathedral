@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "cathedral:blocks/dwemer/block_carved_carving1_top",
+        "side": "cathedral:blocks/dwemer/block_carved_carving1_side"
+    }
+}

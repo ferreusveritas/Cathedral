@@ -141,6 +141,24 @@ public class Basalt implements IFeature {
             }
         }).setRegistryName(blockCarved.getRegistryName()));
 		
+		registry.register(new ItemMultiTexture(slabCarved, slabCarved, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(slabCarved.getRegistryName()));
+		
+		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return Checkered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(blockCheckered.getRegistryName()));
+		
+		registry.register(new ItemMultiTexture(slabCheckered, slabCheckered, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return Checkered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(slabCheckered.getRegistryName()));
+		
 	}
 
 	@Override

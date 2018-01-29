@@ -1,0 +1,6 @@
+{
+    "parent": "cathedral:block/roofing/shingles_plain",
+    "textures": {
+		"all":	"cathedral:blocks/roofing/shingles_green"
+	}
+}

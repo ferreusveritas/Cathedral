@@ -1,10 +1,15 @@
-package com.ferreusveritas.cathedral.features.extras;
+package com.ferreusveritas.cathedral.features.roofing;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.util.IStringSerializable;
 
 /*
 M	8421	F	Desc
@@ -26,18 +31,59 @@ M	8421	F	Desc
 15	1111		Solid Block
  */
 
-public class BlockRoofTiles extends BlockStairs {
+public class BlockShingles extends BlockStairs {
 
 	EnumDyeColor color;
 	
-	public BlockRoofTiles(EnumDyeColor color, String name) {
+    public static final PropertyEnum<EnumForm> FORM = PropertyEnum.<EnumForm>create("form", EnumForm.class);
+	
+	public BlockShingles(EnumDyeColor color, String name) {
 		super(Blocks.STONE_STAIRS.getDefaultState());
 		setRegistryName(name);
 		setUnlocalizedName(name);
+		//setDefaultState(getDefaultState().withProperty(FORM, EnumForm.STAIRS));
 		this.color = color;
 		setCreativeTab(CathedralMod.tabCathedral);
 	}
 
+	@Override
+	protected BlockStateContainer createBlockState() {
+        //return new BlockStateContainer(this, new IProperty[] {FORM, FACING, HALF, SHAPE});
+        return new BlockStateContainer(this, new IProperty[] {FACING, HALF, SHAPE});
+	}
+	
+	/** Convert the given metadata into a BlockState for this Block */
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return super.getStateFromMeta(meta);
+	}
+	
+	/** Convert the BlockState into the correct metadata value */
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return super.getMetaFromState(state);
+	}
+	
+    public static enum EnumForm implements IStringSerializable {
+        BLOCK("block"),
+        STAIRS("stairs"),
+        SLAB("slab");
+
+        private final String name;
+
+        private EnumForm(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+            return this.name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
+	
 	/*
 	int color;
 	private IIcon sideIcon;

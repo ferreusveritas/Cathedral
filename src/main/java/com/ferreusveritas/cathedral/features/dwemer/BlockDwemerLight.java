@@ -20,7 +20,7 @@ public class BlockDwemerLight extends BlockBase {
 	
 	public BlockDwemerLight(String name) {
 		super(Material.ROCK, name);
-		setCreativeTab(CathedralMod.tabBasalt);
+		setCreativeTab(CathedralMod.tabDwemer);
 		setHardness(CathedralMod.basalt.basaltHardness);
 		setResistance(CathedralMod.basalt.basaltResistance);
 		setLightLevel(1.0F);

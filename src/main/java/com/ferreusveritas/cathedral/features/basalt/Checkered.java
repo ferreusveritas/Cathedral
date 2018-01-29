@@ -4,15 +4,6 @@ import net.minecraft.util.IStringSerializable;
 
 public class Checkered {
 	
-	
-	String names[] = {
-			"checkered", //0
-			"checkered-border",  //1
-			"checkered-small", //2
-			"checkered-tiles", //3
-			"checkered-tiles-small", //4
-	};
-
 	/*checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-plain.name", 0, "checkered", Cathedral.MODID);
 	checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-small.name", 2, "checkered-small", Cathedral.MODID);
 	checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-tiles.name", 3, "checkered-tiles", Cathedral.MODID);

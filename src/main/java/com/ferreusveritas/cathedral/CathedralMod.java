@@ -80,6 +80,15 @@ public class CathedralMod {
 		}
 	};
 	
+	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
+		ItemStack icon = new ItemStack(Items.GOLD_INGOT);
+		
+		@Override
+		public ItemStack getTabIconItem() {
+			return icon;
+		}
+	};
+	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e){
 		features.forEach(f -> f.preInit());

@@ -26,7 +26,7 @@ public class BlockDwemer extends BlockBase {
 	
 	public BlockDwemer(String name) {
 		super(Material.ROCK, name);
-		setCreativeTab(CathedralMod.tabBasalt);
+		setCreativeTab(CathedralMod.tabDwemer);
 		setHardness(CathedralMod.basalt.basaltHardness);
 		setResistance(CathedralMod.basalt.basaltResistance);
 	}

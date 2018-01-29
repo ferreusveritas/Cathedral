@@ -30,7 +30,7 @@ public class BlockBars extends BlockPane {
 		setSoundType(SoundType.METAL);
 		setResistance(20.0F);
 		setHardness(2.5F);
-		setCreativeTab(CathedralMod.tabBasalt);
+		setCreativeTab(CathedralMod.tabDwemer);
 	}
 	
 	public BlockBars(){

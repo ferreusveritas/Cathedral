@@ -1,18 +1,22 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGlassBase;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -34,19 +38,19 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		blockNormal = new BlockDwemer();
+		blockNormal = new BlockDwemer(featureObjectName(BlockForm.BLOCK, "carved"));
 		lightNormal = (BlockDwemerLight) new BlockDwemerLight(featureObjectName(BlockForm.LIGHT, "normal"));
 
 		glassNormal = (BlockGlass) new BlockGlassBase(Material.GLASS, false, featureObjectName(BlockForm.GLASS, "normal"))
-				.setCreativeTab(CathedralMod.tabBasalt)
+				.setCreativeTab(CathedralMod.tabDwemer)
 				//.setStepSound(SoundType.GLASS)
 				.setHardness(0.3F);
 
 		barsNormal = new BlockBars(featureObjectName(BlockForm.BARS, "normal"));
 		
-		doorNormal = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "normal"));
+		doorNormal = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "normal")).setCreativeTab(CathedralMod.tabDwemer);
 
-		doorTall = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "tall"));
+		doorTall = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "tall")).setCreativeTab(CathedralMod.tabDwemer);
 		
 		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
 		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
@@ -107,6 +111,8 @@ public class Dwemer implements IFeature {
             }
         }).setRegistryName(barsNormal.getRegistryName()));
 
+		registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
+		registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));
 	}
 
 	@Override
@@ -150,7 +156,14 @@ public class Dwemer implements IFeature {
 	}
 
 	@Override
-	public void registerModels(ModelRegistryEvent event) {}
+	public void registerModels(ModelRegistryEvent event) {
+		
+		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(blockNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		ModelHelper.regModel(barsNormal);
+	}
 
 	@Override
 	public void init() {}

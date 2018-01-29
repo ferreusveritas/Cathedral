@@ -1,0 +1,19 @@
+{
+    "variants": {
+		"variant=embedded"		:{"model": "cathedral:dwemer/block_carved_embedded"},
+		"variant=pillar"		:{"model": "cathedral:dwemer/block_carved_pillar"},
+		"variant=altar"			:{"model": "cathedral:dwemer/block_carved_altar"},
+		"variant=decor"			:{"model": "cathedral:dwemer/block_carved_decor"},
+		"variant=carving1"		:{"model": "cathedral:dwemer/block_carved_carving1"},
+		"variant=carving2"		:{"model": "cathedral:dwemer/block_carved_carving2"},
+		"variant=layered"		:{"model": "cathedral:dwemer/block_carved_layered"},
+		"variant=scalepillar"	:{"model": "cathedral:dwemer/block_carved_scalepillar"},
+		"variant=wormgear"		:{"model": "cathedral:dwemer/block_carved_wormgear"},
+		"variant=rays"			:{"model": "cathedral:dwemer/block_carved_rays"},
+		"variant=knot"			:{"model": "cathedral:dwemer/block_carved_knot"},
+		"variant=mask"			:{"model": "cathedral:dwemer/block_carved_mask"},
+		"variant=doortop"		:{"model": "cathedral:dwemer/block_carved_doortop"},
+		"variant=doorbottom"	:{"model": "cathedral:dwemer/block_carved_doorbottom"},
+		"variant=panel"			:{"model": "cathedral:dwemer/block_carved_panel"}
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "variants": {
+    	"normal"		:{"model": "cathedral:basalt/block_checkered"},
+		"border"		:{"model": "cathedral:basalt/block_checkered"},
+		"small"			:{"model": "cathedral:basalt/block_checkered"},
+		"tiles"			:{"model": "cathedral:basalt/block_checkered"},
+		"tiles-small"	:{"model": "cathedral:basalt/block_checkered"}
+    }
+}

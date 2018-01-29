@@ -1,15 +1,40 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import net.minecraft.block.Block;
+import com.ferreusveritas.cathedral.common.blocks.BlockBase;
+
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.IBlockState;
 
-public class BlockTallDoor extends Block {
+public class BlockTallDoor extends BlockBase {
 
-	public BlockTallDoor(Material materialIn) {
-		super(materialIn);
-		// TODO Auto-generated constructor stub
+	public BlockTallDoor(Material materialIn, String name) {
+		super(materialIn, name);
 	}
-
+	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {BlockBase.META});
+	}
+	
+	/** Convert the given metadata into a BlockState for this Block */
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(BlockBase.META, meta);
+	}
+	
+	/** Convert the BlockState into the correct metadata value */
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(BlockBase.META);
+	}
+	
+	@Override
+	public int damageDropped(IBlockState state) {
+		return state.getValue(BlockBase.META);
+	}
+	
 	/*
     @SideOnly(Side.CLIENT)
     private IIcon[] upperDoorIcon;

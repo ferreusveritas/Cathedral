@@ -1,0 +1,11 @@
+{
+    "variants": {
+		"variant=iron"		:{"model": "stone"},
+		"variant=gold"		:{"model": "stone"},
+		"variant=dwemer"	:{"model": "stone"},
+		"variant=copper"	:{"model": "stone"},
+		"variant=bronze"	:{"model": "stone"},
+		"variant=silver"	:{"model": "stone"},
+		"variant=enderium"	:{"model": "stone"}
+    }
+}
