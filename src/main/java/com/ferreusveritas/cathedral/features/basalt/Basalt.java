@@ -1,12 +1,14 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
 import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -129,7 +132,12 @@ public class Basalt implements IFeature {
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		//registry.register(basaltBase);
-		registry.registerAll(blockCarved, slabCarved, blockCheckered, slabCheckered);
+		registry.registerAll(
+				blockCarved,
+				//slabCarved,
+				blockCheckered
+				//slabCheckered
+			);
 	}
 
 	@Override
@@ -141,11 +149,11 @@ public class Basalt implements IFeature {
             }
         }).setRegistryName(blockCarved.getRegistryName()));
 		
-		registry.register(new ItemMultiTexture(slabCarved, slabCarved, new ItemMultiTexture.Mapper() {
+		/*registry.register(new ItemMultiTexture(slabCarved, slabCarved, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(slabCarved.getRegistryName()));
+        }).setRegistryName(slabCarved.getRegistryName()));*/
 		
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
@@ -153,11 +161,11 @@ public class Basalt implements IFeature {
             }
         }).setRegistryName(blockCheckered.getRegistryName()));
 		
-		registry.register(new ItemMultiTexture(slabCheckered, slabCheckered, new ItemMultiTexture.Mapper() {
+		/*registry.register(new ItemMultiTexture(slabCheckered, slabCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return Checkered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(slabCheckered.getRegistryName()));
+        }).setRegistryName(slabCheckered.getRegistryName()));*/
 		
 	}
 
@@ -194,7 +202,10 @@ public class Basalt implements IFeature {
 
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
-		// TODO Auto-generated method stub
+
+		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
 		
 	}
 

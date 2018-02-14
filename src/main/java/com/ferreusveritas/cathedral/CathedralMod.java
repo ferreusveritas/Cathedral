@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
+import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
@@ -16,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -51,7 +53,14 @@ public class CathedralMod {
 		roofing = new Roofing();
 		marblefixer = new MarbleFixer();
 		
-		Collections.addAll(features, cathedral, basalt, dwemer, extras, roofing, marblefixer);
+		Collections.addAll(features,
+				//cathedral,
+				basalt,
+				dwemer,
+				//extras,
+				roofing
+				//marblefixer
+			);
 	}
 	
 	@Instance(ModConstants.MODID)
@@ -60,13 +69,11 @@ public class CathedralMod {
 	@SidedProxy(clientSide = "com.ferreusveritas.cathedral.proxy.ClientProxy", serverSide = "com.ferreusveritas.cathedral.proxy.CommonProxy")
 	public static CommonProxy proxy;
 	
-	public static final CreativeTabs tabBasalt = new CreativeTabs("tabBasalt") {
-		ItemStack icon = new ItemStack(Items.BAKED_POTATO);
-		
+	public static final CreativeTabs tabBasalt = new CreativeTabs("tabBasalt") {		
         @SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return icon;
+			return new ItemStack(ItemBlock.getItemFromBlock(basalt.blockCarved), 1, BlockBasalt.EnumType.POISON.getMetadata());
 		}
 	};
 	

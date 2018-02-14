@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "cathedral:blocks/basalt/block_carved_vault_top",
+        "side": "cathedral:blocks/basalt/block_carved_vault_side"
+    }
+}

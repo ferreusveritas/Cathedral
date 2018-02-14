@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -25,7 +24,7 @@ public class Dwemer implements IFeature {
 
 	public static final String featureName = "dwemer";
 
-	public Block blockNormal, lightNormal, glassNormal, barsNormal, doorNormal, doorTall;
+	public Block blockCarved, lightNormal, glassNormal, barsNormal, doorNormal, doorTall;
 	public Item  itemDoorNormal, itemDoorTall;
 	
 	@Override
@@ -38,7 +37,7 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		blockNormal = new BlockDwemer(featureObjectName(BlockForm.BLOCK, "carved"));
+		blockCarved = new BlockDwemer(featureObjectName(BlockForm.BLOCK, "carved"));
 		lightNormal = (BlockDwemerLight) new BlockDwemerLight(featureObjectName(BlockForm.LIGHT, "normal"));
 
 		glassNormal = (BlockGlass) new BlockGlassBase(Material.GLASS, false, featureObjectName(BlockForm.GLASS, "normal"))
@@ -92,27 +91,34 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.registerAll(blockNormal, lightNormal, glassNormal, barsNormal, doorNormal, doorTall);
+		registry.registerAll(
+			blockCarved
+			//lightNormal,
+			//glassNormal,
+			//barsNormal,
+			//doorNormal,
+			//doorTall
+		);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 
-		registry.register(new ItemMultiTexture(blockNormal, blockNormal, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(blockCarved, blockCarved, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockDwemer.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(blockNormal.getRegistryName()));
+        }).setRegistryName(blockCarved.getRegistryName()));
 
 		
-		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
+		/*registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(barsNormal.getRegistryName()));
+        }).setRegistryName(barsNormal.getRegistryName()));*/
 
-		registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
-		registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));
+		//registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
+		//registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));
 	}
 
 	@Override
@@ -159,7 +165,7 @@ public class Dwemer implements IFeature {
 	public void registerModels(ModelRegistryEvent event) {
 		
 		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(blockNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
 		ModelHelper.regModel(barsNormal);

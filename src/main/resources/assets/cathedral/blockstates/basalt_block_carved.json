@@ -1,0 +1,21 @@
+{
+    "variants": {
+    	"variant=rosette"		:{"model": "cathedral:basalt/block_carved_rosette"},
+		"variant=paver"         :{"model": "cathedral:basalt/block_carved_paver"},
+		"variant=wornbrick"     :{"model": "cathedral:basalt/block_carved_wornbrick"},
+		"variant=ornate"        :{"model": "cathedral:basalt/block_carved_ornate"},
+		"variant=poison"        :{"model": "cathedral:basalt/block_carved_poison"},
+		"variant=sunkenpanel"   :{"model": "cathedral:basalt/block_carved_sunkenpanel"},
+		"variant=tiles"         :{"model": "cathedral:basalt/block_carved_tiles"},
+		"variant=slabs"         :{"model": "cathedral:basalt/block_carved_slabs"},
+		"variant=vault"         :{"model": "cathedral:basalt/block_carved_vault"},
+		"variant=smallbricks"   :{"model": "cathedral:basalt/block_carved_smallbricks"},
+		"variant=smallchaotic"  :{"model": "cathedral:basalt/block_carved_smallchaotic"},
+		"variant=smalltiles"    :{"model": "cathedral:basalt/block_carved_smalltiles"},
+		"variant=bordered"      :{"model": "cathedral:basalt/block_carved_bordered"},
+		"variant=sunken"        :{"model": "cathedral:basalt/block_carved_sunken"},
+		"variant=knot"          :{"model": "cathedral:basalt/block_carved_knot"},
+		"variant=mediumbricks"  :{"model": "cathedral:basalt/block_carved_mediumbricks"}
+		
+    }
+}

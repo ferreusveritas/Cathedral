@@ -71,11 +71,13 @@ public class BlockBasalt extends Block {
 		SLABS		( 7, "slabs"),
 		VAULT		( 8, "vault"),
 		SMALLBRICKS	( 9, "smallbricks"),
-		SMALLCHAOTI	(10, "smallchaotic"),
+		SMALLCHAOTIC(10, "smallchaotic"),
 		SMALLTILES	(11, "smalltiles"),
-		BLOCK		(12, "block"),
+		BORDERED	(12, "bordered"),
 		SUNKEN		(13, "sunken"),
-		KNOT		(14, "knot"); 
+		KNOT		(14, "knot"),
+		MEDIUMBRICKS(15, "mediumbricks");
+
 		
 		private final int meta;
 		private final String name;

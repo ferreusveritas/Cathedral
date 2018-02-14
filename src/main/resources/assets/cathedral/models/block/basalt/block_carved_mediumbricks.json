@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "cathedral:blocks/basalt/block_carved_mediumbricks"
+    }
+}
