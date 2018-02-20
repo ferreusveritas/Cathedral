@@ -53,7 +53,6 @@ public class Cathedral implements IFeature {
 				.setResistance(20F);
 		
 		gargoyleDemon	= new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon"));
-
 		
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
@@ -70,30 +69,45 @@ public class Cathedral implements IFeature {
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		registry.registerAll(glassStained, railingVarious, chainVarious, catwalkVarious, gargoyleDemon);
+		registry.registerAll(
+			//glassStained,
+			//railingVarious,
+			//chainVarious,
+			//catwalkVarious,
+			//gargoyleDemon
+		);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
+
+		/*
 		registry.register(new ItemMultiTexture(glassStained, glassStained, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(glassStained.getRegistryName()));
+        */
 		
+		/*
 		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(railingVarious.getRegistryName()));
+        */
 
+		/*
 		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(chainVarious.getRegistryName()));
+        */
 		
+		/*
 		registry.register(new ItemBlock(gargoyleDemon).setRegistryName(gargoyleDemon.getRegistryName()));
+		*/
 
 	}
 

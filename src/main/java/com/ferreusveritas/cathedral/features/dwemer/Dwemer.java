@@ -92,10 +92,10 @@ public class Dwemer implements IFeature {
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
-			blockCarved
+			blockCarved,
 			//lightNormal,
 			//glassNormal,
-			//barsNormal,
+			barsNormal
 			//doorNormal,
 			//doorTall
 		);
@@ -111,11 +111,11 @@ public class Dwemer implements IFeature {
         }).setRegistryName(blockCarved.getRegistryName()));
 
 		
-		/*registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
+		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
-        }).setRegistryName(barsNormal.getRegistryName()));*/
+        }).setRegistryName(barsNormal.getRegistryName()));
 
 		//registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
 		//registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));

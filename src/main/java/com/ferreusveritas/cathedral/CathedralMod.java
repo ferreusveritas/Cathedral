@@ -54,13 +54,14 @@ public class CathedralMod {
 		marblefixer = new MarbleFixer();
 		
 		Collections.addAll(features,
-				//cathedral,
-				basalt,
-				dwemer,
-				//extras,
-				roofing
-				//marblefixer
-			);
+			//cathedral,
+			//basalt,
+			dwemer
+			//extras,
+			//roofing
+			//marblefixer
+		);
+		
 	}
 	
 	@Instance(ModConstants.MODID)
