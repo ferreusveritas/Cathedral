@@ -43,7 +43,7 @@ public class BlockShingles extends BlockStairs {
 		setUnlocalizedName(name);
 		//setDefaultState(getDefaultState().withProperty(FORM, EnumForm.STAIRS));
 		this.color = color;
-		setCreativeTab(CathedralMod.tabCathedral);
+		setCreativeTab(CathedralMod.tabRoofing);
 	}
 
 	@Override

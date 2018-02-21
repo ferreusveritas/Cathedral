@@ -1,29 +1,34 @@
 itemGroup.tabBasalt=Basalt
-itemGroup.tabStoneLore=Stone Lore
+itemGroup.tabCathedral=Cathedral
+itemGroup.tabDwemer=Dwarven
+itemGroup.tabRoofing=Roofing
 
 tile.chisel.basaltblock.name=Basalt Block
-tile.basalt_basalt.basalt-rosette.name=Basalt Rosette
-tile.basalt_basalt.basalt-paver.name=Basalt Paver
-tile.basalt_basalt.basalt-worn-brick.name=Basalt Worn Brick
-tile.basalt_basalt.basalt-ornate.name=Basalt Ornate
-tile.basalt_basalt.basalt-poison.name=Basalt Poison
-tile.basalt_basalt.basalt-sunken-panel.name=Basalt Sunken Tile
-tile.basalt_basalt.basalt-tiles.name=Basalt Tiles
-tile.basalt_basalt.basalt-slabs.name=Basalt Bevelled Slabs
-tile.basalt_basalt.basalt-vault.name=Basalt Vault
-tile.basalt_basalt.basalt-smallbricks.name=Basalt Small Bricks
-tile.basalt_basalt.basalt-smallchaotic.name=Basalt Chaotic Bricks
-tile.basalt_basalt.basalt-smalltiles.name=Basalt Small Tiles
-tile.basalt_basalt.basalt-block.name=Basalt Bordered Block
-tile.basalt_basalt.basalt-sunken.name=Basalt Sunken
-tile.basalt_basalt.basalt-knot.name=Basalt Knotted
+
+tile.basalt_block_carved.rosette.name=Basalt Rosette
+tile.basalt_block_carved.paver.name=Basalt Paver
+tile.basalt_block_carved.wornbrick.name=Basalt Worn Brick
+tile.basalt_block_carved.ornate.name=Basalt Ornate
+tile.basalt_block_carved.poison.name=Basalt Poison
+tile.basalt_block_carved.sunkenpanel.name=Basalt Sunken Tile
+tile.basalt_block_carved.tiles.name=Basalt Tiles
+tile.basalt_block_carved.slabs.name=Basalt Bevelled Slabs
+tile.basalt_block_carved.vault.name=Basalt Vault
+tile.basalt_block_carved.smallbricks.name=Basalt Small Bricks
+tile.basalt_block_carved.smallchaotic.name=Basalt Chaotic Bricks
+tile.basalt_block_carved.smalltiles.name=Basalt Small Tiles
+tile.basalt_block_carved.bordered.name=Basalt Bordered Block
+tile.basalt_block_carved.sunken.name=Basalt Sunken
+tile.basalt_block_carved.knot.name=Basalt Knotted
+tile.basalt_block_carved.mediumbricks.name=Basalt Medium Bricks
 
 tile.chisel.checkeredblock.name=Checkered
-tile.basalt_checkered_0.name=Checkered
-tile.basalt_checkered_1.name=Checkered Border
-tile.basalt_checkered_2.name=Checkered Small
-tile.basalt_checkered_3.name=Checkered Tiles
-tile.basalt_checkered_4.name=Checkered Small Tiles
+
+tile.basalt_block_checkered.normal.name=Checkered
+tile.basalt_block_checkered.border.name=Checkered Border
+tile.basalt_block_checkered.small.name=Checkered Small
+tile.basalt_block_checkered.tiles.name=Checkered Tiles
+tile.basalt_block_checkered.tilessmall.name=Checkered Small Tiles
 
 tile.basalt_basalt-stairs.name=Basalt Stairs
 tile.basalt_basalt-brick-stairs.name=Basalt Brick Stairs
@@ -145,25 +150,27 @@ tile.basalt_gargoyle_a.name=Snow Gargoyle
 tile.basalt_stone.stone-panel.name=Stone Panel
 tile.basalt_stone.stone-knot.name=Stone Knot
 
-item.clayTile.name=Unfired Clay Tile
-item.firedTile.name=Fired Clay Tile
-tile.basalt_rooftiles_10.name=Natural Terra Cotta Roof
-tile.basalt_rooftiles_0.name=Black Terra Cotta Roof
-tile.basalt_rooftiles_1.name=Red Terra Cotta Roof
-tile.basalt_rooftiles_2.name=Green Terra Cotta Roof
-tile.basalt_rooftiles_3.name=Brown Terra Cotta Roof
-tile.basalt_rooftiles_4.name=Blue Terra Cotta Roof
-tile.basalt_rooftiles_5.name=Purple Terra Cotta Roof
-tile.basalt_rooftiles_6.name=Cyan Terra Cotta Roof
-tile.basalt_rooftiles_7.name=Light Gray Terra Cotta Roof
-tile.basalt_rooftiles_8.name=Gray Terra Cotta Roof
-tile.basalt_rooftiles_9.name=Pink Terra Cotta Roof
-tile.basalt_rooftiles_a.name=Lime Terra Cotta Roof
-tile.basalt_rooftiles_b.name=Yellow Terra Cotta Roof
-tile.basalt_rooftiles_c.name=Light Blue Terra Cotta Roof
-tile.basalt_rooftiles_d.name=Magenta Terra Cotta Roof
-tile.basalt_rooftiles_e.name=Orange Terra Cotta Roof
-tile.basalt_rooftiles_f.name=White Terra Cotta Roof
+item.claytile.name=Unfired Clay Tile
+item.firedtile.name=Fired Clay Tile
+
+
+tile.roofing_shingles_natural.name=Natural Terra Cotta Roof
+tile.roofing_shingles_black.name=Black Terra Cotta Roof
+tile.roofing_shingles_red.name=Red Terra Cotta Roof
+tile.roofing_shingles_green.name=Green Terra Cotta Roof
+tile.roofing_shingles_brown.name=Brown Terra Cotta Roof
+tile.roofing_shingles_blue.name=Blue Terra Cotta Roof
+tile.roofing_shingles_purple.name=Purple Terra Cotta Roof
+tile.roofing_shingles_cyan.name=Cyan Terra Cotta Roof
+tile.roofing_shingles_silver.name=Light Gray Terra Cotta Roof
+tile.roofing_shingles_gray.name=Gray Terra Cotta Roof
+tile.roofing_shingles_pink.name=Pink Terra Cotta Roof
+tile.roofing_shingles_lime.name=Lime Terra Cotta Roof
+tile.roofing_shingles_yellow.name=Yellow Terra Cotta Roof
+tile.roofing_shingles_light_blue.name=Light Blue Terra Cotta Roof
+tile.roofing_shingles_magenta.name=Magenta Terra Cotta Roof
+tile.roofing_shingles_orange.name=Orange Terra Cotta Roof
+tile.roofing_shingles_white.name=White Terra Cotta Roof
 
 tile.chisel.stainedglass.name=Stained Cathedral Glass
 tile.basalt_glass.stained-1.name=Fire Taijitu Cathedral Glass

@@ -2,7 +2,8 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-			"all":	"cathedral:blocks/roofing/shingles_gray"
+			"all":	"cathedral:blocks/roofing/shingles_gray",
+			"particle": "cathedral:blocks/roofing/shingles_gray"
         }
     },
     "variants": {

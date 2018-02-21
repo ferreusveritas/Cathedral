@@ -1,9 +1,9 @@
 {
     "variants": {
-    	"normal"		:{"model": "cathedral:basalt/block_checkered"},
-		"border"		:{"model": "cathedral:basalt/block_checkered"},
-		"small"			:{"model": "cathedral:basalt/block_checkered"},
-		"tiles"			:{"model": "cathedral:basalt/block_checkered"},
-		"tiles-small"	:{"model": "cathedral:basalt/block_checkered"}
+    	"variant=normal"		:{"model": "cathedral:basalt/block_checkered_normal"},
+		"variant=border"		:{"model": "cathedral:basalt/block_checkered_border"},
+		"variant=small"			:{"model": "cathedral:basalt/block_checkered_small"},
+		"variant=tiles"			:{"model": "cathedral:basalt/block_checkered_tiles"},
+		"variant=tilessmall"	:{"model": "cathedral:basalt/block_checkered_tilessmall"}
     }
 }

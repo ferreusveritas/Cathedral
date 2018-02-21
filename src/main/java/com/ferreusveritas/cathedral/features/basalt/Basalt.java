@@ -60,10 +60,7 @@ public class Basalt implements IFeature {
 			.setHardness(basaltHardness)
 			.setResistance(basaltResistance);
 
-		blockCheckered = new BlockBase(Material.ROCK,featureObjectName(BlockForm.BLOCK, "checkered"))
-			.setCreativeTab(CathedralMod.tabBasalt)
-			.setHardness((basaltHardness + marbleHardness) / 2F)
-			.setResistance((basaltResistance + marbleResistance) / 2F);
+		blockCheckered = new BlockCheckered(featureObjectName(BlockForm.BLOCK, "checkered"));
 		
 		slabCheckered = (BlockSlabBase) new BlockSlabBase(blockCheckered, featureObjectName(BlockForm.SLAB, "checkered"))
 			.setCreativeTab(CathedralMod.tabBasalt)
@@ -157,7 +154,7 @@ public class Basalt implements IFeature {
 		
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return Checkered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockCheckered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(blockCheckered.getRegistryName()));
 		
@@ -205,6 +202,10 @@ public class Basalt implements IFeature {
 
 		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(blockCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
 	}

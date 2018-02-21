@@ -1,7 +1,7 @@
 {
     "textures": {
     	"all":	"cathedral:blocks/roofing/shingles_natural",
-		"particle": "#all"
+		"particle": "cathedral:blocks/roofing/shingles_natural"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

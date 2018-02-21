@@ -7,6 +7,7 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
 import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.features.dwemer.BlockDwemer;
 import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.marble.MarbleFixer;
@@ -55,10 +56,10 @@ public class CathedralMod {
 		
 		Collections.addAll(features,
 			//cathedral,
-			//basalt,
-			dwemer
+			basalt,
+			dwemer,
 			//extras,
-			//roofing
+			roofing
 			//marblefixer
 		);
 		
@@ -89,11 +90,16 @@ public class CathedralMod {
 	};
 	
 	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
-		ItemStack icon = new ItemStack(Items.GOLD_INGOT);
-		
 		@Override
 		public ItemStack getTabIconItem() {
-			return icon;
+			return new ItemStack(ItemBlock.getItemFromBlock(dwemer.blockCarved), 1, BlockDwemer.EnumType.EMBEDDED.getMetadata());
+		}
+	};
+	
+	public static final CreativeTabs tabRoofing = new CreativeTabs("tabRoofing") {
+		@Override
+		public ItemStack getTabIconItem() {
+			return new ItemStack(ItemBlock.getItemFromBlock(roofing.roofingShinglesNatural), 1);
 		}
 	};
 	

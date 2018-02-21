@@ -48,11 +48,11 @@ public class Roofing implements IFeature {
 		clayTile = new Item()
 				.setRegistryName("claytile")
 				.setUnlocalizedName("claytile")
-				.setCreativeTab(CathedralMod.tabCathedral);
+				.setCreativeTab(CathedralMod.tabRoofing);
 		firedTile = new Item()
 				.setRegistryName("firedtile")
 				.setUnlocalizedName("firedtile")
-				.setCreativeTab(CathedralMod.tabCathedral);
+				.setCreativeTab(CathedralMod.tabRoofing);
 	}
 
 	@Override
@@ -98,6 +98,10 @@ public class Roofing implements IFeature {
 
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
+
+		ModelHelper.regModel(clayTile);
+		ModelHelper.regModel(firedTile);
+		
 		ModelHelper.regModel(roofingShinglesNatural);
 		
 		for(BlockShingles shingles: roofingShinglesColored) {
