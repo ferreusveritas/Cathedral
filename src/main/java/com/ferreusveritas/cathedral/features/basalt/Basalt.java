@@ -3,7 +3,6 @@ package com.ferreusveritas.cathedral.features.basalt;
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.features.BlockForm;

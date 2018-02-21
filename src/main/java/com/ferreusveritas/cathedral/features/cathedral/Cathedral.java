@@ -2,14 +2,12 @@ package com.ferreusveritas.cathedral.features.cathedral;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.BlockForm;
+import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
