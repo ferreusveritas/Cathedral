@@ -1,0 +1,65 @@
+{
+    "textures": {
+    	"rail": "blocks/stone",
+        "particle": "blocks/stone"
+    },
+    "elements": [
+        {   "from": [ 5, 0, 0 ],
+            "to": [ 11, 4, 8 ],
+            "faces": {
+                "down":  { "texture": "#rail", "cullface": "down" },
+                "up":    { "texture": "#rail" },
+                "north": { "texture": "#rail", "cullface": "north" },
+                "west":  { "texture": "#rail" },
+                "east":  { "texture": "#rail" }
+            },
+            "__comment": "wall"
+        },
+        {   "from": [ 5, 13, 0 ],
+            "to": [ 11, 16, 8 ],
+            "faces": {
+                "down":  { "texture": "#rail" },
+                "up":    { "texture": "#rail", "cullface": "up" },
+                "north": { "texture": "#rail", "cullface": "north" },
+                "west":  { "texture": "#rail" },
+                "east":  { "texture": "#rail" }
+            },
+            "__comment": "wall"
+        },
+        {   "from": [ 6, 4, 1 ],
+            "to": [ 10, 5, 7 ],
+            "faces": {
+                "up":    { "texture": "#rail" },
+                "north": { "texture": "#rail" },
+                "south": { "texture": "#rail" },
+                "west":  { "texture": "#rail" },
+                "east":  { "texture": "#rail" }
+            },
+            "__comment": "wall"
+        },
+        {   "from": [ 6, 12, 1 ],
+            "to": [ 10, 13, 7 ],
+            "faces": {
+                "down":    { "texture": "#rail" },
+                "north": { "texture": "#rail" },
+                "south": { "texture": "#rail" },
+                "west":  { "texture": "#rail" },
+                "east":  { "texture": "#rail" }
+            },
+            "__comment": "wall"
+        },
+        {   "from": [ 7, 5, 2 ],
+            "to": [ 9, 12, 6 ],
+            "faces": {
+                "down":    { "texture": "#rail" },
+                "north": { "texture": "#rail" },
+                "south": { "texture": "#rail" },
+                "west":  { "texture": "#rail" },
+                "east":  { "texture": "#rail" }
+            },
+            "__comment": "wall"
+        }
+
+        
+    ]
+}

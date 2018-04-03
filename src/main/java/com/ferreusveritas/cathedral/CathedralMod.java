@@ -55,7 +55,7 @@ public class CathedralMod {
 		marblefixer = new MarbleFixer();
 		
 		Collections.addAll(features,
-			//cathedral,
+			cathedral,
 			basalt,
 			dwemer,
 			//extras,

@@ -8,6 +8,7 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -54,9 +55,6 @@ public class Cathedral implements IFeature {
 		
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
-		
-		//whiteTest = new BlockStone().setBlockTextureName(StoneLore.MODID + ":" + "white").setBlockName(StoneLore.MODID + "_" + "whiteTest").setCreativeTab(StoneLore.tabStoneLore);
-		//GameRegistry.registerBlock(whiteTest, "whitetest");
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class Cathedral implements IFeature {
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
 			//glassStained,
-			//railingVarious,
+			railingVarious
 			//chainVarious,
 			//catwalkVarious,
 			//gargoyleDemon
@@ -87,13 +85,13 @@ public class Cathedral implements IFeature {
         }).setRegistryName(glassStained.getRegistryName()));
         */
 		
-		/*
+		
 		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(railingVarious.getRegistryName()));
-        */
+        
 
 		/*
 		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {

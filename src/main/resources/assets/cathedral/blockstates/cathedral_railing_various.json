@@ -1,19 +1,51 @@
 {
-    "multipart": [
-        {   "when": { "up": "true" },
-            "apply": { "model": "cobblestone_wall_post" }
-        },
-        {   "when": { "north": "true" },
-            "apply": { "model": "cobblestone_wall_side", "uvlock": true }
-        },
-        {   "when": { "east": "true" },
-            "apply": { "model": "cobblestone_wall_side", "y": 90, "uvlock": true }
-        },
-        {   "when": { "south": "true" },
-            "apply": { "model": "cobblestone_wall_side", "y": 180, "uvlock": true }
-        },
-        {   "when": { "west": "true" },
-            "apply": { "model": "cobblestone_wall_side", "y": 270, "uvlock": true }
-        }
-    ]
+  "forge_marker": 1,
+  "variants": {
+  
+     "variant": {
+		"stone": { "textures": { "rail": "chisel:blocks/stone/tiles-large" } },
+		"sandstone": { "textures": { "rail": "chisel:blocks/sandstoneyellow/tiles-large" } },
+		"redsandstone": { "textures": { "rail": "chisel:blocks/sandstonered/tiles-large" } },
+		"obsidian": { "textures": { "rail": "chisel:blocks/obsidian/panel" } },
+		"netherbrick": { "textures": { "rail": "blocks/nether_brick" } },
+		"quartz": { "textures": { "rail": "chisel:blocks/quartz/tiles-large" } },
+		"endstone": { "textures": { "rail": "chisel:blocks/endstone/tiles-large" } },
+		"packedice": { "textures": { "rail": "blocks/ice_packed" } },
+		"snow": { "textures": { "rail": "blocks/snow" } },
+		"marble": { "textures": { "rail": "chisel:blocks/marble/tiles-large" } },
+		"limestone": { "textures": { "rail": "chisel:blocks/limestone/tiles-large" } },
+		"basalt": { "textures": { "rail": "cathedral:blocks/basalt/block_carved_paver" } },
+		"dwemer": { "textures": { "rail": "cathedral:blocks/dwemer/block_carved_panel" } }
+	},
+  
+	"up": {
+		"true": { "submodel": "cathedral:cathedral/rail_post" },
+		"false" : {}
+	},  
+
+	"north": {
+		"true": { "submodel": "cathedral:cathedral/rail_side", "uvlock": true },
+		"false" : {}
+	}, 
+
+	"east": {
+		"true": { "submodel": "cathedral:cathedral/rail_side", "y": 90, "uvlock": true },
+		"false" : {}
+	}, 
+
+	"south": {
+		"true": { "submodel": "cathedral:cathedral/rail_side", "y": 180, "uvlock": true },
+		"false" : {}
+	},  
+
+	"west": {
+		"true": { "submodel": "cathedral:cathedral/rail_side", "y": 270, "uvlock": true },
+		"false" : {}
+	}, 
+
+	"postcap": {
+		"true": { "submodel": "cathedral:cathedral/rail_cap" },
+		"false" : {}
+	}
+}
 }
