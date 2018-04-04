@@ -3,19 +3,19 @@
   "variants": {
   
      "variant": {
-		"stone": { "textures": { "rail": "chisel:blocks/stone/tiles-large" } },
-		"sandstone": { "textures": { "rail": "chisel:blocks/sandstoneyellow/tiles-large" } },
-		"redsandstone": { "textures": { "rail": "chisel:blocks/sandstonered/tiles-large" } },
-		"obsidian": { "textures": { "rail": "chisel:blocks/obsidian/panel" } },
-		"netherbrick": { "textures": { "rail": "blocks/nether_brick" } },
-		"quartz": { "textures": { "rail": "chisel:blocks/quartz/tiles-large" } },
-		"endstone": { "textures": { "rail": "chisel:blocks/endstone/tiles-large" } },
-		"packedice": { "textures": { "rail": "blocks/ice_packed" } },
-		"snow": { "textures": { "rail": "blocks/snow" } },
-		"marble": { "textures": { "rail": "chisel:blocks/marble/tiles-large" } },
-		"limestone": { "textures": { "rail": "chisel:blocks/limestone/tiles-large" } },
-		"basalt": { "textures": { "rail": "cathedral:blocks/basalt/block_carved_paver" } },
-		"dwemer": { "textures": { "rail": "cathedral:blocks/dwemer/block_carved_panel" } }
+		"stone": { "textures": { "rail": "chisel:blocks/stone/tiles-large", "particle": "chisel:blocks/stone/tiles-large" } },
+		"sandstone": { "textures": { "rail": "chisel:blocks/sandstoneyellow/tiles-large", "particle": "chisel:blocks/sandstoneyellow/tiles-large" } },
+		"redsandstone": { "textures": { "rail": "chisel:blocks/sandstonered/tiles-large", "particle": "chisel:blocks/sandstonered/tiles-large" } },
+		"obsidian": { "textures": { "rail": "chisel:blocks/obsidian/panel", "particle": "chisel:blocks/obsidian/panel" } },
+		"netherbrick": { "textures": { "rail": "blocks/nether_brick", "particle": "blocks/nether_brick" } },
+		"quartz": { "textures": { "rail": "chisel:blocks/quartz/tiles-large", "particle": "chisel:blocks/quartz/tiles-large" } },
+		"endstone": { "textures": { "rail": "chisel:blocks/endstone/tiles-large", "particle": "chisel:blocks/endstone/tiles-large" } },
+		"packedice": { "textures": { "rail": "blocks/ice_packed", "particle": "blocks/ice_packed" } },
+		"snow": { "textures": { "rail": "blocks/snow", "particle": "blocks/snow" } },
+		"marble": { "textures": { "rail": "chisel:blocks/marble/tiles-large", "particle": "chisel:blocks/marble/tiles-large" } },
+		"limestone": { "textures": { "rail": "chisel:blocks/limestone/tiles-large", "particle": "chisel:blocks/limestone/tiles-large" } },
+		"basalt": { "textures": { "rail": "cathedral:blocks/basalt/block_carved_paver", "particle": "cathedral:blocks/basalt/block_carved_paver" } },
+		"dwemer": { "textures": { "rail": "cathedral:blocks/dwemer/block_carved_panel", "particle": "cathedral:blocks/dwemer/block_carved_panel" } }
 	},
   
 	"up": {
