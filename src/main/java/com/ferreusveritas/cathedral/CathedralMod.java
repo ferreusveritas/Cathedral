@@ -18,7 +18,6 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -75,31 +74,29 @@ public class CathedralMod {
         @SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ItemBlock.getItemFromBlock(basalt.blockCarved), 1, BlockBasalt.EnumType.POISON.getMetadata());
+			return new ItemStack(basalt.blockCarved, 1, BlockBasalt.EnumType.POISON.getMetadata());
 		}
 	};
 	
 	public static final CreativeTabs tabCathedral = new CreativeTabs("tabCathedral") {
-		ItemStack icon = new ItemStack(Items.BONE);
-
         @SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return icon;
+			return new ItemStack(cathedral.railingVarious);
 		}
 	};
 	
 	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ItemBlock.getItemFromBlock(dwemer.blockCarved), 1, BlockDwemer.EnumType.EMBEDDED.getMetadata());
+			return new ItemStack(dwemer.blockCarved, 1, BlockDwemer.EnumType.EMBEDDED.getMetadata());
 		}
 	};
 	
 	public static final CreativeTabs tabRoofing = new CreativeTabs("tabRoofing") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ItemBlock.getItemFromBlock(roofing.roofingShinglesNatural), 1);
+			return new ItemStack(roofing.roofingShinglesNatural, 1);
 		}
 	};
 	

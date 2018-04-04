@@ -139,8 +139,6 @@ public class Dwemer implements IFeature {
 					metalIngot = "ingotGold";//This sucks but whatever
 				}
 		
-		System.out.println("Ingot: " + metalIngot);
-
 		/*
 		//Recipe for Dwemer Stone
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBlock, 16, 0), true, new Object[]{"bbb", "bnb", "bbb", 'b', "basalt", 'n', metalIngot}));

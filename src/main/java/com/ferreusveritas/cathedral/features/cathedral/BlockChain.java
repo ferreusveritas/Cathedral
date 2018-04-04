@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -98,6 +99,11 @@ public class BlockChain extends Block {
 		return true;
 	}
 
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.CUTOUT_MIPPED;
+	}
+	
 	public static enum EnumType implements IStringSerializable {
 		IRON	(0, "Iron", 0xd7d7d7),
 		GOLD	(1, "Gold", 0xe0b820),

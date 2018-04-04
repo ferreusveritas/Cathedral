@@ -1,0 +1,27 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+    	"chain": "cathedral:blocks/cathedral/chain",
+        "particle": "cathedral:blocks/cathedral/chain"
+    },
+    "elements": [
+        {   "from": [ 6, 0, 8 ],
+            "to": [ 10, 16, 8 ],
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45, "rescale": true },
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 0, 0, 6, 16 ], "texture": "#chain", "tintindex": 1 },
+                "south": { "uv": [ 0, 0, 6, 16 ], "texture": "#chain", "tintindex": 1 }
+            }
+        },
+        {   "from": [ 8, 0, 6 ],
+            "to": [ 8, 16, 10 ],
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "y", "angle": 45, "rescale": true },
+            "shade": false,
+            "faces": {
+                "west": { "uv": [ 6, 0, 12, 16 ], "texture": "#chain", "tintindex": 1 },
+                "east": { "uv": [ 6, 0, 12, 16 ], "texture": "#chain", "tintindex": 1 }
+            }
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{   
+	"parent": "cathedral:item/railing",
+    "textures": {
+        "rail": "chisel:blocks/obsidian/panel"
+    }
+}

@@ -1,0 +1,6 @@
+{   
+	"parent": "cathedral:item/railing",
+    "textures": {
+        "rail": "cathedral:blocks/basalt/block_carved_paver"
+    }
+}
