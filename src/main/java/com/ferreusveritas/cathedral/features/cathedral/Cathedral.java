@@ -30,38 +30,32 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Cathedral implements IFeature {
-
+	
 	public static final String featureName = "cathedral";
 	
 	public Block	glassStained, railingVarious, chainVarious, catwalkVarious;
 	public BlockGargoyle	gargoyleDemon;
 	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
-	
 	@Override
 	public String getName() {
 		return featureName;
 	}
-
+	
 	@Override
-	public void preInit() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void preInit() { }
+	
 	@Override
 	public void createBlocks() {
 		glassStained 	= new BlockGlassStained(featureObjectName(BlockForm.GLASS, "stained"));
 		railingVarious 	= new BlockRailing(featureObjectName(BlockForm.RAILING, "various"));
 		chainVarious 	= new BlockChain(featureObjectName(BlockForm.CHAIN, "various"));
-		
-		catwalkVarious = new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"))
+		catwalkVarious	= new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"))
 				.setCreativeTab(CathedralMod.tabCathedral)
 				.setHardness(2.5f)
 				//.setStepSound(SoundType.METAL)
 				.setResistance(20F);
-		
-		gargoyleDemon	= new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon"));
+		gargoyleDemon 	= new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon"));
 		
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
@@ -72,15 +66,15 @@ public class Cathedral implements IFeature {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
-			//glassStained,
+			glassStained,
 			railingVarious,
-			chainVarious
+			chainVarious,
 			//catwalkVarious,
-			//gargoyleDemon
+			gargoyleDemon
 		);
 	}
 
@@ -99,37 +93,32 @@ public class Cathedral implements IFeature {
 	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-
-		/*
-		registry.register(new ItemMultiTexture(glassStained, glassStained, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(glassStained.getRegistryName()));
-        */
 		
+		registry.register(new ItemMultiTexture(glassStained, glassStained, new ItemMultiTexture.Mapper() {
+			public String apply(ItemStack stack) {
+				return BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+			}
+		}).setRegistryName(glassStained.getRegistryName()));
 		
 		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(railingVarious.getRegistryName()));
-        
-		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(chainVarious.getRegistryName()));
+			public String apply(ItemStack stack) {
+				return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+			}
+		}).setRegistryName(railingVarious.getRegistryName()));
 		
-		/*
+		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {
+			public String apply(ItemStack stack) {
+				return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+			}
+		}).setRegistryName(chainVarious.getRegistryName()));
+		
 		registry.register(new ItemBlock(gargoyleDemon).setRegistryName(gargoyleDemon.getRegistryName()));
-		*/
-
+		
 	}
-
+	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
-
+		
 		//Stained Glass
 		registry.register(
 			new ShapedOreRecipe(
@@ -166,7 +155,7 @@ public class Cathedral implements IFeature {
 		
 		//Chains
 		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
-			String nuggetName = "nugget" + type.getName();
+			String nuggetName = "nugget" + type.getOreName();
 			if(OreDictionary.doesOreNameExist(nuggetName)){
 				registry.register( 
 					new ShapedOreRecipe(
@@ -178,7 +167,7 @@ public class Cathedral implements IFeature {
 							"o",
 							'o', nuggetName
 						}
-					)
+					).setRegistryName("chain" + type.getName())
 				);
 			}
 		}
@@ -210,9 +199,13 @@ public class Cathedral implements IFeature {
 		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 9), "X X", "XXX", " X ", 'X', new ItemStack(chiselLimestone, 1, 0));
 		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 10), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.SNOW));*/
 	}
-
+	
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
+		
+		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(glassStained), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassStained.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
 		
 		for(BlockRailing.EnumType type: BlockRailing.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(railingVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, railingVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
@@ -223,7 +216,7 @@ public class Cathedral implements IFeature {
 		}
 		
 	}
-
+	
 	@Override
 	public void init() {
 		
@@ -233,7 +226,7 @@ public class Cathedral implements IFeature {
 				return state.getValue(BlockChain.VARIANT).getColor();
 			}
 		}, new Block[] {chainVarious});
-
+		
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 			@Override
 			public int colorMultiplier(ItemStack stack, int tintIndex) {
@@ -242,7 +235,7 @@ public class Cathedral implements IFeature {
 		}, new Item[] {Item.getItemFromBlock(chainVarious)});
 		
 	}
-
+	
 	@Override
 	public void postInit() { }
 	

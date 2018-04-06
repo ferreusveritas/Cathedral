@@ -123,7 +123,7 @@ public class BlockChain extends Block {
 			this.meta = index;
 			this.name = name.toLowerCase();
 			this.unlocalizedName = name.toLowerCase();
-			this.orename = name();			
+			this.orename = name;			
 			this.color = color;
 		}
 		
@@ -146,7 +146,7 @@ public class BlockChain extends Block {
 		
 		@Override
 		public String getName() {
-			return name.toLowerCase();
+			return name;
 		}
 		
 		public String getUnlocalizedName() {

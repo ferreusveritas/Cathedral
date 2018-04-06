@@ -1,0 +1,6 @@
+{
+    "variants": {
+		"variant=firetaijitu"		:{"model": "cathedral:cathedral/glass_stained_firetaijitu"},
+		"variant=amberrhombus"		:{"model": "cathedral:cathedral/glass_stained_amberrhombus"}
+    }
+}

@@ -10,6 +10,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
@@ -58,6 +59,11 @@ public class BlockGlassStained extends BlockGlass {
 		for(EnumType type : EnumType.values()) {
 			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
+	}
+	
+	@Override
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
 	public static enum EnumType implements IStringSerializable {

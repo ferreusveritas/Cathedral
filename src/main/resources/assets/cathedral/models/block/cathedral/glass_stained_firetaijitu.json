@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "cathedral:blocks/cathedral/glass_stained_firetaijitu"
+    }
+}

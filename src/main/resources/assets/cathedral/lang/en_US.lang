@@ -173,5 +173,5 @@ tile.roofing_shingles_orange.name=Orange Terra Cotta Roof
 tile.roofing_shingles_white.name=White Terra Cotta Roof
 
 tile.chisel.stainedglass.name=Stained Cathedral Glass
-tile.basalt_glass.stained-1.name=Fire Taijitu Cathedral Glass
-tile.basalt_glass.stained-2.name=Amber Rhombus Cathedral Glass
+tile.cathedral_glass_stained.firetaijitu.name=Fire Taijitu Cathedral Glass
+tile.cathedral_glass_stained.amberrhombus.name=Amber Rhombus Cathedral Glass
