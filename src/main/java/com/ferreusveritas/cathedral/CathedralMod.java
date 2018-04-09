@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -142,6 +143,7 @@ public class CathedralMod {
 		@SubscribeEvent
 		@SideOnly(Side.CLIENT)
 		public static void registerModels(ModelRegistryEvent event) {
+			OBJLoader.INSTANCE.addDomain(ModConstants.MODID);
 			features.forEach(f -> f.registerModels(event));
 		}
 		

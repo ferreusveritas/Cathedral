@@ -214,6 +214,8 @@ public class Cathedral implements IFeature {
 		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(chainVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, chainVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
+
+		ModelHelper.regModel(gargoyleDemon);
 		
 	}
 	

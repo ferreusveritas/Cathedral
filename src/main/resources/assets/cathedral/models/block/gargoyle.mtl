@@ -1,0 +1,5 @@
+newmtl material
+Ka 0.0 0.0 0.0
+Kd 1.0 1.0 1.0
+d 1
+map_Kd minecraft:blocks/redstone_block
