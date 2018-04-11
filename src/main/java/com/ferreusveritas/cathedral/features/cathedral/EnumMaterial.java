@@ -1,8 +1,14 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.features.dwemer.BlockDwemer;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Explosion;
@@ -62,7 +68,7 @@ public enum EnumMaterial implements IStringSerializable {
 		return hardness;
 	}
 	
-	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
+	public float getExplosionResistance(Entity exploder) {
 		switch (this) {
 			case STONE: return Blocks.STONE.getExplosionResistance(exploder);
 			case SANDSTONE: return Blocks.SANDSTONE.getExplosionResistance(exploder);
@@ -78,6 +84,25 @@ public enum EnumMaterial implements IStringSerializable {
 			case BASALT: return 20.0f;
 			case DWEMER: return 20.0f;
 			default: return 1.5f;
+		}
+	}
+	
+	public ItemStack getRawMaterialBlock() {
+		switch(this) {
+			case STONE: return new ItemStack(Blocks.STONE);
+			case SANDSTONE: return new ItemStack(Blocks.SANDSTONE);
+			case REDSANDSTONE: return new ItemStack(Blocks.RED_SANDSTONE);
+			case OBSIDIAN: return new ItemStack(Blocks.OBSIDIAN);
+			case NETHERBRICK: return new ItemStack(Blocks.NETHER_BRICK);
+			case QUARTZ: return new ItemStack(Blocks.QUARTZ_BLOCK);
+			case ENDSTONE: return new ItemStack(Blocks.END_STONE);
+			case PACKEDICE: return new ItemStack(Blocks.PACKED_ICE);
+			case SNOW: return new ItemStack(Blocks.SNOW);
+			case MARBLE: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7);
+			case LIMESTONE: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
+			case BASALT: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7);
+			case DWEMER: return new ItemStack(CathedralMod.dwemer.blockCarved, 1, BlockDwemer.EnumType.PANEL.getMetadata());
+			default: return ItemStack.EMPTY;
 		}
 	}
 	

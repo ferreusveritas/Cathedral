@@ -4,7 +4,6 @@ import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.dwemer.BlockDwemer;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
@@ -14,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -82,16 +82,52 @@ public class Cathedral implements IFeature {
 		registry.registerAll(gargoyleDemon);
 	}
 
-	public void railRecipe(ItemStack input, EnumMaterial type) {
+	public void railRecipe(EnumMaterial type) {
+		ItemStack input = type.getRawMaterialBlock();
 		if(input.getItem() instanceof ItemBlock && ((ItemBlock)input.getItem()).getBlock() != Blocks.AIR) {
 			GameRegistry.addShapedRecipe(
-					new ResourceLocation(ModConstants.MODID, "railing" + type.getName()),//Name
+					new ResourceLocation(ModConstants.MODID, "railing_" + type.getName()),//Name
 					null,//Group
 					new ItemStack(railingVarious, 8, type.getMetadata()),//Output
 					"xxx",
 					"x x",
 					'x', input
 					);
+		}
+	}
+	
+	public void gargoyleDemonRecipe(EnumMaterial type) {
+		ItemStack input = type.getRawMaterialBlock();
+		if(input.getItem() instanceof ItemBlock && ((ItemBlock)input.getItem()).getBlock() != Blocks.AIR) {
+			GameRegistry.addShapedRecipe(
+					new ResourceLocation(ModConstants.MODID, "gargoyle_demon_" + type.getName()),//Name
+					null,//Group
+					new ItemStack(gargoyleDemon[type.ordinal()]),//Output
+					" s ",
+					"fpf",
+					"sss",
+					's', input,
+					'p', Blocks.LIT_PUMPKIN,
+					'f', Items.FEATHER
+					);
+		}
+	}
+
+	public void chainRecipe(BlockChain.EnumType type, IForgeRegistry<IRecipe> registry) {
+		String nuggetName = "nugget" + type.getOreName();
+		if(OreDictionary.doesOreNameExist(nuggetName)){
+			registry.register( 
+				new ShapedOreRecipe(
+					null,
+					new ItemStack(chainVarious, 4, type.getMetadata()),
+					new Object[]{
+						"o",
+						"o",
+						"o",
+						'o', nuggetName
+					}
+				).setRegistryName("chain" + type.getName())
+			);
 		}
 	}
 	
@@ -145,39 +181,16 @@ public class Cathedral implements IFeature {
 		);
 		
 		//Stone Railings
-		railRecipe(new ItemStack(Blocks.STONE), EnumMaterial.STONE);
-		railRecipe(new ItemStack(Blocks.SANDSTONE), EnumMaterial.SANDSTONE);
-		railRecipe(new ItemStack(Blocks.RED_SANDSTONE), EnumMaterial.REDSANDSTONE);
-		railRecipe(new ItemStack(Blocks.OBSIDIAN), EnumMaterial.OBSIDIAN);
-		railRecipe(new ItemStack(Blocks.NETHER_BRICK), EnumMaterial.NETHERBRICK);
-		railRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), EnumMaterial.QUARTZ);
-		railRecipe(new ItemStack(Blocks.END_STONE), EnumMaterial.ENDSTONE);
-		railRecipe(new ItemStack(Blocks.PACKED_ICE), EnumMaterial.PACKEDICE);
-		railRecipe(new ItemStack(Blocks.SNOW), EnumMaterial.SNOW);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7), EnumMaterial.MARBLE);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7), EnumMaterial.LIMESTONE);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7), EnumMaterial.BASALT);
-		railRecipe(new ItemStack(CathedralMod.dwemer.blockCarved, 1, BlockDwemer.EnumType.PANEL.getMetadata()), EnumMaterial.DWEMER);
+		for(EnumMaterial material : EnumMaterial.values()) {
+			railRecipe(material);
+		}
 		
 		//Chains
 		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
-			String nuggetName = "nugget" + type.getOreName();
-			if(OreDictionary.doesOreNameExist(nuggetName)){
-				registry.register( 
-					new ShapedOreRecipe(
-						null,
-						new ItemStack(chainVarious, 4, type.getMetadata()),
-						new Object[]{
-							"o",
-							"o",
-							"o",
-							'o', nuggetName
-						}
-					).setRegistryName("chain" + type.getName())
-				);
-			}
+			chainRecipe(type, registry);
 		}
 		
+		//Allow exchange for BRONZE -> DWEMER chain
 		if(!OreDictionary.doesOreNameExist("nuggetDwemer")){
 			GameRegistry.addShapelessRecipe(
 				new ResourceLocation(ModConstants.MODID, "chaindwemer"),
@@ -188,22 +201,12 @@ public class Cathedral implements IFeature {
 				}// Input
 			);
 		}
-		
+
 		//Gargoyles
-		/*Block chiselMarble = GameRegistry.findBlock("chisel", "marble");
-		Block chiselLimestone = GameRegistry.findBlock("chisel", "limestone");
+		for(EnumMaterial material : EnumMaterial.values()) {
+			gargoyleDemonRecipe(material);
+		}
 		
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 0), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.STONE));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 1), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.SANDSTONE));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 2), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.NETHER_BRICK));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 3), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.OBSIDIAN));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 4), "X X", "XXX", " X ", 'X', new ItemStack(Dwemer.dwemerBlock, 1, 14));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 5), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.PACKED_ICE));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 6), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.END_STONE));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 7), "X X", "XXX", " X ", 'X', new ItemStack(Cathedral.basaltBase, 1, 3));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 8), "X X", "XXX", " X ", 'X', new ItemStack(chiselMarble, 1, 0));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 9), "X X", "XXX", " X ", 'X', new ItemStack(chiselLimestone, 1, 0));
-		GameRegistry.addRecipe(new ItemStack(gargoyleBlock, 1, 10), "X X", "XXX", " X ", 'X', new ItemStack(Blocks.SNOW));*/
 	}
 	
 	@Override

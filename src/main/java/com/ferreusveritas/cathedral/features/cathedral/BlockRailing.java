@@ -259,7 +259,7 @@ public class BlockRailing extends Block {
 	
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(world, pos, exploder, explosion);
+		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(exploder);
 	}
 
 }
