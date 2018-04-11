@@ -21,11 +21,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -41,7 +39,7 @@ public class BlockRailing extends Block {
 	public static final PropertyBool SOUTH = PropertyBool.create("south");
 	public static final PropertyBool WEST = PropertyBool.create("west");
 	public static final PropertyBool POSTCAP = PropertyBool.create("postcap");
-	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
+	public static final PropertyEnum<EnumMaterial> VARIANT = PropertyEnum.<EnumMaterial>create("variant", EnumMaterial.class);
 	
 	protected static final AxisAlignedBB[] AABB_BY_INDEX = new AxisAlignedBB[] {
 			new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D),
@@ -98,7 +96,7 @@ public class BlockRailing extends Block {
 				.withProperty(SOUTH, Boolean.valueOf(false))
 				.withProperty(WEST, Boolean.valueOf(false))
 				.withProperty(POSTCAP, Boolean.valueOf(false))
-				.withProperty(VARIANT, EnumType.STONE));
+				.withProperty(VARIANT, EnumMaterial.STONE));
 		setCreativeTab(CathedralMod.tabCathedral);
 	}
 	
@@ -169,7 +167,7 @@ public class BlockRailing extends Block {
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, EnumMaterial.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */
@@ -185,7 +183,7 @@ public class BlockRailing extends Block {
 	
 	@Override
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		for(EnumType type : EnumType.values()) {
+		for(EnumMaterial type : EnumMaterial.values()) {
 			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
 	}
@@ -254,96 +252,14 @@ public class BlockRailing extends Block {
 		return i;
 	}
 
-	public static enum EnumType implements IStringSerializable {
-		
-		STONE         (0, "stone"),
-		SANDSTONE     (1, "sandstone"),
-		REDSANDSTONE  (2, "redsandstone"),
-		OBSIDIAN      (3, "obsidian"),
-		NETHERBRICK   (4, "netherbrick"),
-		QUARTZ        (5, "quartz"),
-		ENDSTONE      (6, "endstone"),
-		PACKEDICE     (7, "packedice"),
-		SNOW          (8, "snow"),
-		MARBLE        (9, "marble"),
-		LIMESTONE     (10, "limestone"),
-		BASALT        (11, "basalt"),
-		DWEMER        (12, "dwemer");
-		
-		private final int meta;
-		private final String name;
-		private final String unlocalizedName;
-		
-		private EnumType(int index, String name) {
-			this.meta = index;
-			this.name = name;
-			this.unlocalizedName = name;
-		}
-		
-		public int getMetadata() {
-			return meta;
-		}
-		
-		@Override
-		public String toString() {
-			return name;
-		}
-		
-		public static EnumType byMetadata(int meta) {
-			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
-		}
-		
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public String getUnlocalizedName() {
-			return unlocalizedName;
-		}
-		
-	}
-	
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
-		switch (blockState.getValue(VARIANT)) {
-			case STONE: return 1.5f;
-			case SANDSTONE: return 0.8f;
-			case REDSANDSTONE: return 0.8f;
-			case OBSIDIAN: return 50.0f;
-			case NETHERBRICK: return 2.0f;
-			case QUARTZ: return 0.8f;
-			case ENDSTONE: return 3.0f;
-			case PACKEDICE: return 0.5f;
-			case SNOW: return 0.2f;
-			case MARBLE: return 1.5f;
-			case LIMESTONE: return 2.0f;
-			case BASALT: return 2.5f;
-			case DWEMER: return 2.5f;
-			default: return 1.5f;
-		}
+		return blockState.getValue(VARIANT).getHardness();
 	}
 	
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		IBlockState blockState = world.getBlockState(pos);
-		
-		switch (blockState.getValue(VARIANT)) {
-			case STONE: return Blocks.STONE.getExplosionResistance(exploder);
-			case SANDSTONE: return Blocks.SANDSTONE.getExplosionResistance(exploder);
-			case REDSANDSTONE: return Blocks.RED_SANDSTONE.getExplosionResistance(exploder);
-			case OBSIDIAN: return Blocks.OBSIDIAN.getExplosionResistance(exploder);
-			case NETHERBRICK: return Blocks.NETHER_BRICK.getExplosionResistance(exploder);
-			case QUARTZ: return Blocks.QUARTZ_BLOCK.getExplosionResistance(exploder);
-			case ENDSTONE: return Blocks.END_STONE.getExplosionResistance(exploder);
-			case PACKEDICE: return Blocks.PACKED_ICE.getExplosionResistance(exploder);
-			case SNOW: return Blocks.SNOW.getExplosionResistance(exploder);
-			case MARBLE: return 10.0f;
-			case LIMESTONE: return 10.0f;
-			case BASALT: return 20.0f;
-			case DWEMER: return 20.0f;
-			default: return 1.5f;
-		}
+		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(world, pos, exploder, explosion);
 	}
 
 }

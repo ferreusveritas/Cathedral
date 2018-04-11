@@ -34,7 +34,7 @@ public class Cathedral implements IFeature {
 	public static final String featureName = "cathedral";
 	
 	public Block	glassStained, railingVarious, chainVarious, catwalkVarious;
-	public BlockGargoyle	gargoyleDemon;
+	public BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
 	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
 	@Override
@@ -55,7 +55,10 @@ public class Cathedral implements IFeature {
 				.setHardness(2.5f)
 				//.setStepSound(SoundType.METAL)
 				.setResistance(20F);
-		gargoyleDemon 	= new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon"));
+
+		for(EnumMaterial type: EnumMaterial.values()) {
+			gargoyleDemon[type.ordinal()] = new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon_" + type.getName()));
+		}
 		
 		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
 		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
@@ -72,13 +75,14 @@ public class Cathedral implements IFeature {
 		registry.registerAll(
 			glassStained,
 			railingVarious,
-			chainVarious,
+			chainVarious
 			//catwalkVarious,
-			gargoyleDemon
 		);
+		
+		registry.registerAll(gargoyleDemon);
 	}
 
-	public void railRecipe(ItemStack input, BlockRailing.EnumType type) {
+	public void railRecipe(ItemStack input, EnumMaterial type) {
 		if(input.getItem() instanceof ItemBlock && ((ItemBlock)input.getItem()).getBlock() != Blocks.AIR) {
 			GameRegistry.addShapedRecipe(
 					new ResourceLocation(ModConstants.MODID, "railing" + type.getName()),//Name
@@ -102,7 +106,7 @@ public class Cathedral implements IFeature {
 		
 		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
 			public String apply(ItemStack stack) {
-				return BlockRailing.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+				return EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName();
 			}
 		}).setRegistryName(railingVarious.getRegistryName()));
 		
@@ -112,7 +116,9 @@ public class Cathedral implements IFeature {
 			}
 		}).setRegistryName(chainVarious.getRegistryName()));
 		
-		registry.register(new ItemBlock(gargoyleDemon).setRegistryName(gargoyleDemon.getRegistryName()));
+		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
+			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
+		}
 		
 	}
 	
@@ -139,19 +145,19 @@ public class Cathedral implements IFeature {
 		);
 		
 		//Stone Railings
-		railRecipe(new ItemStack(Blocks.STONE), BlockRailing.EnumType.STONE);
-		railRecipe(new ItemStack(Blocks.SANDSTONE), BlockRailing.EnumType.SANDSTONE);
-		railRecipe(new ItemStack(Blocks.RED_SANDSTONE), BlockRailing.EnumType.REDSANDSTONE);
-		railRecipe(new ItemStack(Blocks.OBSIDIAN), BlockRailing.EnumType.OBSIDIAN);
-		railRecipe(new ItemStack(Blocks.NETHER_BRICK), BlockRailing.EnumType.NETHERBRICK);
-		railRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), BlockRailing.EnumType.QUARTZ);
-		railRecipe(new ItemStack(Blocks.END_STONE), BlockRailing.EnumType.ENDSTONE);
-		railRecipe(new ItemStack(Blocks.PACKED_ICE), BlockRailing.EnumType.PACKEDICE);
-		railRecipe(new ItemStack(Blocks.SNOW), BlockRailing.EnumType.SNOW);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7), BlockRailing.EnumType.MARBLE);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7), BlockRailing.EnumType.LIMESTONE);
-		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7), BlockRailing.EnumType.BASALT);
-		railRecipe(new ItemStack(CathedralMod.dwemer.blockCarved, 1, BlockDwemer.EnumType.PANEL.getMetadata()), BlockRailing.EnumType.DWEMER);
+		railRecipe(new ItemStack(Blocks.STONE), EnumMaterial.STONE);
+		railRecipe(new ItemStack(Blocks.SANDSTONE), EnumMaterial.SANDSTONE);
+		railRecipe(new ItemStack(Blocks.RED_SANDSTONE), EnumMaterial.REDSANDSTONE);
+		railRecipe(new ItemStack(Blocks.OBSIDIAN), EnumMaterial.OBSIDIAN);
+		railRecipe(new ItemStack(Blocks.NETHER_BRICK), EnumMaterial.NETHERBRICK);
+		railRecipe(new ItemStack(Blocks.QUARTZ_BLOCK), EnumMaterial.QUARTZ);
+		railRecipe(new ItemStack(Blocks.END_STONE), EnumMaterial.ENDSTONE);
+		railRecipe(new ItemStack(Blocks.PACKED_ICE), EnumMaterial.PACKEDICE);
+		railRecipe(new ItemStack(Blocks.SNOW), EnumMaterial.SNOW);
+		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7), EnumMaterial.MARBLE);
+		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7), EnumMaterial.LIMESTONE);
+		railRecipe(new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7), EnumMaterial.BASALT);
+		railRecipe(new ItemStack(CathedralMod.dwemer.blockCarved, 1, BlockDwemer.EnumType.PANEL.getMetadata()), EnumMaterial.DWEMER);
 		
 		//Chains
 		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
@@ -207,7 +213,7 @@ public class Cathedral implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(glassStained), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassStained.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
-		for(BlockRailing.EnumType type: BlockRailing.EnumType.values()) {
+		for(EnumMaterial type: EnumMaterial.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(railingVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, railingVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
@@ -215,7 +221,9 @@ public class Cathedral implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(chainVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, chainVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 
-		ModelHelper.regModel(gargoyleDemon);
+		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
+			ModelHelper.regModel(gargoyleBlock);
+		}
 		
 	}
 	
