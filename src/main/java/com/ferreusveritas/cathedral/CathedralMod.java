@@ -32,8 +32,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "after:chisel;after:ProjRed|Exploration;after:ThermalFoundation")
-//@Mod(modid = Cathedral.MODID, version = Cathedral.VERSION, dependencies = "required-after:chisel;required-after:ProjRed|Exploration;after:ThermalFoundation")
+@Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "after:chisel;after:ThermalFoundation")
 public class CathedralMod {
 
 	public static Cathedral cathedral;
@@ -118,7 +117,7 @@ public class CathedralMod {
 	
 	@Mod.EventHandler
 	public void PostInit(FMLPostInitializationEvent e){
-		features.forEach(f -> f.init());
+		features.forEach(f -> f.postInit());
 	}
 	
 	@Mod.EventBusSubscriber
@@ -142,7 +141,7 @@ public class CathedralMod {
 		@SubscribeEvent
 		@SideOnly(Side.CLIENT)
 		public static void registerModels(ModelRegistryEvent event) {
-			OBJLoader.INSTANCE.addDomain(ModConstants.MODID);
+			OBJLoader.INSTANCE.addDomain(ModConstants.MODID);//Required for obj models to load
 			features.forEach(f -> f.registerModels(event));
 		}
 		

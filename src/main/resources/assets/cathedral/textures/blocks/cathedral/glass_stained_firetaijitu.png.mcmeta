@@ -1,0 +1,10 @@
+{
+    "ctm": {
+        "ctm_version": 1,
+        "type": "ctm",
+        "layer": "TRANSLUCENT",
+        "textures": [
+        	"cathedral:blocks/cathedral/glass_stained_firetaijitu_ctm"
+        ]
+    }
+}
