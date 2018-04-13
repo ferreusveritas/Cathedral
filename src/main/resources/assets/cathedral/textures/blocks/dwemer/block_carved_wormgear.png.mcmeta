@@ -1,0 +1,10 @@
+{
+    "ctm": {
+        "ctm_version": 1,
+        "type": "pillar",
+        "layer": "SOLID",
+        "textures": [
+        	"cathedral:blocks/dwemer/block_carved_wormgear_ctmv"
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.renderers;
 
-public class RendererRoofTiles implements ISimpleBlockRenderingHandler {
+public class RendererRoofTiles {
 	
 	/*
 	public static int id;

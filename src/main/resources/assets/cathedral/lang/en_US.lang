@@ -49,29 +49,28 @@ tile.basalt_basaltslab-smalltiles.name=Basalt Small Tiles Slab
 
 tile.chisel.dwemerblock.name=Dwemer Block
 
-tile.basalt_dwemer.dwemer-embedded.name=Dwemer Embedded Plate
-tile.basalt_dwemer.dwemer-pillar.name=Dwemer Bordered Pillar
-tile.basalt_dwemer.dwemer-altar.name=Dwemer Stone Altar
-tile.basalt_dwemer.dwemer-decor.name=Dwemer Gilded Altar
-tile.basalt_dwemer.dwemer-carving-1.name=Dwemer Carved Snake
-tile.basalt_dwemer.dwemer-carving-2.name=Dwemer Carved Figures
-tile.basalt_dwemer.dwemer-layered.name=Dwemer Reinforced Brick
-tile.basalt_dwemer.dwemer-scale-pillar.name=Dwemer Scale Pillar
-tile.basalt_dwemer.dwemer-wormgear.name=Dwemer Worm Gear
-tile.basalt_dwemer.dwemer-rays.name=Dwemer Ray Carving
-tile.basalt_dwemer.dwemer-knot.name=Dwemer Knot
-tile.basalt_dwemer.dwemer-mask.name=Dwemer Mask
-tile.basalt_dwemer.dwemer-doortop.name=Dwemer Door(top)
-tile.basalt_dwemer.dwemer-doorbottom.name=Dwemer Door(bottom)
-tile.basalt_dwemer.dwemer-panel.name=Dwemer Panel
+tile.dwemer_block_carved.embedded.name=Dwemer Embedded Plate
+tile.dwemer_block_carved.pillar.name=Dwemer Bordered Pillar
+tile.dwemer_block_carved.altar.name=Dwemer Stone Altar
+tile.dwemer_block_carved.decor.name=Dwemer Gilded Altar
+tile.dwemer_block_carved.carving-1.name=Dwemer Carved Snake
+tile.dwemer_block_carved.carving-2.name=Dwemer Carved Figures
+tile.dwemer_block_carved.layered.name=Dwemer Reinforced Brick
+tile.dwemer_block_carved.scalepillar.name=Dwemer Scale Pillar
+tile.dwemer_block_carved.wormgear.name=Dwemer Worm Gear
+tile.dwemer_block_carved.rays.name=Dwemer Ray Carving
+tile.dwemer_block_carved.knot.name=Dwemer Knot
+tile.dwemer_block_carved.mask.name=Dwemer Mask
+tile.dwemer_block_carved.panel.name=Dwemer Panel
 
 tile.basalt_dwemer.dwemer-glass-fence.name=Dwemer Metal Fence
 tile.basalt_dwemer.dwemer-glass-ornate.name=Dwemer Metal Ornate
 
 tile.chisel.dwemliteblock.name=Dwemer Light
-tile.basalt_dwemlite.dwemer-light-path.name=Dwemer Path Lighting
-tile.basalt_dwemlite.dwemer-light-vent.name=Dwemer Burning Vent
-tile.basalt_dwemlite.dwemer-light-gas.name=Dwemer Gaslit Vent
+
+tile.dwemer_light_normal.path.name=Dwemer Path Lighting
+tile.dwemer_light_normal.vent.name=Dwemer Burning Vent
+tile.dwemer_light_normal.gas.name=Dwemer Gaslit Vent
 
 tile.basalt_bars_0.name=Dwemer Metal Bars
 tile.basalt_bars_1.name=Dwemer Metal Bars Ornate

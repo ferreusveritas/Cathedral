@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.renderers;
 
-public class RendererTallDoor  implements ISimpleBlockRenderingHandler {
+public class RendererTallDoor {
 
 	/*
 	public static int id;

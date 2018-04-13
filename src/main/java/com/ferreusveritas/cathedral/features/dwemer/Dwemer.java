@@ -93,7 +93,7 @@ public class Dwemer implements IFeature {
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
 			blockCarved,
-			//lightNormal,
+			lightNormal,
 			//glassNormal,
 			barsNormal
 			//doorNormal,
@@ -110,6 +110,11 @@ public class Dwemer implements IFeature {
             }
         }).setRegistryName(blockCarved.getRegistryName()));
 
+		registry.register(new ItemMultiTexture(lightNormal, lightNormal, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockDwemerLight.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(lightNormal.getRegistryName()));
 		
 		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
@@ -117,6 +122,8 @@ public class Dwemer implements IFeature {
             }
         }).setRegistryName(barsNormal.getRegistryName()));
 
+
+		
 		//registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
 		//registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));
 	}
@@ -164,6 +171,10 @@ public class Dwemer implements IFeature {
 		
 		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(lightNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, lightNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
 		ModelHelper.regModel(barsNormal);

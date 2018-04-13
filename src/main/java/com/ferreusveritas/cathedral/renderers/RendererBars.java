@@ -1,7 +1,7 @@
 package com.ferreusveritas.cathedral.renderers;
 
 
-public class RendererBars implements ISimpleBlockRenderingHandler {
+public class RendererBars {
 
 	/*
 	public static int id;

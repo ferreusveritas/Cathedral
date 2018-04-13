@@ -1,0 +1,7 @@
+{
+    "variants": {
+		"variant=path"		:{"model": "cathedral:dwemer/light_normal_path"},
+		"variant=vent"		:{"model": "cathedral:dwemer/light_normal_vent"},
+		"variant=gas"		:{"model": "cathedral:dwemer/light_normal_gas"}
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "ctm": {
+        "ctm_version": 1,
+        "type": "pillar",
+        "layer": "SOLID",
+        "textures": [
+        	"cathedral:blocks/basalt/block_carved_wornbrick_ctmv"
+        ]
+    }
+}

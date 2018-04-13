@@ -12,8 +12,6 @@
 		"variant=rays"			:{"model": "cathedral:dwemer/block_carved_rays"},
 		"variant=knot"			:{"model": "cathedral:dwemer/block_carved_knot"},
 		"variant=mask"			:{"model": "cathedral:dwemer/block_carved_mask"},
-		"variant=doortop"		:{"model": "cathedral:dwemer/block_carved_doortop"},
-		"variant=doorbottom"	:{"model": "cathedral:dwemer/block_carved_doorbottom"},
 		"variant=panel"			:{"model": "cathedral:dwemer/block_carved_panel"}
     }
 }
