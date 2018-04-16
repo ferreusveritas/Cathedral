@@ -1,0 +1,8 @@
+{
+	"parent": "block/half_slab",
+	"textures": {
+		"bottom": "chisel:blocks/basalt/tiles-medium",
+		"top": "chisel:blocks/basalt/tiles-medium",
+		"side": "chisel:blocks/basalt/tiles-medium"
+	}
+}

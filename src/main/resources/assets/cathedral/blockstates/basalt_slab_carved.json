@@ -1,0 +1,40 @@
+{
+  "forge_marker": 1,
+  "variants": {
+     "variant": {
+     	"raw"			: { "textures": { 	"side": 	"chisel:blocks/basalt/raw",
+											"top": 		"chisel:blocks/basalt/raw",
+											"bottom": 	"chisel:blocks/basalt/raw" } },
+     
+		"smalltiles"	: { "textures": { 	"side": 	"chisel:blocks/basalt/tiles-small",
+											"top": 		"chisel:blocks/basalt/tiles-small",
+											"bottom": 	"chisel:blocks/basalt/tiles-small" } },
+											
+		"layers"		: { "textures": {	"side": 	"chisel:blocks/basalt/layers",
+											"top": 		"cathedral:blocks/basalt/block_carved_slabs_top",
+											"bottom": 	"cathedral:blocks/basalt/block_carved_slabs_top" } },
+
+		"bricks"		: { "textures": {	"side": 	"chisel:blocks/basalt/bricks-solid",
+											"top": 		"chisel:blocks/basalt/bricks-solid",
+											"bottom": 	"chisel:blocks/basalt/bricks-solid" } },
+
+		"smallbricks"	: { "textures": {	"side": 	"chisel:blocks/basalt/bricks-small",
+											"top": 		"chisel:blocks/basalt/bricks-small",
+											"bottom": 	"chisel:blocks/basalt/bricks-small" } },
+
+		"tiles"			: { "textures": {	"side": 	"chisel:blocks/basalt/tiles-medium",
+											"top": 		"chisel:blocks/basalt/tiles-medium",
+											"bottom": 	"chisel:blocks/basalt/tiles-medium" } },
+											
+		"slabs"			: { "textures": {	"side": 	"cathedral:blocks/basalt/block_carved_slabs_side",
+											"top": 		"cathedral:blocks/basalt/block_carved_slabs_top",
+											"bottom": 	"cathedral:blocks/basalt/block_carved_slabs_top" } }											
+											
+	},
+  
+	"half": {
+		"top": { "submodel": "upper_slab" },
+		"bottom" : { "submodel": "half_slab" }
+	}
+}
+}

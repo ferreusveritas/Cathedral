@@ -1,10 +1,7 @@
 package com.ferreusveritas.cathedral.features.extras;
 
-import java.util.ArrayList;
-
-import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
-import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
+import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
@@ -21,7 +18,7 @@ public class Extras implements IFeature {
 	public BlockSlabBase slabsVarious;
 	public Block blockStone;
 	
-	public ArrayList<BaseBlockDef> baseBlocks = new ArrayList<BaseBlockDef>();
+	//public ArrayList<BaseBlockDef> baseBlocks = new ArrayList<BaseBlockDef>();
 	
 	@Override
 	public String getName() {

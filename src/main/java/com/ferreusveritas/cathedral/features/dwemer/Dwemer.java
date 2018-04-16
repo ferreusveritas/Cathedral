@@ -11,13 +11,17 @@ import com.ferreusveritas.cathedral.proxy.ModelHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Dwemer implements IFeature {
@@ -145,17 +149,40 @@ public class Dwemer implements IFeature {
 				} else {
 					metalIngot = "ingotGold";//This sucks but whatever
 				}
-		
-		/*
+				
 		//Recipe for Dwemer Stone
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBlock, 16, 0), true, new Object[]{"bbb", "bnb", "bbb", 'b', "basalt", 'n', metalIngot}));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBlock, 16, 0), true, new Object[]{"bbb", "bnb", "bbb", 'b', "basaltBrick", 'n', metalIngot}));
-		//Recipe for Dwemer Bars
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBars, 16, 0), true, new Object[]{"nnn", "nnn", 'n', metalIngot}));
-
+		registry.register(new ShapedOreRecipe(
+				null,
+				new ItemStack(blockCarved, 16, 0),
+				new Object[]{
+						"bbb",
+						"bib",
+						"bbb",
+						'b', "basalt",
+						'i', metalIngot
+					}
+				).setRegistryName(ModConstants.MODID, "dwemer_stone")
+			);
+		
 		//Dwemer Lights Recipes
-		GameRegistry.addRecipe(new ItemStack(dwemerLightBlock, 2, 0), "XGX", "GLG", "XGX", 'X', new ItemStack(dwemerBlock, 1, 0), 'L', Blocks.glowstone, 'G', new ItemStack(Blocks.stained_glass, 1, 4));
+		GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "dwemer_light"),
+				null,
+				new ItemStack(lightNormal, 2, 0), 
+				"xgx",
+				"glg",
+				"xgx",
+				'x', new ItemStack(blockCarved, 1, 0),
+				'l', Blocks.GLOWSTONE,
+				'g', new ItemStack(Blocks.STAINED_GLASS, 1, 4)
+			);
 
+		
+		//Recipe for Dwemer Bars
+		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBars, 16, 0), true, new Object[]{"nnn", "nnn", 'n', metalIngot}));
+
+
+		/*
 		//Recipe for Dwemer Catwalk
 		GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
 
@@ -181,7 +208,17 @@ public class Dwemer implements IFeature {
 	}
 
 	@Override
-	public void init() {}
+	public void init() {
+		//Add chisel variations for Dwemer Blocks
+		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", "dwemer" + "|" + blockCarved.getRegistryName() + "|" + type.getMetadata());
+		}
+		
+		//Add chisel variations for Dwemer Light Blocks
+		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", "dwemerlight" + "|" + lightNormal.getRegistryName() + "|" + type.getMetadata());
+		}
+	}
 
 	@Override
 	public void postInit() {}

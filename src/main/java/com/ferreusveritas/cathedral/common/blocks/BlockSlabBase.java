@@ -1,13 +1,37 @@
 package com.ferreusveritas.cathedral.common.blocks;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.item.ItemStack;
 
-public class BlockSlabBase extends Block {
+public class BlockSlabBase extends BlockSlab {
 
-	public BlockSlabBase(Block baseblock, String name) {
-		super(baseblock.getMaterial(baseblock.getDefaultState()));//TODO handle materials better
+	public BlockSlabBase(Material material, String name) {
+		super(material);
 		setRegistryName(name);
 		setUnlocalizedName(name);
+	}
+
+	@Override
+	public String getUnlocalizedName(int meta) {
+		 return super.getUnlocalizedName() + "." + BlockStoneSlab.EnumType.byMetadata(meta).getUnlocalizedName();
+	}
+
+	@Override
+	public boolean isDouble() {
+		return false;
+	}
+
+	@Override
+	public IProperty<?> getVariantProperty() {
+		return null;
+	}
+
+	@Override
+	public Comparable<?> getTypeForItem(ItemStack stack) {
+		return null;
 	}
 
 	/*

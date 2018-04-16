@@ -2,34 +2,35 @@ package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.common.blocks.BaseBlockDef;
 import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
-import com.ferreusveritas.cathedral.common.blocks.BlockSlabBase;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Basalt implements IFeature {
 
 	public static final String featureName = "basalt";
 	
-	public Block basaltBase;//This is assigned from Project Red in PostInit()
-
 	public Block blockCarved;
 	public Block blockCheckered;
 
-	public BlockSlabBase slabCarved;
-	public BlockSlabBase slabCheckered;
+	public Block slabCarved;
+	public Block slabCarvedDouble;
+	public Block slabCheckered;
 
 	public BlockGenericStairs stairs[] = new BlockGenericStairs[8];
 
@@ -45,28 +46,30 @@ public class Basalt implements IFeature {
 	
 	@Override
 	public void preInit() {
+
 	}
 
 	@Override
 	public void createBlocks() {
 		
-		basaltBase = new Block(Material.ROCK);
-		
 		blockCarved = new BlockBasalt(featureObjectName(BlockForm.BLOCK, "carved"));		
 		
-		slabCarved = (BlockSlabBase) new BlockSlabBase(blockCarved, featureObjectName(BlockForm.SLAB, "carved"))
+		slabCarved = new BlockSlabBasalt(featureObjectName(BlockForm.SLAB, "carved"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness(basaltHardness)
 			.setResistance(basaltResistance);
 
+		slabCarvedDouble = new BlockDoubleSlabBasalt(featureObjectName(BlockForm.DOUBLESLAB, "carved"))
+				.setCreativeTab(CathedralMod.tabBasalt)
+				.setHardness(basaltHardness)
+				.setResistance(basaltResistance);
+		
 		blockCheckered = new BlockCheckered(featureObjectName(BlockForm.BLOCK, "checkered"));
 		
-		slabCheckered = (BlockSlabBase) new BlockSlabBase(blockCheckered, featureObjectName(BlockForm.SLAB, "checkered"))
+		/*slabCheckered = (BlockSlabBase) new BlockSlabBase(blockCheckered, featureObjectName(BlockForm.SLAB, "checkered"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
-			.setResistance((basaltResistance + marbleResistance) / 2F);
-
-		//BlockCarvable.addBlocks(basaltNames, basaltBlock, "basalt");
+			.setResistance((basaltResistance + marbleResistance) / 2F);*/
 
 		//Basalt Slabs
 		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
@@ -85,26 +88,17 @@ public class Basalt implements IFeature {
 			//basaltBase = GameRegistry.registerBlock(block, "nothing");
 		}*/
 		
-		//Ore Dictionary Registrations
 		//OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
 		//OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
 
 		//Stairs
-		
-		BaseBlockDef[] baseBlocks = {
-				new BaseBlockDef(0, basaltBase, 3, "basalt", "Basalt", basaltHardness, basaltResistance),
-				new BaseBlockDef(1, basaltBase, 4, "basalt-brick", "BasaltBrick", basaltHardness, basaltResistance),
-				new BaseBlockDef(2, blockCarved, 6, "basalt-tiles", "BasaltSlabs", basaltHardness, basaltResistance),
-				new BaseBlockDef(3, blockCarved, 7, "basalt-slabs", "BasaltTiles", basaltHardness, basaltResistance),
-				new BaseBlockDef(4, blockCarved, 9, "basalt-smallbricks", "BasaltSmallBricks", basaltHardness, basaltResistance),
-				new BaseBlockDef(5, blockCarved, 11, "basalt-smalltiles", "BasaltSmallTiles", basaltHardness, basaltResistance)
-		};
+		//Block basaltBase = Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2"));
 				
-		for(int i = 0; i < baseBlocks.length; i++){
+		/*for(int i = 0; i < baseBlocks.length; i++){
 			//basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
 			//GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
 			//GameRegistry.addRecipe(new ItemStack(basaltStairs[baseBlocks[i].select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlocks[i].block, 1, baseBlocks[i].metaData) );
-		}
+		}*/
 		
 		//Explicitly Added Variations
 		/*{
@@ -130,7 +124,8 @@ public class Basalt implements IFeature {
 		//registry.register(basaltBase);
 		registry.registerAll(
 				blockCarved,
-				//slabCarved,
+				slabCarved,
+				slabCarvedDouble,
 				blockCheckered
 				//slabCheckered
 			);
@@ -145,12 +140,16 @@ public class Basalt implements IFeature {
             }
         }).setRegistryName(blockCarved.getRegistryName()));
 		
+		ItemSlab itemSlabBasalt = new ItemSlab(slabCarved, (BlockSlab)slabCarved, (BlockSlab)slabCarvedDouble);
+		itemSlabBasalt.setRegistryName(slabCarved.getRegistryName());
+		registry.register(itemSlabBasalt);
+		
 		/*registry.register(new ItemMultiTexture(slabCarved, slabCarved, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(slabCarved.getRegistryName()));*/
-		
+				
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockCheckered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
@@ -167,6 +166,14 @@ public class Basalt implements IFeature {
 
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
+		
+		//Ore Dictionary Registrations
+		for(String name : new String[] {"basalt", "basalt2"}) {
+			Block basaltBase = Block.REGISTRY.getObject(new ResourceLocation("chisel", name));
+			if(basaltBase != Blocks.AIR) {
+				OreDictionary.registerOre("basalt", basaltBase);
+			}
+		}		
 		
 		//int basaltSlabMetas[] = { 2, 6, 7, 9, 10, 11 };
 		
@@ -203,6 +210,11 @@ public class Basalt implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(slabCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+			ModelHelper.regModel(Item.getItemFromBlock(slabCarvedDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarvedDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
@@ -210,7 +222,12 @@ public class Basalt implements IFeature {
 	}
 
 	@Override
-	public void init() {}
+	public void init() {
+		//Add chisel variations for Basalt
+		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", "basalt|cathedral:basalt_block_carved|" + type.getMetadata());
+		}
+	}
 
 	@Override
 	public void postInit() {}

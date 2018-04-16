@@ -1,10 +1,9 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
-import com.ferreusveritas.cathedral.common.blocks.BlockBase;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockCatwalk extends BlockBase {
+public class BlockCatwalk extends Block {
 
 	public static final String name = "catwalk";
 	
@@ -13,7 +12,9 @@ public class BlockCatwalk extends BlockBase {
 	}
 	
 	public BlockCatwalk(Material materialIn, String name) {
-		super(materialIn, name);
+		super(materialIn);
+		setRegistryName(name);
+		setUnlocalizedName(name);
 	}
 
 	/*

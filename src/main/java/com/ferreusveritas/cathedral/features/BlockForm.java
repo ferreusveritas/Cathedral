@@ -8,6 +8,7 @@ public enum BlockForm {
 	BARS("bars"),
 	STAIRS("stairs"),
 	SLAB("slab"),
+	DOUBLESLAB("doubleslab"),
 	DOOR("door"),
 	LIGHT("light"),
 	RAILING("railing"),

@@ -24,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -232,6 +233,11 @@ public class Cathedral implements IFeature {
 	
 	@Override
 	public void init() {
+		
+		//Add chisel variations for Stained Glass Blocks
+		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", "cathedralglass" + "|" + glassStained.getRegistryName() + "|" + type.getMetadata());
+		}
 		
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor() {
 			@Override

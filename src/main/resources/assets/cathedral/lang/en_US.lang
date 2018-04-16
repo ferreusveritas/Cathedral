@@ -40,12 +40,15 @@ tile.basalt_basalt-smalltiles-stairs.name=Basalt Small Tiles Stairs
 tile.basalt_basalt-block.name=Basalt Block Stairs
 
 tile.chisel.basaltslab.name=Basalt Slab
-tile.basalt_basaltslab-basalt.name=Basalt Slab
-tile.basalt_basaltslab-brick.name=Basalt Bricks Slab
-tile.basalt_basaltslab-tiles.name=Basalt Tiles Slab
-tile.basalt_basaltslab-slabs.name=Basalt Bevelled Slab
-tile.basalt_basaltslab-smallbricks.name=Basalt Small Bricks Slab
-tile.basalt_basaltslab-smalltiles.name=Basalt Small Tiles Slab
+tile.basalt_slab_carved.raw.name=Basalt Raw Slab
+tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab
+tile.basalt_slab_carved.layers.name=Basalt Layers Slab
+tile.basalt_slab_carved.bricks.name=Basalt Bricks Slab
+tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab
+tile.basalt_slab_carved.tiles.name=Basalt Tiles Slab
+tile.basalt_slab_carved.slabs.name=Basalt Bevelled Slab
+
+tile.basalt_slab_carved.smalltiles.name=Basalt Small Tiles Slab
 
 tile.chisel.dwemerblock.name=Dwemer Block
 
