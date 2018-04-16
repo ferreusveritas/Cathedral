@@ -1,5 +1,8 @@
 {
   "forge_marker": 1,
+  "defaults": {
+  	"model": "cube_bottom_top"
+  },
   "variants": {
      "variant": {
      	"normal"	: { "textures": { 	"side": 	"cathedral:blocks/basalt/block_checkered_normal",
@@ -16,12 +19,7 @@
 		
 		"tilessmall": { "textures": {	"side": 	"cathedral:blocks/basalt/block_checkered_tilessmall",
 										"top": 		"cathedral:blocks/basalt/block_checkered_tilessmall",
-										"bottom": 	"cathedral:blocks/basalt/block_checkered_tilessmall" } }
-	},
-  
-	"half": {
-		"top": { "submodel": "upper_slab" },
-		"bottom" : { "submodel": "half_slab" }
+										"bottom": 	"cathedral:blocks/basalt/block_checkered_tilessmall" } }									
 	}
 }
 }

@@ -31,7 +31,8 @@ public class Basalt implements IFeature {
 	public Block slabCarved;
 	public Block slabCarvedDouble;
 	public Block slabCheckered;
-
+	public Block slabCheckeredDouble;
+	
 	public BlockGenericStairs stairs[] = new BlockGenericStairs[8];
 
 	public final float basaltHardness = 2.5f;
@@ -66,11 +67,16 @@ public class Basalt implements IFeature {
 		
 		blockCheckered = new BlockCheckered(featureObjectName(BlockForm.BLOCK, "checkered"));
 		
-		/*slabCheckered = (BlockSlabBase) new BlockSlabBase(blockCheckered, featureObjectName(BlockForm.SLAB, "checkered"))
+		slabCheckered = new BlockSlabCheckered(featureObjectName(BlockForm.SLAB, "checkered"))
 			.setCreativeTab(CathedralMod.tabBasalt)
 			.setHardness((basaltHardness + marbleHardness) / 2F)
-			.setResistance((basaltResistance + marbleResistance) / 2F);*/
+			.setResistance((basaltResistance + marbleResistance) / 2F);
 
+		slabCheckeredDouble = new BlockDoubleSlabCheckered(featureObjectName(BlockForm.DOUBLESLAB, "checkered"))
+				.setCreativeTab(CathedralMod.tabBasalt)
+				.setHardness(basaltHardness)
+				.setResistance(basaltResistance);
+		
 		//Basalt Slabs
 		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
 		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-tiles.name", 6, "basalt-tiles", Cathedral.MODID);
@@ -126,41 +132,38 @@ public class Basalt implements IFeature {
 				blockCarved,
 				slabCarved,
 				slabCarvedDouble,
-				blockCheckered
-				//slabCheckered
+				blockCheckered,
+				slabCheckered,
+				slabCheckeredDouble
 			);
 	}
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		
+		//Basalt Blocks
 		registry.register(new ItemMultiTexture(blockCarved, blockCarved, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(blockCarved.getRegistryName()));
-		
+
+		//Basalt Slabs
 		ItemSlab itemSlabBasalt = new ItemSlab(slabCarved, (BlockSlab)slabCarved, (BlockSlab)slabCarvedDouble);
 		itemSlabBasalt.setRegistryName(slabCarved.getRegistryName());
 		registry.register(itemSlabBasalt);
-		
-		/*registry.register(new ItemMultiTexture(slabCarved, slabCarved, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockBasalt.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(slabCarved.getRegistryName()));*/
-				
+
+		//Checkered Blocks
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
                 return BlockCheckered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(blockCheckered.getRegistryName()));
-		
-		/*registry.register(new ItemMultiTexture(slabCheckered, slabCheckered, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return Checkered.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(slabCheckered.getRegistryName()));*/
+
+		//Checkered Slabs
+		ItemSlab itemSlabCheckered = new ItemSlab(slabCheckered, (BlockSlab)slabCheckered, (BlockSlab)slabCheckeredDouble);
+		itemSlabCheckered.setRegistryName(slabCheckered.getRegistryName());
+		registry.register(itemSlabCheckered);
 		
 	}
 
@@ -219,6 +222,10 @@ public class Basalt implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
+		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(slabCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+			ModelHelper.regModel(Item.getItemFromBlock(slabCheckeredDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckeredDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
 	}
 
 	@Override
@@ -227,6 +234,11 @@ public class Basalt implements IFeature {
 		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
 			FMLInterModComms.sendMessage("chisel", "variation:add", "basalt|cathedral:basalt_block_carved|" + type.getMetadata());
 		}
+		
+		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", "basaltcheckered|cathedral:basalt_block_checkered|" + type.getMetadata());
+		}
+		
 	}
 
 	@Override
