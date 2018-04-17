@@ -110,9 +110,9 @@ public class BlockSlabBasalt extends BlockSlab {
 		TILES("tiles", new ResourceLocation("chisel", "basalt2"), 3),
 		SLABS("slabs", new ResourceLocation("cathedral", "basalt_block_carved"), 7);
 		
-		ResourceLocation location;
-		String name;
-		int baseMeta;
+		private ResourceLocation location;
+		private String name;
+		private int baseMeta;
 		
 		EnumType(String name, ResourceLocation location, int baseMeta) {
 			this.name = name;

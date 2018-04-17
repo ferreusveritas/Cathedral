@@ -2,7 +2,6 @@ package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
@@ -11,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
@@ -22,19 +22,19 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Basalt implements IFeature {
-
+	
 	public static final String featureName = "basalt";
 	
 	public Block blockCarved;
 	public Block blockCheckered;
-
+	
 	public Block slabCarved;
 	public Block slabCarvedDouble;
 	public Block slabCheckered;
 	public Block slabCheckeredDouble;
 	
-	public BlockGenericStairs stairs[] = new BlockGenericStairs[8];
-
+	public Block stairsCarved[] = new BlockStairsBasalt[BlockSlabBasalt.EnumType.values().length];
+	
 	public final float basaltHardness = 2.5f;
 	public final float basaltResistance = 20f;
 	public final float marbleHardness = 2.0f;
@@ -76,6 +76,10 @@ public class Basalt implements IFeature {
 				.setCreativeTab(CathedralMod.tabBasalt)
 				.setHardness(basaltHardness)
 				.setResistance(basaltResistance);
+		
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			stairsCarved[type.ordinal()] = new BlockStairsBasalt(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState());
+		}
 		
 		//Basalt Slabs
 		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
@@ -136,6 +140,8 @@ public class Basalt implements IFeature {
 				slabCheckered,
 				slabCheckeredDouble
 			);
+		
+		registry.registerAll(stairsCarved);
 	}
 
 	@Override
@@ -165,6 +171,11 @@ public class Basalt implements IFeature {
 		itemSlabCheckered.setRegistryName(slabCheckered.getRegistryName());
 		registry.register(itemSlabCheckered);
 		
+		//Basalt Stairs
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			registry.register(new ItemBlock(stairsCarved[type.ordinal()]).setRegistryName(stairsCarved[type.ordinal()].getRegistryName()));
+		}
+
 	}
 
 	@Override
@@ -215,7 +226,7 @@ public class Basalt implements IFeature {
 		
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-			ModelHelper.regModel(Item.getItemFromBlock(slabCarvedDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarvedDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+			//ModelHelper.regModel(Item.getItemFromBlock(slabCarvedDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarvedDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
@@ -224,7 +235,7 @@ public class Basalt implements IFeature {
 		
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-			ModelHelper.regModel(Item.getItemFromBlock(slabCheckeredDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckeredDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+			//ModelHelper.regModel(Item.getItemFromBlock(slabCheckeredDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckeredDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 	}
 

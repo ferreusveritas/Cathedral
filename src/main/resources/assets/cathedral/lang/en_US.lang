@@ -24,7 +24,7 @@ tile.basalt_block_carved.mediumbricks.name=Basalt Medium Bricks
 
 tile.chisel.checkeredblock.name=Checkered
 
-tile.basalt__checkered.normal.name=Checkered
+tile.basalt_block_checkered.normal.name=Checkered
 tile.basalt_block_checkered.border.name=Checkered Border
 tile.basalt_block_checkered.small.name=Checkered Small
 tile.basalt_block_checkered.tiles.name=Checkered Tiles
