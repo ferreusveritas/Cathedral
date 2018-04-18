@@ -30,14 +30,13 @@ tile.basalt_block_checkered.small.name=Checkered Small
 tile.basalt_block_checkered.tiles.name=Checkered Tiles
 tile.basalt_block_checkered.tilessmall.name=Checkered Small Tiles
 
-tile.basalt_basalt-stairs.name=Basalt Stairs
-tile.basalt_basalt-brick-stairs.name=Basalt Brick Stairs
-tile.basalt_basalt-paver-stairs.name=Basalt Paver Stairs
-tile.basalt_basalt-tiles-stairs.name=Basalt Tiles Stairs
-tile.basalt_basalt-slabs-stairs.name=Basalt Slabs Stairs
-tile.basalt_basalt-smallbricks-stairs.name=Basalt Small Bricks Stairs
-tile.basalt_basalt-smalltiles-stairs.name=Basalt Small Tiles Stairs
-tile.basalt_basalt-block.name=Basalt Block Stairs
+tile.basalt_stairs_carved_raw.name=Basalt Stairs
+tile.basalt_stairs_carved_smalltiles.name=Basalt Small Tiles Stairs
+tile.basalt_stairs_carved_layers.name=Basalt Layers Stairs
+tile.basalt_stairs_carved_bricks.name=Basalt Bricks Stairs
+tile.basalt_stairs_carved_smallbricks.name=Basalt Small Bricks Stairs
+tile.basalt_stairs_carved_tiles.name=Basalt Tiles Stairs
+tile.basalt_stairs_carved_slabs.name=Basalt Slabs Stairs
 
 tile.chisel.basaltslab.name=Basalt Slab
 tile.basalt_slab_carved.raw.name=Basalt Raw Slab

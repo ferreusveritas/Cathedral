@@ -4,6 +4,7 @@ import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.roofing.BlockShingles;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
@@ -226,7 +227,6 @@ public class Basalt implements IFeature {
 		
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-			//ModelHelper.regModel(Item.getItemFromBlock(slabCarvedDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarvedDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
@@ -235,7 +235,10 @@ public class Basalt implements IFeature {
 		
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-			//ModelHelper.regModel(Item.getItemFromBlock(slabCheckeredDouble), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckeredDouble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(Block stairs: stairsCarved) {
+			ModelHelper.regModel(stairs);
 		}
 	}
 
