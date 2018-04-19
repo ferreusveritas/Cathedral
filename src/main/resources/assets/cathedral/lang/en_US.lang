@@ -38,6 +38,11 @@ tile.basalt_stairs_carved_smallbricks.name=Basalt Small Bricks Stairs
 tile.basalt_stairs_carved_tiles.name=Basalt Tiles Stairs
 tile.basalt_stairs_carved_slabs.name=Basalt Slabs Stairs
 
+tile.basalt_stairs_checkered_normal.name=Checkered Stairs
+tile.basalt_stairs_checkered_small.name=Checkered Small Tiles Stairs
+tile.basalt_stairs_checkered_tiles.name=Checkered Layers Stairs
+tile.basalt_stairs_checkered_tilessmall.name=Checkered Bricks Stairs
+
 tile.chisel.basaltslab.name=Basalt Slab
 tile.basalt_slab_carved.raw.name=Basalt Raw Slab
 tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab

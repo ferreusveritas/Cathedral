@@ -110,13 +110,13 @@ public class BlockSlabBasalt extends BlockSlab {
 		TILES("tiles", new ResourceLocation("chisel", "basalt2"), 3),
 		SLABS("slabs", new ResourceLocation("cathedral", "basalt_block_carved"), 7);
 		
-		private ResourceLocation location;
+		private ResourceLocation baseResourceLocation;
 		private String name;
 		private int baseMeta;
 		
-		EnumType(String name, ResourceLocation location, int baseMeta) {
+		EnumType(String name, ResourceLocation baseResourceLocation, int baseMeta) {
 			this.name = name;
-			this.location = location;
+			this.baseResourceLocation = baseResourceLocation;
 			this.baseMeta = baseMeta;
 		}
 
@@ -137,6 +137,13 @@ public class BlockSlabBasalt extends BlockSlab {
 			return name;
 		}
 		
+		public ResourceLocation getBaseResourceLocation() {
+			return baseResourceLocation;
+		}
+	
+		public int getBaseMeta() {
+			return baseMeta;
+		}
 	}
 	
 }

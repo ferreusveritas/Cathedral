@@ -1,10 +1,13 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
+import java.util.ArrayList;
+
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
+import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
+import com.ferreusveritas.cathedral.compat.CompatThermalExpansion;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.roofing.BlockShingles;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
@@ -19,7 +22,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Basalt implements IFeature {
@@ -34,7 +39,8 @@ public class Basalt implements IFeature {
 	public Block slabCheckered;
 	public Block slabCheckeredDouble;
 	
-	public Block stairsCarved[] = new BlockStairsBasalt[BlockSlabBasalt.EnumType.values().length];
+	public ArrayList<Block> stairsCarved = new ArrayList<>();
+	public ArrayList<Block> stairsCheckered = new ArrayList<>();
 	
 	public final float basaltHardness = 2.5f;
 	public final float basaltResistance = 20f;
@@ -79,50 +85,13 @@ public class Basalt implements IFeature {
 				.setResistance(basaltResistance);
 		
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
-			stairsCarved[type.ordinal()] = new BlockStairsBasalt(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState());
+			stairsCarved.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
 		}
 		
-		//Basalt Slabs
-		/*basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-paver.name", 2, "basalt-worn-brick", Cathedral.MODID);
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-tiles.name", 6, "basalt-tiles", Cathedral.MODID);
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-slabs.name", 7, "basalt-slabs", Cathedral.MODID);
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smallbricks.name", 9, "basalt-smallbricks", Cathedral.MODID);
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smallchaotic.name", 10, "basalt-smallchaotic", Cathedral.MODID);
-		basaltSlab.carverHelper.addVariation("tile.basalt_basaltslab-smalltiles.name", 11, "basalt-smalltiles", Cathedral.MODID);
-		basaltSlab.carverHelper.registerAll(basaltSlab, "basaltslab", ItemCarvableSlab.class);
-		basaltSlab.registerSlabTop();*/
+		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
+			stairsCheckered.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "checkered_" + type.getName() ), blockCheckered.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
+		}
 		
-		//This must be ran in init because project red doesn't register it's stone until after it's init
-		/*if(Loader.isModLoaded("ProjRed|Exploration")){
-			basaltBase = GameRegistry.findBlock("ProjRed|Exploration", "projectred.exploration.stone");
-		} else {
-			//basaltBase = GameRegistry.registerBlock(block, "nothing");
-		}*/
-		
-		//OreDictionary.registerOre("basalt", new ItemStack(basaltBase, 1, 3));
-		//OreDictionary.registerOre("basaltBrick", new ItemStack(basaltBase, 1, 4));
-
-		//Stairs
-		//Block basaltBase = Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2"));
-				
-		/*for(int i = 0; i < baseBlocks.length; i++){
-			//basaltStairs[baseBlocks[i].select] = (BlockGenericStairs) new BlockGenericStairs(baseBlocks[i]).setCreativeTab(Cathedral.tabBasalt);
-			//GameRegistry.registerBlock(basaltStairs[baseBlocks[i].select], baseBlocks[i].blockName + "Stairs");
-			//GameRegistry.addRecipe(new ItemStack(basaltStairs[baseBlocks[i].select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlocks[i].block, 1, baseBlocks[i].metaData) );
-		}*/
-		
-		//Explicitly Added Variations
-		/*{
-			ICarvingRegistry Carving = CarvingUtils.getChiselRegistry();
-			Carving.addVariation("basaltblock", basaltBase, 3, -2);
-			Carving.addVariation("basaltblock", basaltBase, 4, -1);
-
-			for(int i = 0; i < 6; i++){
-				Carving.addVariation("basaltStairs", basaltStairs[i], 0, 1);
-			}
-		}*/
-		
-
 	}
 
 	@Override
@@ -142,7 +111,8 @@ public class Basalt implements IFeature {
 				slabCheckeredDouble
 			);
 		
-		registry.registerAll(stairsCarved);
+		registry.registerAll(stairsCarved.toArray(new Block[0]));
+		registry.registerAll(stairsCheckered.toArray(new Block[0]));
 	}
 
 	@Override
@@ -174,50 +144,116 @@ public class Basalt implements IFeature {
 		
 		//Basalt Stairs
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
-			registry.register(new ItemBlock(stairsCarved[type.ordinal()]).setRegistryName(stairsCarved[type.ordinal()].getRegistryName()));
+			registry.register(new ItemBlock(stairsCarved.get(type.ordinal())).setRegistryName(stairsCarved.get(type.ordinal()).getRegistryName()));
 		}
 
+		//Checkered Stairs
+		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
+			registry.register(new ItemBlock(stairsCheckered.get(type.ordinal())).setRegistryName(stairsCheckered.get(type.ordinal()).getRegistryName()));
+		}
+		
 	}
-
+	
+	private void tryRegisterBlockOre(String oreName, ItemStack ore) {
+		if(!ore.isEmpty()) {
+			OreDictionary.registerOre(oreName, ore);
+		}
+	}
+	
+	public static ItemStack getItemBlockStack(String domain, String name, int metadata) {
+		Block block = Block.REGISTRY.getObject(new ResourceLocation(domain, name));
+		if(block != Blocks.AIR) {
+			return new ItemStack(block, 1, metadata);
+		}
+		
+		return ItemStack.EMPTY;
+	}
+	
+	public static ItemStack getRawBasalt() {
+		return getItemBlockStack("chisel", "basalt2", 7);
+	}
+	
+	public static ItemStack getRawMarble() {
+		return getItemBlockStack("chisel", "marble2", 7);
+	}
+	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
+
+		String basaltOre = "blockBasalt";
+		String marbleOre = "blockMarble";
 		
-		//Ore Dictionary Registrations
-		for(String name : new String[] {"basalt", "basalt2"}) {
-			Block basaltBase = Block.REGISTRY.getObject(new ResourceLocation("chisel", name));
-			if(basaltBase != Blocks.AIR) {
-				OreDictionary.registerOre("basalt", basaltBase);
-			}
-		}		
-		
-		//int basaltSlabMetas[] = { 2, 6, 7, 9, 10, 11 };
-		
-		//Basalt Slab Recipes
-		/*
-		for(int i = 0; i < basaltSlabMetas.length; i++){
-			GameRegistry.addRecipe(new ItemStack(basaltSlab, 6, basaltSlabMetas[i]), "XXX", 'X', new ItemStack(basaltBlock, 1, basaltSlabMetas[i]) );
-		}*/
-		
-		//GameRegistry.addRecipe(new ItemStack(basaltSlab, 6, 7), "XXX", 'X', new ItemStack(basaltBlock, 1, 1) );//Basalt Paver
-		//GameRegistry.addRecipe(new ItemStack(basaltBlock, 1, 7), "X", "X", 'X', new ItemStack(basaltSlab, 1, 7));
+		//Basalt Ore Dictionary Registrations
+		tryRegisterBlockOre(basaltOre, getRawBasalt());
+
+		//Marble Ore Dictionary Registrations
+		tryRegisterBlockOre(marbleOre, getRawMarble());
 		
 		//Checkered Tile Recipes
-		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"mb", "bm", 'b', "basalt", 'm', "marble"}));
-		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(checkeredBlock, 4, 0), true, new Object[]{"bm", "mb", 'b', "basalt", 'm', "marble"}));
+		for( boolean flip: new boolean[] { false, true } ) {
+			registry.register(
+					new ShapedOreRecipe( null, new ItemStack(blockCheckered, 4, 0),
+							flip ? "mb" : "bm",
+							flip ? "bm" : "mb",
+							'b', basaltOre,
+							'm', marbleOre
+							).setRegistryName(blockCheckered.getRegistryName().getResourcePath() + (flip ? "A" : "B"))
+					);
+		}
 		
-		//Thermal Expansion Capabilities
-		/*if(Loader.isModLoaded("ThermalExpansion")){//Having thermal expansion adds the ability to create basalt from obsidian dust and stone
-			//ThermalExpansion Smelter recipe for Basalt
-			ItemStack obsidianDust = new ItemStack(GameRegistry.findItem("ThermalFoundation", "material"), 1, 4);
-			
-			ThermalExpansionHelper.addSmelterRecipe(2000, new ItemStack(Blocks.stone, 1, 0), obsidianDust, new ItemStack(basaltBase, 1, 3));
-			ThermalExpansionHelper.addSmelterRecipe(2000, new ItemStack(Blocks.cobblestone, 1, 0), obsidianDust, new ItemStack(basaltBase, 1, 2));
-		} else {
-			GameRegistry.addRecipe(new ItemStack(basaltBase, 1, 2), "XXX", "XOX", "XXX", 'X', new ItemStack(Blocks.stone, 1), 'O', new ItemStack(Blocks.obsidian));
-			GameRegistry.addRecipe(new ItemStack(basaltBase, 1, 3), "XXX", "XOX", "XXX", 'X', new ItemStack(Blocks.cobblestone, 1), 'O', new ItemStack(Blocks.obsidian));
-		}*/		
-	}
+		//Basalt Slab and Stairs Recipes
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			Block baseBlock = Block.REGISTRY.getObject(type.getBaseResourceLocation());
+			if(baseBlock != Blocks.AIR) {
+				ItemStack baseItemBlock = new ItemStack(baseBlock, 1, type.getBaseMeta());
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, slabCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()),
+						null,
+						new ItemStack(slabCarved, 6, type.getMetadata()), //Output
+						"xxx",
+						'x', baseItemBlock
+					);
 
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, stairsCarved.get(type.getMetadata()).getRegistryName().getResourcePath()),
+						null,
+						new ItemStack(stairsCarved.get(type.getMetadata()), 8), //Output
+						"x  ",
+						"xx ",
+						"xxx",
+						'x', baseItemBlock
+					);
+			}
+		}
+
+		//Checkered Slab and Stairs Recipes
+		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
+			ItemStack baseItemBlock = new ItemStack(blockCheckered, 1, type.getBaseMeta());
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()),
+						null,
+						new ItemStack(slabCheckered, 6, type.getMetadata()), //Output
+						"xxx",
+						'x', baseItemBlock
+					);
+
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, stairsCheckered.get(type.getMetadata()).getRegistryName().getResourcePath()),
+						null,
+						new ItemStack(stairsCheckered.get(type.getMetadata()), 8), //Output
+						"x  ",
+						"xx ",
+						"xxx",
+						'x', baseItemBlock
+					);
+		}
+		
+		ItemStack obsidianDust = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation("thermalfoundation", "material")), 1, 770);
+		
+		//Having Thermal Expansion adds the ability to create basalt from obsidian dust and stone
+		CompatThermalExpansion.addSmelterRecipe(2000, new ItemStack(Blocks.STONE, 1, 0), obsidianDust, getRawBasalt(), ItemStack.EMPTY, 0);
+	}
+	
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
 
@@ -236,25 +272,43 @@ public class Basalt implements IFeature {
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
-		
-		for(Block stairs: stairsCarved) {
-			ModelHelper.regModel(stairs);
-		}
+
+		stairsCarved.forEach(s -> ModelHelper.regModel(s));
+		stairsCheckered.forEach(s -> ModelHelper.regModel(s));
 	}
 
 	@Override
 	public void init() {
-		//Add chisel variations for Basalt
+		
+		//Add chisel variations for Basalt Blocks
 		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", "basalt|cathedral:basalt_block_carved|" + type.getMetadata());
+			addChiselVariation("basalt", blockCarved, type.getMetadata());
 		}
 		
+		//Add chisel variations for Checkered Blocks
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", "basaltcheckered|cathedral:basalt_block_checkered|" + type.getMetadata());
+			addChiselVariation("basaltcheckered", blockCheckered, type.getMetadata());
 		}
 		
+		//Add chisel variations for Basalt Blocks
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			addChiselVariation("basaltslab", slabCarved, type.getMetadata());
+		}
+		
+		//Add chisel variations for Checkered Blocks
+		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
+			addChiselVariation("basaltcheckeredslab", slabCheckered, type.getMetadata());
+		}
+		
+		//Add chisel variations for Basalt Blocks
+		stairsCarved.forEach(s -> addChiselVariation("basaltstairs", s, 0));
+		stairsCheckered.forEach(s -> addChiselVariation("basaltcheckeredstairs", s, 0));
 	}
 
+	private void addChiselVariation(String group, Block block, int meta) {
+		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
+	}
+	
 	@Override
 	public void postInit() {}
 }

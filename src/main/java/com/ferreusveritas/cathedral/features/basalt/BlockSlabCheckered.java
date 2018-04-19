@@ -134,6 +134,9 @@ public class BlockSlabCheckered extends BlockSlab {
 			return name;
 		}
 		
+		public int getBaseMeta() {
+			return baseMeta;
+		}
 	}
 	
 }

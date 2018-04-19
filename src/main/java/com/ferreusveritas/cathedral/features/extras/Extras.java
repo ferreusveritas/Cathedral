@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.features.extras;
 
-import com.ferreusveritas.cathedral.common.blocks.BlockGenericStairs;
+import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.IFeature;
 
 import net.minecraft.block.Block;
@@ -13,7 +13,7 @@ public class Extras implements IFeature {
 	
 	public static final String featureName = "extras";
 
-	public BlockGenericStairs stairs[] = new BlockGenericStairs[5];
+	public BlockStairsGeneric stairs[] = new BlockStairsGeneric[5];
 	//public BlockSlabBase slabsVarious;
 	public Block blockStone;
 	

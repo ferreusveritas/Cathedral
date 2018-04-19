@@ -1,0 +1,8 @@
+{
+	"parent": "block/stairs",
+	"textures": {
+		"bottom": "cathedral:blocks/basalt/block_checkered_tilessmall",
+		"top": "cathedral:blocks/basalt/block_checkered_tilessmall",
+		"side": "cathedral:blocks/basalt/block_checkered_tilessmall"
+	}
+}

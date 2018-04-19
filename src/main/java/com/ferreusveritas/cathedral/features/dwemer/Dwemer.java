@@ -136,6 +136,7 @@ public class Dwemer implements IFeature {
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 		
 		//Attempt to find the best fit for a center metal ingot
+		String basaltOre = "blockBasalt";
 		String metalIngot;
 
 		if(OreDictionary.doesOreNameExist("ingotDwemer")){
@@ -158,7 +159,7 @@ public class Dwemer implements IFeature {
 						"bbb",
 						"bib",
 						"bbb",
-						'b', "basalt",
+						'b', basaltOre,
 						'i', metalIngot
 					}
 				).setRegistryName(ModConstants.MODID, "dwemer_stone")
@@ -181,16 +182,12 @@ public class Dwemer implements IFeature {
 		//Recipe for Dwemer Bars
 		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBars, 16, 0), true, new Object[]{"nnn", "nnn", 'n', metalIngot}));
 
-
-		/*
 		//Recipe for Dwemer Catwalk
-		GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
+		//GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
 
 		//Recipe for Dwemer Doors
-		GameRegistry.addRecipe(new ItemStack(tallDoorItem), "X", "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
-		GameRegistry.addRecipe(new ItemStack(shortDoorItem), "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
-		*/
-		
+		//GameRegistry.addRecipe(new ItemStack(tallDoorItem), "X", "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
+		//GameRegistry.addRecipe(new ItemStack(shortDoorItem), "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
 	}
 
 	@Override
@@ -211,15 +208,19 @@ public class Dwemer implements IFeature {
 	public void init() {
 		//Add chisel variations for Dwemer Blocks
 		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", "dwemer" + "|" + blockCarved.getRegistryName() + "|" + type.getMetadata());
+			addChiselVariation("dwemer", blockCarved, type.getMetadata());
 		}
 		
 		//Add chisel variations for Dwemer Light Blocks
 		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", "dwemerlight" + "|" + lightNormal.getRegistryName() + "|" + type.getMetadata());
+			addChiselVariation("dwemerlight", lightNormal, type.getMetadata());
 		}
 	}
 
+	private void addChiselVariation(String group, Block block, int meta) {
+		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
+	}
+	
 	@Override
 	public void postInit() {}
 }
