@@ -13,15 +13,6 @@ import net.minecraft.util.IStringSerializable;
 
 public class BlockCheckered extends Block {
 	
-	/*checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-plain.name", 0, "checkered", Cathedral.MODID);
-	checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-small.name", 2, "checkered-small", Cathedral.MODID);
-	checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-tiles.name", 3, "checkered-tiles", Cathedral.MODID);
-	checkeredSlab.carverHelper.addVariation("tile.basalt_checkeredslab-smalltiles.name", 4, "checkered-tiles-small", Cathedral.MODID);
-	checkeredSlab.carverHelper.registerAll(checkeredSlab, "checkeredslab", ItemCarvableSlab.class);
-	checkeredSlab.registerSlabTop();*/
-
-	//BlockCarvable.addBlocks(names, checkeredBlock, "checkered");	
-	
 	public final static String name = "checkered"; 
 	
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);

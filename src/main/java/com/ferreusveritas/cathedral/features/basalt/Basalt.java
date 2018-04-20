@@ -303,6 +303,13 @@ public class Basalt implements IFeature {
 		//Add chisel variations for Basalt Blocks
 		stairsCarved.forEach(s -> addChiselVariation("basaltstairs", s, 0));
 		stairsCheckered.forEach(s -> addChiselVariation("basaltcheckeredstairs", s, 0));
+		
+		for(String name : new String[] { "basalt", "basalt2" }) {
+			Block basalt = Block.REGISTRY.getObject(new ResourceLocation("chisel", name));
+			if(basalt != Blocks.AIR) {
+				basalt.setCreativeTab(CathedralMod.tabBasalt);
+			}
+		}
 	}
 
 	private void addChiselVariation(String group, Block block, int meta) {

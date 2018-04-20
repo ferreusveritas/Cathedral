@@ -65,16 +65,15 @@ public class BlockDwemer extends BlockBase {
 		EMBEDDED   	( 0, "embedded"),
 		PILLAR     	( 1, "pillar"),
 		ALTAR     	( 2, "altar"),
-		DECOR      	( 3, "decor"),
-		CARVING1   	( 4, "carving1"),
-		CARVING2   	( 5, "carving2"),
-		LAYERED    	( 6, "layered"),
-		SCALEPILLAR	( 7, "scalepillar"),
-		WORMGEAR   	( 8, "wormgear"),
-		RAYS       	( 9, "rays"),
-		KNOT       	(10, "knot"),
-		MASK       	(11, "mask"),
-		PANEL      	(12, "panel");
+		CARVING1   	( 3, "carving1"),
+		CARVING2   	( 4, "carving2"),
+		LAYERED    	( 5, "layered"),
+		SCALEPILLAR	( 6, "scalepillar"),
+		WORMGEAR   	( 7, "wormgear"),
+		RAYS       	( 8, "rays"),
+		KNOT       	( 9, "knot"),
+		MASK       	(10, "mask"),
+		PANEL      	(11, "panel");
 		
 		/** Array of the Block's BlockStates */
 		private static final EnumType[] META_LOOKUP = new EnumType[values().length];

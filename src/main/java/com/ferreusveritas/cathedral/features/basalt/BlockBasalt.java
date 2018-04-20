@@ -61,23 +61,12 @@ public class BlockBasalt extends Block {
 	
 	public static enum EnumType implements IStringSerializable {
 		
-		ROSETTE		( 0, "rosette"),
-		PAVER		( 1, "paver"),
-		WORNBRICK	( 2, "wornbrick"),
-		ORNATE		( 3, "ornate"),
-		POISON		( 4, "poison"),
-		SUNKENPANEL	( 5, "sunkenpanel"),
-		TILES		( 6, "tiles"),
-		SLABS		( 7, "slabs"),
-		VAULT		( 8, "vault"),
-		SMALLBRICKS	( 9, "smallbricks"),
-		SMALLCHAOTIC(10, "smallchaotic"),
-		SMALLTILES	(11, "smalltiles"),
-		BORDERED	(12, "bordered"),
-		SUNKEN		(13, "sunken"),
-		KNOT		(14, "knot"),
-		MEDIUMBRICKS(15, "mediumbricks");
-
+		PAVER		( 0, "paver"),
+		POISON		( 1, "poison"),
+		SUNKENPANEL	( 2, "sunkenpanel"),
+		VAULT		( 3, "vault"), 
+		SUNKEN		(4, "sunken"), 
+		KNOT		(5, "knot");
 		
 		private final int meta;
 		private final String name;
