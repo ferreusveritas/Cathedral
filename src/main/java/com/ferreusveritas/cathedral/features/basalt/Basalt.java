@@ -32,14 +32,13 @@ public class Basalt implements IFeature {
 	public static final String featureName = "basalt";
 	
 	public Block blockCarved;
-	public Block blockCheckered;
-	
 	public Block slabCarved;
 	public Block slabCarvedDouble;
+	public ArrayList<Block> stairsCarved = new ArrayList<>();
+
+	public Block blockCheckered;
 	public Block slabCheckered;
 	public Block slabCheckeredDouble;
-	
-	public ArrayList<Block> stairsCarved = new ArrayList<>();
 	public ArrayList<Block> stairsCheckered = new ArrayList<>();
 	
 	public final float basaltHardness = 2.5f;
@@ -59,7 +58,8 @@ public class Basalt implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		
+
+		//Create carved blocks
 		blockCarved = new BlockBasalt(featureObjectName(BlockForm.BLOCK, "carved"));		
 		
 		slabCarved = new BlockSlabBasalt(featureObjectName(BlockForm.SLAB, "carved"))
@@ -71,7 +71,12 @@ public class Basalt implements IFeature {
 				.setCreativeTab(CathedralMod.tabBasalt)
 				.setHardness(basaltHardness)
 				.setResistance(basaltResistance);
-		
+
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			stairsCarved.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
+		}
+
+		//Create checkered blocks		
 		blockCheckered = new BlockCheckered(featureObjectName(BlockForm.BLOCK, "checkered"));
 		
 		slabCheckered = new BlockSlabCheckered(featureObjectName(BlockForm.SLAB, "checkered"))
@@ -84,10 +89,6 @@ public class Basalt implements IFeature {
 				.setHardness(basaltHardness)
 				.setResistance(basaltResistance);
 		
-		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
-			stairsCarved.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
-		}
-		
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			stairsCheckered.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "checkered_" + type.getName() ), blockCheckered.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
 		}
@@ -96,22 +97,25 @@ public class Basalt implements IFeature {
 
 	@Override
 	public void createItems() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
-		//registry.register(basaltBase);
+
 		registry.registerAll(
 				blockCarved,
 				slabCarved,
-				slabCarvedDouble,
+				slabCarvedDouble
+			);
+
+		registry.registerAll(stairsCarved.toArray(new Block[0]));
+		
+		registry.registerAll(
 				blockCheckered,
 				slabCheckered,
 				slabCheckeredDouble
 			);
 		
-		registry.registerAll(stairsCarved.toArray(new Block[0]));
 		registry.registerAll(stairsCheckered.toArray(new Block[0]));
 	}
 
@@ -130,6 +134,12 @@ public class Basalt implements IFeature {
 		itemSlabBasalt.setRegistryName(slabCarved.getRegistryName());
 		registry.register(itemSlabBasalt);
 
+		//Basalt Stairs
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			registry.register(new ItemBlock(stairsCarved.get(type.ordinal())).setRegistryName(stairsCarved.get(type.ordinal()).getRegistryName()));
+		}
+
+		
 		//Checkered Blocks
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
@@ -142,10 +152,6 @@ public class Basalt implements IFeature {
 		itemSlabCheckered.setRegistryName(slabCheckered.getRegistryName());
 		registry.register(itemSlabCheckered);
 		
-		//Basalt Stairs
-		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
-			registry.register(new ItemBlock(stairsCarved.get(type.ordinal())).setRegistryName(stairsCarved.get(type.ordinal()).getRegistryName()));
-		}
 
 		//Checkered Stairs
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
@@ -188,19 +194,7 @@ public class Basalt implements IFeature {
 
 		//Marble Ore Dictionary Registrations
 		tryRegisterBlockOre(marbleOre, getRawMarble());
-		
-		//Checkered Tile Recipes
-		for( boolean flip: new boolean[] { false, true } ) {
-			registry.register(
-					new ShapedOreRecipe( null, new ItemStack(blockCheckered, 4, 0),
-							flip ? "mb" : "bm",
-							flip ? "bm" : "mb",
-							'b', basaltOre,
-							'm', marbleOre
-							).setRegistryName(blockCheckered.getRegistryName().getResourcePath() + (flip ? "A" : "B"))
-					);
-		}
-		
+
 		//Basalt Slab and Stairs Recipes
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			Block baseBlock = Block.REGISTRY.getObject(type.getBaseResourceLocation());
@@ -224,6 +218,18 @@ public class Basalt implements IFeature {
 						'x', baseItemBlock
 					);
 			}
+		}
+
+		//Checkered Tile Recipes
+		for( boolean flip: new boolean[] { false, true } ) {
+			registry.register(
+					new ShapedOreRecipe( null, new ItemStack(blockCheckered, 4, 0),
+							flip ? "mb" : "bm",
+							flip ? "bm" : "mb",
+							'b', basaltOre,
+							'm', marbleOre
+							).setRegistryName(blockCheckered.getRegistryName().getResourcePath() + (flip ? "A" : "B"))
+					);
 		}
 
 		//Checkered Slab and Stairs Recipes
@@ -264,6 +270,9 @@ public class Basalt implements IFeature {
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
+
+		stairsCarved.forEach(s -> ModelHelper.regModel(s));
+
 		
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
@@ -273,7 +282,6 @@ public class Basalt implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 
-		stairsCarved.forEach(s -> ModelHelper.regModel(s));
 		stairsCheckered.forEach(s -> ModelHelper.regModel(s));
 	}
 
@@ -284,26 +292,26 @@ public class Basalt implements IFeature {
 		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
 			addChiselVariation("basalt", blockCarved, type.getMetadata());
 		}
-		
+
+		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
+			addChiselVariation("basaltslab", slabCarved, type.getMetadata());
+		}
+
+		stairsCarved.forEach(s -> addChiselVariation("basaltstairs", s, 0));
+
+
 		//Add chisel variations for Checkered Blocks
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
 			addChiselVariation("basaltcheckered", blockCheckered, type.getMetadata());
 		}
 		
-		//Add chisel variations for Basalt Blocks
-		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
-			addChiselVariation("basaltslab", slabCarved, type.getMetadata());
-		}
-		
-		//Add chisel variations for Checkered Blocks
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			addChiselVariation("basaltcheckeredslab", slabCheckered, type.getMetadata());
 		}
 		
-		//Add chisel variations for Basalt Blocks
-		stairsCarved.forEach(s -> addChiselVariation("basaltstairs", s, 0));
 		stairsCheckered.forEach(s -> addChiselVariation("basaltcheckeredstairs", s, 0));
 		
+		//Move chisel basalt variations to Basalt tab
 		for(String name : new String[] { "basalt", "basalt2" }) {
 			Block basalt = Block.REGISTRY.getObject(new ResourceLocation("chisel", name));
 			if(basalt != Blocks.AIR) {
