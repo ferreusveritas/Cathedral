@@ -1,6 +1,7 @@
 {
-    "parent": "block/cube_all",
+    "parent": "block/cube_column",
     "textures": {
-        "all": "cathedral:blocks/dwemer/block_carved_layered"
+        "end": "cathedral:blocks/dwemer/block_carved_layered_top",
+        "side": "cathedral:blocks/dwemer/block_carved_layered"
     }
 }

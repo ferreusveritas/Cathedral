@@ -201,7 +201,10 @@ public class Dwemer implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(lightNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, lightNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
-		ModelHelper.regModel(barsNormal);
+		for(BlockBars.EnumType type: BlockBars.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(barsNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, barsNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
 	}
 
 	@Override

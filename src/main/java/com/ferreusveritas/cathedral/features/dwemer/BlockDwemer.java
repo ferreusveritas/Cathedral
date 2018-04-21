@@ -73,7 +73,8 @@ public class BlockDwemer extends BlockBase {
 		RAYS       	( 8, "rays"),
 		KNOT       	( 9, "knot"),
 		MASK       	(10, "mask"),
-		PANEL      	(11, "panel");
+		PANEL      	(11, "panel"),
+		VENT		(12, "vent");
 		
 		/** Array of the Block's BlockStates */
 		private static final EnumType[] META_LOOKUP = new EnumType[values().length];

@@ -13,13 +13,16 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 
 public class BlockBars extends BlockPane {
 	
 	public static final String name = "bars";
 	
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
+	public static final PropertyEnum<EnumCapping> CAPPING = PropertyEnum.<EnumCapping>create("capping", EnumCapping.class);
 	
 	public BlockBars(String name) {
 		super(Material.IRON, true);
@@ -39,8 +42,29 @@ public class BlockBars extends BlockPane {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, WEST, SOUTH, VARIANT});
+		return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, SOUTH, WEST, VARIANT, CAPPING});
 	}
+	
+    /**
+     * Get the actual Block state of this Block at the given position. This applies properties not visible in the
+     * metadata, such as fence connections.
+     */
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+    	state = super.getActualState(state, worldIn, pos);
+    	
+    	boolean north = state.getValue(NORTH);
+    	boolean east = state.getValue(EAST);
+    	boolean south = state.getValue(SOUTH);
+    	boolean west = state.getValue(WEST);
+    	
+    	return state.withProperty(CAPPING,
+    							( north && !east && !south && !west) ? EnumCapping.NORTH :
+    							(!north &&  east && !south && !west) ? EnumCapping.EAST :
+    							(!north && !east &&  south && !west) ? EnumCapping.SOUTH :
+    							(!north && !east && !south &&  west) ? EnumCapping.WEST :
+    							(!north && !east && !south && !west) ? EnumCapping.POST :
+    							EnumCapping.NONE);
+    }
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
@@ -79,7 +103,7 @@ public class BlockBars extends BlockPane {
 		FOOTER(2, "footer"),
 		HEADER(3, "header"),
 		MASK(4, "mask"),
-		ROMBUS(5, "rombus");
+		RHOMBUS(5, "rhombus");
 		
 		private final int meta;
 		private final String name;
@@ -113,6 +137,26 @@ public class BlockBars extends BlockPane {
 			return unlocalizedName;
 		}
 		
+	}
+	
+	public static enum EnumCapping implements IStringSerializable {
+		NONE("none"),
+		POST("post"),
+		NORTH("north"),
+		EAST("east"),
+		SOUTH("south"),
+		WEST("west");
+		
+		private String name;
+		
+		private EnumCapping(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
 	}
 	
 }

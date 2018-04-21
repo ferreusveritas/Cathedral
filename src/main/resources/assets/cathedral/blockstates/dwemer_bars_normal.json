@@ -1,32 +1,58 @@
 {
-    "multipart": [
-        {   "apply": { "model": "iron_bars_post_ends" }},
-        {   "when": { "north": false, "east": false, "south": false, "west": false },
-            "apply": { "model": "iron_bars_post" }
-        },
-        {   "when": { "north": true, "east": false, "south": false, "west": false },
-            "apply": { "model": "iron_bars_cap" }
-        },
-        {   "when": { "north": false, "east": true, "south": false, "west": false },
-            "apply": { "model": "iron_bars_cap", "y": 90 }
-        },
-        {   "when": { "north": false, "east": false, "south": true, "west": false },
-            "apply": { "model": "iron_bars_cap_alt" }
-        },
-        {   "when": { "north": false, "east": false, "south": false, "west": true },
-            "apply": { "model": "iron_bars_cap_alt", "y": 90 }
-        },
-        {   "when": { "north": true },
-            "apply": { "model": "iron_bars_side" }
-        },
-        {   "when": { "east": true },
-            "apply": { "model": "iron_bars_side", "y": 90 }
-        },
-        {   "when": { "south": true },
-            "apply": { "model": "iron_bars_side_alt" }
-        },
-        {   "when": { "west": true },
-            "apply": { "model": "iron_bars_side_alt", "y": 90 }
-        }
-    ]
+  "forge_marker": 1,
+  "defaults": {
+    "model": "iron_bars_post_ends"
+  },
+  "variants": {
+  
+     "variant": {
+		"normal": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_normal",
+									"edge": 	"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle": "cathedral:blocks/dwemer/bars_normal_side" } },
+		"ornate": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_ornate",
+									"edge": 	"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle": "cathedral:blocks/dwemer/bars_normal_ornate" } },
+		"footer": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_footer",
+									"edge":		"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle":	"cathedral:blocks/dwemer/bars_normal_footer" } },
+		"header": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_header",
+									"edge": 	"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle": "cathedral:blocks/dwemer/bars_normal_header" } },
+		"mask": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_mask",
+									"edge": 	"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle": "cathedral:blocks/dwemer/bars_normal_mask" } },
+		"rhombus": { "textures": { 	"bars": 	"cathedral:blocks/dwemer/bars_normal_rhombus",
+									"edge": 	"cathedral:blocks/dwemer/bars_normal_empty",
+									"particle": "cathedral:blocks/dwemer/bars_normal_rhombus" } }
+	},
+    
+    "capping": {
+    	"none": {},
+		"post": { "submodel": "iron_bars_post" },
+		"north": { "submodel": "iron_bars_cap" },
+		"east": { "submodel": "iron_bars_cap", "y": 90 },
+		"south": { "submodel": "iron_bars_cap_alt" },
+		"west": { "submodel": "iron_bars_cap_alt", "y": 90 }
+    },
+    
+	"north": {
+		"true": { "submodel": "iron_bars_side" },
+		"false" : {}
+	}, 
+
+	"east": {
+		"true": { "submodel": "iron_bars_side", "y": 90 },
+		"false" : {}
+	}, 
+
+	"south": {
+		"true": { "submodel": "iron_bars_side_alt" },
+		"false" : {}
+	},  
+
+	"west": {
+		"true": { "submodel": "iron_bars_side_alt", "y": 90 },
+		"false" : {}
+	}
+}
 }

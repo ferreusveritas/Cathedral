@@ -3,32 +3,20 @@ itemGroup.tabCathedral=Cathedral
 itemGroup.tabDwemer=Dwarven
 itemGroup.tabRoofing=Roofing
 
-tile.chisel.basaltblock.name=Basalt Block
-
-tile.basalt_block_carved.rosette.name=Basalt Rosette
 tile.basalt_block_carved.paver.name=Basalt Paver
-tile.basalt_block_carved.wornbrick.name=Basalt Worn Brick
-tile.basalt_block_carved.ornate.name=Basalt Ornate
 tile.basalt_block_carved.poison.name=Basalt Poison
 tile.basalt_block_carved.sunkenpanel.name=Basalt Sunken Tile
-tile.basalt_block_carved.tiles.name=Basalt Tiles
-tile.basalt_block_carved.slabs.name=Basalt Bevelled Slabs
 tile.basalt_block_carved.vault.name=Basalt Vault
-tile.basalt_block_carved.smallbricks.name=Basalt Small Bricks
-tile.basalt_block_carved.smallchaotic.name=Basalt Chaotic Bricks
-tile.basalt_block_carved.smalltiles.name=Basalt Small Tiles
-tile.basalt_block_carved.bordered.name=Basalt Bordered Block
 tile.basalt_block_carved.sunken.name=Basalt Sunken
 tile.basalt_block_carved.knot.name=Basalt Knotted
-tile.basalt_block_carved.mediumbricks.name=Basalt Medium Bricks
 
-tile.chisel.checkeredblock.name=Checkered
-
-tile.basalt_block_checkered.normal.name=Checkered
-tile.basalt_block_checkered.border.name=Checkered Border
-tile.basalt_block_checkered.small.name=Checkered Small
-tile.basalt_block_checkered.tiles.name=Checkered Tiles
-tile.basalt_block_checkered.tilessmall.name=Checkered Small Tiles
+tile.basalt_slab_carved.raw.name=Basalt Raw Slab
+tile.basalt_slab_carved.smalltiles.name=Basalt Small Tiles Slab
+tile.basalt_slab_carved.layers.name=Basalt Layers Slab
+tile.basalt_slab_carved.bricks.name=Basalt Bricks Slab
+tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab
+tile.basalt_slab_carved.tiles.name=Basalt Tiles Slab
+tile.basalt_slab_carved.slabs.name=Basalt Bevelled Slab
 
 tile.basalt_stairs_carved_raw.name=Basalt Stairs
 tile.basalt_stairs_carved_smalltiles.name=Basalt Small Tiles Stairs
@@ -38,30 +26,29 @@ tile.basalt_stairs_carved_smallbricks.name=Basalt Small Bricks Stairs
 tile.basalt_stairs_carved_tiles.name=Basalt Tiles Stairs
 tile.basalt_stairs_carved_slabs.name=Basalt Slabs Stairs
 
+
+tile.basalt_block_checkered.normal.name=Checkered
+tile.basalt_block_checkered.border.name=Checkered Border
+tile.basalt_block_checkered.small.name=Checkered Small
+tile.basalt_block_checkered.tiles.name=Checkered Tiles
+tile.basalt_block_checkered.tilessmall.name=Checkered Small Tiles
+
+tile.basalt_slab_checkered.normal.name=Checkered Slab
+tile.basalt_slab_checkered.small.name=Checkered Small Slab
+tile.basalt_slab_checkered.tiles.name=Checkered Tiles Slab
+tile.basalt_slab_checkered.tilessmall.name=Checkered Small Tiles Slab
+
 tile.basalt_stairs_checkered_normal.name=Checkered Stairs
 tile.basalt_stairs_checkered_small.name=Checkered Small Tiles Stairs
 tile.basalt_stairs_checkered_tiles.name=Checkered Layers Stairs
 tile.basalt_stairs_checkered_tilessmall.name=Checkered Bricks Stairs
 
-tile.chisel.basaltslab.name=Basalt Slab
-tile.basalt_slab_carved.raw.name=Basalt Raw Slab
-tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab
-tile.basalt_slab_carved.layers.name=Basalt Layers Slab
-tile.basalt_slab_carved.bricks.name=Basalt Bricks Slab
-tile.basalt_slab_carved.smallbricks.name=Basalt Small Bricks Slab
-tile.basalt_slab_carved.tiles.name=Basalt Tiles Slab
-tile.basalt_slab_carved.slabs.name=Basalt Bevelled Slab
-
-tile.basalt_slab_carved.smalltiles.name=Basalt Small Tiles Slab
-
-tile.chisel.dwemerblock.name=Dwemer Block
 
 tile.dwemer_block_carved.embedded.name=Dwemer Embedded Plate
 tile.dwemer_block_carved.pillar.name=Dwemer Bordered Pillar
 tile.dwemer_block_carved.altar.name=Dwemer Stone Altar
-tile.dwemer_block_carved.decor.name=Dwemer Gilded Altar
-tile.dwemer_block_carved.carving-1.name=Dwemer Carved Snake
-tile.dwemer_block_carved.carving-2.name=Dwemer Carved Figures
+tile.dwemer_block_carved.carving1.name=Dwemer Carved Snake
+tile.dwemer_block_carved.carving2.name=Dwemer Carved Figures
 tile.dwemer_block_carved.layered.name=Dwemer Reinforced Brick
 tile.dwemer_block_carved.scalepillar.name=Dwemer Scale Pillar
 tile.dwemer_block_carved.wormgear.name=Dwemer Worm Gear
@@ -69,22 +56,21 @@ tile.dwemer_block_carved.rays.name=Dwemer Ray Carving
 tile.dwemer_block_carved.knot.name=Dwemer Knot
 tile.dwemer_block_carved.mask.name=Dwemer Mask
 tile.dwemer_block_carved.panel.name=Dwemer Panel
+tile.dwemer_block_carved.vent.name=Dwemer Vent
 
 tile.basalt_dwemer.dwemer-glass-fence.name=Dwemer Metal Fence
 tile.basalt_dwemer.dwemer-glass-ornate.name=Dwemer Metal Ornate
-
-tile.chisel.dwemliteblock.name=Dwemer Light
 
 tile.dwemer_light_normal.path.name=Dwemer Path Lighting
 tile.dwemer_light_normal.vent.name=Dwemer Burning Vent
 tile.dwemer_light_normal.gas.name=Dwemer Gaslit Vent
 
-tile.basalt_bars_0.name=Dwemer Metal Bars
-tile.basalt_bars_1.name=Dwemer Metal Bars Ornate
-tile.basalt_bars_2.name=Dwemer Metal Bars Footer
-tile.basalt_bars_3.name=Dwemer Metal Bars Header
-tile.basalt_bars_4.name=Dwemer Metal Bars Mask
-tile.basalt_bars_5.name=Dwemer Metal Bars Rombus
+tile.dwemer_bars_normal.normal.name=Dwemer Metal Bars
+tile.dwemer_bars_normal.ornate.name=Dwemer Metal Bars Ornate
+tile.dwemer_bars_normal.footer.name=Dwemer Metal Bars Footer
+tile.dwemer_bars_normal.header.name=Dwemer Metal Bars Header
+tile.dwemer_bars_normal.mask.name=Dwemer Metal Bars Mask
+tile.dwemer_bars_normal.rhombus.name=Dwemer Metal Bars Rhombus
 
 tile.basalt_dwemercatwalk.name=Dwemer Catwalk
 
@@ -106,12 +92,7 @@ tile.basalt_fantasy.fantasy2pillarlarge.name=Fantasy Large Pillar
 tile.basalt_fantasy.fantasy2knot.name=Fantasy Carved Knot
 tile.basalt_fantasy.fantasy2embedded.name=Fantasy Embedded Plate
 
-tile.chisel.checkeredslab.name=Checkered Slab
 
-tile.basalt_slab_checkered.normal.name=Checkered Slab
-tile.basalt_slab_checkered.small.name=Checkered Small Slab
-tile.basalt_slab_checkered.tiles.name=Checkered Tiles Slab
-tile.basalt_slab_checkered.tilessmall.name=Checkered Small Tiles Slab
 
 tile.basalt_extraslabs.fantasy-brick.name=Fantasy Brick Slab
 tile.basalt_extraslabs.fantasy-damaged.name=Fantasy Damaged Slab

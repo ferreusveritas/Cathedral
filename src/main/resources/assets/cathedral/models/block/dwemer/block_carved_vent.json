@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "cathedral:blocks/dwemer/block_carved_vent"
+    }
+}
