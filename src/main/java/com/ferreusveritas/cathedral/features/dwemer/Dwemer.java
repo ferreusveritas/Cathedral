@@ -2,22 +2,25 @@ package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.common.blocks.BlockBase;
 import com.ferreusveritas.cathedral.common.blocks.BlockGlassBase;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -51,9 +54,9 @@ public class Dwemer implements IFeature {
 
 		barsNormal = new BlockBars(featureObjectName(BlockForm.BARS, "normal"));
 		
-		doorNormal = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "normal")).setCreativeTab(CathedralMod.tabDwemer);
+		doorNormal = new BlockShortDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "normal")).setCreativeTab(CathedralMod.tabDwemer);
 
-		doorTall = new BlockBase(Material.IRON, featureObjectName(BlockForm.DOOR, "tall")).setCreativeTab(CathedralMod.tabDwemer);
+		doorTall = new BlockTallDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "tall")).setCreativeTab(CathedralMod.tabDwemer);
 		
 		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
 		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
@@ -88,9 +91,7 @@ public class Dwemer implements IFeature {
 	}
 
 	@Override
-	public void createItems() {
-		// TODO Auto-generated method stub
-		
+	public void createItems() {		
 	}
 
 	@Override
@@ -99,9 +100,9 @@ public class Dwemer implements IFeature {
 			blockCarved,
 			lightNormal,
 			//glassNormal,
-			barsNormal
-			//doorNormal,
-			//doorTall
+			barsNormal,
+			doorNormal,
+			doorTall
 		);
 	}
 
@@ -125,20 +126,18 @@ public class Dwemer implements IFeature {
                 return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(barsNormal.getRegistryName()));
-
-
 		
-		//registry.register(new ItemBlock(doorNormal).setRegistryName(doorNormal.getRegistryName()));
-		//registry.register(new ItemBlock(doorTall).setRegistryName(doorTall.getRegistryName()));
+		registry.register(new ItemDoor(doorNormal).setRegistryName(doorNormal.getRegistryName()));
+		registry.register(new ItemTallDoor(doorTall).setRegistryName(doorTall.getRegistryName()));
 	}
 
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 		
-		//Attempt to find the best fit for a center metal ingot
 		String basaltOre = "blockBasalt";
 		String metalIngot;
 
+		//Attempt to find the best fit for a center metal ingot
 		if(OreDictionary.doesOreNameExist("ingotDwemer")){
 			metalIngot = "ingotDwemer";//In case a skyrim mod is out there
 		} else
@@ -205,6 +204,8 @@ public class Dwemer implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(barsNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, barsNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
+		ModelLoader.setCustomStateMapper(doorNormal, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+		ModelLoader.setCustomStateMapper(doorTall, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
 	}
 
 	@Override

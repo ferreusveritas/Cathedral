@@ -1,72 +1,93 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class ItemTallDoor extends Item {
 
-	    public ItemTallDoor(Material material) {
-	        this.maxStackSize = 64;
-	        this.setCreativeTab(CreativeTabs.REDSTONE);
-	    }
-    
-	    /*
-	    // Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-	    // True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-	    @Override
-		public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float px, float py, float pz) {
-	        if (side != 1) { return false; }
-	        
-            ++y;
-            Block block = Dwemer.tallDoorBlock;
+    private final Block block;
 
-            if (player.canPlayerEdit(x, y, z, side, itemStack) && player.canPlayerEdit(x, y + 1, z, side, itemStack) && player.canPlayerEdit(x, y + 2, z, side, itemStack)) {
-                if (!block.canPlaceBlockAt(world, x, y, z)) { return false; }
+    public ItemTallDoor(Block block) {
+        this.block = block;
+        this.setCreativeTab(block.getCreativeTabToDisplayOn());
+    }
 
-                int dir = MathHelper.floor_double((player.rotationYaw + 180.0F) * 4.0F / 360.0F - 0.5D) & 3;
-                placeDoorBlock(world, x, y, z, dir, block);
-                --itemStack.stackSize;
-                
-                return true;
+    /**
+     * Called when a Block is right-clicked with this Item
+     */
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (facing != EnumFacing.UP) {
+            return EnumActionResult.FAIL;
+        }
+        else {
+            IBlockState iblockstate = worldIn.getBlockState(pos);
+            Block block = iblockstate.getBlock();
+
+            if (!block.isReplaceable(worldIn, pos)) {
+                pos = pos.offset(facing);
             }
-            
-            return false;
-	    }
-	    
-	    @Override
-	    @SideOnly(Side.CLIENT)
-	    public void registerIcons(IIconRegister register){}
-	    
-	    public static void placeDoorBlock(World world, int x, int y, int z, int dir, Block block) {
-	        byte xdelta = 0;
-	        byte zdelta = 0;
 
-	        if (dir == 0){ zdelta = 1; }
-	        if (dir == 1){ xdelta = -1; }
-	        if (dir == 2){ zdelta = -1; }
-	        if (dir == 3){ xdelta = 1; }
+            ItemStack itemstack = player.getHeldItem(hand);
 
-	        int rightBlocks = (world.getBlock(x - xdelta, y, z - zdelta).isNormalCube() ? 1 : 0) + (world.getBlock(x - xdelta, y + 1, z - zdelta).isNormalCube() ? 1 : 0);
-	        int leftBlocks = (world.getBlock(x + xdelta, y, z + zdelta).isNormalCube() ? 1 : 0) + (world.getBlock(x + xdelta, y + 1, z + zdelta).isNormalCube() ? 1 : 0);
-	        boolean rightDoor = world.getBlock(x - xdelta, y, z - zdelta) == block || world.getBlock(x - xdelta, y + 1, z - zdelta) == block;
-	        boolean leftDoor = world.getBlock(x + xdelta, y, z + zdelta) == block || world.getBlock(x + xdelta, y + 1, z + zdelta) == block;
-	        boolean leftHinge = false;
+            if (player.canPlayerEdit(pos, facing, itemstack) && this.block.canPlaceBlockAt(worldIn, pos)) {
+                EnumFacing enumfacing = EnumFacing.fromAngle((double)player.rotationYaw);
+                int x = enumfacing.getFrontOffsetX();
+                int z = enumfacing.getFrontOffsetZ();
+                boolean isRightHinge = x < 0 && hitZ < 0.5F || x > 0 && hitZ > 0.5F || z < 0 && hitX > 0.5F || z > 0 && hitX < 0.5F;
+                placeDoor(worldIn, pos, enumfacing, this.block, isRightHinge);
+                SoundType soundtype = worldIn.getBlockState(pos).getBlock().getSoundType(worldIn.getBlockState(pos), worldIn, pos, player);
+                worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                itemstack.shrink(1);
+                return EnumActionResult.SUCCESS;
+            }
+            else {
+                return EnumActionResult.FAIL;
+            }
+        }
+    }
 
-	        if (rightDoor && !leftDoor){//There's a door on the right side but not the left side.
-	            leftHinge = true;
-	        }
-	        else if (leftBlocks > rightBlocks){//There's more whole blocks on the left than on the right
-	            leftHinge = true;
-	        }
+    public static void placeDoor(World worldIn, BlockPos lowerPos, EnumFacing facing, Block door, boolean isRightHinge) {
+        BlockPos rightPos = lowerPos.offset(facing.rotateY());
+        BlockPos leftPos = lowerPos.offset(facing.rotateYCCW());
+        int leftCount = (worldIn.getBlockState(leftPos).isNormalCube() ? 1 : 0) + (worldIn.getBlockState(leftPos.up()).isNormalCube() ? 1 : 0);
+        int rightCount = (worldIn.getBlockState(rightPos).isNormalCube() ? 1 : 0) + (worldIn.getBlockState(rightPos.up()).isNormalCube() ? 1 : 0);
+        boolean doorOnLeft = worldIn.getBlockState(leftPos).getBlock() == door || worldIn.getBlockState(leftPos.up()).getBlock() == door;
+        boolean doorOnRight = worldIn.getBlockState(rightPos).getBlock() == door || worldIn.getBlockState(rightPos.up()).getBlock() == door;
 
-	        //X, Y, Z, new block ID, new metadata, flags
-	        world.setBlock(x, y, z, block, dir, 2);//Bottom Block
-	        world.setBlock(x, y + 1, z, block, 8 | (leftHinge ? 1 : 0), 2);//Middle Block
-	        world.setBlock(x, y + 2, z, block, 12, 2);//Top Block
-	        world.notifyBlocksOfNeighborChange(x, y, z, block);
-	        world.notifyBlocksOfNeighborChange(x, y + 1, z, block);
-	        world.notifyBlocksOfNeighborChange(x, y + 2, z, block);
-	    }
-	    */
+        if ((!doorOnLeft || doorOnRight) && rightCount <= leftCount) {
+            if (doorOnRight && !doorOnLeft || rightCount < leftCount) {
+                isRightHinge = false;
+            }
+        }
+        else {
+            isRightHinge = true;
+        }
+
+        BlockPos middlePos = lowerPos.up();
+        BlockPos upperPos = lowerPos.up(2);
+        boolean powered = worldIn.isBlockPowered(lowerPos) || worldIn.isBlockPowered(middlePos) || worldIn.isBlockPowered(upperPos);
+        IBlockState iblockstate = door.getDefaultState()
+        		.withProperty(BlockDoor.FACING, facing)
+        		.withProperty(BlockDoor.HINGE, isRightHinge ? BlockDoor.EnumHingePosition.RIGHT : BlockDoor.EnumHingePosition.LEFT)
+        		.withProperty(BlockDoor.POWERED, Boolean.valueOf(powered))
+        		.withProperty(BlockDoor.OPEN, Boolean.valueOf(powered));
+        worldIn.setBlockState(lowerPos, iblockstate.withProperty(BlockTallDoor.THIRD, BlockTallDoor.EnumDoorThird.LOWER), 2);
+        worldIn.setBlockState(middlePos, iblockstate.withProperty(BlockTallDoor.THIRD, BlockTallDoor.EnumDoorThird.MIDDLE), 2);
+        worldIn.setBlockState(upperPos, iblockstate.withProperty(BlockTallDoor.THIRD, BlockTallDoor.EnumDoorThird.UPPER), 2);
+        worldIn.notifyNeighborsOfStateChange(lowerPos, door, false);
+        worldIn.notifyNeighborsOfStateChange(middlePos, door, false);
+        worldIn.notifyNeighborsOfStateChange(upperPos, door, false);
+    }
+    
 }
