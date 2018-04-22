@@ -34,11 +34,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTallDoor extends Block {
     public static final PropertyEnum<EnumDoorThird> THIRD = PropertyEnum.<EnumDoorThird>create("third", EnumDoorThird.class);
-    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.25D);
-    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.75D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.75D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.25D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB SOUTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.1875D);
+    protected static final AxisAlignedBB NORTH_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.8125D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(0.8125D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB EAST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.1875D, 1.0D, 1.0D);
 
+    ItemTallDoor doorItem;
+    
     protected BlockTallDoor(Material materialIn, String name) {
         super(materialIn);
 		setRegistryName(name);
@@ -52,6 +54,15 @@ public class BlockTallDoor extends Block {
         		.withProperty(THIRD, EnumDoorThird.LOWER));
     }
 
+    public BlockTallDoor setDoorItem(ItemTallDoor doorItem) {
+    	this.doorItem = doorItem;
+    	return this;
+    }
+    
+    public ItemTallDoor getDoorItem() {
+    	return doorItem;
+    }
+    
     @Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         state = state.getActualState(source, pos);
@@ -252,7 +263,7 @@ public class BlockTallDoor extends Block {
     }
 
     private Item getItem() {
-    	return Items.IRON_DOOR;
+    	return doorItem;
     }
 
     // Called before the Block is set to air in the world. Called regardless of if the player's tool can actually collect this block
@@ -303,8 +314,8 @@ public class BlockTallDoor extends Block {
     // Convert the given metadata into a BlockState for this Block
     @Override
 	public IBlockState getStateFromMeta(int meta) {
-    	IBlockState state = this.getDefaultState();
     	EnumDoorThird third = EnumDoorThird.values()[meta >> 2];
+    	IBlockState state = this.getDefaultState().withProperty(THIRD, third);
     	
     	switch(third) {
     		case LOWER: return state.withProperty(BlockDoor.HINGE, BlockDoor.EnumHingePosition.values()[meta & 1]).withProperty(BlockDoor.OPEN, (meta & 2) > 0);

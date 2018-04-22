@@ -127,6 +127,15 @@ public class Dwemer implements IFeature {
             }
         }).setRegistryName(barsNormal.getRegistryName()));
 		
+		ItemDoor itemDoor = new ItemDoor(doorNormal);
+		ItemTallDoor itemTallDoor = new ItemTallDoor(doorTall);
+		
+		itemDoor.setRegistryName(doorNormal.getRegistryName());
+		itemTallDoor.setRegistryName(doorTall.getRegistryName());
+		
+		((BlockShortDoor)doorNormal).setDoorItem(itemDoor);
+		((BlockTallDoor)doorTall).setDoorItem(itemTallDoor);
+		
 		registry.register(new ItemDoor(doorNormal).setRegistryName(doorNormal.getRegistryName()));
 		registry.register(new ItemTallDoor(doorTall).setRegistryName(doorTall.getRegistryName()));
 	}
