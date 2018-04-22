@@ -1,14 +1,11 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
-import java.util.Random;
-
 import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
