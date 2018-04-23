@@ -130,14 +130,14 @@ public class Dwemer implements IFeature {
 		ItemDoor itemDoor = new ItemDoor(doorNormal);
 		ItemTallDoor itemTallDoor = new ItemTallDoor(doorTall);
 		
-		itemDoor.setRegistryName(doorNormal.getRegistryName());
-		itemTallDoor.setRegistryName(doorTall.getRegistryName());
+		itemDoor.setUnlocalizedName(doorNormal.getUnlocalizedName()).setRegistryName(doorNormal.getRegistryName()).setCreativeTab(CathedralMod.tabDwemer);
+		itemTallDoor.setUnlocalizedName(doorTall.getUnlocalizedName()).setRegistryName(doorTall.getRegistryName()).setCreativeTab(CathedralMod.tabDwemer);
 		
 		((BlockShortDoor)doorNormal).setDoorItem(itemDoor);
 		((BlockTallDoor)doorTall).setDoorItem(itemTallDoor);
 		
-		registry.register(new ItemDoor(doorNormal).setRegistryName(doorNormal.getRegistryName()));
-		registry.register(new ItemTallDoor(doorTall).setRegistryName(doorTall.getRegistryName()));
+		registry.register(itemDoor);
+		registry.register(itemTallDoor);
 	}
 
 	@Override
@@ -215,6 +215,10 @@ public class Dwemer implements IFeature {
 		
 		ModelLoader.setCustomStateMapper(doorNormal, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
 		ModelLoader.setCustomStateMapper(doorTall, new StateMap.Builder().ignore(BlockDoor.POWERED).build());
+		
+		ModelHelper.regModel(((BlockShortDoor)doorNormal).getDoorItem(), 0, doorNormal.getRegistryName());
+		ModelHelper.regModel(((BlockTallDoor)doorTall).getDoorItem(), 0, doorTall.getRegistryName());
+
 	}
 
 	@Override

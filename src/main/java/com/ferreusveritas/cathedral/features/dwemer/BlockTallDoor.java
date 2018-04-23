@@ -62,7 +62,7 @@ public class BlockTallDoor extends Block {
     public ItemTallDoor getDoorItem() {
     	return doorItem;
     }
-    
+
     @Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         state = state.getActualState(source, pos);
@@ -259,7 +259,7 @@ public class BlockTallDoor extends Block {
 
     @Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return null;//new ItemStack(this.getItem());
+        return new ItemStack(this.getItem());
     }
 
     private Item getItem() {

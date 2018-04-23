@@ -20,7 +20,6 @@ public class ItemTallDoor extends Item {
 
     public ItemTallDoor(Block block) {
         this.block = block;
-        this.setCreativeTab(block.getCreativeTabToDisplayOn());
     }
 
     /**
