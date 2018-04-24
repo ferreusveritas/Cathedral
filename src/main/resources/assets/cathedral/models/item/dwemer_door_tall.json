@@ -1,0 +1,10 @@
+{   
+	"parent": "cathedral:item/talldoor",
+	"textures": {
+		"lower": "cathedral:blocks/dwemer/door_tall_lower",
+        "middle": "cathedral:blocks/dwemer/door_tall_middle",
+        "upper": "cathedral:blocks/dwemer/door_tall_upper",
+        "side": "cathedral:blocks/dwemer/door_normal_side",
+        "top": "cathedral:blocks/dwemer/door_normal_top"
+    }
+}

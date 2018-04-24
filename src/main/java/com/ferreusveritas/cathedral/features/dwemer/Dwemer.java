@@ -54,9 +54,15 @@ public class Dwemer implements IFeature {
 
 		barsNormal = new BlockBars(featureObjectName(BlockForm.BARS, "normal"));
 		
-		doorNormal = new BlockShortDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "normal")).setCreativeTab(CathedralMod.tabDwemer);
+		doorNormal = new BlockShortDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "normal"))
+				.setCreativeTab(CathedralMod.tabDwemer)
+				.setHardness(3.5f)
+				.setResistance(CathedralMod.basalt.basaltResistance);
 
-		doorTall = new BlockTallDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "tall")).setCreativeTab(CathedralMod.tabDwemer);
+		doorTall = new BlockTallDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "tall"))
+				.setCreativeTab(CathedralMod.tabDwemer)
+				.setHardness(3.5f)
+				.setResistance(CathedralMod.basalt.basaltResistance);
 		
 		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
 		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
@@ -72,22 +78,6 @@ public class Dwemer implements IFeature {
 
 		//Dwemer Catwalk
 		//GameRegistry.registerBlock(dwemerCatwalkBlock, "dwemcatwalk");
-
-		//Doors
-		//shortDoorBlock = (BlockShortDoor) new BlockShortDoor().setBlockName(Cathedral.MODID + "_doorShort").setBlockTextureName(Cathedral.MODID + ":short").setHardness(3.5f).setResistance(Basalt.basaltResistance);
-		//tallDoorBlock = (BlockTallDoor) new BlockTallDoor().setBlockName(Cathedral.MODID + "_doorTall").setBlockTextureName(Cathedral.MODID + ":tall").setHardness(3.5f).setResistance(Basalt.basaltResistance);
-
-		//GameRegistry.registerBlock(shortDoorBlock, "ShortDoor");
-		//GameRegistry.registerBlock(tallDoorBlock, "TallDoor");
-
-		//shortDoorItem = (ItemShortDoor) new ItemShortDoor(Material.IRON).setUnlocalizedName(Cathedral.MODID + "_doorShort").setCreativeTab(Cathedral.tabBasalt);
-		//GameRegistry.registerItem(shortDoorItem, "ShortDoorItem");
-		//shortDoorBlock.setDroppedItem(shortDoorItem);
-
-		//tallDoorItem = (ItemTallDoor) new ItemTallDoor(Material.IRON).setUnlocalizedName(Cathedral.MODID + "_doorTall").setCreativeTab(Cathedral.tabBasalt);
-		//GameRegistry.registerItem(tallDoorItem, "TallDoorItem");
-		//tallDoorBlock.setDroppedItem(tallDoorItem);
-
 	}
 
 	@Override
@@ -185,17 +175,44 @@ public class Dwemer implements IFeature {
 				'l', Blocks.GLOWSTONE,
 				'g', new ItemStack(Blocks.STAINED_GLASS, 1, 4)
 			);
-
 		
 		//Recipe for Dwemer Bars
-		//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(dwemerBars, 16, 0), true, new Object[]{"nnn", "nnn", 'n', metalIngot}));
+		registry.register(
+				new ShapedOreRecipe(
+					null,
+					new ItemStack(barsNormal, 16, 0), 
+					new Object[]{
+						"iii",
+						"iii",
+						'i', metalIngot
+					}
+				).setRegistryName(ModConstants.MODID, "dwemer_bars")
+			);
 
 		//Recipe for Dwemer Catwalk
 		//GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
 
-		//Recipe for Dwemer Doors
-		//GameRegistry.addRecipe(new ItemStack(tallDoorItem), "X", "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
-		//GameRegistry.addRecipe(new ItemStack(shortDoorItem), "X", "X", 'X', new ItemStack(dwemerBlock, 1, 12));
+		//Recipe for Dwemer Tall Door
+		GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "dwemer_door_tall"),
+				null,
+				new ItemStack(((BlockTallDoor)doorTall).getDoorItem(), 1), 
+				"x",
+				"x",
+				"x",
+				'x', new ItemStack(blockCarved, 1, 11)
+			);
+		
+		//Recipe for Dwemer Short Door
+		GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "dwemer_door_normal"),
+				null,
+				new ItemStack(((BlockShortDoor)doorNormal).getDoorItem(), 1), 
+				"x",
+				"x",
+				'x', new ItemStack(blockCarved, 1, 11)
+			);
+		
 	}
 
 	@Override

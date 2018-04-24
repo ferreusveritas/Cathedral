@@ -1,0 +1,9 @@
+{   
+	"parent": "cathedral:item/normaldoor",
+	"textures": {
+		"lower": "cathedral:blocks/dwemer/door_normal_lower",
+        "upper": "cathedral:blocks/dwemer/door_normal_upper",
+        "side": "cathedral:blocks/dwemer/door_normal_side",
+        "top": "cathedral:blocks/dwemer/door_normal_top"
+    }
+}
