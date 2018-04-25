@@ -58,8 +58,8 @@ tile.dwemer_block_carved.mask.name=Dwemer Mask
 tile.dwemer_block_carved.panel.name=Dwemer Panel
 tile.dwemer_block_carved.vent.name=Dwemer Vent
 
-tile.basalt_dwemer.dwemer-glass-fence.name=Dwemer Metal Fence
-tile.basalt_dwemer.dwemer-glass-ornate.name=Dwemer Metal Ornate
+tile.dwemer_glass_normal.fence.name=Dwemer Metal Fence
+tile.dwemer_glass_normal.ornate.name=Dwemer Metal Ornate
 
 tile.dwemer_light_normal.path.name=Dwemer Path Lighting
 tile.dwemer_light_normal.vent.name=Dwemer Burning Vent

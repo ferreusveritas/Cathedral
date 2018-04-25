@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "cathedral:blocks/dwemer/glass_normal_ornate"
+    }
+}

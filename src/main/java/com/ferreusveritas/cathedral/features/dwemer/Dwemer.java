@@ -2,7 +2,6 @@ package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.common.blocks.BlockGlassBase;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
@@ -47,12 +46,12 @@ public class Dwemer implements IFeature {
 		blockCarved = new BlockDwemer(featureObjectName(BlockForm.BLOCK, "carved"));
 		lightNormal = (BlockDwemerLight) new BlockDwemerLight(featureObjectName(BlockForm.LIGHT, "normal"));
 
-		glassNormal = (BlockGlass) new BlockGlassBase(Material.GLASS, false, featureObjectName(BlockForm.GLASS, "normal"))
+		glassNormal = (BlockGlass) new BlockDwemerGlass(featureObjectName(BlockForm.GLASS, "normal"))
 				.setCreativeTab(CathedralMod.tabDwemer)
 				//.setStepSound(SoundType.GLASS)
 				.setHardness(0.3F);
 
-		barsNormal = new BlockBars(featureObjectName(BlockForm.BARS, "normal"));
+		barsNormal = new BlockDwemerBars(featureObjectName(BlockForm.BARS, "normal"));
 		
 		doorNormal = new BlockShortDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "normal"))
 				.setCreativeTab(CathedralMod.tabDwemer)
@@ -63,18 +62,6 @@ public class Dwemer implements IFeature {
 				.setCreativeTab(CathedralMod.tabDwemer)
 				.setHardness(3.5f)
 				.setResistance(CathedralMod.basalt.basaltResistance);
-		
-		//BlockCarvable.addBlocks(dwemerNames, dwemerBlock, "dwemer");
-		//BlockCarvable.addBlocks(dwemerLightNames, dwemerLightBlock, "dwemlite");
-
-		//Dwemer Glass Blocks
-		//dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-fence.name", 0, "dwemer-glass-fence", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-		//dwemerGlassBlock.carverHelper.addVariation("tile.basalt_dwemer.dwemer-glass-ornate.name", 1, "dwemer-glass-ornate", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-		//dwemerGlassBlock.carverHelper.registerAll(dwemerGlassBlock, "glass");
-
-		//Dwemer Bars
-		//GameRegistry.registerBlock(dwemerBars, ItemSubBlocks.class, "DwemerBars");
-		//dwemerBars.addVariations();
 
 		//Dwemer Catwalk
 		//GameRegistry.registerBlock(dwemerCatwalkBlock, "dwemcatwalk");
@@ -89,7 +76,7 @@ public class Dwemer implements IFeature {
 		registry.registerAll(
 			blockCarved,
 			lightNormal,
-			//glassNormal,
+			glassNormal,
 			barsNormal,
 			doorNormal,
 			doorTall
@@ -111,9 +98,15 @@ public class Dwemer implements IFeature {
             }
         }).setRegistryName(lightNormal.getRegistryName()));
 		
+		registry.register(new ItemMultiTexture(glassNormal, glassNormal, new ItemMultiTexture.Mapper() {
+            public String apply(ItemStack stack) {
+                return BlockDwemerGlass.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+            }
+        }).setRegistryName(glassNormal.getRegistryName()));
+		
 		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return BlockBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockDwemerBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(barsNormal.getRegistryName()));
 		
@@ -189,9 +182,6 @@ public class Dwemer implements IFeature {
 				).setRegistryName(ModConstants.MODID, "dwemer_bars")
 			);
 
-		//Recipe for Dwemer Catwalk
-		//GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
-
 		//Recipe for Dwemer Tall Door
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "dwemer_door_tall"),
@@ -212,6 +202,9 @@ public class Dwemer implements IFeature {
 				"x",
 				'x', new ItemStack(blockCarved, 1, 11)
 			);
+
+		//Recipe for Dwemer Catwalk
+		//GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
 		
 	}
 
@@ -226,7 +219,11 @@ public class Dwemer implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(lightNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, lightNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
-		for(BlockBars.EnumType type: BlockBars.EnumType.values()) {
+		for(BlockDwemerGlass.EnumType type: BlockDwemerGlass.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(glassNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(barsNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, barsNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
@@ -249,6 +246,17 @@ public class Dwemer implements IFeature {
 		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
 			addChiselVariation("dwemerlight", lightNormal, type.getMetadata());
 		}
+		
+		//Add chisel variations for Dwemer Glass
+		for(BlockDwemerGlass.EnumType type: BlockDwemerGlass.EnumType.values()) {
+			addChiselVariation("glass", glassNormal, type.getMetadata());
+		}
+		
+		//Add chisel variations for Dwemer Bars
+		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
+			addChiselVariation("dwemerbars", barsNormal, type.getMetadata());
+		}
+
 	}
 
 	private void addChiselVariation(String group, Block block, int meta) {

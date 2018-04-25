@@ -17,14 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockBars extends BlockPane {
+public class BlockDwemerBars extends BlockPane {
 	
 	public static final String name = "bars";
 	
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	public static final PropertyEnum<EnumCapping> CAPPING = PropertyEnum.<EnumCapping>create("capping", EnumCapping.class);
 	
-	public BlockBars(String name) {
+	public BlockDwemerBars(String name) {
 		super(Material.IRON, true);
 		setRegistryName(name);
 		setUnlocalizedName(name);
@@ -36,7 +36,7 @@ public class BlockBars extends BlockPane {
 		setCreativeTab(CathedralMod.tabDwemer);
 	}
 	
-	public BlockBars(){
+	public BlockDwemerBars(){
 		this(name);
 	}
 	
@@ -69,7 +69,7 @@ public class BlockBars extends BlockPane {
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, BlockBars.EnumType.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, BlockDwemerBars.EnumType.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */

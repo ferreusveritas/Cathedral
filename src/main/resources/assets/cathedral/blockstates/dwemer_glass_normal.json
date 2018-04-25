@@ -1,0 +1,6 @@
+{
+    "variants": {
+    	"variant=fence"		:{"model": "cathedral:dwemer/glass_normal_fence"},
+		"variant=ornate"	:{"model": "cathedral:dwemer/glass_normal_ornate"}
+    }
+}
