@@ -60,7 +60,7 @@ public class Basalt implements IFeature {
 	public void createBlocks() {
 
 		//Create carved blocks
-		blockCarved = new BlockBasalt(featureObjectName(BlockForm.BLOCK, "carved"));		
+		blockCarved = new BlockBasalt(featureObjectName(BlockForm.BLOCK, "carved"));
 		
 		slabCarved = new BlockSlabBasalt(featureObjectName(BlockForm.SLAB, "carved"))
 			.setCreativeTab(CathedralMod.tabBasalt)

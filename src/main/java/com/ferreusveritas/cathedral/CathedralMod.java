@@ -10,7 +10,6 @@ import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.features.dwemer.BlockDwemer;
 import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
 import com.ferreusveritas.cathedral.features.extras.Extras;
-import com.ferreusveritas.cathedral.features.marble.MarbleFixer;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
 
@@ -40,7 +39,6 @@ public class CathedralMod {
 	public static Dwemer dwemer;
 	public static Extras extras;
 	public static Roofing roofing;
-	public static MarbleFixer marblefixer;
 	
 	public static ArrayList<IFeature> features = new ArrayList();
 	
@@ -50,15 +48,13 @@ public class CathedralMod {
 		dwemer = new Dwemer();
 		extras = new Extras();
 		roofing = new Roofing();
-		marblefixer = new MarbleFixer();
 		
 		Collections.addAll(features,
 			cathedral,
 			basalt,
 			dwemer,
-			//extras,
+			extras,
 			roofing
-			//marblefixer
 		);
 		
 	}

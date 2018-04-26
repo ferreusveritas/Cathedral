@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.TypeStandard;
 
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.SoundType;
@@ -97,65 +98,40 @@ public class BlockDwemerBars extends BlockPane {
 		}
 	}*/
 	
-	public static enum EnumType implements IStringSerializable {
-		NORMAL(0, "normal"),
-		ORNATE(1, "ornate"),
-		FOOTER(2, "footer"),
-		HEADER(3, "header"),
-		MASK(4, "mask"),
-		RHOMBUS(5, "rhombus");
-		
-		private final int meta;
-		private final String name;
-		private final String unlocalizedName;
-		
-		private EnumType(int index, String name) {
-			this.meta = index;
-			this.name = name;
-			this.unlocalizedName = name;
-		}
+	public static enum EnumType implements TypeStandard {
+		NORMAL,
+		ORNATE,
+		FOOTER,
+		HEADER,
+		MASK,
+		RHOMBUS;
 		
 		public int getMetadata() {
-			return meta;
+			return ordinal();
 		}
 		
 		@Override
 		public String toString() {
-			return name;
+			return getName();
 		}
 		
 		public static EnumType byMetadata(int meta) {
 			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 		}
 		
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public String getUnlocalizedName() {
-			return unlocalizedName;
-		}
-		
 	}
 	
 	public static enum EnumCapping implements IStringSerializable {
-		NONE("none"),
-		POST("post"),
-		NORTH("north"),
-		EAST("east"),
-		SOUTH("south"),
-		WEST("west");
-		
-		private String name;
-		
-		private EnumCapping(String name) {
-			this.name = name;
-		}
+		NONE,
+		POST,
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST;
 
 		@Override
 		public String getName() {
-			return name;
+			return name().toLowerCase();
 		}
 	}
 	

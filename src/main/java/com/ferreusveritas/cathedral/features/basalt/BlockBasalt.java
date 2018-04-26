@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.TypeStandard;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,7 +10,6 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.MathHelper;
 
 public class BlockBasalt extends Block {
@@ -59,45 +59,26 @@ public class BlockBasalt extends Block {
 		}
 	};
 	
-	public static enum EnumType implements IStringSerializable {
+	public static enum EnumType implements TypeStandard {
 		
-		PAVER		( 0, "paver"),
-		POISON		( 1, "poison"),
-		SUNKENPANEL	( 2, "sunkenpanel"),
-		VAULT		( 3, "vault"), 
-		SUNKEN		(4, "sunken"), 
-		KNOT		(5, "knot");
-		
-		private final int meta;
-		private final String name;
-		private final String unlocalizedName;
-		
-		private EnumType(int index, String name) {
-			this.meta = index;
-			this.name = name;
-			this.unlocalizedName = name;
-		}
+		PAVER,
+		POISON,
+		SUNKENPANEL,
+		VAULT,
+		SUNKEN,
+		KNOT;
 		
 		public int getMetadata() {
-			return meta;
+			return ordinal();
 		}
 		
 		@Override
 		public String toString() {
-			return name;
+			return getName();
 		}
 		
 		public static EnumType byMetadata(int meta) {
 			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
-		}
-		
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public String getUnlocalizedName() {
-			return unlocalizedName;
 		}
 
 	}
