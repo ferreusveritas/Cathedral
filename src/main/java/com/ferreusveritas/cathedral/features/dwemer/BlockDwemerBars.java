@@ -1,7 +1,7 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.common.TypeStandard;
+import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.SoundType;
@@ -98,7 +98,7 @@ public class BlockDwemerBars extends BlockPane {
 		}
 	}*/
 	
-	public static enum EnumType implements TypeStandard {
+	public static enum EnumType implements StandardEnum {
 		NORMAL,
 		ORNATE,
 		FOOTER,

@@ -1,7 +1,7 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.common.TypeStandard;
+import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -59,7 +59,7 @@ public class BlockBasalt extends Block {
 		}
 	};
 	
-	public static enum EnumType implements TypeStandard {
+	public static enum EnumType implements StandardEnum {
 		
 		PAVER,
 		POISON,

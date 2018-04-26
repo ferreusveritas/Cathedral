@@ -1,8 +1,8 @@
 package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.common.TypeStandard;
 import com.ferreusveritas.cathedral.common.blocks.BlockBase;
+import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -60,7 +60,7 @@ public class BlockDwemer extends BlockBase {
 		}
 	}
 	
-	public static enum EnumType implements TypeStandard {
+	public static enum EnumType implements StandardEnum {
 		
 		EMBEDDED,
 		PILLAR,
