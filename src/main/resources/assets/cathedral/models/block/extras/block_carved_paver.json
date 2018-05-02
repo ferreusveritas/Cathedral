@@ -1,6 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "cathedral:blocks/extras/block_carved_paver"
-    }
-}

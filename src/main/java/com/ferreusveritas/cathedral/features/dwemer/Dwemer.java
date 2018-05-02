@@ -2,14 +2,18 @@ package com.ferreusveritas.cathedral.features.dwemer;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
+import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumCarvedType;
+import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumGlassType;
+import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumLightType;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -43,13 +47,33 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void createBlocks() {
-		blockCarved = new BlockDwemer(featureObjectName(BlockForm.BLOCK, "carved"));
-		lightNormal = (BlockDwemerLight) new BlockDwemerLight(featureObjectName(BlockForm.LIGHT, "normal"));
+		
+		blockCarved = new BlockMultiVariant<EnumCarvedType>(Material.ROCK, EnumCarvedType.class, featureObjectName(BlockForm.BLOCK, "carved")) {
+			@Override
+			public void makeVariantProperty() {
+				variant = PropertyEnum.<EnumCarvedType>create("variant", EnumCarvedType.class);			
+			}
+		}.setCreativeTab(CathedralMod.tabDwemer)
+		.setHardness(CathedralMod.basalt.basaltHardness)
+		.setResistance(CathedralMod.basalt.basaltResistance);
+		
+		lightNormal = new BlockMultiVariant<EnumLightType>(Material.ROCK, EnumLightType.class, featureObjectName(BlockForm.LIGHT, "normal")) {
+			@Override
+			public void makeVariantProperty() {
+				variant = PropertyEnum.<EnumLightType>create("variant", EnumLightType.class);			
+			}
+		}.setCreativeTab(CathedralMod.tabDwemer)
+		.setHardness(CathedralMod.basalt.basaltHardness)
+		.setResistance(CathedralMod.basalt.basaltResistance)
+		.setLightLevel(1.0F);
 
-		glassNormal = (BlockGlass) new BlockDwemerGlass(featureObjectName(BlockForm.GLASS, "normal"))
-				.setCreativeTab(CathedralMod.tabDwemer)
-				//.setStepSound(SoundType.GLASS)
-				.setHardness(0.3F);
+		glassNormal = new BlockMultiVariant<EnumGlassType>(Material.GLASS, EnumGlassType.class, featureObjectName(BlockForm.GLASS, "normal")) {
+			@Override
+			public void makeVariantProperty() {
+				variant = PropertyEnum.<EnumGlassType>create("variant", EnumGlassType.class);			
+			}
+		}.setCreativeTab(CathedralMod.tabDwemer)
+		.setHardness(0.3F); 
 
 		barsNormal = new BlockDwemerBars(featureObjectName(BlockForm.BARS, "normal"));
 		
@@ -86,23 +110,9 @@ public class Dwemer implements IFeature {
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 
-		registry.register(new ItemMultiTexture(blockCarved, blockCarved, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockDwemer.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(blockCarved.getRegistryName()));
-
-		registry.register(new ItemMultiTexture(lightNormal, lightNormal, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockDwemerLight.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(lightNormal.getRegistryName()));
-		
-		registry.register(new ItemMultiTexture(glassNormal, glassNormal, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockDwemerGlass.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(glassNormal.getRegistryName()));
+		registry.register(((BlockMultiVariant<EnumCarvedType>)blockCarved).getItemMultiTexture());
+		registry.register(((BlockMultiVariant<EnumLightType>)lightNormal).getItemMultiTexture());
+		registry.register(((BlockMultiVariant<EnumGlassType>)glassNormal).getItemMultiTexture());
 		
 		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
@@ -211,18 +221,10 @@ public class Dwemer implements IFeature {
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
 		
-		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(blockCarved), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCarved.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(lightNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, lightNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(BlockDwemerGlass.EnumType type: BlockDwemerGlass.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(glassNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
+		((BlockMultiVariant<EnumCarvedType>)blockCarved).registerItemModels();
+		((BlockMultiVariant<EnumLightType>)lightNormal).registerItemModels();
+		((BlockMultiVariant<EnumGlassType>)glassNormal).registerItemModels();
+
 		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(barsNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, barsNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
@@ -237,20 +239,9 @@ public class Dwemer implements IFeature {
 
 	@Override
 	public void init() {
-		//Add chisel variations for Dwemer Blocks
-		for(BlockDwemer.EnumType type: BlockDwemer.EnumType.values()) {
-			addChiselVariation("dwemer", blockCarved, type.getMetadata());
-		}
-		
-		//Add chisel variations for Dwemer Light Blocks
-		for(BlockDwemerLight.EnumType type: BlockDwemerLight.EnumType.values()) {
-			addChiselVariation("dwemerlight", lightNormal, type.getMetadata());
-		}
-		
-		//Add chisel variations for Dwemer Glass
-		for(BlockDwemerGlass.EnumType type: BlockDwemerGlass.EnumType.values()) {
-			addChiselVariation("glass", glassNormal, type.getMetadata());
-		}
+		((BlockMultiVariant<EnumCarvedType>)blockCarved).addChiselVariation("dwemer");
+		((BlockMultiVariant<EnumLightType>)lightNormal).addChiselVariation("dwemerlight");
+		((BlockMultiVariant<EnumGlassType>)glassNormal).addChiselVariation("glass");
 		
 		//Add chisel variations for Dwemer Bars
 		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {

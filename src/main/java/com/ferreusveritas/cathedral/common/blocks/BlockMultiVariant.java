@@ -1,7 +1,6 @@
 package com.ferreusveritas.cathedral.common.blocks;
 
 import com.ferreusveritas.cathedral.ModConstants;
-import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
@@ -15,23 +14,26 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 
-public class BlockMultiVariant<E extends Enum<E> & StandardEnum> extends Block {
+public abstract class BlockMultiVariant<E extends Enum<E> & StandardEnum> extends Block {
 	
-	public final PropertyEnum<E> variant;
+	public PropertyEnum<E> variant;
 	public final E[] values;
 	
-	public BlockMultiVariant(Material materialIn, Class<E> e) {
+	public BlockMultiVariant(Material materialIn, Class<E> e, String name) {
 		super(materialIn);
 		variant = PropertyEnum.<E>create("variant", e);
 		values = e.getEnumConstants();
-		String name = values[0].getBlockName();
 		setRegistryName(name);
 		setUnlocalizedName(name);
 	}
 	
+	abstract public void makeVariantProperty();
+	
 	@Override
 	protected BlockStateContainer createBlockState() {
+		makeVariantProperty();
 		return new BlockStateContainer(this, new IProperty[] {variant});
 	}
 	
@@ -56,7 +58,7 @@ public class BlockMultiVariant<E extends Enum<E> & StandardEnum> extends Block {
 	}
 	
 	public void getSubBlocks(net.minecraft.creativetab.CreativeTabs itemIn, net.minecraft.util.NonNullList<ItemStack> items) {
-		for(E type : values ) {
+		for(E type : values) {
 			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
 	};
@@ -70,8 +72,16 @@ public class BlockMultiVariant<E extends Enum<E> & StandardEnum> extends Block {
 	}
 	
 	public void registerItemModels() {
-		for(BlockBasalt.EnumType type: BlockBasalt.EnumType.values()) {
+		for(E type: values) {
 			ModelHelper.regModel(Item.getItemFromBlock(this), type.getMetadata(), new ResourceLocation(ModConstants.MODID, this.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 	}
+	
+	public void addChiselVariation(String group) {
+		for(E type: values) {
+			FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + getRegistryName() + "|" + type.getMetadata());
+
+		}
+	}
+	
 }

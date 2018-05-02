@@ -17,9 +17,5 @@ public interface StandardEnum extends IStringSerializable {
 	default public String getUnlocalizedName() {
 		return getName();
 	}
-
-	default public String getBlockName() {
-		return "";
-	}
 	
 }

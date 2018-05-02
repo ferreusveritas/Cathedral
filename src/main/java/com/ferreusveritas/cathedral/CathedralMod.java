@@ -7,8 +7,8 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
 import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
-import com.ferreusveritas.cathedral.features.dwemer.BlockDwemer;
 import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
+import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumCarvedType;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
@@ -84,7 +84,7 @@ public class CathedralMod {
 	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(dwemer.blockCarved, 1, BlockDwemer.EnumType.EMBEDDED.getMetadata());
+			return new ItemStack(dwemer.blockCarved, 1, EnumCarvedType.EMBEDDED.getMetadata());
 		}
 	};
 	

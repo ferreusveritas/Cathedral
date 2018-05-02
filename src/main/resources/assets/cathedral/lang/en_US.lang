@@ -134,8 +134,8 @@ tile.cathedral_gargoyle_demon_limestone.name=Limestone Gargoyle
 tile.cathedral_gargoyle_demon_basalt.name=Basalt Gargoyle
 tile.cathedral_gargoyle_demon_dwemer.name=Dwemer Gargoyle
 
-tile.basalt_stone.stone-panel.name=Stone Panel
-tile.basalt_stone.stone-knot.name=Stone Knot
+tile.extras_block_stone.paver.name=Stone Paver
+tile.extras_block_stone.knot.name=Stone Knot
 
 item.claytile.name=Unfired Clay Tile
 item.firedtile.name=Fired Clay Tile

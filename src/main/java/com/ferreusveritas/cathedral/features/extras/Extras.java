@@ -1,17 +1,17 @@
 package com.ferreusveritas.cathedral.features.extras;
 
-import com.ferreusveritas.cathedral.ModConstants;
+import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.proxy.ModelHelper;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemMultiTexture;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -39,7 +39,12 @@ public class Extras implements IFeature {
 	public void createBlocks() {
 	
 	//Create carved blocks
-	blockStone = new BlockExtraStone(featureObjectName(BlockForm.BLOCK, "carved"));
+	blockStone = new BlockMultiVariant<EnumStoneType>(Material.ROCK, EnumStoneType.class, featureObjectName(BlockForm.BLOCK, "stone")) {
+		@Override
+		public void makeVariantProperty() {
+			variant = PropertyEnum.<EnumStoneType>create("variant", EnumStoneType.class);
+		}
+	}.setCreativeTab(CathedralMod.tabBasalt);
 	
 	//Create and Register Stairs
 	/*for(BaseBlockDef baseBlock : baseBlocks){
@@ -69,7 +74,6 @@ public class Extras implements IFeature {
 	stainedGlass.carverHelper.addVariation("tile." + Cathedral.MODID + "_glass.stained-1.name", 0, "stained-1", null, 0, Cathedral.MODID);
 	stainedGlass.carverHelper.addVariation("tile." + Cathedral.MODID + "_glass.stained-2.name", 1, "stained-2", null, 0, Cathedral.MODID);\
 	*/
-
 	
 	//Register Extra Blocks
 	/*
@@ -98,12 +102,9 @@ public class Extras implements IFeature {
 	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
+
 		//Extra Stone Blocks
-		registry.register(new ItemMultiTexture(blockStone, blockStone, new ItemMultiTexture.Mapper() {
-            public String apply(ItemStack stack) {
-                return BlockExtraStone.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-            }
-        }).setRegistryName(blockStone.getRegistryName()));
+		registry.register(((BlockMultiVariant<EnumStoneType>)blockStone).getItemMultiTexture());
 		
 	}
 	
@@ -120,9 +121,7 @@ public class Extras implements IFeature {
 
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
-		for(BlockExtraStone.EnumType type: BlockExtraStone.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(blockStone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockStone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
+		((BlockMultiVariant<EnumStoneType>)blockStone).registerItemModels();
 	}
 	
 	@Override

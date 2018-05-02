@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cathedral:blocks/extras/block_carved_knot"
+        "all": "cathedral:blocks/extras/block_stone_knot"
     }
 }

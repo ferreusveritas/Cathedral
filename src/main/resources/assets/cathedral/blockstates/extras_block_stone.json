@@ -1,0 +1,6 @@
+{
+    "variants": {
+    	"variant=paver"		:{"model": "cathedral:extras/block_stone_paver"},
+		"variant=knot"         :{"model": "cathedral:extras/block_stone_knot"}
+    }
+}

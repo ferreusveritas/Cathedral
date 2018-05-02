@@ -1,7 +1,7 @@
 package com.ferreusveritas.cathedral.features.extras;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,13 +10,12 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
 
 public class BlockExtraStone extends Block {
 
 	public final static String name = "extrastone";
 
-	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
+	public static final PropertyEnum<EnumStoneType> VARIANT = PropertyEnum.<EnumStoneType>create("variant", EnumStoneType.class);
 
 	public BlockExtraStone() {
 		this(name);
@@ -39,7 +38,7 @@ public class BlockExtraStone extends Block {
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, EnumStoneType.byMetadata(meta));
 	}
 
 	/** Convert the BlockState into the correct metadata value */
@@ -55,30 +54,10 @@ public class BlockExtraStone extends Block {
 
 	@Override
 	public void getSubBlocks(net.minecraft.creativetab.CreativeTabs itemIn, net.minecraft.util.NonNullList<ItemStack> items) {
-		for(EnumType type : EnumType.values()) {
+		for(EnumStoneType type : EnumStoneType.values()) {
 			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
 	};
-
-	public static enum EnumType implements StandardEnum {
-		PAVER,
-		KNOT;
-
-		@Override
-		public int getMetadata() {
-			return ordinal();
-		}
-
-		@Override
-		public String toString() {
-			return getName();
-		}
-
-		public static EnumType byMetadata(int meta) {
-			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
-		}
-
-	}
 
 }
 

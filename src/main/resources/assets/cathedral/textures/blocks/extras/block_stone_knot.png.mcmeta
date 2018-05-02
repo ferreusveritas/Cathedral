@@ -4,7 +4,7 @@
         "type": "ctm",
         "layer": "SOLID",
         "textures": [
-        	"cathedral:blocks/extras/block_carved_knot_ctm"
+        	"cathedral:blocks/extras/block_stone_knot_ctm"
         ]
     }
 }
