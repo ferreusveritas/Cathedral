@@ -234,9 +234,9 @@ public class Dwemer implements IFeature {
 		
 		ModelHelper.regModel(((BlockShortDoor)doorNormal).getDoorItem(), 0, doorNormal.getRegistryName());
 		ModelHelper.regModel(((BlockTallDoor)doorTall).getDoorItem(), 0, doorTall.getRegistryName());
-
+		
 	}
-
+	
 	@Override
 	public void init() {
 		((BlockMultiVariant<EnumCarvedType>)blockCarved).addChiselVariation("dwemer");
@@ -247,9 +247,8 @@ public class Dwemer implements IFeature {
 		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
 			addChiselVariation("dwemerbars", barsNormal, type.getMetadata());
 		}
-
 	}
-
+	
 	private void addChiselVariation(String group, Block block, int meta) {
 		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
 	}

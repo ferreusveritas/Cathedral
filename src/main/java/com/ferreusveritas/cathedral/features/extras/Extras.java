@@ -5,6 +5,7 @@ import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
 
 import net.minecraft.block.Block;
@@ -43,6 +44,13 @@ public class Extras implements IFeature {
 		@Override
 		public void makeVariantProperty() {
 			variant = PropertyEnum.<EnumStoneType>create("variant", EnumStoneType.class);
+		}
+	}.setCreativeTab(CathedralMod.tabBasalt);
+	
+	blockEndstone = new BlockMultiVariant<EnumEndStoneType>(Material.ROCK, EnumEndStoneType.class, featureObjectName(BlockForm.BLOCK, "endstone")) {
+		@Override
+		public void makeVariantProperty() {
+			variant = PropertyEnum.<EnumEndStoneType>create("variant", EnumEndStoneType.class);
 		}
 	}.setCreativeTab(CathedralMod.tabBasalt);
 	
@@ -96,16 +104,15 @@ public class Extras implements IFeature {
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
-				blockStone
+				blockStone,
+				blockEndstone
 			);
 	}
 	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-
-		//Extra Stone Blocks
 		registry.register(((BlockMultiVariant<EnumStoneType>)blockStone).getItemMultiTexture());
-		
+		registry.register(((BlockMultiVariant<EnumEndStoneType>)blockEndstone).getItemMultiTexture());
 	}
 	
 	@Override
@@ -122,6 +129,7 @@ public class Extras implements IFeature {
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
 		((BlockMultiVariant<EnumStoneType>)blockStone).registerItemModels();
+		((BlockMultiVariant<EnumEndStoneType>)blockEndstone).registerItemModels();
 	}
 	
 	@Override
