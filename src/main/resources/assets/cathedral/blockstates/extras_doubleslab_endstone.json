@@ -1,0 +1,42 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+  	"model": "cube_bottom_top"
+  },
+  "variants": {
+     "variant": {
+     	"raw"			: { "textures": { 	"side": 	"chisel:blocks/endstone/raw",
+											"top": 		"chisel:blocks/endstone/raw",
+											"bottom": 	"chisel:blocks/endstone/raw" } },
+     
+		"smalltiles"	: { "textures": { 	"side": 	"chisel:blocks/endstone/tiles-small",
+											"top": 		"chisel:blocks/endstone/tiles-small",
+											"bottom": 	"chisel:blocks/endstone/tiles-small" } },
+											
+		"layers"		: { "textures": {	"side": 	"chisel:blocks/endstone/layers",
+											"top": 		"cathedral:blocks/extras/block_endstone_paver",
+											"bottom": 	"cathedral:blocks/extras/block_endstone_paver" } },
+
+		"bricks"		: { "textures": {	"side": 	"chisel:blocks/endstone/bricks-solid",
+											"top": 		"chisel:blocks/endstone/bricks-solid",
+											"bottom": 	"chisel:blocks/endstone/bricks-solid" } },
+
+		"smallbricks"	: { "textures": {	"side": 	"chisel:blocks/endstone/bricks-small",
+											"top": 		"chisel:blocks/endstone/bricks-small",
+											"bottom": 	"chisel:blocks/endstone/bricks-small" } },
+
+		"tiles"			: { "textures": {	"side": 	"chisel:blocks/endstone/tiles-medium",
+											"top": 		"chisel:blocks/endstone/tiles-medium",
+											"bottom": 	"chisel:blocks/endstone/tiles-medium" } },
+											
+		"slabs"			: { "textures": {	"side": 	"cathedral:blocks/basalt/block_carved_slabs_side",
+											"top": 		"cathedral:blocks/basalt/block_carved_slabs_top",
+											"bottom": 	"cathedral:blocks/basalt/block_carved_slabs_top" } },
+											
+		"checkered"		: { "textures": {	"side": 	"cathedral:blocks/extras/block_endstone_checkered",
+											"top": 		"cathedral:blocks/extras/block_endstone_checkered",
+											"bottom": 	"cathedral:blocks/extras/block_endstone_checkered" } }													
+											
+	}
+}
+}

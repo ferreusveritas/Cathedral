@@ -1,18 +1,24 @@
 package com.ferreusveritas.cathedral.features.extras;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneSlabType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
+import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -23,10 +29,10 @@ public class Extras implements IFeature {
 	public Block blockStone;
 	public Block blockEndstone;
 	
-	public BlockStairsGeneric stairs[] = new BlockStairsGeneric[5];
-	//public BlockSlabBase slabsVarious;
+	public Block slabEndstone;
+	public Block slabEndstoneDouble;
 	
-	//public ArrayList<BaseBlockDef> baseBlocks = new ArrayList<BaseBlockDef>();
+	public BlockStairsGeneric stairs[] = new BlockStairsGeneric[5];
 	
 	@Override
 	public String getName() {
@@ -52,48 +58,19 @@ public class Extras implements IFeature {
 		public void makeVariantProperty() {
 			variant = PropertyEnum.<EnumEndStoneType>create("variant", EnumEndStoneType.class);
 		}
-	}.setCreativeTab(CathedralMod.tabBasalt);
+	}.setCreativeTab(CathedralMod.tabBasalt)
+	.setHardness(3)
+	.setResistance(45);
 	
-	//Create and Register Stairs
-	/*for(BaseBlockDef baseBlock : baseBlocks){
-		extraStairs[baseBlock.select] = (BlockGenericStairs) new BlockGenericStairs(baseBlock).setCreativeTab(Cathedral.tabCathedral);
-		GameRegistry.registerBlock(extraStairs[baseBlock.select], baseBlock.blockName + "Stairs");
-	}*/
-
-	//Create and Register Slabs
-	/*extraSlabs = (BlockGenericSlab) new BlockGenericSlab(baseBlocks).setBlockName(Cathedral.MODID + "_extraslabs");
-	GameRegistry.registerBlock(extraSlabs, ItemGenericSlab.class, "ExtraSlabs");*/
-
-	//Explicitly Add Carving Variations for Stairs and Slabs
-	/*{
-		ICarvingRegistry Carving = CarvingUtils.getChiselRegistry();
-
-		Carving.addVariation("endstonestairs", extraStairs[3], 0, 0);
-		Carving.addVariation("endstonestairs", extraStairs[4], 0, 1);
-
-		Carving.addVariation("endstoneslab", extraSlabs, 3, 0);
-		Carving.addVariation("endstoneslab", extraSlabs, 4, 1);
-	}*/
-
-
-	/*
-	extraStone.carverHelper.addVariation("tile." + Cathedral.MODID + "_stone.stone-panel.name", 0, "stone-panel", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-	extraStone.carverHelper.addVariation("tile." + Cathedral.MODID + "_stone.stone-knot.name", 1, "stone-knot", null, 0, Cathedral.MODID, (ISubmapManager) null, 100);
-	stainedGlass.carverHelper.addVariation("tile." + Cathedral.MODID + "_glass.stained-1.name", 0, "stained-1", null, 0, Cathedral.MODID);
-	stainedGlass.carverHelper.addVariation("tile." + Cathedral.MODID + "_glass.stained-2.name", 1, "stained-2", null, 0, Cathedral.MODID);\
-	*/
+	slabEndstone = new BlockSlabEndstone(featureObjectName(BlockForm.SLAB, "endstone"))
+			.setCreativeTab(CathedralMod.tabBasalt)
+			.setHardness(3)
+			.setResistance(45);
 	
-	//Register Extra Blocks
-	/*
-	extraStone.carverHelper.registerBlock(extraStone, "stonebricksmooth");
-	stainedGlass.carverHelper.registerBlock(stainedGlass, "stainedglass");
-	*/
-
-	//Register Variations
-	/*
-	extraStone.carverHelper.registerVariations("stonebricksmooth");
-	stainedGlass.carverHelper.registerVariations("stainedglass");
-	*/
+	slabEndstoneDouble = new BlockDoubleSlabEndstone(featureObjectName(BlockForm.DOUBLESLAB, "endstone"))
+			.setCreativeTab(CathedralMod.tabBasalt)
+			.setHardness(3)
+			.setResistance(45);
 		
 	}
 
@@ -105,7 +82,9 @@ public class Extras implements IFeature {
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
 				blockStone,
-				blockEndstone
+				blockEndstone,
+				slabEndstone,
+				slabEndstoneDouble
 			);
 	}
 	
@@ -113,23 +92,25 @@ public class Extras implements IFeature {
 	public void registerItems(IForgeRegistry<Item> registry) {
 		registry.register(((BlockMultiVariant<EnumStoneType>)blockStone).getItemMultiTexture());
 		registry.register(((BlockMultiVariant<EnumEndStoneType>)blockEndstone).getItemMultiTexture());
+		
+		//Basalt Slabs
+		ItemSlab itemSlabBasalt = new ItemSlab(slabEndstone, (BlockSlab)slabEndstone, (BlockSlab)slabEndstoneDouble);
+		itemSlabBasalt.setRegistryName(slabEndstone.getRegistryName());
+		registry.register(itemSlabBasalt);
 	}
 	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
-		//Stairs and Slabs
-		/*for(BaseBlockDef baseBlock : baseBlocks){
-			//Stairs
-			GameRegistry.addRecipe(new ItemStack(extraStairs[baseBlock.select], 6, 0), "X  ", "XX ", "XXX", 'X', new ItemStack(baseBlock.block, 1, baseBlock.metaData));
-			//Slabs
-			GameRegistry.addRecipe(new ItemStack(extraSlabs, 6, baseBlock.select), "XXX", 'X', new ItemStack(baseBlock.block, 1, baseBlock.metaData));
-		}*/
 	}
 
 	@Override
 	public void registerModels(ModelRegistryEvent event) {
 		((BlockMultiVariant<EnumStoneType>)blockStone).registerItemModels();
 		((BlockMultiVariant<EnumEndStoneType>)blockEndstone).registerItemModels();
+		
+		for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(slabEndstone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabEndstone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
 	}
 	
 	@Override
