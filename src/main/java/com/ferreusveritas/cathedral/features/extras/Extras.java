@@ -94,9 +94,9 @@ public class Extras implements IFeature {
 		registry.register(((BlockMultiVariant<EnumEndStoneType>)blockEndstone).getItemMultiTexture());
 		
 		//Basalt Slabs
-		ItemSlab itemSlabBasalt = new ItemSlab(slabEndstone, (BlockSlab)slabEndstone, (BlockSlab)slabEndstoneDouble);
-		itemSlabBasalt.setRegistryName(slabEndstone.getRegistryName());
-		registry.register(itemSlabBasalt);
+		ItemSlab itemSlabEndstone = new ItemSlab(slabEndstone, (BlockSlab)slabEndstone, (BlockSlab)slabEndstoneDouble);
+		itemSlabEndstone.setRegistryName(slabEndstone.getRegistryName());
+		registry.register(itemSlabEndstone);
 	}
 	
 	@Override

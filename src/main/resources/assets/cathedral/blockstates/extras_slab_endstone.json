@@ -26,9 +26,9 @@
 											"top": 		"chisel:blocks/endstone/tiles-medium",
 											"bottom": 	"chisel:blocks/endstone/tiles-medium" } },
 											
-		"slabs"			: { "textures": {	"side": 	"cathedral:blocks/extras/block_carved_slabs_side",
-											"top": 		"cathedral:blocks/extras/block_carved_slabs_top",
-											"bottom": 	"cathedral:blocks/extras/block_carved_slabs_top" } },
+		"slabs"			: { "textures": {	"side": 	"cathedral:blocks/extras/block_endstone_slabs_side",
+											"top": 		"cathedral:blocks/extras/block_endstone_slabs_end",
+											"bottom": 	"cathedral:blocks/extras/block_endstone_slabs_end" } },
 											
 		"checkered"		: { "textures": {	"side": 	"cathedral:blocks/extras/block_endstone_checkered",
 											"top": 		"cathedral:blocks/extras/block_endstone_checkered",
