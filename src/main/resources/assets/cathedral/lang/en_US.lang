@@ -134,8 +134,20 @@ tile.cathedral_gargoyle_demon_limestone.name=Limestone Gargoyle
 tile.cathedral_gargoyle_demon_basalt.name=Basalt Gargoyle
 tile.cathedral_gargoyle_demon_dwemer.name=Dwemer Gargoyle
 
+
 tile.extras_block_stone.paver.name=Stone Paver
 tile.extras_block_stone.knot.name=Stone Knot
+
+tile.extras_block_endstone.paver.name=Endstone Paver 
+tile.extras_block_endstone.checkered.name=Endstone Checkered Tiles
+tile.extras_slab_endstone.raw.name=Endstone Raw Slab
+tile.extras_slab_endstone.smalltiles.name=Endstone Small Tiles Slab
+tile.extras_slab_endstone.layers.name=Endstone Layers Slab
+tile.extras_slab_endstone.bricks.name=Endstone Bricks Slab
+tile.extras_slab_endstone.smallbricks.name=Endstone Small Bricks Slab
+tile.extras_slab_endstone.tiles.name=Endstone Tiles Slab
+tile.extras_slab_endstone.slabs.name=Endstone Slab
+tile.extras_slab_endstone.checkered.name=Endstone Checkered Slab
 
 item.claytile.name=Unfired Clay Tile
 item.firedtile.name=Fired Clay Tile

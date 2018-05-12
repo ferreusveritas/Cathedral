@@ -1,0 +1,8 @@
+{
+	"parent": "block/half_slab",
+	"textures": {
+		"bottom": "chisel:blocks/endstone/raw",
+		"top": "chisel:blocks/endstone/raw",
+		"side": "chisel:blocks/endstone/raw"
+	}
+}
