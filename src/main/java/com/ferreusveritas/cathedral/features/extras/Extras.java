@@ -6,13 +6,8 @@ import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
-import com.ferreusveritas.cathedral.compat.CompatThermalExpansion;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
-import com.ferreusveritas.cathedral.features.basalt.BlockCheckered;
-import com.ferreusveritas.cathedral.features.basalt.BlockSlabBasalt;
-import com.ferreusveritas.cathedral.features.basalt.BlockSlabCheckered;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneSlabType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
@@ -33,7 +28,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Extras implements IFeature {
