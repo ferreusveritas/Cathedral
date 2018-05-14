@@ -2,10 +2,10 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "side": "chisel:blocks/basalt/raw",
-            "top": "chisel:blocks/basalt/raw",
-            "bottom": "chisel:blocks/basalt/raw",
-			"particle": "chisel:blocks/basalt/raw"
+            "side": "cathedral:blocks/extras/block_endstone_slabs_side",
+            "top": "cathedral:blocks/extras/block_endstone_slabs_end",
+            "bottom": "cathedral:blocks/extras/block_endstone_slabs_end",
+			"particle": "cathedral:blocks/extras/block_endstone_slabs_side"
         }
     },
     "variants": {

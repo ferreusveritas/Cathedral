@@ -147,7 +147,15 @@ tile.extras_slab_endstone.bricks.name=Endstone Bricks Slab
 tile.extras_slab_endstone.smallbricks.name=Endstone Small Bricks Slab
 tile.extras_slab_endstone.tiles.name=Endstone Tiles Slab
 tile.extras_slab_endstone.slabs.name=Endstone Slab
-tile.extras_slab_endstone.checkered.name=Endstone Checkered Slab
+
+tile.extras_stairs_endstone_raw.name=Endstone Raw Stairs
+tile.extras_stairs_endstone_smalltiles.name=Endstone Small Tiles Stairs
+tile.extras_stairs_endstone_layers.name=Endstone Layers Stairs
+tile.extras_stairs_endstone_bricks.name=Endstone Bricks Stairs
+tile.extras_stairs_endstone_smallbricks.name=Endstone Small Bricks Stairs
+tile.extras_stairs_endstone_tiles.name=Endstone Tiles Stairs
+tile.extras_stairs_endstone_slabs.name=Endstone Slabs Stairs
+tile.extras_stairs_endstone_checkered.name=Endstone Checkered Stairs
 
 item.claytile.name=Unfired Clay Tile
 item.firedtile.name=Fired Clay Tile

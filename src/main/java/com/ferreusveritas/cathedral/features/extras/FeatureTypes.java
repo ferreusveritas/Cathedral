@@ -56,8 +56,8 @@ public class FeatureTypes {
 		BRICKS("bricks", new ResourceLocation("chisel", "endstone2"), 0),
 		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "endstone2"), 1),
 		TILES("tiles", new ResourceLocation("chisel", "endstone2"), 3),
-		SLABS("slabs", new ResourceLocation("cathedral", "basalt_block_carved"), 7),
-		CHECKERED("checkered", new ResourceLocation("cathedral", "extras_block_checkered"), 1);
+		SLABS("slabs", new ResourceLocation("cathedral", "extras_block_endstone"), 0),
+		CHECKERED("checkered", new ResourceLocation("cathedral", "extras_block_endstone"), 1);
 		
 		private ResourceLocation baseResourceLocation;
 		private String name;

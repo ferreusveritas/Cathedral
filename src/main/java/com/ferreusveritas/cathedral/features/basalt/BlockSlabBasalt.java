@@ -108,7 +108,7 @@ public class BlockSlabBasalt extends BlockSlab {
 		BRICKS("bricks", new ResourceLocation("chisel", "basalt2"), 0),
 		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "basalt2"), 1),
 		TILES("tiles", new ResourceLocation("chisel", "basalt2"), 3),
-		SLABS("slabs", new ResourceLocation("cathedral", "basalt_block_carved"), 7);
+		SLABS("slabs", new ResourceLocation("chisel", "basalt"), 7);
 		
 		private ResourceLocation baseResourceLocation;
 		private String name;
