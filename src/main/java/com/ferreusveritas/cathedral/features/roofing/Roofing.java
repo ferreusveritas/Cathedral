@@ -1,26 +1,31 @@
 package com.ferreusveritas.cathedral.features.roofing;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Roofing implements IFeature {
 
 	public static final String featureName = "roofing";
-	
-	public BlockShingles roofingShinglesColored[] = new BlockShingles[EnumDyeColor.values().length];
+
 	public BlockShingles roofingShinglesNatural;
+	public BlockShingles roofingShinglesColored[] = new BlockShingles[EnumDyeColor.values().length];
 	
 	public Item clayTile;
 	public Item firedTile;
@@ -63,6 +68,8 @@ public class Roofing implements IFeature {
 
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
+
+		registry.registerAll(clayTile, firedTile);
 		
 		registry.register(new ItemBlock(roofingShinglesNatural).setRegistryName(roofingShinglesNatural.getRegistryName()));
 		
@@ -70,28 +77,55 @@ public class Roofing implements IFeature {
 			registry.register(new ItemBlock(roofTile).setRegistryName(roofTile.getRegistryName()));
 		}
 		
-		registry.registerAll(clayTile, firedTile);
 	}
 
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 		
 		//Clay Tiles
-		//GameRegistry.addRecipe(new ItemStack(clayTile, 16), " X ", "X X", 'X', Items.clay_ball);
-		//GameRegistry.addSmelting(new ItemStack(clayTile), new ItemStack(firedTile), 0.1f);
-		//GameRegistry.addRecipe(new ItemStack(roofTiles[16]), "XX", "XX", 'X', firedTile);
+		GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "claytile"),//Name
+				null,//Group
+				new ItemStack(clayTile),//Output
+				" x ",
+				"x x",
+				'x', Items.CLAY_BALL
+				);
 
-		//Coloring the clay tiles
-		/*String dyes[] = {
+		GameRegistry.addSmelting(new ItemStack(clayTile), new ItemStack(firedTile), 0.1f);
+		
+		GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "roofshinglesnatural"),//Name
+				null,//Group
+				new ItemStack(roofingShinglesNatural),//Output
+				"xx",
+				"xx",
+				'x', new ItemStack(firedTile)
+				);
+		
+		OreDictionary.registerOre("clayshingles", new ItemStack(roofingShinglesNatural));//Natural Terra Cotta Roofing
+		
+		String dyes[] = {
 				"dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray",
 				"dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite",
-		};*/
+		};
 		
-		OreDictionary.registerOre("blockClayTile", new ItemStack(roofingShinglesNatural));//Natural Terra Cotta Roofing
-		
-		for(int color = 0; color < 16; color++){
-			OreDictionary.registerOre("blockClayTile", new ItemStack(roofingShinglesColored[color]));
-			//GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(roofTiles[color], 8), true, new Object[]{"ttt", "tdt", "ttt", 't', "blockClayTile", 'd', dyes[color]}));
+		for(EnumDyeColor color: EnumDyeColor.values()) {
+			OreDictionary.registerOre("clayshingles", new ItemStack(roofingShinglesColored[color.getMetadata()]));
+			
+			registry.register(
+				new ShapedOreRecipe(
+					null,
+					new ItemStack(roofingShinglesColored[color.getMetadata()], 8, 0),
+					new Object[] {
+						"xxx",
+						"xcx",
+						"xxx",
+						'x', "clayshingles",
+						'c', dyes[color.getDyeDamage()]
+					}
+				).setRegistryName("clayshingles_" + color.getDyeColorName())
+			);
 		}
 		
 	}
