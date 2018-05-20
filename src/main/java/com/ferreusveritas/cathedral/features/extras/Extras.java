@@ -59,29 +59,29 @@ public class Extras implements IFeature {
 		public void makeVariantProperty() {
 			variant = PropertyEnum.<EnumStoneType>create("variant", EnumStoneType.class);
 		}
-	}.setCreativeTab(CathedralMod.tabBasalt);
+	}.setCreativeTab(CathedralMod.tabCathedral);
 	
 	blockEndstone = new BlockMultiVariant<EnumEndStoneType>(Material.ROCK, EnumEndStoneType.class, featureObjectName(BlockForm.BLOCK, "endstone")) {
 		@Override
 		public void makeVariantProperty() {
 			variant = PropertyEnum.<EnumEndStoneType>create("variant", EnumEndStoneType.class);
 		}
-	}.setCreativeTab(CathedralMod.tabBasalt)
+	}.setCreativeTab(CathedralMod.tabCathedral)
 	.setHardness(3)
 	.setResistance(45);
 	
 	slabEndstone = new BlockSlabEndstone(featureObjectName(BlockForm.SLAB, "endstone"))
-			.setCreativeTab(CathedralMod.tabBasalt)
+			.setCreativeTab(CathedralMod.tabCathedral)
 			.setHardness(3)
 			.setResistance(45);
 	
 	slabEndstoneDouble = new BlockDoubleSlabEndstone(featureObjectName(BlockForm.DOUBLESLAB, "endstone"))
-			.setCreativeTab(CathedralMod.tabBasalt)
+			.setCreativeTab(CathedralMod.tabCathedral)
 			.setHardness(3)
 			.setResistance(45);
 	
 	for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
-		stairsEndstone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "endstone_" + type.getName() ), blockEndstone.getDefaultState()).setCreativeTab(CathedralMod.tabBasalt));
+		stairsEndstone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "endstone_" + type.getName() ), blockEndstone.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
 	}
 	
 	}
