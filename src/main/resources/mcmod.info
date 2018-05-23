@@ -1,14 +1,14 @@
 [
 {
-  "modid": "basalt",
-  "name": "Basalt",
-  "description": "A small mod that adds in Chisel-2 variations of basalt, marble, and dwemer blocks.",
-  "version": "1.9.4",
-  "mcversion": "1.7.10",
-  "url": "http://ferreusveritas.com/basalt",
+  "modid": "cathedral",
+  "name": "Cathedral",
+  "description": "Provides blocks for building cathedrals and other fantasy structures",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/ferreusveritas/Cathedral",
   "updateUrl": "",
-  "authorList": [ "Ferreus Veritas" ],
-  "credits": "TTerrag and Cricket for reworking the Chisel-2 API and CTM code to accommodate this mod",
+  "authorList": [ "FerreusVeritas" ],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
