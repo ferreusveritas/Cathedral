@@ -3,6 +3,7 @@ package com.ferreusveritas.cathedral.features.cathedral;
 import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockGlass;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -26,6 +27,7 @@ public class BlockGlassStained extends BlockGlass {
 	
 	public BlockGlassStained(String name) {
 		super(Material.GLASS, false);
+		setSoundType(SoundType.GLASS);
 		setRegistryName(name);
 		setUnlocalizedName(name);
 		setHardness(0.3f);
