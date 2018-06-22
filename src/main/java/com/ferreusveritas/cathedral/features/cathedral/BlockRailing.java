@@ -164,6 +164,10 @@ public class BlockRailing extends Block {
 		return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
 	}
 	
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+        return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THICK : BlockFaceShape.CENTER_BIG;
+    }
+	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
