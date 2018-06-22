@@ -107,6 +107,7 @@ public class CathedralMod {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event){
 		features.forEach(f -> f.init());
+		features.forEach(f -> f.registerColorHandlers());
 		
 		proxy.init();
 	}

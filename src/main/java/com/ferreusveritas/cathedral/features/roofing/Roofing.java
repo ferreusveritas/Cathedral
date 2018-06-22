@@ -124,7 +124,7 @@ public class Roofing implements IFeature {
 						'x', "clayshingles",
 						'c', dyes[color.getDyeDamage()]
 					}
-				).setRegistryName("clayshingles_" + color.getDyeColorName())
+				).setRegistryName("clayshingles_" + color.getName())
 			);
 		}
 		

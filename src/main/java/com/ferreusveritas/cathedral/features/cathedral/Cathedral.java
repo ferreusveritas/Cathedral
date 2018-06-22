@@ -26,6 +26,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -211,33 +213,18 @@ public class Cathedral implements IFeature {
 	}
 	
 	@Override
-	public void registerModels(ModelRegistryEvent event) {
-		
-		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(glassStained), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassStained.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(EnumMaterial type: EnumMaterial.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(railingVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, railingVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(chainVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, chainVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-
-		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
-			ModelHelper.regModel(gargoyleBlock);
-		}
-		
-	}
-	
-	@Override
 	public void init() {
 		
 		//Add chisel variations for Stained Glass Blocks
 		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
 			FMLInterModComms.sendMessage("chisel", "variation:add", "cathedralglass" + "|" + glassStained.getRegistryName() + "|" + type.getMetadata());
 		}
+		
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerColorHandlers() {
 		
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor() {
 			@Override
@@ -257,5 +244,27 @@ public class Cathedral implements IFeature {
 	
 	@Override
 	public void postInit() { }
-	
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerModels(ModelRegistryEvent event) {
+		
+		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(glassStained), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassStained.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(EnumMaterial type: EnumMaterial.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(railingVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, railingVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
+		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(chainVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, chainVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+
+		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
+			ModelHelper.regModel(gargoyleBlock);
+		}
+		
+	}
+
 }

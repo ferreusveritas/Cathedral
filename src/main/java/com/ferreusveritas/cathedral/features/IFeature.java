@@ -32,4 +32,6 @@ public interface IFeature {
 		return getName() + "_" + form + "_" + style;
 	}
 	
+	default void registerColorHandlers() { }
+	
 }

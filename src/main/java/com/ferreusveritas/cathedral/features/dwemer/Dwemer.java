@@ -26,6 +26,8 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -219,6 +221,7 @@ public class Dwemer implements IFeature {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerModels(ModelRegistryEvent event) {
 		
 		((BlockMultiVariant<EnumCarvedType>)blockCarved).registerItemModels();
