@@ -74,8 +74,8 @@ tile.dwemer_bars_normal.rhombus.name=Dwemer Metal Bars Rhombus
 
 tile.basalt_dwemercatwalk.name=Dwemer Catwalk
 
-item.tile.dwemer_door_normal=Short Dwemer Door
-item.tile.dwemer_door_tall=Tall Dwemer Door
+item.tile.dwemer_door_normal.name=Short Dwemer Door
+item.tile.dwemer_door_tall.name=Tall Dwemer Door
 
 tile.basalt_fantasy-brick-stairs.name=Fantasy Brick Stairs
 tile.basalt_fantasy-disarray-stairs.name=Fantasy Disarray Stairs
