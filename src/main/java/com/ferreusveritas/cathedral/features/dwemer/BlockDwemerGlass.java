@@ -2,11 +2,8 @@ package com.ferreusveritas.cathedral.features.dwemer;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
-import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumGlassType;
 
 import net.minecraft.block.Block;
@@ -14,12 +11,10 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
