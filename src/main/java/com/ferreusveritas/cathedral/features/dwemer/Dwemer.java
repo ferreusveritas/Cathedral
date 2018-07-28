@@ -139,14 +139,17 @@ public class Dwemer implements IFeature {
 		if(OreDictionary.doesOreNameExist("ingotDwemer")){
 			metalIngot = "ingotDwemer";//In case a skyrim mod is out there
 		} else
-			if(OreDictionary.doesOreNameExist("ingotBrass")){
-				metalIngot = "ingotBrass";//Brass would also make sense
+			if(OreDictionary.doesOreNameExist("ingotDawnstone")) {
+				metalIngot = "ingotDawnstone";//Basically a perfect fit
 			} else
-				if(OreDictionary.doesOreNameExist("ingotBronze")){
-					metalIngot = "ingotBronze";//Bronze is close enough and pretty common
-				} else {
-					metalIngot = "ingotGold";//This sucks but whatever
-				}
+				if(OreDictionary.doesOreNameExist("ingotBrass")){
+					metalIngot = "ingotBrass";//Brass would also make sense
+				} else
+					if(OreDictionary.doesOreNameExist("ingotBronze")){
+						metalIngot = "ingotBronze";//Bronze is close enough and pretty common
+					} else {
+						metalIngot = "ingotGold";//This sucks but whatever
+					}
 				
 		//Recipe for Dwemer Stone
 		registry.register(new ShapedOreRecipe(

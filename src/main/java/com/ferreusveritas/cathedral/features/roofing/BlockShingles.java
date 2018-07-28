@@ -7,9 +7,12 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
 /*
 M	8421	F	Desc
@@ -457,10 +460,11 @@ public class BlockShingles extends BlockStairs {
 		this.setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
 		return straight;
 	}
+*/
 
 	@Override
-	public boolean canCreatureSpawn(EnumCreatureType type, IBlockAccess world, int x, int y, int z) {
+	public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, EntityLiving.SpawnPlacementType type) {
 		return false;
 	}
-*/
+
 }

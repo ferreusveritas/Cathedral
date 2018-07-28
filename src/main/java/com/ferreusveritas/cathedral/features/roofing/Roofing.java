@@ -86,7 +86,7 @@ public class Roofing implements IFeature {
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "claytile"),//Name
 				null,//Group
-				new ItemStack(clayTile),//Output
+				new ItemStack(clayTile, 16, 0),//Output
 				" x ",
 				"x x",
 				'x', Items.CLAY_BALL
