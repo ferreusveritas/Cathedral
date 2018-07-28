@@ -10,9 +10,9 @@
     },
     "variants": {
         "facing=east,half=bottom,shape=straight":		{ "model": "stairs" },
-        "facing=west,half=bottom,shape=straight":		{ "model": "stairs", "y": 180},
-        "facing=south,half=bottom,shape=straight":		{ "model": "stairs", "y": 90},
-        "facing=north,half=bottom,shape=straight":		{ "model": "stairs", "y": 270},
+        "facing=west,half=bottom,shape=straight":		{ "model": "stairs", "y": 180, "uvlock": true },
+        "facing=south,half=bottom,shape=straight":		{ "model": "stairs", "y": 90, "uvlock": true },
+        "facing=north,half=bottom,shape=straight":		{ "model": "stairs", "y": 270, "uvlock": true },
         "facing=east,half=bottom,shape=outer_right":	{ "model": "outer_stairs" },
         "facing=west,half=bottom,shape=outer_right":	{ "model": "outer_stairs", "y": 180, "uvlock": true },
         "facing=south,half=bottom,shape=outer_right":	{ "model": "outer_stairs", "y": 90, "uvlock": true },
