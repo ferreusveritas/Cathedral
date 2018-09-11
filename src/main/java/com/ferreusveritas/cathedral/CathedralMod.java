@@ -66,7 +66,7 @@ public class CathedralMod {
 	public static CommonProxy proxy;
 	
 	public static final CreativeTabs tabBasalt = new CreativeTabs("tabBasalt") {		
-        @SideOnly(Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
 			return new ItemStack(basalt.blockCarved, 1, BlockBasalt.EnumType.POISON.getMetadata());
@@ -74,7 +74,7 @@ public class CathedralMod {
 	};
 	
 	public static final CreativeTabs tabCathedral = new CreativeTabs("tabCathedral") {
-        @SideOnly(Side.CLIENT)
+		@SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
 			return new ItemStack(cathedral.railingVarious);
