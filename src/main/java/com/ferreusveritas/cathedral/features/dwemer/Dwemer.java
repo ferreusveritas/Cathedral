@@ -137,10 +137,10 @@ public class Dwemer implements IFeature {
 
 		//Attempt to find the best fit for a center metal ingot
 		if(OreDictionary.doesOreNameExist("ingotDwemer")){
-			metalIngot = "ingotDwemer";//In case a skyrim mod is out there
+			metalIngot = "ingotDwemer";//In case a Skyrim mod is out there
 		} else
 			if(OreDictionary.doesOreNameExist("ingotDawnstone")) {
-				metalIngot = "ingotDawnstone";//Basically a perfect fit
+				metalIngot = "ingotDawnstone";//Basically a perfect fit (Embers)
 			} else
 				if(OreDictionary.doesOreNameExist("ingotBrass")){
 					metalIngot = "ingotBrass";//Brass would also make sense

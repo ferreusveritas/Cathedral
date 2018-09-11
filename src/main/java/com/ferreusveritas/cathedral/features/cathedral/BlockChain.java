@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockChain extends Block {
 	
@@ -144,6 +145,16 @@ public class BlockChain extends Block {
 		}
 		
 		public String getOreName() {
+			//Dirty hack to allow dwemer chains to be made from dawnstone nuggets
+			if(orename.equals(DWEMER.orename)) {
+				if(OreDictionary.doesOreNameExist("nuggetDwemer")) { //Skyrim
+					return orename;
+				}
+				if(OreDictionary.doesOreNameExist("nuggetDawnstone")) { //Embers
+					return "Dawnstone";
+				}
+			}
+			
 			return orename;
 		}
 		

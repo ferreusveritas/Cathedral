@@ -193,14 +193,16 @@ public class Cathedral implements IFeature {
 			chainRecipe(type, registry);
 		}
 		
-		//Allow exchange for BRONZE -> DWEMER chain
-		if(!OreDictionary.doesOreNameExist("nuggetDwemer")){
+		//Allow exchange for BRONZE -> DWEMER(or GOLD -> DWEMER) chain in cases where Dwemer and Dawnstone aren't available
+		if(!OreDictionary.doesOreNameExist("nuggetDwemer") && !OreDictionary.doesOreNameExist("nuggetDawnstone")){
 			GameRegistry.addShapelessRecipe(
 				new ResourceLocation(ModConstants.MODID, "chaindwemer"),
 				null,// Group
 				new ItemStack(chainVarious, 1, BlockChain.EnumType.DWEMER.getMetadata()),// Output
-				new Ingredient[]{ 
-					Ingredient.fromStacks(new ItemStack(chainVarious, 1, BlockChain.EnumType.BRONZE.getMetadata()))
+				new Ingredient[] { 
+					Ingredient.fromStacks(new ItemStack(chainVarious, 1, 
+						(OreDictionary.doesOreNameExist("nuggetBronze") ? BlockChain.EnumType.BRONZE : BlockChain.EnumType.GOLD).getMetadata()
+					))
 				}// Input
 			);
 		}
