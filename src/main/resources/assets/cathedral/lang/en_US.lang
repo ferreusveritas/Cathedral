@@ -44,38 +44,38 @@ tile.basalt_stairs_checkered_tiles.name=Checkered Tiles Stairs
 tile.basalt_stairs_checkered_tilessmall.name=Checkered Bricks Stairs
 
 
-tile.dwemer_block_carved.embedded.name=Dwemer Embedded Plate
-tile.dwemer_block_carved.pillar.name=Dwemer Bordered Pillar
-tile.dwemer_block_carved.altar.name=Dwemer Stone Altar
-tile.dwemer_block_carved.carving1.name=Dwemer Carved Snake
-tile.dwemer_block_carved.carving2.name=Dwemer Carved Figures
-tile.dwemer_block_carved.layered.name=Dwemer Reinforced Brick
-tile.dwemer_block_carved.scalepillar.name=Dwemer Scale Pillar
-tile.dwemer_block_carved.wormgear.name=Dwemer Worm Gear
-tile.dwemer_block_carved.rays.name=Dwemer Ray Carving
-tile.dwemer_block_carved.knot.name=Dwemer Knot
-tile.dwemer_block_carved.mask.name=Dwemer Mask
-tile.dwemer_block_carved.panel.name=Dwemer Panel
-tile.dwemer_block_carved.vent.name=Dwemer Vent
+tile.dwemer_block_carved.embedded.name=Dwarven Embedded Plate
+tile.dwemer_block_carved.pillar.name=Dwarven Bordered Pillar
+tile.dwemer_block_carved.altar.name=Dwarven Stone Altar
+tile.dwemer_block_carved.carving1.name=Dwarven Carved Snake
+tile.dwemer_block_carved.carving2.name=Dwarven Carved Figures
+tile.dwemer_block_carved.layered.name=Dwarven Reinforced Brick
+tile.dwemer_block_carved.scalepillar.name=Dwarven Scale Pillar
+tile.dwemer_block_carved.wormgear.name=Dwarven Worm Gear
+tile.dwemer_block_carved.rays.name=Dwarven Ray Carving
+tile.dwemer_block_carved.knot.name=Dwarven Knot
+tile.dwemer_block_carved.mask.name=Dwarven Mask
+tile.dwemer_block_carved.panel.name=Dwarven Panel
+tile.dwemer_block_carved.vent.name=Dwarven Vent
 
-tile.dwemer_glass_normal.fence.name=Dwemer Metal Fence
-tile.dwemer_glass_normal.ornate.name=Dwemer Metal Ornate
+tile.dwemer_glass_normal.fence.name=Dwarven Metal Fence
+tile.dwemer_glass_normal.ornate.name=Dwarven Metal Ornate
 
-tile.dwemer_light_normal.path.name=Dwemer Path Lighting
-tile.dwemer_light_normal.vent.name=Dwemer Burning Vent
-tile.dwemer_light_normal.gas.name=Dwemer Gaslit Vent
+tile.dwemer_light_normal.path.name=Dwarven Path Lighting
+tile.dwemer_light_normal.vent.name=Dwarven Burning Vent
+tile.dwemer_light_normal.gas.name=Dwarven Gaslit Vent
 
-tile.dwemer_bars_normal.normal.name=Dwemer Metal Bars
-tile.dwemer_bars_normal.ornate.name=Dwemer Metal Bars Ornate
-tile.dwemer_bars_normal.footer.name=Dwemer Metal Bars Footer
-tile.dwemer_bars_normal.header.name=Dwemer Metal Bars Header
-tile.dwemer_bars_normal.mask.name=Dwemer Metal Bars Mask
-tile.dwemer_bars_normal.rhombus.name=Dwemer Metal Bars Rhombus
+tile.dwemer_bars_normal.normal.name=Dwarven Metal Bars
+tile.dwemer_bars_normal.ornate.name=Dwarven Metal Bars Ornate
+tile.dwemer_bars_normal.footer.name=Dwarven Metal Bars Footer
+tile.dwemer_bars_normal.header.name=Dwarven Metal Bars Header
+tile.dwemer_bars_normal.mask.name=Dwarven Metal Bars Mask
+tile.dwemer_bars_normal.rhombus.name=Dwarven Metal Bars Rhombus
 
-tile.basalt_dwemercatwalk.name=Dwemer Catwalk
+tile.basalt_dwemercatwalk.name=Dwarven Catwalk
 
-item.tile.dwemer_door_normal.name=Short Dwemer Door
-item.tile.dwemer_door_tall.name=Tall Dwemer Door
+item.tile.dwemer_door_normal.name=Short Dwarven Door
+item.tile.dwemer_door_tall.name=Tall Dwarven Door
 
 tile.basalt_fantasy-brick-stairs.name=Fantasy Brick Stairs
 tile.basalt_fantasy-disarray-stairs.name=Fantasy Disarray Stairs
@@ -110,11 +110,11 @@ tile.cathedral_railing_various.snow.name=Snow Railing
 tile.cathedral_railing_various.marble.name=Marble Railing
 tile.cathedral_railing_various.limestone.name=Limestone Railing
 tile.cathedral_railing_various.basalt.name=Basalt Railing
-tile.cathedral_railing_various.dwemer.name=Dwemer Railing
+tile.cathedral_railing_various.dwemer.name=Dwarven Railing
 
 tile.cathedral_chain_various.iron.name=Iron Chain
 tile.cathedral_chain_various.gold.name=Gold Chain
-tile.cathedral_chain_various.dwemer.name=Dwemer Chain
+tile.cathedral_chain_various.dwemer.name=Dwarven Chain
 tile.cathedral_chain_various.copper.name=Copper Chain
 tile.cathedral_chain_various.bronze.name=Bronze Chain
 tile.cathedral_chain_various.silver.name=Silver Chain
@@ -132,7 +132,7 @@ tile.cathedral_gargoyle_demon_snow.name=Snow Gargoyle
 tile.cathedral_gargoyle_demon_marble.name=Marble Gargoyle
 tile.cathedral_gargoyle_demon_limestone.name=Limestone Gargoyle
 tile.cathedral_gargoyle_demon_basalt.name=Basalt Gargoyle
-tile.cathedral_gargoyle_demon_dwemer.name=Dwemer Gargoyle
+tile.cathedral_gargoyle_demon_dwemer.name=Dwarven Gargoyle
 
 
 tile.extras_block_stone.paver.name=Stone Paver

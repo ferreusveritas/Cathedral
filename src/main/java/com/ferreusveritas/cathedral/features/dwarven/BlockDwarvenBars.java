@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.features.dwemer;
+package com.ferreusveritas.cathedral.features.dwarven;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
@@ -18,14 +18,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 
-public class BlockDwemerBars extends BlockPane {
+public class BlockDwarvenBars extends BlockPane {
 	
 	public static final String name = "bars";
 	
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 	public static final PropertyEnum<EnumCapping> CAPPING = PropertyEnum.<EnumCapping>create("capping", EnumCapping.class);
 	
-	public BlockDwemerBars(String name) {
+	public BlockDwarvenBars(String name) {
 		super(Material.IRON, true);
 		setRegistryName(name);
 		setUnlocalizedName(name);
@@ -37,7 +37,7 @@ public class BlockDwemerBars extends BlockPane {
 		setCreativeTab(CathedralMod.tabDwemer);
 	}
 	
-	public BlockDwemerBars(){
+	public BlockDwarvenBars(){
 		this(name);
 	}
 	
@@ -70,7 +70,7 @@ public class BlockDwemerBars extends BlockPane {
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, BlockDwemerBars.EnumType.byMetadata(meta));
+		return this.getDefaultState().withProperty(VARIANT, BlockDwarvenBars.EnumType.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */

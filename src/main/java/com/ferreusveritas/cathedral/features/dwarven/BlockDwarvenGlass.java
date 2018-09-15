@@ -1,10 +1,10 @@
-package com.ferreusveritas.cathedral.features.dwemer;
+package com.ferreusveritas.cathedral.features.dwarven;
 
 import java.util.Random;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumGlassType;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumGlassType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -18,9 +18,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockDwemerGlass extends BlockMultiVariant<EnumGlassType> {
+public class BlockDwarvenGlass extends BlockMultiVariant<EnumGlassType> {
 
-	public BlockDwemerGlass(String name) {
+	public BlockDwarvenGlass(String name) {
 		super(Material.GLASS, EnumGlassType.class, name);
 		setHardness(0.3F); 
 		setSoundType(SoundType.GLASS);

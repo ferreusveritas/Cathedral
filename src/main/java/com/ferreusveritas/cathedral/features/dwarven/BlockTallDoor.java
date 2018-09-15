@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.features.dwemer;
+package com.ferreusveritas.cathedral.features.dwarven;
 
 import java.util.Random;
 

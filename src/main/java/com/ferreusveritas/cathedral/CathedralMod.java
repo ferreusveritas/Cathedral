@@ -7,8 +7,8 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
 import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
-import com.ferreusveritas.cathedral.features.dwemer.Dwemer;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumCarvedType;
+import com.ferreusveritas.cathedral.features.dwarven.Dwarven;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
@@ -36,7 +36,7 @@ public class CathedralMod {
 
 	public static Cathedral cathedral;
 	public static Basalt basalt;
-	public static Dwemer dwemer;
+	public static Dwarven dwarven;
 	public static Extras extras;
 	public static Roofing roofing;
 	
@@ -45,14 +45,14 @@ public class CathedralMod {
 	static {
 		cathedral = new Cathedral();
 		basalt = new Basalt();
-		dwemer = new Dwemer();
+		dwarven = new Dwarven();
 		extras = new Extras();
 		roofing = new Roofing();
 		
 		Collections.addAll(features,
 			cathedral,
 			basalt,
-			dwemer,
+			dwarven,
 			extras,
 			roofing
 		);
@@ -84,7 +84,7 @@ public class CathedralMod {
 	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(dwemer.blockCarved, 1, EnumCarvedType.EMBEDDED.getMetadata());
+			return new ItemStack(dwarven.blockCarved, 1, EnumCarvedType.EMBEDDED.getMetadata());
 		}
 	};
 	

@@ -1,7 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
 import com.ferreusveritas.cathedral.CathedralMod;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumCarvedType;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -98,7 +98,7 @@ public enum EnumMaterial implements IStringSerializable {
 			case MARBLE: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7);
 			case LIMESTONE: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
 			case BASALT: return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7);
-			case DWEMER: return new ItemStack(CathedralMod.dwemer.blockCarved, 1, EnumCarvedType.PANEL.getMetadata());
+			case DWEMER: return new ItemStack(CathedralMod.dwarven.blockCarved, 1, EnumCarvedType.PANEL.getMetadata());
 			default: return ItemStack.EMPTY;
 		}
 	}

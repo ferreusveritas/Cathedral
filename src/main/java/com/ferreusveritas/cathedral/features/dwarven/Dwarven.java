@@ -1,13 +1,13 @@
-package com.ferreusveritas.cathedral.features.dwemer;
+package com.ferreusveritas.cathedral.features.dwarven;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumCarvedType;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumGlassType;
-import com.ferreusveritas.cathedral.features.dwemer.FeatureTypes.EnumLightType;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumGlassType;
+import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumLightType;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
@@ -32,7 +32,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class Dwemer implements IFeature {
+public class Dwarven implements IFeature {
 
 	public static final String featureName = "dwemer";
 
@@ -69,9 +69,9 @@ public class Dwemer implements IFeature {
 		.setResistance(CathedralMod.basalt.basaltResistance)
 		.setLightLevel(1.0F);
 
-		glassNormal = new BlockDwemerGlass(featureObjectName(BlockForm.GLASS, "normal"));
+		glassNormal = new BlockDwarvenGlass(featureObjectName(BlockForm.GLASS, "normal"));
 
-		barsNormal = new BlockDwemerBars(featureObjectName(BlockForm.BARS, "normal"));
+		barsNormal = new BlockDwarvenBars(featureObjectName(BlockForm.BARS, "normal"));
 		
 		doorNormal = new BlockShortDoor(Material.IRON, featureObjectName(BlockForm.DOOR, "normal"))
 				.setCreativeTab(CathedralMod.tabDwemer)
@@ -112,7 +112,7 @@ public class Dwemer implements IFeature {
 		
 		registry.register(new ItemMultiTexture(barsNormal, barsNormal, new ItemMultiTexture.Mapper() {
             public String apply(ItemStack stack) {
-                return BlockDwemerBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+                return BlockDwarvenBars.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
             }
         }).setRegistryName(barsNormal.getRegistryName()));
 		
@@ -136,22 +136,22 @@ public class Dwemer implements IFeature {
 		String metalIngot;
 
 		//Attempt to find the best fit for a center metal ingot
-		if(OreDictionary.doesOreNameExist("ingotDwemer")){
+		if(OreDictionary.doesOreNameExist("ingotDwemer") && !OreDictionary.getOres("ingotDwemer").isEmpty()){
 			metalIngot = "ingotDwemer";//In case a Skyrim mod is out there
 		} else
-			if(OreDictionary.doesOreNameExist("ingotDawnstone")) {
-				metalIngot = "ingotDawnstone";//Basically a perfect fit (Embers)
-			} else
-				if(OreDictionary.doesOreNameExist("ingotBrass")){
-					metalIngot = "ingotBrass";//Brass would also make sense
-				} else
-					if(OreDictionary.doesOreNameExist("ingotBronze")){
-						metalIngot = "ingotBronze";//Bronze is close enough and pretty common
-					} else {
-						metalIngot = "ingotGold";//This sucks but whatever
-					}
+		if(OreDictionary.doesOreNameExist("ingotDawnstone") && !OreDictionary.getOres("ingotDawnstone").isEmpty()) {
+			metalIngot = "ingotDawnstone";//Basically a perfect fit (Embers)
+		} else
+		if(OreDictionary.doesOreNameExist("ingotBrass") && !OreDictionary.getOres("ingotBrass").isEmpty()){
+			metalIngot = "ingotBrass";//Brass would also make sense
+		} else
+		if(OreDictionary.doesOreNameExist("ingotBronze") && !OreDictionary.getOres("ingotBronze").isEmpty()){
+			metalIngot = "ingotBronze";//Bronze is close enough and pretty common
+		} else {
+			metalIngot = "ingotGold";//This sucks but whatever
+		}
 				
-		//Recipe for Dwemer Stone
+		//Recipe for Dwarven Stone
 		registry.register(new ShapedOreRecipe(
 				null,
 				new ItemStack(blockCarved, 16, 0),
@@ -165,7 +165,7 @@ public class Dwemer implements IFeature {
 				).setRegistryName(ModConstants.MODID, "dwemer_stone")
 			);
 		
-		//Dwemer Lights Recipes
+		//Dwarven Lights Recipes
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "dwemer_light"),
 				null,
@@ -178,7 +178,7 @@ public class Dwemer implements IFeature {
 				'g', new ItemStack(Blocks.STAINED_GLASS, 1, 4)
 			);
 		
-		//Recipe for Dwemer Bars
+		//Recipe for Dwarven Bars
 		registry.register(
 				new ShapedOreRecipe(
 					null,
@@ -191,7 +191,7 @@ public class Dwemer implements IFeature {
 				).setRegistryName(ModConstants.MODID, "dwemer_bars")
 			);
 
-		//Recipe for Dwemer Tall Door
+		//Recipe for Dwarven Tall Door
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "dwemer_door_tall"),
 				null,
@@ -202,7 +202,7 @@ public class Dwemer implements IFeature {
 				'x', new ItemStack(blockCarved, 1, 11)
 			);
 		
-		//Recipe for Dwemer Short Door
+		//Recipe for Dwarven Short Door
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "dwemer_door_normal"),
 				null,
@@ -212,7 +212,7 @@ public class Dwemer implements IFeature {
 				'x', new ItemStack(blockCarved, 1, 11)
 			);
 
-		//Recipe for Dwemer Catwalk
+		//Recipe for Dwarven Catwalk
 		//GameRegistry.addRecipe(new ItemStack(dwemerCatwalkBlock, 3, 0), "XXX", 'X', new ItemStack(dwemerBars, 1, 0));
 		
 	}
@@ -225,7 +225,7 @@ public class Dwemer implements IFeature {
 		((BlockMultiVariant<EnumLightType>)lightNormal).registerItemModels();
 		((BlockMultiVariant<EnumGlassType>)glassNormal).registerItemModels();
 
-		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
+		for(BlockDwarvenBars.EnumType type: BlockDwarvenBars.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(barsNormal), type.getMetadata(), new ResourceLocation(ModConstants.MODID, barsNormal.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 		
@@ -244,7 +244,7 @@ public class Dwemer implements IFeature {
 		((BlockMultiVariant<EnumGlassType>)glassNormal).addChiselVariation("glass");
 		
 		//Add chisel variations for Dwemer Bars
-		for(BlockDwemerBars.EnumType type: BlockDwemerBars.EnumType.values()) {
+		for(BlockDwarvenBars.EnumType type: BlockDwarvenBars.EnumType.values()) {
 			addChiselVariation("dwemerbars", barsNormal, type.getMetadata());
 		}
 	}

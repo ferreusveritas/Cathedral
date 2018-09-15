@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.features.dwemer;
+package com.ferreusveritas.cathedral.features.dwarven;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
