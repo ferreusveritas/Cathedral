@@ -74,11 +74,11 @@ public class BlockSlabCheckered extends BlockSlab {
 	}
 	
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(CathedralMod.basalt.slabCarved);
+        return Item.getItemFromBlock(CathedralMod.basalt.slabCheckered);
     }
 
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return new ItemStack(CathedralMod.basalt.slabCarved, 1, ((BlockSlabCheckered.EnumType)state.getValue(VARIANT)).getMetadata());
+        return new ItemStack(CathedralMod.basalt.slabCheckered, 1, ((BlockSlabCheckered.EnumType)state.getValue(VARIANT)).getMetadata());
     }
 	
     public int damageDropped(IBlockState state) {
