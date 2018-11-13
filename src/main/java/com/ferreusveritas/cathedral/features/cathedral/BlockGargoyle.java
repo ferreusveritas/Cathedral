@@ -11,13 +11,21 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,12 +36,15 @@ public class BlockGargoyle extends Block {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyEnum<EnumMount> MOUNT = PropertyEnum.<EnumMount>create("mount", EnumMount.class);
 	
-	public BlockGargoyle() {
-		this(name);
+    private EnumMaterial enumMaterial;
+    
+	public BlockGargoyle(EnumMaterial material) {
+		this(name, material);
 	}
 	
-	public BlockGargoyle(String name) {
+	public BlockGargoyle(String name, EnumMaterial material) {
 		super(Material.ROCK);
+		enumMaterial = material;
 		setRegistryName(name);
 		setUnlocalizedName(name);
 		setDefaultState(getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(MOUNT, EnumMount.FLOOR));
@@ -112,25 +123,56 @@ public class BlockGargoyle extends Block {
 	
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return BlockFaceShape.UNDEFINED;
-    }
+		return BlockFaceShape.UNDEFINED;
+	}
 	
-	/*	
-
-	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)	{
+	@Override
+	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
+		
+		IBlockState state = Blocks.DIRT.getDefaultState();
+		ItemStack stack = enumMaterial.getRawMaterialBlock();
+		Block block = Block.getBlockFromItem(stack.getItem());
+		if(block != Blocks.AIR) {
+			state = block.getDefaultState();
+		}
+		
+		for (int x = 0; x < 4; ++x) {
+			for (int y = 0; y < 4; ++y) {
+				for (int z = 0; z < 4; ++z) {
+					double dX = ((double)x + 0.5D) / 4.0D;
+					double dY = ((double)y + 0.5D) / 4.0D;
+					double dZ = ((double)z + 0.5D) / 4.0D;
+					
+					Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.BLOCK_DUST.getParticleID(),
+						(double)pos.getX() + dX, (double)pos.getY() + dY, (double)pos.getZ() + dZ, 
+						dX - 0.5D, dY - 0.5D, dZ - 0.5D,
+						new int[]{Block.getStateId(state)});
+				}
+			}
+		}
+		
 		return true;
 	}
-
-	@Override
+	
 	@SideOnly(Side.CLIENT)
-	public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+	@Override
+	public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, ParticleManager manager) {
+		return false;
+	}
+	
+	@Override
+	public boolean addLandingEffects(IBlockState state, WorldServer worldObj, BlockPos blockPosition, IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles) {
+		ItemStack stack = enumMaterial.getRawMaterialBlock();
+		Block block = Block.getBlockFromItem(stack.getItem());
+		if(block != Blocks.AIR) {
+			state = block.getDefaultState();
+		}
+
+		worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, entity.posX, entity.posY, entity.posZ, numberOfParticles, 0.0D, 0.0D, 0.0D, 0.15D, Block.getStateId(state));
 		return true;
 	}
-
-	*/
-
+	
     public static enum EnumMount implements IStringSerializable {
     	CEILING("ceiling"),
     	WALL("wall"),

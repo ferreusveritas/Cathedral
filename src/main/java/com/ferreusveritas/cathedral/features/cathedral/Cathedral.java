@@ -60,11 +60,9 @@ public class Cathedral implements IFeature {
 				.setResistance(20F);
 
 		for(EnumMaterial type: EnumMaterial.values()) {
-			gargoyleDemon[type.ordinal()] = new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon_" + type.getName()));
+			gargoyleDemon[type.ordinal()] = new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon_" + type.getName()), type);
 		}
 		
-		//GameRegistry.registerBlock(gargoyleBlock, ItemGargoyle.class, "gargoyle");
-		//TileEntity.addMapping(EntityGargoyle.class, "gargoyle");
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 {
     "textures": {
 		"rail": "blocks/stone",
-		"particle": "blocks/stone"
+        "particle": "blocks/stone"
     },
     "elements": [
         {   "from": [ 4, 2, 4 ],
