@@ -12,7 +12,6 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -144,7 +143,7 @@ public class BlockGargoyle extends Block {
 					double dY = ((double)y + 0.5D) / 4.0D;
 					double dZ = ((double)z + 0.5D) / 4.0D;
 					
-					Particle particle = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.BLOCK_DUST.getParticleID(),
+					Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.BLOCK_DUST.getParticleID(),
 						(double)pos.getX() + dX, (double)pos.getY() + dY, (double)pos.getZ() + dZ, 
 						dX - 0.5D, dY - 0.5D, dZ - 0.5D,
 						new int[]{Block.getStateId(state)});
