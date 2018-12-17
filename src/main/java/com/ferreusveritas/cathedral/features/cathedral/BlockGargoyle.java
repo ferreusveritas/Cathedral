@@ -12,7 +12,9 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -128,7 +130,6 @@ public class BlockGargoyle extends Block {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
-		
 		IBlockState state = Blocks.DIRT.getDefaultState();
 		ItemStack stack = enumMaterial.getRawMaterialBlock();
 		Block block = Block.getBlockFromItem(stack.getItem());
@@ -136,19 +137,24 @@ public class BlockGargoyle extends Block {
 			state = block.getDefaultState();
 		}
 		
-		for (int x = 0; x < 4; ++x) {
-			for (int y = 0; y < 4; ++y) {
-				for (int z = 0; z < 4; ++z) {
-					double dX = ((double)x + 0.5D) / 4.0D;
-					double dY = ((double)y + 0.5D) / 4.0D;
-					double dZ = ((double)z + 0.5D) / 4.0D;
-					
-					Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.BLOCK_DUST.getParticleID(),
-						(double)pos.getX() + dX, (double)pos.getY() + dY, (double)pos.getZ() + dZ, 
-						dX - 0.5D, dY - 0.5D, dZ - 0.5D,
-						new int[]{Block.getStateId(state)});
-				}
-			}
+		TextureAtlasSprite texture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+		
+		if (!state.getBlock().isAir(state, world, pos)) {
+            for (int j = 0; j < 4; ++j) {
+                for (int k = 0; k < 4; ++k) {
+                    for (int l = 0; l < 4; ++l) {
+                    	double d0 = ((double) j + 0.5D) / 4.0D;
+                        double d1 = ((double) k + 0.5D) / 4.0D;
+                        double d2 = ((double) l + 0.5D) / 4.0D;
+                    	
+                        ParticleDigging particle = (ParticleDigging) manager.spawnEffectParticle(EnumParticleTypes.BLOCK_CRACK.getParticleID(), (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, Block.getStateId(state));
+                    	if (particle != null) {
+                    		particle.setParticleTexture(texture);
+            				particle.setBlockPos(pos);
+                    	}
+                    }
+                }
+            }
 		}
 		
 		return true;
