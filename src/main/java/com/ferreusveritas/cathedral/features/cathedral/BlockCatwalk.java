@@ -1,5 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import com.ferreusveritas.cathedral.CathedralMod;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -15,6 +17,10 @@ public class BlockCatwalk extends Block {
 		super(materialIn);
 		setRegistryName(name);
 		setUnlocalizedName(name);
+		setCreativeTab(CathedralMod.tabCathedral);
+		setHardness(2.5f);
+		//.setStepSound(SoundType.METAL)
+		setResistance(20F);
 	}
 
 	/*

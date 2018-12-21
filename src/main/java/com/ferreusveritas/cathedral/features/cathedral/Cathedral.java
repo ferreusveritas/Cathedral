@@ -36,7 +36,7 @@ public class Cathedral implements IFeature {
 	
 	public static final String featureName = "cathedral";
 	
-	public Block	glassStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
+	public Block	glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
 	public final BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
 	public final static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
@@ -51,13 +51,10 @@ public class Cathedral implements IFeature {
 	@Override
 	public void createBlocks() {
 		glassStained 	= new BlockGlassStained(featureObjectName(BlockForm.GLASS, "stained"));
+		panesStained 	= new BlockPaneStained(featureObjectName(BlockForm.PANE, "stained"));
 		railingVarious 	= new BlockRailing(featureObjectName(BlockForm.RAILING, "various"));
 		chainVarious 	= new BlockChain(featureObjectName(BlockForm.CHAIN, "various"));
-		catwalkVarious	= new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"))
-				.setCreativeTab(CathedralMod.tabCathedral)
-				.setHardness(2.5f)
-				//.setStepSound(SoundType.METAL)
-				.setResistance(20F);
+		catwalkVarious	= new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"));
 		pillarVarious = new BlockPillar(featureObjectName(BlockForm.PILLAR, "various"));
 		
 		for(EnumMaterial type: EnumMaterial.values()) {
@@ -76,6 +73,7 @@ public class Cathedral implements IFeature {
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
 			glassStained,
+			panesStained,
 			railingVarious,
 			chainVarious,
 			//catwalkVarious,
@@ -139,7 +137,7 @@ public class Cathedral implements IFeature {
 		
 		ItemMultiTexture.Mapper mapper = (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName();
 		Consumer<Block> itemBlockMaker = (block) -> registry.register(new ItemMultiTexture(block, block, mapper).setRegistryName(block.getRegistryName()));
-		Lists.newArrayList(glassStained, railingVarious, chainVarious, railingVarious).forEach(itemBlockMaker);
+		Lists.newArrayList(glassStained, panesStained, railingVarious, chainVarious, pillarVarious).forEach(itemBlockMaker);
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
@@ -221,9 +219,11 @@ public class Cathedral implements IFeature {
 	public void registerModels(ModelRegistryEvent event) {
 		BiConsumer<Block, IVariantEnumType> reg = (block, type) -> ModelHelper.regModel(Item.getItemFromBlock(block), type.getMetadata(), new ResourceLocation(ModConstants.MODID, block.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		Lists.newArrayList(BlockGlassStained.EnumType.values()).forEach(type -> reg.accept(glassStained, type) );
+		Lists.newArrayList(BlockGlassStained.EnumType.values()).forEach(type -> reg.accept(panesStained, type) );
 		Lists.newArrayList(EnumMaterial.values()).forEach(type -> reg.accept(railingVarious, type) );
 		Lists.newArrayList(BlockChain.EnumType.values()).forEach(type -> reg.accept(chainVarious, type) );
-
+		Lists.newArrayList(EnumMaterial.values()).forEach(type -> reg.accept(pillarVarious, type) );
+		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			ModelHelper.regModel(gargoyleBlock);
 		}
