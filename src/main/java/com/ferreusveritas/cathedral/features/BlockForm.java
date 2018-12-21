@@ -15,7 +15,8 @@ public enum BlockForm {
 	CHAIN("chain"),
 	SHINGLES("shingles"),
 	GARGOYLE("gargoyle"),
-	CATWALK("catwalk");
+	CATWALK("catwalk"),
+	PILLAR("pillar");
 	
 	private String name;
 	

@@ -36,7 +36,7 @@ public class Cathedral implements IFeature {
 	
 	public static final String featureName = "cathedral";
 	
-	public Block	glassStained, railingVarious, chainVarious, catwalkVarious;
+	public Block	glassStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
 	public BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
 	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
@@ -58,7 +58,8 @@ public class Cathedral implements IFeature {
 				.setHardness(2.5f)
 				//.setStepSound(SoundType.METAL)
 				.setResistance(20F);
-
+		pillarVarious = new BlockPillar(featureObjectName(BlockForm.PILLAR, "various"));
+		
 		for(EnumMaterial type: EnumMaterial.values()) {
 			gargoyleDemon[type.ordinal()] = new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon_" + type.getName()), type);
 		}
@@ -76,8 +77,9 @@ public class Cathedral implements IFeature {
 		registry.registerAll(
 			glassStained,
 			railingVarious,
-			chainVarious
+			chainVarious,
 			//catwalkVarious,
+			pillarVarious
 		);
 		
 		registry.registerAll(gargoyleDemon);
