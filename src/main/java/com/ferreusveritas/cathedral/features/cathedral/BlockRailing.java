@@ -164,7 +164,8 @@ public class BlockRailing extends Block {
 		return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
 	}
 	
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    @Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THICK : BlockFaceShape.CENTER_BIG;
     }
 	
@@ -192,15 +193,18 @@ public class BlockRailing extends Block {
 		}
 	}
 	
+	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 	
+	@Override
 	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
 		return false;
 	}
 	
 	/** Used to determine ambient occlusion and culling when rebuilding chunks for render */
+	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
@@ -211,11 +215,13 @@ public class BlockRailing extends Block {
 		return side == EnumFacing.DOWN ? super.shouldSideBeRendered(blockState, blockAccess, pos, side) : true;
 	}
 	
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		state = this.getActualState(state, source, pos);
 		return AABB_BY_INDEX[getAABBIndex(state)];
 	}
 	
+	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
 		if (!isActualState) {
 			state = this.getActualState(state, worldIn, pos);
@@ -224,6 +230,7 @@ public class BlockRailing extends Block {
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, CLIP_AABB_BY_INDEX[getAABBIndex(state)]);
 	}
 	
+	@Override
 	@Nullable
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		blockState = this.getActualState(blockState, worldIn, pos);
@@ -233,23 +240,23 @@ public class BlockRailing extends Block {
 	private static int getAABBIndex(IBlockState state) {
 		int i = 0;
 		
-		if (((Boolean)state.getValue(POSTCAP)).booleanValue()) {
+		if (state.getValue(POSTCAP).booleanValue()) {
 			return 16;
 		}
 		
-		if (((Boolean)state.getValue(NORTH)).booleanValue()) {
+		if (state.getValue(NORTH).booleanValue()) {
 			i |= 1 << EnumFacing.NORTH.getHorizontalIndex();
 		}
 		
-		if (((Boolean)state.getValue(EAST)).booleanValue()) {
+		if (state.getValue(EAST).booleanValue()) {
 			i |= 1 << EnumFacing.EAST.getHorizontalIndex();
 		}
 		
-		if (((Boolean)state.getValue(SOUTH)).booleanValue()) {
+		if (state.getValue(SOUTH).booleanValue()) {
 			i |= 1 << EnumFacing.SOUTH.getHorizontalIndex();
 		}
 		
-		if (((Boolean)state.getValue(WEST)).booleanValue()) {
+		if (state.getValue(WEST).booleanValue()) {
 			i |= 1 << EnumFacing.WEST.getHorizontalIndex();
 		}
 		

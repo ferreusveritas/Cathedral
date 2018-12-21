@@ -1,17 +1,19 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
+import com.ferreusveritas.cathedral.features.IVariantEnumType;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -21,8 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -37,8 +37,8 @@ public class Cathedral implements IFeature {
 	public static final String featureName = "cathedral";
 	
 	public Block	glassStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
-	public BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
-	public static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
+	public final BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
+	public final static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
 	@Override
 	public String getName() {
@@ -137,23 +137,9 @@ public class Cathedral implements IFeature {
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		
-		registry.register(new ItemMultiTexture(glassStained, glassStained, new ItemMultiTexture.Mapper() {
-			public String apply(ItemStack stack) {
-				return BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-			}
-		}).setRegistryName(glassStained.getRegistryName()));
-		
-		registry.register(new ItemMultiTexture(railingVarious, railingVarious, new ItemMultiTexture.Mapper() {
-			public String apply(ItemStack stack) {
-				return EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName();
-			}
-		}).setRegistryName(railingVarious.getRegistryName()));
-		
-		registry.register(new ItemMultiTexture(chainVarious, chainVarious, new ItemMultiTexture.Mapper() {
-			public String apply(ItemStack stack) {
-				return BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-			}
-		}).setRegistryName(chainVarious.getRegistryName()));
+		ItemMultiTexture.Mapper mapper = (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName();
+		Consumer<Block> itemBlockMaker = (block) -> registry.register(new ItemMultiTexture(block, block, mapper).setRegistryName(block.getRegistryName()));
+		Lists.newArrayList(glassStained, railingVarious, chainVarious, railingVarious).forEach(itemBlockMaker);
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
@@ -216,32 +202,15 @@ public class Cathedral implements IFeature {
 	
 	@Override
 	public void init() {
-		
 		//Add chisel variations for Stained Glass Blocks
-		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", "cathedralglass" + "|" + glassStained.getRegistryName() + "|" + type.getMetadata());
-		}
-		
+		Lists.newArrayList(BlockGlassStained.EnumType.values()).forEach(type -> FMLInterModComms.sendMessage("chisel", "variation:add", "cathedralglass" + "|" + glassStained.getRegistryName() + "|" + type.getMetadata()));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerColorHandlers() {
-		
-		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor() {
-			@Override
-			public int colorMultiplier(IBlockState state, IBlockAccess worldIn, BlockPos pos, int tintIndex) {
-				return state.getValue(BlockChain.VARIANT).getColor();
-			}
-		}, new Block[] {chainVarious});
-		
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-			@Override
-			public int colorMultiplier(ItemStack stack, int tintIndex) {
-				return BlockChain.EnumType.byMetadata(stack.getItemDamage()).getColor();
-			}
-		}, new Item[] {Item.getItemFromBlock(chainVarious)});
-		
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler( (state, world, pos, tint) -> state.getValue(BlockChain.VARIANT).getColor(), new Block[] {chainVarious});
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler( ( stack,  tint) -> BlockChain.EnumType.byMetadata(stack.getItemDamage()).getColor(), new Item[] {Item.getItemFromBlock(chainVarious)});
 	}
 	
 	@Override
@@ -250,18 +219,10 @@ public class Cathedral implements IFeature {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModels(ModelRegistryEvent event) {
-		
-		for(BlockGlassStained.EnumType type: BlockGlassStained.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(glassStained), type.getMetadata(), new ResourceLocation(ModConstants.MODID, glassStained.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(EnumMaterial type: EnumMaterial.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(railingVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, railingVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
-		
-		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
-			ModelHelper.regModel(Item.getItemFromBlock(chainVarious), type.getMetadata(), new ResourceLocation(ModConstants.MODID, chainVarious.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
-		}
+		BiConsumer<Block, IVariantEnumType> reg = (block, type) -> ModelHelper.regModel(Item.getItemFromBlock(block), type.getMetadata(), new ResourceLocation(ModConstants.MODID, block.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		Lists.newArrayList(BlockGlassStained.EnumType.values()).forEach(type -> reg.accept(glassStained, type) );
+		Lists.newArrayList(EnumMaterial.values()).forEach(type -> reg.accept(railingVarious, type) );
+		Lists.newArrayList(BlockChain.EnumType.values()).forEach(type -> reg.accept(chainVarious, type) );
 
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			ModelHelper.regModel(gargoyleBlock);

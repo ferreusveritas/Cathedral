@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.features.IVariantEnumType;
 
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.SoundType;
@@ -68,7 +69,7 @@ public class BlockGlassStained extends BlockGlass {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
-	public static enum EnumType implements IStringSerializable {
+	public static enum EnumType implements IStringSerializable, IVariantEnumType {
 		
 		FIRETAIJITU  (0, "firetaijitu"),
 		AMBERRHOMBUS (1, "amberrhombus");
@@ -83,6 +84,7 @@ public class BlockGlassStained extends BlockGlass {
 			this.unlocalizedName = name;
 		}
 		
+		@Override
 		public int getMetadata() {
 			return meta;
 		}
@@ -101,6 +103,7 @@ public class BlockGlassStained extends BlockGlass {
 			return name;
 		}
 		
+		@Override
 		public String getUnlocalizedName() {
 			return unlocalizedName;
 		}

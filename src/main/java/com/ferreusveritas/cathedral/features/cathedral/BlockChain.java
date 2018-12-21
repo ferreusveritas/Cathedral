@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.features.IVariantEnumType;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -112,7 +113,7 @@ public class BlockChain extends Block {
         return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.CENTER_SMALL;
     }
 	
-	public static enum EnumType implements IStringSerializable {
+	public static enum EnumType implements IStringSerializable, IVariantEnumType {
 		IRON	(0, "Iron", 0xd7d7d7),
 		GOLD	(1, "Gold", 0xe0b820),
 		DWEMER	(2, "Dwemer", 0xc3a84e),
@@ -135,6 +136,7 @@ public class BlockChain extends Block {
 			this.color = color;
 		}
 		
+		@Override
 		public int getMetadata() {
 			return meta;
 		}
@@ -167,6 +169,7 @@ public class BlockChain extends Block {
 			return name;
 		}
 		
+		@Override
 		public String getUnlocalizedName() {
 			return unlocalizedName;
 		}

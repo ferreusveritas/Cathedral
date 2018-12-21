@@ -1,6 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
 import com.ferreusveritas.cathedral.CathedralMod;
+import com.ferreusveritas.cathedral.features.IVariantEnumType;
 import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
 
 import net.minecraft.block.Block;
@@ -11,7 +12,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-public enum EnumMaterial implements IStringSerializable {
+public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 
 	STONE         (0, "stone", 1.5f),
 	SANDSTONE     (1, "sandstone", 0.8f),
@@ -39,6 +40,7 @@ public enum EnumMaterial implements IStringSerializable {
 		this.hardness = hardness;
 	}
 	
+	@Override
 	public int getMetadata() {
 		return meta;
 	}
@@ -57,6 +59,7 @@ public enum EnumMaterial implements IStringSerializable {
 		return name;
 	}
 	
+	@Override
 	public String getUnlocalizedName() {
 		return unlocalizedName;
 	}
