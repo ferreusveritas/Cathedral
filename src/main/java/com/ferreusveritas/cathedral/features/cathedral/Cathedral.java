@@ -3,7 +3,6 @@ package com.ferreusveritas.cathedral.features.cathedral;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
