@@ -1,67 +1,164 @@
 {
-  "forge_marker": 1,
- 
-   "defaults": {
-    "model": "cathedral:cathedral/pillarshaft"
-  },
- "variants": {
-     "variant": {
-		"stone": { "textures": {
-			"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
-
-			"headtop": "cathedral:blocks/extras/block_stone_paver",
-			"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
-			"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
-
-			"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
-			"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
-			"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
-
-			"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
-		}},
-		"sandstone": { "textures": { "rail": "chisel:blocks/sandstoneyellow/tiles-large", "particle": "chisel:blocks/sandstoneyellow/tiles-large" } },
-		"redsandstone": { "textures": { "rail": "chisel:blocks/sandstonered/tiles-large", "particle": "chisel:blocks/sandstonered/tiles-large" } },
-		"obsidian": { "textures": { "rail": "chisel:blocks/obsidian/panel", "particle": "chisel:blocks/obsidian/panel" } },
-		"netherbrick": { "textures": { "rail": "blocks/nether_brick", "particle": "blocks/nether_brick" } },
-		"quartz": { "textures": { "rail": "chisel:blocks/quartz/tiles-large", "particle": "chisel:blocks/quartz/tiles-large" } },
-		"endstone": { "textures": { "rail": "chisel:blocks/endstone/tiles-large", "particle": "chisel:blocks/endstone/tiles-large" } },
-		"packedice": { "textures": { "rail": "blocks/ice_packed", "particle": "blocks/ice_packed" } },
-		"snow": { "textures": { "rail": "blocks/snow", "particle": "blocks/snow" } },
-		"marble": { "textures": { "rail": "chisel:blocks/marble/tiles-large", "particle": "chisel:blocks/marble/tiles-large" } },
-		"limestone": { "textures": { "rail": "chisel:blocks/limestone/tiles-large", "particle": "chisel:blocks/limestone/tiles-large" } },
-		"basalt": { "textures": { "rail": "cathedral:blocks/basalt/block_carved_paver", "particle": "cathedral:blocks/basalt/block_carved_paver" } },
-		"dwemer": { "textures": { "rail": "cathedral:blocks/dwemer/block_carved_panel", "particle": "cathedral:blocks/dwemer/block_carved_panel" } }
+	"forge_marker": 1,
+	"defaults": {
+    	"model": "cathedral:cathedral/pillarshaft"
 	},
-  
-  	"down": {
-		"true": { },
-		"false" : { "submodel": "cathedral:cathedral/pillarbase" }
-	},  
-  
-	"up": {
-		"true": { },
-		"false" : { "submodel": "cathedral:cathedral/pillarhead" }
-	},  
-
-	"north": {
-		"true": { "submodel": "cathedral:cathedral/pillar", "uvlock": true },
-		"false" : {}
-	}, 
-
-	"south": {
-		"true": { "submodel": "cathedral:cathedral/pillar", "y": 180, "uvlock": true },
-		"false" : {}
-	},  
-
-	"west": {
-		"true": { "submodel": "cathedral:cathedral/pillar", "y": 270, "uvlock": true },
-		"false" : {}
-	},
-
-	"east": {
-		"true": { "submodel": "cathedral:cathedral/pillar", "y": 90, "uvlock": true },
-		"false" : {}
-	} 
-}
-	
+	"variants": {
+		"variant": {
+			"stone": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"sandstone": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_sandstone_shaft_side",
+				"headtop": "chisel:blocks/sandstoneyellow/tiles-large",
+				"headside": "cathedral:blocks/cathedral/pillar_sandstone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_sandstone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_sandstone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_sandstone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_sandstone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_sandstone_shaft_side"
+			}},
+			"redsandstone": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"obsidian": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"netherbrick": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"quartz": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"endstone": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"packedice": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"snow": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"marble": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"limestone": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"basalt": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}},
+			"dwemer": { "textures": {
+				"shaftside": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+				"headtop": "cathedral:blocks/extras/block_stone_paver",
+				"headside": "cathedral:blocks/cathedral/pillar_stone_head_side",
+				"headbottom": "cathedral:blocks/cathedral/pillar_stone_head_bottom",
+				"basetop": "cathedral:blocks/cathedral/pillar_stone_base_top",
+				"baseside": "cathedral:blocks/cathedral/pillar_stone_base_side",
+				"basebottom": "cathedral:blocks/cathedral/pillar_stone_base_bottom",
+				"particle": "cathedral:blocks/cathedral/pillar_stone_shaft_side"
+			}}
+		},
+		"down": {
+			"true"  : {},
+			"false" : { "submodel": "cathedral:cathedral/pillarbase" }
+		},
+		"up": {
+			"true"  : {},
+			"false" : { "submodel": "cathedral:cathedral/pillarhead" }
+		},  
+		"north": {
+			"true"  : {},
+			"false" : {}
+		}, 
+		"south": {
+			"true"  : {},
+			"false" : {}
+		},  
+		"west": {
+			"true"  : {},
+			"false" : {}
+		},
+		"east": {
+			"true"  : {},
+			"false" : {}
+		} 
+	}
 }

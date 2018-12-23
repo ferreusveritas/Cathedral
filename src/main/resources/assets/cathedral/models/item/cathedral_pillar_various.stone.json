@@ -1,0 +1,7 @@
+{
+	"parent": "cathedral:item/pillar",
+	"textures": {
+		"side": "cathedral:blocks/cathedral/pillar_stone_shaft_side",
+		"end": "blocks/stone"
+	}
+}

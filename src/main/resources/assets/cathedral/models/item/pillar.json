@@ -1,0 +1,48 @@
+{
+	"parent": "block/block",
+	"elements": [
+		{
+			"__name": "pillar_w_e",
+			"from": [ 1, 0, 5 ],
+			"to": [ 15, 16, 11 ],
+			"faces": {
+				"up"   : { "uv": [ 1, 5, 15, 11 ], "texture": "#end" },
+				"down" : { "uv": [ 1, 5, 15, 11 ], "texture": "#end" },
+				"north": { "uv": [ 1, 0, 15, 16 ], "texture": "#side" },
+				"south": { "uv": [ 1, 0, 15, 16 ], "texture": "#side" },
+				"west" : { "uv": [ 5, 0, 11, 16 ], "texture": "#side" },
+				"east" : { "uv": [ 5, 0, 11, 16 ], "texture": "#side" }
+			}
+		},
+		{
+			"__name": "pillar_n_s",
+			"from": [ 5, 0, 1 ],
+			"to": [ 11, 16, 15 ],
+			"faces": {
+				"up"   : { "uv": [ 5, 1, 11, 15 ], "texture": "#end" },
+				"down" : { "uv": [ 5, 1, 11, 15 ], "texture": "#end" },
+				"north": { "uv": [ 5, 0, 11, 16 ], "texture": "#side" },
+				"south": { "uv": [ 5, 0, 11, 16 ], "texture": "#side" },
+				"west" : { "uv": [ 1, 0, 15, 16 ], "texture": "#side" },
+				"east" : { "uv": [ 1, 0, 15, 16 ], "texture": "#side" }
+			}
+		},
+		{
+			"__name": "pillar_mid",
+			"from": [ 4, 0, 4 ],
+			"to": [ 12, 16, 12 ],
+			"faces": {
+				"up"   : { "uv": [ 4, 4, 12, 12 ], "texture": "#end" },
+				"down" : { "uv": [ 4, 4, 12, 12 ], "texture": "#end" },
+				"north": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"south": { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"west" : { "uv": [ 4, 0, 12, 16 ], "texture": "#side" },
+				"east" : { "uv": [ 4, 0, 12, 16 ], "texture": "#side" }
+			}
+		}
+	],
+	"textures": {
+		"side": "blocks/stone",
+		"end": "blocks/stone"		
+	}
+}
