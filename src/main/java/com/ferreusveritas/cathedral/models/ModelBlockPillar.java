@@ -75,24 +75,27 @@ public class ModelBlockPillar implements IModel {
 		Map<EnumMaterial, String> base = new HashMap<>();
 		
 		base.put(EnumMaterial.STONE, "blocks/stone");
-		base.put(EnumMaterial.SANDSTONE, "chisel:blocks/sandstoneyellow/tiles-large");
+		base.put(EnumMaterial.SANDSTONE, "chisel:blocks/sandstoneyellow/raw");
+		base.put(EnumMaterial.BASALT, "chisel:blocks/basalt/raw");
 		
 		switch(material) {
 			case STONE:
 				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(material)));
 			case SANDSTONE:
 				return generic(EnumMaterial.SANDSTONE, new ResourceLocation(base.get(material)));
-			case BASALT:
-			case DWEMER:
-			case ENDSTONE:
-			case LIMESTONE:
-			case MARBLE:
-			case NETHERBRICK:
-			case OBSIDIAN:
-			case PACKEDICE:
-			case QUARTZ:
 			case REDSANDSTONE:
+			case OBSIDIAN:
+			case NETHERBRICK:
+			case QUARTZ:
+			case ENDSTONE:
+			case PACKEDICE:
 			case SNOW:
+			case MARBLE:
+			case LIMESTONE:
+				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(EnumMaterial.STONE)));
+			case BASALT:
+				return generic(EnumMaterial.BASALT, new ResourceLocation(base.get(material)));
+			case DWEMER:
 			default:
 				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(EnumMaterial.STONE)));
 		}
