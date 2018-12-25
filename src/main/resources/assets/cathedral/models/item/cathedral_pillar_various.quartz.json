@@ -1,0 +1,7 @@
+{
+	"parent": "cathedral:item/pillar",
+	"textures": {
+		"side": "cathedral:blocks/cathedral/pillar_quartz_shaft_side",
+		"end": "chisel:blocks/quartz/raw"
+	}
+}

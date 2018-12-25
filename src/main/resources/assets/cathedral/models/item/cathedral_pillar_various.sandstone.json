@@ -2,6 +2,6 @@
 	"parent": "cathedral:item/pillar",
 	"textures": {
 		"side": "cathedral:blocks/cathedral/pillar_sandstone_shaft_side",
-		"end": "chisel:blocks/sandstoneyellow/tiles-large"
+		"end": "chisel:blocks/sandstoneyellow/raw"
 	}
 }
