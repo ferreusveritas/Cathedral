@@ -145,20 +145,36 @@
 			"false" : { "submodel": "cathedral:cathedral/pillarhead" }
 		},  
 		"north": {
-			"true"  : {},
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin" },
 			"false" : {}
 		}, 
 		"south": {
-			"true"  : {},
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin", "y": 180, "uvlock": true },
 			"false" : {}
 		},  
 		"west": {
-			"true"  : {},
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin", "y": 270, "uvlock": true },
 			"false" : {}
 		},
 		"east": {
-			"true"  : {},
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin", "y": 90, "uvlock": true },
 			"false" : {}
-		} 
+		},
+		"nw": {
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin_top" },
+			"false" : {}
+		}, 
+		"ne": {
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin_top", "y": 180, "uvlock": true },
+			"false" : {}
+		},  
+		"se": {
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin_top", "y": 270, "uvlock": true },
+			"false" : {}
+		},
+		"sw": {
+			"true"  : { "submodel": "cathedral:cathedral/pillarjoin_top", "y": 90, "uvlock": true },
+			"false" : {}
+		}
 	}
 }

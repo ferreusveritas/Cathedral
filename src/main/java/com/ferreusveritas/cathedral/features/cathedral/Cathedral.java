@@ -1,18 +1,26 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.IVariantEnumType;
+import com.ferreusveritas.cathedral.models.ExtendedModelResourceLocation;
+import com.ferreusveritas.cathedral.models.ModelBlockPillar;
+import com.ferreusveritas.cathedral.models.ModelLoaderKeyed;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -23,6 +31,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,6 +48,8 @@ public class Cathedral implements IFeature {
 	public Block	glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
 	public final BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
 	public final static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
+	
+	public final static String PILLAR = "pillar";
 	
 	@Override
 	public String getName() {
@@ -227,6 +239,19 @@ public class Cathedral implements IFeature {
 			ModelHelper.regModel(gargoyleBlock);
 		}
 		
+		ModelLoaderRegistry.registerLoader(new ModelLoaderKeyed(PILLAR, resloc -> new ModelBlockPillar(resloc)));
+		Function<EnumMaterial, ModelResourceLocation> matModel = mat -> new ExtendedModelResourceLocation(ModConstants.MODID, PILLAR, mat.getName(), PILLAR);
+		Map<EnumMaterial, ModelResourceLocation> matMap = Lists.newArrayList(EnumMaterial.values()).stream().collect(Collectors.toMap(mat -> mat, matModel));
+		IStateMapper pillarMapper = block -> block.getBlockState().getValidStates().stream().collect(Collectors.toMap(b -> b, b -> matMap.get( b.getValue(BlockPillar.VARIANT) )));
+		ModelLoader.setCustomStateMapper(pillarVarious, pillarMapper);
+		
+		
 	}
-
+	
+	@SideOnly(Side.CLIENT)
+	public void setGenericStateMapper(Block block, ModelResourceLocation modelLocation) {
+		ModelLoader.setCustomStateMapper(block, state -> {
+			return block.getBlockState().getValidStates().stream().collect(Collectors.toMap(b -> b, b -> modelLocation));
+		});
+	}
 }

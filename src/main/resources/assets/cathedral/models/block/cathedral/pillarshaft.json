@@ -35,6 +35,6 @@
 		}
 	],
 	"textures": {
-		"shaftside": "blocks/shaftside"
+		"shaftside": "blocks/stone"
 	}
 }

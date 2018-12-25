@@ -164,10 +164,10 @@ public class BlockRailing extends Block {
 		return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
 	}
 	
-    @Override
+	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-        return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THICK : BlockFaceShape.CENTER_BIG;
-    }
+		return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THICK : BlockFaceShape.CENTER_BIG;
+	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
@@ -236,7 +236,7 @@ public class BlockRailing extends Block {
 		blockState = this.getActualState(blockState, worldIn, pos);
 		return CLIP_AABB_BY_INDEX[getAABBIndex(blockState)];
 	}
-
+	
 	private static int getAABBIndex(IBlockState state) {
 		int i = 0;
 		
@@ -262,7 +262,7 @@ public class BlockRailing extends Block {
 		
 		return i;
 	}
-
+	
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
 		return blockState.getValue(VARIANT).getHardness();
@@ -272,5 +272,5 @@ public class BlockRailing extends Block {
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
 		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(exploder);
 	}
-
+	
 }

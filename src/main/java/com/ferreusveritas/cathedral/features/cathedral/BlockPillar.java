@@ -15,24 +15,30 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.common.property.Properties;
 
 public class BlockPillar extends Block {
 	
 	public static final String name = "pillar";
-	public static final PropertyBool DOWN = PropertyBool.create("down");
-	public static final PropertyBool UP = PropertyBool.create("up");
-	public static final PropertyBool NORTH = PropertyBool.create("north");
-	public static final PropertyBool SOUTH = PropertyBool.create("south");
-	public static final PropertyBool WEST = PropertyBool.create("west");
-	public static final PropertyBool EAST = PropertyBool.create("east");
 	public static final PropertyEnum<EnumMaterial> VARIANT = PropertyEnum.<EnumMaterial>create("variant", EnumMaterial.class);
 	
+	public static final IUnlistedProperty CONNECTIONS[] = { 
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.DOWN.getName())),
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.UP.getName())),
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.NORTH.getName())),
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.SOUTH.getName())),
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.WEST.getName())),
+			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.EAST.getName()))
+		};
 	
 	public BlockPillar() {
 		this(name);
@@ -48,7 +54,8 @@ public class BlockPillar extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {DOWN, UP, NORTH, SOUTH, WEST, EAST, VARIANT});
+		IProperty[] listedProperties = { VARIANT };
+		return new ExtendedBlockState(this, listedProperties, CONNECTIONS);
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
@@ -64,21 +71,17 @@ public class BlockPillar extends Block {
 	}
 	
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		boolean d = canPillarConnectTo(world, pos, EnumFacing.DOWN);
-		boolean u = canPillarConnectTo(world, pos, EnumFacing.UP);
-		boolean n = canPillarConnectTo(world, pos, EnumFacing.NORTH);
-		boolean e = canPillarConnectTo(world, pos, EnumFacing.EAST);
-		boolean s = canPillarConnectTo(world, pos, EnumFacing.SOUTH);
-		boolean w = canPillarConnectTo(world, pos, EnumFacing.WEST);
+	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		if (state instanceof IExtendedBlockState) {
+			IExtendedBlockState retval = (IExtendedBlockState) state;
+			
+			for (EnumFacing dir : EnumFacing.VALUES) {
+				retval = retval.withProperty(CONNECTIONS[dir.getIndex()], canPillarConnectTo(world, pos, dir));
+			}
+			return retval;
+		}
 		
-		return state
-				.withProperty(DOWN, Boolean.valueOf(d))
-				.withProperty(UP, Boolean.valueOf(u))
-				.withProperty(NORTH, Boolean.valueOf(n))
-				.withProperty(SOUTH, Boolean.valueOf(s))
-				.withProperty(WEST, Boolean.valueOf(w))
-				.withProperty(EAST, Boolean.valueOf(e));
+		return state;
 	}
 	
 	private boolean canPillarConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {

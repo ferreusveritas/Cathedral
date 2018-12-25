@@ -53,6 +53,16 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 	public static EnumMaterial byMetadata(int meta) {
 		return values()[MathHelper.clamp(meta, 0, values().length - 1)];
 	}
+
+	public static EnumMaterial byName(String name) {
+		for(EnumMaterial mat : values()) {
+			if(mat.getName().equals(name)) {
+				return mat;
+			}
+		}
+		
+		return STONE;
+	}
 	
 	@Override
 	public String getName() {
