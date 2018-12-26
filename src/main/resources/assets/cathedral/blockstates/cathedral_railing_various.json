@@ -15,7 +15,7 @@
 		"netherbrick": { "textures": { "rail": "cathedral:blocks/cathedral/netherbrick_default", "particle": "blocks/nether_brick" } },
 		"quartz": { "textures": { "rail": "chisel:blocks/quartz/tiles-large", "particle": "chisel:blocks/quartz/tiles-large" } },
 		"endstone": { "textures": { "rail": "chisel:blocks/endstone/tiles-large", "particle": "chisel:blocks/endstone/tiles-large" } },
-		"packedice": { "textures": { "rail": "blocks/ice_packed", "particle": "blocks/ice_packed" } },
+		"packedice": { "textures": { "rail": "cathedral:blocks/extras/block_packedice_base", "particle": "cathedral:blocks/extras/block_packedice_base" } },
 		"snow": { "textures": { "rail": "blocks/snow", "particle": "blocks/snow" } },
 		"marble": { "textures": { "rail": "chisel:blocks/marble/tiles-large", "particle": "chisel:blocks/marble/tiles-large" } },
 		"limestone": { "textures": { "rail": "chisel:blocks/limestone/tiles-large", "particle": "chisel:blocks/limestone/tiles-large" } },

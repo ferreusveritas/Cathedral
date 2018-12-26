@@ -1,6 +1,6 @@
 {   
 	"parent": "cathedral:item/railing",
     "textures": {
-        "rail": "blocks/ice_packed"
+        "rail": "cathedral:blocks/extras/block_packedice_base"
     }
 }

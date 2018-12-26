@@ -1,0 +1,7 @@
+{
+	"parent": "cathedral:item/pillar",
+	"textures": {
+		"side": "cathedral:blocks/cathedral/pillar_packedice_shaft_side",
+		"end": "cathedral:blocks/extras/block_packedice_base"
+	}
+}

@@ -81,6 +81,8 @@ public class ModelBlockPillar implements IModel {
 		base.put(EnumMaterial.NETHERBRICK, "cathedral:blocks/cathedral/netherbrick_default");
 		base.put(EnumMaterial.QUARTZ, "chisel:blocks/quartz/raw");
 		base.put(EnumMaterial.ENDSTONE, "chisel:blocks/endstone/raw");
+		base.put(EnumMaterial.PACKEDICE, "cathedral:blocks/extras/block_packedice_base");
+		base.put(EnumMaterial.SNOW, "blocks/snow");
 		base.put(EnumMaterial.BASALT, "chisel:blocks/basalt/raw");
 		
 		switch(material) {
@@ -99,7 +101,9 @@ public class ModelBlockPillar implements IModel {
 			case ENDSTONE:
 				return generic(EnumMaterial.ENDSTONE, new ResourceLocation(base.get(material)));
 			case PACKEDICE:
+				return generic(EnumMaterial.PACKEDICE, new ResourceLocation(base.get(material)));
 			case SNOW:
+				return generic(EnumMaterial.SNOW, new ResourceLocation(base.get(material)));
 			case MARBLE:
 			case LIMESTONE:
 				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(EnumMaterial.STONE)));
