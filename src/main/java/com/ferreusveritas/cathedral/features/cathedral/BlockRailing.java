@@ -12,7 +12,6 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -27,19 +26,24 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.common.property.Properties;
+import net.minecraftforge.common.property.Properties.PropertyAdapter;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRailing extends Block {
 	
 	public static final String name = "railing";
-	public static final PropertyBool UP = PropertyBool.create("up");
-	public static final PropertyBool NORTH = PropertyBool.create("north");
-	public static final PropertyBool EAST = PropertyBool.create("east");
-	public static final PropertyBool SOUTH = PropertyBool.create("south");
-	public static final PropertyBool WEST = PropertyBool.create("west");
-	public static final PropertyBool POSTCAP = PropertyBool.create("postcap");
-	public static final PropertyEnum<EnumMaterial> VARIANT = PropertyEnum.<EnumMaterial>create("variant", EnumMaterial.class);
+	
+	public static final PropertyAdapter<Boolean> POSTCAP = new Properties.PropertyAdapter<Boolean>(PropertyBool.create("postcap"));
+	public static final PropertyAdapter<Boolean> POST = new Properties.PropertyAdapter<Boolean>(PropertyBool.create("post"));
+	public static final PropertyAdapter<Boolean> NORTH = new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.NORTH.getName()));
+	public static final PropertyAdapter<Boolean> SOUTH = new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.SOUTH.getName()));
+	public static final PropertyAdapter<Boolean> WEST = new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.WEST.getName()));
+	public static final PropertyAdapter<Boolean> EAST = new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.EAST.getName()));
 	
 	protected static final AxisAlignedBB[] AABB_BY_INDEX = new AxisAlignedBB[] {
 			new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D),
@@ -89,57 +93,58 @@ public class BlockRailing extends Block {
 		super(Material.ROCK);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setDefaultState(this.blockState.getBaseState()
-				.withProperty(UP, Boolean.valueOf(false))
-				.withProperty(NORTH, Boolean.valueOf(false))
-				.withProperty(EAST, Boolean.valueOf(false))
-				.withProperty(SOUTH, Boolean.valueOf(false))
-				.withProperty(WEST, Boolean.valueOf(false))
-				.withProperty(POSTCAP, Boolean.valueOf(false))
-				.withProperty(VARIANT, EnumMaterial.STONE));
+		setDefaultState(this.blockState.getBaseState().withProperty(EnumMaterial.VARIANT, EnumMaterial.STONE));
 		setCreativeTab(CathedralMod.tabCathedral);
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {UP, NORTH, EAST, WEST, SOUTH, POSTCAP, VARIANT});
+		IProperty[] listedProperties = { EnumMaterial.VARIANT };
+		IUnlistedProperty[] unlistedProperties = new IUnlistedProperty[] { POST, NORTH, SOUTH, WEST, EAST, POSTCAP };
+		return new ExtendedBlockState(this, listedProperties, unlistedProperties);
 	}
 	
 	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		boolean n = canRailConnectTo(world, pos, EnumFacing.NORTH);
-		boolean e = canRailConnectTo(world, pos, EnumFacing.EAST);
-		boolean s = canRailConnectTo(world, pos, EnumFacing.SOUTH);
-		boolean w = canRailConnectTo(world, pos, EnumFacing.WEST);
-		boolean up = canRailConnectTo(world, pos, EnumFacing.UP);
-		boolean centerPole = !((n && s && !e && !w) || (!n && !s && e && w));
-		
-		//boolean railabove = world.getBlockState(pos.up()).getBlock() instanceof BlockRailing;
-		boolean railbelow = world.getBlockState(pos.down()).getBlock() instanceof BlockRailing;
-		
-		if(!w && !e && !s && !n) {//There's no connections horizontally
-			if(up) {
-				return state.withProperty(UP, Boolean.valueOf(true));
+	public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+
+		if (state instanceof IExtendedBlockState) {
+			IExtendedBlockState retval = (IExtendedBlockState) state;
+						
+			boolean n = canRailConnectTo(world, pos, EnumFacing.NORTH);
+			boolean e = canRailConnectTo(world, pos, EnumFacing.EAST);
+			boolean s = canRailConnectTo(world, pos, EnumFacing.SOUTH);
+			boolean w = canRailConnectTo(world, pos, EnumFacing.WEST);
+			boolean up = canRailConnectTo(world, pos, EnumFacing.UP);
+			boolean centerPole = !((n && s && !e && !w) || (!n && !s && e && w));
+			
+			boolean railbelow = world.getBlockState(pos.down()).getBlock() instanceof BlockRailing;
+			
+			if(!w && !e && !s && !n) {//There's no connections horizontally
+				if(up) {
+					return retval.withProperty(POST, Boolean.valueOf(true));
+				}
+				if(railbelow) { //If there's a rail below then
+					return retval.withProperty(POSTCAP, true);//Make a post cap and that's it
+				}
 			}
-			if(railbelow /* && !railabove*/) { //If there's a rail below but not above then
-				return state.withProperty(POSTCAP, true);//Make a post cap and that's it
-				//this.setBlockBounds(0.25f, 0.0f, 0.25f, 0.75f, 0.5f, 0.75f);
-			}
+			
+			return retval
+					.withProperty(POST, centerPole || up)
+					.withProperty(NORTH, n)
+					.withProperty(EAST, e)
+					.withProperty(SOUTH, s)
+					.withProperty(WEST, w)
+					.withProperty(POSTCAP, false);
+			
 		}
 		
-		return state
-				.withProperty(UP, Boolean.valueOf(centerPole || up))
-				.withProperty(NORTH, Boolean.valueOf(n))
-				.withProperty(EAST, Boolean.valueOf(e))
-				.withProperty(SOUTH, Boolean.valueOf(s))
-				.withProperty(WEST, Boolean.valueOf(w))
-				.withProperty(POSTCAP, Boolean.valueOf(false));
+		return state;
 	}
 	
-	private boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
-		IBlockState iblockstate = worldIn.getBlockState(pos);
+	private boolean canConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+		IBlockState iblockstate = world.getBlockState(pos);
 		Block block = iblockstate.getBlock();
-		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, pos, facing);
+		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(world, pos, facing);
 		boolean flag = blockfaceshape == BlockFaceShape.MIDDLE_POLE_THICK || blockfaceshape == BlockFaceShape.MIDDLE_POLE && block instanceof BlockFenceGate;
 		return !isExceptionBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID || flag;
 	}
@@ -165,25 +170,25 @@ public class BlockRailing extends Block {
 	}
 	
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
 		return face != EnumFacing.UP && face != EnumFacing.DOWN ? BlockFaceShape.MIDDLE_POLE_THICK : BlockFaceShape.CENTER_BIG;
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, EnumMaterial.byMetadata(meta));
+		return this.getDefaultState().withProperty(EnumMaterial.VARIANT, EnumMaterial.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIANT).getMetadata();
+		return state.getValue(EnumMaterial.VARIANT).getMetadata();
 	}
 	
 	@Override
 	public int damageDropped(IBlockState state) {
-		return state.getValue(VARIANT).getMetadata();
+		return state.getValue(EnumMaterial.VARIANT).getMetadata();
 	}
 	
 	@Override
@@ -211,33 +216,27 @@ public class BlockRailing extends Block {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		return side == EnumFacing.DOWN ? super.shouldSideBeRendered(blockState, blockAccess, pos, side) : true;
+	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess access, BlockPos pos, EnumFacing side) {
+		return side == EnumFacing.DOWN ? super.shouldSideBeRendered(state, access, pos, side) : true;
 	}
 	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		state = this.getActualState(state, source, pos);
-		return AABB_BY_INDEX[getAABBIndex(state)];
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess access, BlockPos pos) {
+		return AABB_BY_INDEX[getAABBIndex((IExtendedBlockState) getExtendedState(state, access, pos))];
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
-		if (!isActualState) {
-			state = this.getActualState(state, worldIn, pos);
-		}
-		
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, CLIP_AABB_BY_INDEX[getAABBIndex(state)]);
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, CLIP_AABB_BY_INDEX[getAABBIndex((IExtendedBlockState) getExtendedState(state, world, pos))]);
 	}
 	
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		blockState = this.getActualState(blockState, worldIn, pos);
-		return CLIP_AABB_BY_INDEX[getAABBIndex(blockState)];
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess access, BlockPos pos) {
+		return CLIP_AABB_BY_INDEX[getAABBIndex((IExtendedBlockState) getExtendedState(state, access, pos))];
 	}
 	
-	private static int getAABBIndex(IBlockState state) {
+	private static int getAABBIndex(IExtendedBlockState state) {
 		int i = 0;
 		
 		if (state.getValue(POSTCAP).booleanValue()) {
@@ -264,13 +263,13 @@ public class BlockRailing extends Block {
 	}
 	
 	@Override
-	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
-		return blockState.getValue(VARIANT).getHardness();
+	public float getBlockHardness(IBlockState blockState, World world, BlockPos pos) {
+		return blockState.getValue(EnumMaterial.VARIANT).getHardness();
 	}
 	
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(exploder);
+		return world.getBlockState(pos).getValue(EnumMaterial.VARIANT).getExplosionResistance(exploder);
 	}
 	
 }

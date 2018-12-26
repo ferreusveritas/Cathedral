@@ -70,54 +70,8 @@ public class ModelBlockPillar implements IModel {
 		return stuff;
 	}
 	
-	private Map<String, ResourceLocation> getTextureMap(EnumMaterial material) {
-		
-		Map<EnumMaterial, String> base = new HashMap<>();
-		
-		base.put(EnumMaterial.STONE, "blocks/stone");
-		base.put(EnumMaterial.SANDSTONE, "chisel:blocks/sandstoneyellow/raw");
-		base.put(EnumMaterial.REDSANDSTONE, "chisel:blocks/sandstonered/raw");
-		base.put(EnumMaterial.OBSIDIAN, "chisel:blocks/obsidian/panel");
-		base.put(EnumMaterial.NETHERBRICK, "cathedral:blocks/cathedral/netherbrick_default");
-		base.put(EnumMaterial.QUARTZ, "chisel:blocks/quartz/raw");
-		base.put(EnumMaterial.ENDSTONE, "chisel:blocks/endstone/raw");
-		base.put(EnumMaterial.PACKEDICE, "cathedral:blocks/extras/block_packedice_base");
-		base.put(EnumMaterial.SNOW, "blocks/snow");
-		base.put(EnumMaterial.BASALT, "chisel:blocks/basalt/raw");
-		
-		switch(material) {
-			case STONE:
-				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(material)));
-			case SANDSTONE:
-				return generic(EnumMaterial.SANDSTONE, new ResourceLocation(base.get(material)));
-			case REDSANDSTONE:
-				return generic(EnumMaterial.REDSANDSTONE, new ResourceLocation(base.get(material)));
-			case OBSIDIAN:
-				return generic(EnumMaterial.OBSIDIAN, new ResourceLocation(base.get(material)));
-			case NETHERBRICK:
-				return generic(EnumMaterial.NETHERBRICK, new ResourceLocation(base.get(material)));
-			case QUARTZ:
-				return generic(EnumMaterial.QUARTZ, new ResourceLocation(base.get(material)));
-			case ENDSTONE:
-				return generic(EnumMaterial.ENDSTONE, new ResourceLocation(base.get(material)));
-			case PACKEDICE:
-				return generic(EnumMaterial.PACKEDICE, new ResourceLocation(base.get(material)));
-			case SNOW:
-				return generic(EnumMaterial.SNOW, new ResourceLocation(base.get(material)));
-			case MARBLE:
-			case LIMESTONE:
-				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(EnumMaterial.STONE)));
-			case BASALT:
-				return generic(EnumMaterial.BASALT, new ResourceLocation(base.get(material)));
-			case DWEMER:
-			default:
-				return generic(EnumMaterial.STONE, new ResourceLocation(base.get(EnumMaterial.STONE)));
-		}
-		
-	}
-	
 	private Map<String, ResourceLocation> getTextureMap() {
-		return getTextureMap(material);
+		return generic(material, material.getFlatTexture());
 	}
 	
 	@Override
@@ -138,7 +92,7 @@ public class ModelBlockPillar implements IModel {
 			bakedJoins[i] = modelJoin.uvlock(true).retexture(textures).bake(ModelRotation.getModelRotation(0, i * 90), format, bakedTextureGetter);
 		}
 		
-		TextureAtlasSprite particleSprite = bakedTextureGetter.apply(getTextureMap().get("default"));
+		TextureAtlasSprite particleSprite = bakedTextureGetter.apply(material.getFlatTexture());
 		
 		return new BakedModelBlockPillar(bakedShaft, bakedBase, bakedHead, bakedJoins, particleSprite);
 	}

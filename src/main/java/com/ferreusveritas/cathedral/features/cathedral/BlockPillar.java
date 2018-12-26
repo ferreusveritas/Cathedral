@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +28,6 @@ import net.minecraftforge.common.property.Properties;
 public class BlockPillar extends Block {
 	
 	public static final String name = "pillar";
-	public static final PropertyEnum<EnumMaterial> VARIANT = PropertyEnum.<EnumMaterial>create("variant", EnumMaterial.class);
 	
 	public static final IUnlistedProperty CONNECTIONS[] = { 
 			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.DOWN.getName())),
@@ -54,20 +52,20 @@ public class BlockPillar extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		IProperty[] listedProperties = { VARIANT };
+		IProperty[] listedProperties = { EnumMaterial.VARIANT };
 		return new ExtendedBlockState(this, listedProperties, CONNECTIONS);
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(VARIANT, EnumMaterial.byMetadata(meta));
+		return this.getDefaultState().withProperty(EnumMaterial.VARIANT, EnumMaterial.byMetadata(meta));
 	}
 	
 	/** Convert the BlockState into the correct metadata value */
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIANT).getMetadata();
+		return state.getValue(EnumMaterial.VARIANT).getMetadata();
 	}
 	
 	@Override
@@ -134,12 +132,12 @@ public class BlockPillar extends Block {
 	
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
-		return blockState.getValue(VARIANT).getHardness();
+		return blockState.getValue(EnumMaterial.VARIANT).getHardness();
 	}
 	
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		return world.getBlockState(pos).getValue(VARIANT).getExplosionResistance(exploder);
+		return world.getBlockState(pos).getValue(EnumMaterial.VARIANT).getExplosionResistance(exploder);
 	}
 	
 }

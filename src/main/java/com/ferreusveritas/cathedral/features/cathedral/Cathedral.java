@@ -6,12 +6,15 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
+
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.IVariantEnumType;
 import com.ferreusveritas.cathedral.models.ExtendedModelResourceLocation;
 import com.ferreusveritas.cathedral.models.ModelBlockPillar;
+import com.ferreusveritas.cathedral.models.ModelBlockRailing;
 import com.ferreusveritas.cathedral.models.ModelLoaderKeyed;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 import com.google.common.collect.Lists;
@@ -31,6 +34,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -50,6 +54,7 @@ public class Cathedral implements IFeature {
 	public final static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
 	public final static String PILLAR = "pillar";
+	public final static String RAILING = "railing";
 	
 	@Override
 	public String getName() {
@@ -77,7 +82,6 @@ public class Cathedral implements IFeature {
 	@Override
 	public void createItems() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -239,13 +243,16 @@ public class Cathedral implements IFeature {
 			ModelHelper.regModel(gargoyleBlock);
 		}
 		
-		ModelLoaderRegistry.registerLoader(new ModelLoaderKeyed(PILLAR, resloc -> new ModelBlockPillar(resloc)));
-		Function<EnumMaterial, ModelResourceLocation> matModel = mat -> new ExtendedModelResourceLocation(ModConstants.MODID, PILLAR, mat.getName(), PILLAR);
-		Map<EnumMaterial, ModelResourceLocation> matMap = Lists.newArrayList(EnumMaterial.values()).stream().collect(Collectors.toMap(mat -> mat, matModel));
-		IStateMapper pillarMapper = block -> block.getBlockState().getValidStates().stream().collect(Collectors.toMap(b -> b, b -> matMap.get( b.getValue(BlockPillar.VARIANT) )));
-		ModelLoader.setCustomStateMapper(pillarVarious, pillarMapper);
-		
-		
+		setupCustomModel(railingVarious, RAILING, resloc -> new ModelBlockRailing(resloc));
+		setupCustomModel(pillarVarious, PILLAR, resloc -> new ModelBlockPillar(resloc));
+	}
+	
+	public void setupCustomModel(Block block, String resName, @Nonnull Function<ResourceLocation, IModel> loader) {
+		ModelLoaderRegistry.registerLoader(new ModelLoaderKeyed(resName, loader));
+		Function<EnumMaterial, ModelResourceLocation> resMaker = mat -> new ExtendedModelResourceLocation(ModConstants.MODID, resName, mat.getName(), resName);
+		Map<EnumMaterial, ModelResourceLocation> matModelMap = Lists.newArrayList(EnumMaterial.values()).stream().collect(Collectors.toMap(mat -> mat, resMaker));
+		IStateMapper mapper = blk -> blk.getBlockState().getValidStates().stream().collect(Collectors.toMap(b -> b, b -> matModelMap.get( b.getValue(EnumMaterial.VARIANT) )));
+		ModelLoader.setCustomStateMapper(block, mapper);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -254,4 +261,5 @@ public class Cathedral implements IFeature {
 			return block.getBlockState().getValidStates().stream().collect(Collectors.toMap(b -> b, b -> modelLocation));
 		});
 	}
+	
 }
