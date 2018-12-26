@@ -1,6 +1,6 @@
 {   
 	"parent": "cathedral:item/railing",
     "textures": {
-        "rail": "blocks/nether_brick"
+        "rail": "cathedral:blocks/cathedral/netherbrick_default"
     }
 }

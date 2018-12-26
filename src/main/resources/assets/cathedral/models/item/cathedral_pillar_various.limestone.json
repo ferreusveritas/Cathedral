@@ -1,7 +1,7 @@
 {
 	"parent": "cathedral:item/pillar",
 	"textures": {
-		"side": "cathedral:blocks/cathedral/pillar_marble_shaft_side",
+		"side": "cathedral:blocks/cathedral/pillar_limestone_shaft_side",
 		"end": "chisel:blocks/limestone/raw"
 	}
 }

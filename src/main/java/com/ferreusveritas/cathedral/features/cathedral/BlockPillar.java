@@ -118,6 +118,11 @@ public class BlockPillar extends Block {
 	}
 	
 	@Override
+	public int damageDropped(IBlockState state) {
+		return state.getValue(EnumMaterial.VARIANT).getMetadata();
+	}
+	
+	@Override
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 		for(EnumMaterial type : EnumMaterial.values()) {
 			items.add(new ItemStack(this, 1, type.getMetadata()));

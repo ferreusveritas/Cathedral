@@ -7,9 +7,9 @@
 			"faces": {
 				"down" : { "texture": "#default", "cullface": "down" },
 				"up"   : { "texture": "#default", "cullface": "up" },
-				"north": { "texture": "#shaftside" },
-				"west" : { "texture": "#shaftside" },
-				"east" : { "texture": "#shaftside" }
+				"north": { "uv": [ 1,  0, 15, 16 ], "texture": "#shaftside" },
+				"west" : { "uv": [ 5,  0,  8, 16 ], "texture": "#shaftside" },
+				"east" : { "uv": [ 8,  0, 11, 16 ], "texture": "#shaftside" }
 			}
 		}
 	],
