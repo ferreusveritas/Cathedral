@@ -1,6 +1,6 @@
 package com.ferreusveritas.cathedral.models;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -34,7 +34,7 @@ public class BakedModelBlockPillar implements IBakedModel {
 	@Override
 	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
 		
-		List<BakedQuad> quadsList = new LinkedList<BakedQuad>();
+		List<BakedQuad> quadsList = new ArrayList<>(12);
 		
 		if(state instanceof IExtendedBlockState) {
 			IExtendedBlockState exState = (IExtendedBlockState) state;
