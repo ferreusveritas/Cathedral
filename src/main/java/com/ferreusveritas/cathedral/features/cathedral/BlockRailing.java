@@ -109,7 +109,14 @@ public class BlockRailing extends Block {
 
 		if (state instanceof IExtendedBlockState) {
 			IExtendedBlockState retval = (IExtendedBlockState) state;
-						
+			
+			retval = retval.withProperty(POST, false)
+				.withProperty(NORTH, false)
+				.withProperty(EAST, false)
+				.withProperty(SOUTH, false)
+				.withProperty(WEST, false)
+				.withProperty(POSTCAP, false);
+			
 			boolean n = canRailConnectTo(world, pos, EnumFacing.NORTH);
 			boolean e = canRailConnectTo(world, pos, EnumFacing.EAST);
 			boolean s = canRailConnectTo(world, pos, EnumFacing.SOUTH);
