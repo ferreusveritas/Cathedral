@@ -130,10 +130,10 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case ENDSTONE:     return new ResourceLocation("chisel:blocks/endstone/raw");
 			case PACKEDICE:    return new ResourceLocation("cathedral:blocks/extras/block_packedice_base");
 			case SNOW:         return new ResourceLocation("blocks/snow");
-			case MARBLE:       return new ResourceLocation("blocks/stone");//TODO
-			case LIMESTONE:    return new ResourceLocation("blocks/stone");//TODO
+			case MARBLE:       return new ResourceLocation("chisel:blocks/marble/raw");
+			case LIMESTONE:    return new ResourceLocation("chisel:blocks/limestone/raw");
 			case BASALT:       return new ResourceLocation("chisel:blocks/basalt/raw");
-			case DWEMER:       return new ResourceLocation("blocks/stone");//TODO
+			case DWEMER:       return new ResourceLocation("chisel:blocks/basalt/raw");
 			default:           return new ResourceLocation("blocks/dirt");
 		}
 	}

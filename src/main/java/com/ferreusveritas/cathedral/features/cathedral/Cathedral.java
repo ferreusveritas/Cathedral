@@ -49,9 +49,8 @@ public class Cathedral implements IFeature {
 	
 	public static final String featureName = "cathedral";
 	
-	public Block	glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
+	public Block glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
 	public final BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
-	public final static String types[] = {"stone", "sandstone", "netherbrick", "obsidian", "dwemer", "packedice", "endstone", "basalt", "marble", "limestone", "snow"};
 	
 	public final static String PILLAR = "pillar";
 	public final static String RAILING = "railing";

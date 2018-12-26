@@ -31,10 +31,10 @@ public class ModelBlockPillar implements IModel {
 	public ModelBlockPillar(ResourceLocation modelLocation) {
 		
 		try {
-			modelShaft = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillarshaft"));
-			modelBase  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillarbase"));
-			modelHead  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillarhead"));
-			modelJoin  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillarjoin"));
+			modelShaft = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_shaft"));
+			modelBase  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_base"));
+			modelHead  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_head"));
+			modelJoin  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_join"));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
