@@ -2,7 +2,6 @@ package com.ferreusveritas.cathedral.features.cathedral;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -148,15 +147,18 @@ public class Cathedral implements IFeature {
 	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
-		
-		ItemMultiTexture.Mapper mapper = (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName();
-		Consumer<Block> itemBlockMaker = (block) -> registry.register(new ItemMultiTexture(block, block, mapper).setRegistryName(block.getRegistryName()));
-		Lists.newArrayList(glassStained, panesStained, railingVarious, chainVarious, pillarVarious).forEach(itemBlockMaker);
+		registerMultiTextureItems(registry, (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName(), railingVarious, pillarVarious);
+		registerMultiTextureItems(registry, (stack) -> BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), glassStained, panesStained);
+		registerMultiTextureItems(registry, (stack) -> BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), chainVarious);
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
 		}
 		
+	}
+	
+	public void registerMultiTextureItems(IForgeRegistry<Item> registry, ItemMultiTexture.Mapper mapper, Block ... blocks) {
+		Lists.newArrayList(blocks).forEach((block) -> registry.register(new ItemMultiTexture(block, block, mapper).setRegistryName(block.getRegistryName())));
 	}
 	
 	@Override
@@ -180,6 +182,31 @@ public class Cathedral implements IFeature {
 				}
 			).setRegistryName("stainedglass")
 		);
+
+		//Stained Glass Panes
+		for(BlockGlassStained.EnumType type : BlockGlassStained.EnumType.values() ) {
+			GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "pane_stained_" + type.getName()),//Name
+				null,//Group
+				new ItemStack(panesStained, 16, type.getMetadata()),//Output
+				"ggg",
+				"ggg",
+				'g', new ItemStack(glassStained, 1, type.getMetadata())
+			);
+		}
+		
+		//Stone pillars
+		for(EnumMaterial type : EnumMaterial.values() ) {
+			GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "pillar_" + type.getName()),//Name
+				null,//Group
+				new ItemStack(pillarVarious, 4, type.getMetadata()),//Output
+				"s",
+				"s",
+				"s",
+				's', type.getRawMaterialBlock()
+			);
+		}
 		
 		//Stone Railings
 		for(EnumMaterial material : EnumMaterial.values()) {

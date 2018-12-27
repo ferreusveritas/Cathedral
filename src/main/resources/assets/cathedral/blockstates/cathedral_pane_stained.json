@@ -1,0 +1,39 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "cathedral:cathedral/pane_post"
+  },
+  "variants": {
+  	
+     "variant": {
+		"amberrhombus": { "textures": {
+									"pane": 	"cathedral:blocks/cathedral/glass_stained_amberrhombus",
+									"edge": 	"cathedral:blocks/cathedral/glass_stained_edge",
+									"particle": "cathedral:blocks/cathedral/glass_stained_amberrhombus" } },
+		"firetaijitu": { "textures": {
+									"pane": 	"cathedral:blocks/cathedral/glass_stained_firetaijitu",
+									"edge": 	"cathedral:blocks/cathedral/glass_stained_edge",
+									"particle": "cathedral:blocks/cathedral/glass_stained_firetaijitu" } }
+	},
+	
+	"north": {
+		"true"  : {"submodel": "cathedral:cathedral/pane_side" },
+		"false" : {"submodel": "cathedral:cathedral/pane_noside" }
+	}, 
+
+	"east": {
+		"true"  : {"submodel": "cathedral:cathedral/pane_side", "y": 90 },
+		"false" : {"submodel": "cathedral:cathedral/pane_noside_alt" }
+	}, 
+	
+	"south": {
+		"true"  : {"submodel": "cathedral:cathedral/pane_side_alt" },
+		"false" : {"submodel": "cathedral:cathedral/pane_noside_alt", "y": 90}
+	},  
+	
+	"west": {
+		"true"  : {"submodel": "cathedral:cathedral/pane_side_alt", "y": 90 },
+		"false" : {"submodel": "cathedral:cathedral/pane_noside", "y": 270}
+	}
+}
+}

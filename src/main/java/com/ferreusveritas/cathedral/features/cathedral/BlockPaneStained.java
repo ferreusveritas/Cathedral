@@ -11,17 +11,19 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPaneStained extends BlockPane {
 	
 	public static final String name = "pane";
 	
 	public static final PropertyEnum<BlockGlassStained.EnumType> VARIANT = PropertyEnum.<BlockGlassStained.EnumType>create("variant", BlockGlassStained.EnumType.class);
-	public static final PropertyEnum<EnumCapping> CAPPING = PropertyEnum.<EnumCapping>create("capping", EnumCapping.class);
 	
 	public BlockPaneStained(String name) {
 		super(Material.IRON, true);
@@ -32,7 +34,7 @@ public class BlockPaneStained extends BlockPane {
 		setSoundType(SoundType.METAL);
 		setResistance(20.0F);
 		setHardness(2.5F);
-		setCreativeTab(CathedralMod.tabDwemer);
+		setCreativeTab(CathedralMod.tabCathedral);
 	}
 	
 	public BlockPaneStained(){
@@ -41,29 +43,8 @@ public class BlockPaneStained extends BlockPane {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, SOUTH, WEST, VARIANT, CAPPING});
+		return new BlockStateContainer(this, new IProperty[] {NORTH, EAST, SOUTH, WEST, VARIANT});
 	}
-	
-    /**
-     * Get the actual Block state of this Block at the given position. This applies properties not visible in the
-     * metadata, such as fence connections.
-     */
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-    	state = super.getActualState(state, worldIn, pos);
-    	
-    	boolean north = state.getValue(NORTH);
-    	boolean east = state.getValue(EAST);
-    	boolean south = state.getValue(SOUTH);
-    	boolean west = state.getValue(WEST);
-    	
-    	return state.withProperty(CAPPING,
-    							( north && !east && !south && !west) ? EnumCapping.NORTH :
-    							(!north &&  east && !south && !west) ? EnumCapping.EAST :
-    							(!north && !east &&  south && !west) ? EnumCapping.SOUTH :
-    							(!north && !east && !south &&  west) ? EnumCapping.WEST :
-    							(!north && !east && !south && !west) ? EnumCapping.POST :
-    							EnumCapping.NONE);
-    }
 	
 	/** Convert the given metadata into a BlockState for this Block */
 	@Override
@@ -88,6 +69,11 @@ public class BlockPaneStained extends BlockPane {
 			items.add(new ItemStack(this, 1, type.getMetadata()));
 		}
 	}
+	
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+        return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
 	
 	public static enum EnumCapping implements IStringSerializable {
 		NONE,
