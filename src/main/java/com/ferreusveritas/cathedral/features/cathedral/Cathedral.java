@@ -272,7 +272,8 @@ public class Cathedral implements IFeature {
 		setupCustomModel(railingVarious, RAILING, resloc -> new ModelBlockRailing(resloc));
 		setupCustomModel(pillarVarious, PILLAR, resloc -> new ModelBlockPillar(resloc));
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public void setupCustomModel(Block block, String resName, @Nonnull Function<ResourceLocation, IModel> loader) {
 		ModelLoaderRegistry.registerLoader(new ModelLoaderKeyed(resName, loader));
 		Function<EnumMaterial, ModelResourceLocation> resMaker = mat -> new ExtendedModelResourceLocation(ModConstants.MODID, resName, mat.getName(), resName);
