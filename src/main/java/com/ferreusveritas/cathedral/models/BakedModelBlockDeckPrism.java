@@ -44,9 +44,12 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			IBakedModel mimicModel = blockModelShapes.getModelForState(mimicState);
 			
 			List<BakedQuad> qs = mimicModel.getQuads(mimicState, side, rand);
-			BakedQuad q = qs.get(0);
-			q.getSprite();
-			
+			for(BakedQuad q : qs) {
+				q = qs.get(0);
+				TextureAtlasSprite sprite = q.getSprite();
+				String iconName = sprite.getIconName();
+				System.out.println(iconName);
+			}
 			
 			quads.addAll(mimicModel.getQuads(mimicState, side, rand));
 			
