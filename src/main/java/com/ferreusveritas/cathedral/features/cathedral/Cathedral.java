@@ -48,7 +48,7 @@ public class Cathedral implements IFeature {
 	
 	public static final String featureName = "cathedral";
 	
-	public Block glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious;
+	public Block glassStained, panesStained, railingVarious, chainVarious, catwalkVarious, pillarVarious, deckPrism;
 	public final BlockGargoyle gargoyleDemon[] = new BlockGargoyle[EnumMaterial.values().length];
 	
 	public final static String PILLAR = "pillar";
@@ -60,7 +60,9 @@ public class Cathedral implements IFeature {
 	}
 	
 	@Override
-	public void preInit() { }
+	public void preInit() {
+		GameRegistry.registerTileEntity(TileEntityDeckPrism.class, new ResourceLocation(ModConstants.MODID, "deckprism"));
+	}
 	
 	@Override
 	public void createBlocks() {
@@ -69,7 +71,8 @@ public class Cathedral implements IFeature {
 		railingVarious 	= new BlockRailing(featureObjectName(BlockForm.RAILING, "various"));
 		chainVarious 	= new BlockChain(featureObjectName(BlockForm.CHAIN, "various"));
 		catwalkVarious	= new BlockCatwalk(Material.IRON, featureObjectName(BlockForm.CATWALK, "various"));
-		pillarVarious = new BlockPillar(featureObjectName(BlockForm.PILLAR, "various"));
+		pillarVarious	= new BlockPillar(featureObjectName(BlockForm.PILLAR, "various"));
+		deckPrism		= new BlockDeckPrism();
 		
 		for(EnumMaterial type: EnumMaterial.values()) {
 			gargoyleDemon[type.ordinal()] = new BlockGargoyle(featureObjectName(BlockForm.GARGOYLE, "demon_" + type.getName()), type);
@@ -90,7 +93,8 @@ public class Cathedral implements IFeature {
 			railingVarious,
 			chainVarious,
 			//catwalkVarious,
-			pillarVarious
+			pillarVarious,
+			deckPrism
 		);
 		
 		registry.registerAll(gargoyleDemon);
@@ -150,6 +154,7 @@ public class Cathedral implements IFeature {
 		registerMultiTextureItems(registry, (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName(), railingVarious, pillarVarious);
 		registerMultiTextureItems(registry, (stack) -> BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), glassStained, panesStained);
 		registerMultiTextureItems(registry, (stack) -> BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), chainVarious);
+		registry.register( new ItemBlock(deckPrism).setRegistryName(deckPrism.getRegistryName()) );
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
