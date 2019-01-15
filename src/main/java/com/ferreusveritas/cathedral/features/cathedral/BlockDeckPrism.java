@@ -2,6 +2,7 @@ package com.ferreusveritas.cathedral.features.cathedral;
 
 import java.util.Optional;
 
+import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
@@ -36,6 +37,7 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 		super(Material.GLASS);
 		setRegistryName(new ResourceLocation(ModConstants.MODID, name));
 		setUnlocalizedName(name);
+		setCreativeTab(CathedralMod.tabCathedral);
 	}
 	
 	@Override

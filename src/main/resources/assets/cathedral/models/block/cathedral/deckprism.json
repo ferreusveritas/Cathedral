@@ -1,0 +1,27 @@
+{
+	"elements": [
+		{
+			"from": [ 5, 1, 5 ],
+			"to": [ 11, 15, 11 ],
+			"faces": {
+				"down": {
+					"uv": [ 5, 5, 11, 11 ],
+					"texture": "#glass"
+				},
+				"up": {
+					"uv": [ 5, 5, 11, 11 ],
+					"texture": "#glass"
+				}
+			},
+			"rotation": {
+				"origin": [ 5, 1, 5 ],
+				"axis": "y",
+				"angle": 0
+			},
+			"__gr_name": "prism"
+		}
+	],
+	"textures": {
+		"glass": "blocks/glass_light_blue"
+	}
+}

@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.property.IExtendedBlockState;
@@ -43,20 +42,54 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
 			IBakedModel mimicModel = blockModelShapes.getModelForState(mimicState);
 			
+			//TextureAtlasSprite holdSprite = null;
+			//BakedQuad holdQuad = null;
+			
 			List<BakedQuad> qs = mimicModel.getQuads(mimicState, side, rand);
 			for(BakedQuad q : qs) {
-				q = qs.get(0);
 				TextureAtlasSprite sprite = q.getSprite();
+				//holdSprite = sprite;
+				//holdQuad = q;
 				String iconName = sprite.getIconName();
 				System.out.println(iconName);
+				
+				//System.out.println(holdQuad);
+				int c = 0;
+				for(int i : q.getVertexData()) {
+					System.out.print(String.format("%08x ", i));
+					if(++c % 7 == 0) {
+						System.out.println();
+					}
+				}
 			}
 			
-			quads.addAll(mimicModel.getQuads(mimicState, side, rand));
+			/*
+			//holdQuad.getVertexData();
 			
-			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT_MIPPED) {
+			if(holdQuad != null && holdQuad.getFace() == EnumFacing.UP) {
+				holdQuad = new BakedQuad(
+					holdQuad.getVertexData(),
+					-1,
+					EnumFacing.UP,
+					holdSprite,
+					false,
+					holdQuad.getFormat());
+				
+				quads.add(holdQuad);
+			}
+			*/
+			
+			List<BakedQuad> x = mimicModel.getQuads(mimicState, side, rand);
+			//System.out.println(x.size());
+			quads.addAll(x);
+			
+			//if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
 				quads.addAll(prismModel.getQuads(state, side, rand));
-			}
+			//}
+			
+			//System.out.println(side + " " + quads.size() + " " + MinecraftForgeClient.getRenderLayer());
 		}
+		
 		
 		return quads;
 	}
