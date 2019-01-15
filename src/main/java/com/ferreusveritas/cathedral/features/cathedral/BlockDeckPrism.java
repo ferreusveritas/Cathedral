@@ -26,8 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic {
 	
@@ -103,10 +101,15 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 		return 0;
 	}
 	
-    @SideOnly(Side.CLIENT)
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		return true;//For troubleshooting
+	}
+	
+    /*@SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
-    }
+    }*/
     
     @Override
     protected boolean canSilkHarvest() {

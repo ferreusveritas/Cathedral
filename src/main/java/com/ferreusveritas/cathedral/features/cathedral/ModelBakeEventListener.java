@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,10 +19,10 @@ public class ModelBakeEventListener {
 		
 		Block block = CathedralMod.cathedral.deckPrism;
 		IBakedModel model = event.getModelRegistry().getObject(new ModelResourceLocation(block.getRegistryName(), "normal"));
-		if (model instanceof IBakedModel) {			
+		if (model instanceof IBakedModel) {
 			IBakedModel prismModel = (IBakedModel) model;
-			BakedModelBlockDeckPrism rootyModel = new BakedModelBlockDeckPrism(prismModel);
-			event.getModelRegistry().putObject(new ModelResourceLocation(block.getRegistryName(), "normal"), rootyModel);
+			BakedModelBlockDeckPrism newPrismModel = new BakedModelBlockDeckPrism(prismModel);
+			event.getModelRegistry().putObject(new ModelResourceLocation(block.getRegistryName(), "normal"), newPrismModel);
 		}
 		
 	}
