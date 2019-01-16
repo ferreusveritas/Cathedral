@@ -29,9 +29,12 @@ import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.Attributes;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,6 +51,10 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 	
 	@Override
 	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+		
+		System.out.println();
+		System.out.print("################## getQuads ##################\n");
+		
 		List<BakedQuad> quads = new ArrayList<>(16);
 		
 		if (state != null && state.getBlock() instanceof IMimic && state instanceof IExtendedBlockState) {
@@ -57,20 +64,17 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			Minecraft mc = Minecraft.getMinecraft();
 			BlockRendererDispatcher blockRendererDispatcher = mc.getBlockRendererDispatcher();
 			BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
-			IBakedModel mimicModel = blockModelShapes.getModelForState(mimicState);
+			IBakedModel mimicModel = blockModelShapes.getModelForState(Blocks.DIRT.getDefaultState());
 			
-			//TextureAtlasSprite holdSprite = null;
-			//BakedQuad holdQuad = null;
-			
-			/*List<BakedQuad> qs = mimicModel.getQuads(mimicState, side, rand);
+			/*
+			List<BakedQuad> qs = mimicModel.getQuads(mimicState, side, rand);
 			for(BakedQuad q : qs) {
 				TextureAtlasSprite sprite = q.getSprite();
-				//holdSprite = sprite;
-				//holdQuad = q;
 				String iconName = sprite.getIconName();
-				System.out.println(iconName);
+				System.out.print("State: " + mimicState + "\n");
+				System.out.print("Icon: " + iconName + "\n");
+				System.out.print("Face: " + q.getFace() + "\n");
 				
-				//System.out.println(holdQuad);
 				int c = 0;
 				for(int i : q.getVertexData()) {
 					System.out.print(String.format("%08x ", i));
@@ -78,7 +82,16 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 						System.out.println();
 					}
 				}
-			}*/
+				
+				UnpackedQuad uq = new UnpackedQuad(q);
+				for(int i = 0; i < 4; i++) {
+					System.out.print("Pos:[" + uq.vertices[i].x + ", " + uq.vertices[i].y + ", " + uq.vertices[i].z + "] ");
+					System.out.print(String.format("Color:#%08X ", uq.vertices[i].color) + " UV:[" + uq.vertices[i].u + ", " + uq.vertices[i].v + "] ");
+					System.out.print("Normal:[" + uq.vertices[i].nx + ", " + uq.vertices[i].ny + ", " + uq.vertices[i].nz + "] ");
+					System.out.println();
+				}
+			}
+			*/
 			
 			/*
 			//holdQuad.getVertexData();
@@ -97,18 +110,21 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			*/
 			
 			//TODO: Investigate BakedQuadRetextured
-
 			
-			List<BakedQuad> mimicQuads = mimicModel.getQuads(mimicState, side, rand);
-			quads.addAll(mimicQuads);
+			//NOTE: WHAT IN HELL IS GOING ON HERE? WHY WON"T THIS FUCKING WORK?
+			
+			//if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
+				quads.addAll(mimicModel.getQuads(mimicState, side, rand));
+		    //}
 			
 			//if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.CUTOUT) {
 				quads.addAll(prismModel.getQuads(state, side, rand));
 			//}
 			
-			//System.out.println(side + " " + quads.size() + " " + MinecraftForgeClient.getRenderLayer());
+			System.out.print(side + " " + quads.size() + " " + MinecraftForgeClient.getRenderLayer() + "\n");
 		}
 		
+		//System.out.println(side + " " + quads.size());
 		
 		return quads;
 	}
@@ -170,8 +186,10 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			int vertexNum = 0;
 			for(int vertexPos = 0; vertexPos < vertexDataIn.length; vertexPos += inQuad.getFormat().getIntegerSize()) {
 				int vfePos = 0;
-				UnpackedQuad.UnpackedVertex outVertex = outQuad.vertices[vertexNum];
+				UnpackedQuad.UnpackedVertex outVertex = vertices[vertexNum++];
+				System.out.print(vertexNum + ": ");
 				for(VertexFormatElement vfe: inQuad.getFormat().getElements()) {
+					System.out.print(vfe.getUsage() + ":" + vfe.getSize() + " ");
 					switch(vfe.getUsage()) {
 						case POSITION:
 							if(vfe.getType() == EnumType.FLOAT) {
@@ -185,15 +203,15 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 						case NORMAL:
 							if(vfe.getType() == EnumType.BYTE) {
 								int normalData = vertexDataIn[vertexPos + vfePos + 0];
-								outVertex.nx = (byte) ((normalData >> 24) * 0xFF);
-								outVertex.ny = (byte) ((normalData >> 16) * 0xFF);
-								outVertex.nz = (byte) ((normalData >> 8) * 0xFF);
+								outVertex.nx = (byte) ((normalData >> 0) * 0xFF);
+								outVertex.ny = (byte) ((normalData >> 8) * 0xFF);
+								outVertex.nz = (byte) ((normalData >> 16) * 0xFF);
 							} else {
 								System.err.println("Unhandled " + vfe.getUsage() + " Data Type: " + vfe.getType());
 							}
 							break;
 						case COLOR:
-							if(vfe.getType() == EnumType.BYTE) {
+							if(vfe.getType() == EnumType.UBYTE) {
 								outVertex.color = vertexDataIn[vertexPos + vfePos + 0];
 							} else {
 								System.err.println("Unhandled " + vfe.getUsage() + " Data Type: " + vfe.getType());
@@ -218,6 +236,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 					
 					vfePos += vfe.getSize() / 4;//Size is always in bytes but we are dealing with an array of int32s
 				}
+				System.out.println();
 			}
 		}
 		
@@ -231,7 +250,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 				data[n++] = v.color;
 				data[n++] = Float.floatToIntBits(v.u);
 				data[n++] = Float.floatToIntBits(v.v);
-				data[n++] = 0;//Padding
+				data[n++] = v.nx | v.ny << 8 | v.nz << 16;//Normal + Padding
 			}
 			
 			return new BakedQuad(data, tintIndex, face, sprite, applyDiffuseLighting, Attributes.DEFAULT_BAKED_FORMAT);

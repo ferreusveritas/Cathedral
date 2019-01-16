@@ -26,6 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic {
 	
@@ -98,18 +100,18 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return 0;
+		return super.getLightOpacity(state, world, pos);//0;
 	}
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return true;//For troubleshooting
+		return super.canRenderInLayer(state, layer);//true;//For troubleshooting
 	}
 	
-    /*@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }*/
+        return super.getBlockLayer();//BlockRenderLayer.CUTOUT;
+    }
     
     @Override
     protected boolean canSilkHarvest() {
