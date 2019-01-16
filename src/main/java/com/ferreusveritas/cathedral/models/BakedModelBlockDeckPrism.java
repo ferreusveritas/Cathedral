@@ -29,7 +29,6 @@ import net.minecraft.client.renderer.block.model.SimpleBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -64,7 +63,21 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			BlockRendererDispatcher blockRendererDispatcher = mc.getBlockRendererDispatcher();
 			BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
 			IBakedModel mimicModel = blockModelShapes.getModelForState(mimicState);
-
+			
+			/*IBlockState randState = Blocks.STONE.getDefaultState();
+			Set<ResourceLocation> k = Block.REGISTRY.getKeys();
+			int size = k.size();
+			int destKey = new Random().nextInt(size);
+			int i = 0;
+			for(ResourceLocation resloc : k) {
+				if(destKey == i) {
+					randState = Block.REGISTRY.getObject(resloc).getDefaultState();
+					mimicModel = blockModelShapes.getModelForState(randState);
+					break;
+				}
+				i++;
+			}*/
+			
 			System.out.print("State: " + mimicState + "\n");
 			
 			/*

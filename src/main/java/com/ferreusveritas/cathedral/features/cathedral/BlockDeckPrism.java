@@ -18,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -112,6 +113,21 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
     public BlockRenderLayer getBlockLayer() {
         return super.getBlockLayer();//BlockRenderLayer.CUTOUT;
     }
+    
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;//super.isFullCube(state);
+	}
+	
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;//super.isOpaqueCube(state);
+	}
+	
+	@Override
+	public EnumBlockRenderType getRenderType(IBlockState state) {
+		return EnumBlockRenderType.MODEL;//super.getRenderType(state);
+	}
     
     @Override
     protected boolean canSilkHarvest() {
