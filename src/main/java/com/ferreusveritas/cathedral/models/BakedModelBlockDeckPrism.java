@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
@@ -73,15 +74,17 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		
 		//Pick the best quad for each cube face
 		for(EnumFacing dir : EnumFacing.values()) {
-			if(quadMap.get(dir).size() > 0) {
+			if(quadMap.get(dir).size() > 0) {//The face completely against the side of the block is the ideal choice
 				sides[dir.getIndex()] = quadMap.get(dir).get(0);
 			} else {
-				for(BakedQuad q : quadMap.get(null)) {
-					if(q.getFace() == dir) {
-						sides[dir.getIndex()] = q;
-					}
-				}
+				List<UnpackedQuad> list = quadMap.get(null).stream().map( q -> new UnpackedQuad(q) ).collect(Collectors.toList());
+				list.forEach( q -> q.calcArea() );
+				sides[dir.getIndex()] = list.stream().max( (a, b) -> Float.compare(a.area, b.area) ).get().pack();//Find the biggest quad facing in the right direction
 			}
+		}
+		
+		for(int i = 0; i < 6; i++) {
+			sides[i] = new UnpackedQuad(sides[i]).normalize().pack();
 		}
 		
 		return sides;

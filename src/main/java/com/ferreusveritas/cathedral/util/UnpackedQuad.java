@@ -1,13 +1,19 @@
 package com.ferreusveritas.cathedral.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.Attributes;
 
 /*
@@ -16,9 +22,10 @@ import net.minecraftforge.client.model.Attributes;
 public class UnpackedQuad {
 	public UnpackedVertex vertices[] = new UnpackedVertex[4];
 	public TextureAtlasSprite sprite;
-	EnumFacing face;
-	int tintIndex;
-	boolean applyDiffuseLighting = false;
+	public EnumFacing face;
+	public int tintIndex;
+	public float area;
+	public boolean applyDiffuseLighting = false;
 
 	public static class UnpackedVertex {
 		public float x;
@@ -37,6 +44,11 @@ public class UnpackedQuad {
 	}
 	
 	public UnpackedQuad(UnpackedQuad o) {
+		face = o.face;
+		sprite = o.sprite;
+		area = o.area;
+		tintIndex = o.tintIndex;
+		applyDiffuseLighting = o.applyDiffuseLighting;
 		for(int i = 0; i < 4; i++) {
 			UnpackedVertex vert = vertices[i] = new UnpackedVertex();
 			UnpackedVertex oVert = o.vertices[i];
@@ -138,6 +150,104 @@ public class UnpackedQuad {
 	
 	public static List<BakedQuad> packAll(List<UnpackedQuad> inQuads) {
 		return inQuads.stream().map( in -> in.pack() ).collect(Collectors.toList());
+	}
+	
+	public float calcArea() {
+		float minX = Float.NaN;
+		float minY = Float.NaN;
+		float minZ = Float.NaN;
+		float maxX = Float.NaN;
+		float maxY = Float.NaN;
+		float maxZ = Float.NaN;
+		
+		for(UnpackedVertex v : vertices) {
+			minX = minX < v.x ? minX : v.x;
+			minY = minY < v.y ? minY : v.y;
+			minZ = minZ < v.z ? minZ : v.z;
+			maxX = maxX > v.x ? maxX : v.x;
+			maxY = maxY > v.y ? maxY : v.y;
+			maxZ = maxZ > v.z ? maxZ : v.z;
+		}
+
+		switch(face.getAxis()) {
+			case X: area = (maxY - minY) * (maxZ - minZ);
+			case Y: area = (maxX - minX) * (maxZ - minZ);
+			case Z: area = (maxX - minX) * (maxY - minY);
+			default: area = 0;
+		}
+		
+		return area;
+	}
+	
+	public UnpackedQuad normalize() {
+
+		{//Snap the corners of the quads texture to the closest corners of the sprite
+			float corners[] = new float[] { sprite.getMinU(), sprite.getMinV(), sprite.getMaxU(), sprite.getMaxV() };
+			List<UnpackedVertex> verts = Lists.newArrayList(vertices);//Temporary list so we can remove elements as they are organized
+			for(int c = 0; c < 4; c++) {//Iterate over each corner of the sprite
+				float cU = corners[c & 2];//0 or 2
+				float cV = corners[((c & 1) * 2) + 1];//1 or 3
+				float minDelta = 999f;
+				UnpackedVertex nearest = null;
+				for(UnpackedVertex v : verts) {//Find the vertex that has the closest UV coordinates to this corner
+					float delU = v.u - cU;
+					float delV = v.v - cV;
+					float delta = delU * delU + delV * delV;
+					if(delta < minDelta) {
+						minDelta = delta;
+						nearest = v;
+					}
+				}
+				verts.remove(nearest);//Remove this vertex from the temporary list so it's not chosen again by another corner
+				nearest.u = cU;
+				nearest.v = cV;
+			}
+		}
+		
+		{//Snap the corners of quad to the closest corners of the full cube
+			
+			Axis axis = face.getAxis();
+			float limit = MathHelper.clamp(face.getAxisDirection().getOffset(), 0, 1);
+			
+			for(UnpackedVertex v : vertices) {//Push the quads all the way to the sides of the block
+				switch(axis) {
+					case X: v.x = limit; break;
+					case Y: v.y = limit; break;
+					case Z: v.z = limit; break;
+				}
+			}
+			
+			List<Vec3d> corners = new ArrayList<>();
+			for(int c = 0; c < 8; c++) {//Iterate over each corner of the volume
+				double x = axis == Axis.X ? limit : (c >> 2) & 1;
+				double y = axis == Axis.Y ? limit : (c >> 1) & 1;
+				double z = axis == Axis.Z ? limit : (c >> 0) & 1;
+				Vec3d v = new Vec3d(x, y, z);
+				if(!corners.contains(v)) {
+					corners.add(v);
+				}
+			}
+			
+			List<UnpackedVertex> verts = Lists.newArrayList(vertices);//Temporary list so we can remove elements as they are organized
+			for(Vec3d corn: corners) {//Iterate over each corner of the volume
+				double minDelta = 999f;
+				UnpackedVertex nearest = null;
+				for(UnpackedVertex v : verts) {//Find the vertex that has the closest UV coordinates to this corner
+					Vec3d vert = new Vec3d(v.x, v.y, v.z);
+					double delta = corn.squareDistanceTo(vert);
+					if(delta < minDelta) {
+						minDelta = delta;
+						nearest = v;
+					}
+				}
+				verts.remove(nearest);//Remove this vertex from the temporary list so it's not chosen again by another corner
+				nearest.x = (float) corn.x;
+				nearest.y = (float) corn.y;
+				nearest.z = (float) corn.z;
+			}
+		}
+		
+		return this;
 	}
 	
 	public void print() {
