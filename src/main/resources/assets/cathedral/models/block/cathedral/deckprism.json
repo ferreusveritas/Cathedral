@@ -22,6 +22,6 @@
 		}
 	],
 	"textures": {
-		"glass": "blocks/glass_light_blue"
+		"glass": "blocks/dirt"
 	}
 }

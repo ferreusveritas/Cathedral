@@ -19,6 +19,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -106,12 +107,17 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return super.canRenderInLayer(state, layer);//true;//For troubleshooting
+		return layer == BlockRenderLayer.TRANSLUCENT;//super.canRenderInLayer(state, layer);//true;//For troubleshooting
 	}
 	
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return super.getBlockLayer();//BlockRenderLayer.CUTOUT;
+    }
+    
+    @Override
+    public boolean isTranslucent(IBlockState state) {
+    	return true;//super.isTranslucent(state);
     }
     
 	@Override
@@ -122,6 +128,11 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;//super.isOpaqueCube(state);
+	}
+	
+	@Override
+	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		return true;//super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}
 	
 	@Override
