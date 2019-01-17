@@ -103,7 +103,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		    }
 			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
-				//quads.addAll(prismModel.getQuads(state, side, rand));
+				quads.addAll(prismModel.getQuads(state, side, rand));
 			}
 			
 			TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/glass_light_blue");
