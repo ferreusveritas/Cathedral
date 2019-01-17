@@ -26,14 +26,12 @@ public class BlockPaneStained extends BlockPane {
 	public static final PropertyEnum<BlockGlassStained.EnumType> VARIANT = PropertyEnum.<BlockGlassStained.EnumType>create("variant", BlockGlassStained.EnumType.class);
 	
 	public BlockPaneStained(String name) {
-		super(Material.IRON, true);
+		super(Material.GLASS, true);
 		setRegistryName(name);
 		setUnlocalizedName(name);
 		setDefaultState(getDefaultState().withProperty(VARIANT, BlockGlassStained.EnumType.AMBERRHOMBUS));
-		setHarvestLevel("pickaxe", 0);
-		setSoundType(SoundType.METAL);
-		setResistance(20.0F);
-		setHardness(2.5F);
+		setSoundType(SoundType.GLASS);
+		setHardness(0.3F);
 		setCreativeTab(CathedralMod.tabCathedral);
 	}
 	
