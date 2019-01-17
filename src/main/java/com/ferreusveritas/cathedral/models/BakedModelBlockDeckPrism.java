@@ -1,6 +1,8 @@
 package com.ferreusveritas.cathedral.models;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,26 +63,158 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			IExtendedBlockState extendedState = ((IExtendedBlockState) state);
 			IBlockState mimicState = extendedState.getValue(MimicProperty.MIMIC);
 			
-			mimicState = Blocks.CACTUS.getDefaultState();
-			
 			Minecraft mc = Minecraft.getMinecraft();
 			BlockRendererDispatcher blockRendererDispatcher = mc.getBlockRendererDispatcher();
 			BlockModelShapes blockModelShapes = blockRendererDispatcher.getBlockModelShapes();
 			IBakedModel mimicModel = blockModelShapes.getModelForState(mimicState);
 			
-			/*IBlockState randState = Blocks.STONE.getDefaultState();
-			Set<ResourceLocation> k = Block.REGISTRY.getKeys();
-			int size = k.size();
-			int destKey = new Random().nextInt(size);
-			int i = 0;
-			for(ResourceLocation resloc : k) {
-				if(destKey == i) {
-					randState = Block.REGISTRY.getObject(resloc).getDefaultState();
-					mimicModel = blockModelShapes.getModelForState(randState);
-					break;
+			Map<EnumFacing, List<BakedQuad> > quadMap = new HashMap<>(); 
+			
+			for(EnumFacing dir : EnumFacing.values()) {
+				quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>()).addAll(mimicModel.getQuads(mimicState, dir, rand));
+			}
+			quadMap.computeIfAbsent(null, d -> new ArrayList<BakedQuad>()).addAll(mimicModel.getQuads(mimicState, null, rand));
+			
+			BakedQuad sides[] = new BakedQuad[6];
+			
+			for(EnumFacing dir : EnumFacing.values()) {
+				if(quadMap.get(dir).size() > 0) {
+					sides[dir.getIndex()] = quadMap.get(dir).get(0);
+				} else {
+					for(BakedQuad q : quadMap.get(null)) {
+						if(q.getFace() == dir) {
+							sides[dir.getIndex()] = q;
+						}
+					}
 				}
-				i++;
-			}*/
+			}
+			
+			quadMap.clear();
+			
+			for(EnumFacing dir : EnumFacing.HORIZONTALS) {
+				List<BakedQuad> list = quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>());
+				if(sides[dir.getIndex()] != null) {
+					list.add(sides[dir.getIndex()]);
+				}
+			}
+			
+			if(sides[EnumFacing.UP.getIndex()] != null) {
+				List<BakedQuad> list = quadMap.computeIfAbsent(EnumFacing.UP, d -> new ArrayList<BakedQuad>());
+				UnpackedQuad upq;
+				float amount;
+				
+				upq = new UnpackedQuad(sides[EnumFacing.UP.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[0].x += amount;
+				upq.vertices[0].u += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[1].x += amount;
+				upq.vertices[1].u += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+				
+				upq = new UnpackedQuad(sides[EnumFacing.UP.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[2].x -= amount;
+				upq.vertices[2].u -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[3].x -= amount;
+				upq.vertices[3].u -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+				
+				upq = new UnpackedQuad(sides[EnumFacing.UP.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[0].z += amount;
+				upq.vertices[0].v += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[3].z += amount;
+				upq.vertices[3].v += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+
+				upq = new UnpackedQuad(sides[EnumFacing.UP.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[1].z -= amount;
+				upq.vertices[1].v -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[2].z -= amount;
+				upq.vertices[2].v -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());				
+			}
+
+			{
+				List<BakedQuad> list = quadMap.computeIfAbsent(null, d -> new ArrayList<BakedQuad>());
+				
+				for(EnumFacing dir: EnumFacing.HORIZONTALS) {
+					float amount = 0.5f + 3/16f;
+					if(sides[dir.getIndex()] != null) {
+						UnpackedQuad q = new UnpackedQuad(sides[dir.getIndex()]);
+						EnumFacing CW = dir.rotateY();
+						for(int v = 0; v < 4; v++) {
+							q.vertices[v].x += dir.getOpposite().getFrontOffsetX() * amount;
+							q.vertices[v].y += dir.getOpposite().getFrontOffsetY() * amount;
+							q.vertices[v].z += dir.getOpposite().getFrontOffsetZ() * amount;
+							q.vertices[v].color = 0xFF999999;
+						}
+						q.vertices[0].x -= CW.getFrontOffsetX() * 5/16f;
+						q.vertices[0].y -= CW.getFrontOffsetY() * 5/16f;
+						q.vertices[0].z -= CW.getFrontOffsetZ() * 5/16f;
+						q.vertices[0].u += (q.sprite.getMaxU() - q.sprite.getMinU()) * 5/16f;
+
+						q.vertices[1].x -= CW.getFrontOffsetX() * 5/16f;
+						q.vertices[1].y -= CW.getFrontOffsetY() * 5/16f;
+						q.vertices[1].z -= CW.getFrontOffsetZ() * 5/16f;
+						q.vertices[1].u += (q.sprite.getMaxU() - q.sprite.getMinU()) * 5/16f;
+
+						q.vertices[2].x += CW.getFrontOffsetX() * 5/16f;
+						q.vertices[2].y += CW.getFrontOffsetY() * 5/16f;
+						q.vertices[2].z += CW.getFrontOffsetZ() * 5/16f;
+						q.vertices[2].u -= (q.sprite.getMaxU() - q.sprite.getMinU()) * 5/16f;
+
+						q.vertices[3].x += CW.getFrontOffsetX() * 5/16f;
+						q.vertices[3].y += CW.getFrontOffsetY() * 5/16f;
+						q.vertices[3].z += CW.getFrontOffsetZ() * 5/16f;
+						q.vertices[3].u -= (q.sprite.getMaxU() - q.sprite.getMinU()) * 5/16f;
+						
+						list.add(q.pack());
+					}
+				}
+			}
+			
+			if(sides[EnumFacing.DOWN.getIndex()] != null) {
+				List<BakedQuad> list = quadMap.computeIfAbsent(EnumFacing.DOWN, d -> new ArrayList<BakedQuad>());
+				UnpackedQuad upq;
+				float amount;
+				
+				upq = new UnpackedQuad(sides[EnumFacing.DOWN.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[0].x += amount;
+				upq.vertices[0].u += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[1].x += amount;
+				upq.vertices[1].u += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+				
+				upq = new UnpackedQuad(sides[EnumFacing.DOWN.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[2].x -= amount;
+				upq.vertices[2].u -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[3].x -= amount;
+				upq.vertices[3].u -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+				
+				
+				upq = new UnpackedQuad(sides[EnumFacing.DOWN.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[0].z -= amount;
+				upq.vertices[0].v += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[3].z -= amount;
+				upq.vertices[3].v += (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+
+				
+				upq = new UnpackedQuad(sides[EnumFacing.DOWN.getIndex()]);
+				amount = 0.5f + 3/16f;
+				upq.vertices[1].z += amount;
+				upq.vertices[1].v -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				upq.vertices[2].z += amount;
+				upq.vertices[2].v -= (upq.sprite.getMaxU() - upq.sprite.getMinU()) * amount; 
+				list.add(upq.pack());
+				
+			}
 			
 			//System.out.print("State: " + mimicState + "\n");
 			
@@ -94,73 +228,19 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			}
 			*/
 			
-			//TODO: Investigate BakedQuadRetextured
-			
-			//NOTE: WHAT IN HELL IS GOING ON HERE? WHY WON'T THIS FUCKING WORK?
-			
-			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
-				//quads.addAll(mimicModel.getQuads(mimicState, side, rand));
-		    }
-			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
+				
+				List<BakedQuad> q = quadMap.get(side);
+				if(q != null) {
+					quads.addAll(q);
+				}
+				
 				quads.addAll(prismModel.getQuads(state, side, rand));
 			}
 			
-			TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/glass_light_blue");
-			
-			UnpackedQuad uq = new UnpackedQuad();
-			uq.sprite = sprite;
-			uq.face = EnumFacing.UP;
-			uq.tintIndex = -1;
-			uq.vertices[0].x = 0.0f;
-			uq.vertices[0].y = 0.9f;
-			uq.vertices[0].z = 0.0f;
-			uq.vertices[0].u = sprite.getMinU();
-			uq.vertices[0].v = sprite.getMinV();
-			
-			uq.vertices[1].x = 0.0f;
-			uq.vertices[1].y = 0.9f;
-			uq.vertices[1].z = 1.0f;
-			uq.vertices[1].u = sprite.getMinU();
-			uq.vertices[1].v = sprite.getMaxV();
-			
-			uq.vertices[2].x = 1.0f;
-			uq.vertices[2].y = 0.9f;
-			uq.vertices[2].z = 1.0f;
-			uq.vertices[2].u = sprite.getMaxU();
-			uq.vertices[2].v = sprite.getMaxV();
-			
-			uq.vertices[3].x = 1.0f;
-			uq.vertices[3].y = 0.9f;
-			uq.vertices[3].z = 0.0f;
-			uq.vertices[3].u = sprite.getMaxU();
-			uq.vertices[3].v = sprite.getMinV();
-			
-			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
-				quads.add(uq.pack());
-			}
-			
-			//System.out.print("Side:" + side + ", NumQuads:" + quads.size() + ", RenderLayer:" + MinecraftForgeClient.getRenderLayer() + "\n");
-		} else {
-			System.out.println("PROBLEM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+		
 		}
-		
-		//Show output of all of this crap for testing
-		/*for(BakedQuad q : quads) {
-			UnpackedQuad uq = new UnpackedQuad(q);
-			uq.print();
-			
-			int c = 0;
-			for(int i : q.getVertexData()) {
-				System.out.print(String.format("%08x ", i));
-				if(++c % 7 == 0) {
-					System.out.println();
-				}
-			}
-			
-		}*/
-		
-		//System.out.println(side + " " + quads.size());
 		
 		return quads;
 	}
