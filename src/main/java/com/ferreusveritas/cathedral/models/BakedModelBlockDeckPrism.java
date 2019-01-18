@@ -18,6 +18,8 @@ import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.fml.relauncher.Side;
@@ -73,7 +75,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>()).addAll(model.getQuads(state, dir, rand));
 		}
 		
-		for(EnumFacing dir: EnumFacing.values()) {
+		/*for(EnumFacing dir: EnumFacing.values()) {
 			if(dir == EnumFacing.EAST) {
 				System.out.println("Face: " + dir);
 				for(BakedQuad bq: quadMap.get(dir)) {
@@ -87,7 +89,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 					}
 				}
 			}
-		}
+		}*/
 		
 		BakedQuad sides[] = new BakedQuad[6];
 		
@@ -117,130 +119,45 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			quadMap.put(dir, new ArrayList<>());
 		}
 		
+		//The horizontal sides are unchanged and can be added directly
 		for(EnumFacing dir : EnumFacing.HORIZONTALS) {
-			List<BakedQuad> list = quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>());
-			if(sides[dir.getIndex()] != null) {
-				list.add(sides[dir.getIndex()]);
+			BakedQuad side = sides[dir.getIndex()];
+			if(side != null) {
+				quadMap.get(dir).add(side);
 			}
 		}
 		
+		//Create face with hold in it
 		float radius = texelRadius / 16f;
-		float amount = 0.5f + radius;
-		float amount2 = 0.5f - radius;
+		float min = 0.5f - radius;
+		float max = 0.5f + radius;
 		
-		if(sides[EnumFacing.UP.getIndex()] != null) {
-			List<BakedQuad> list = quadMap.computeIfAbsent(EnumFacing.UP, d -> new ArrayList<BakedQuad>());
-			UnpackedQuad upqMain = new UnpackedQuad(sides[EnumFacing.UP.getIndex()]);
-			UnpackedQuad upq;
-			
-			float sizeU = upqMain.sprite.getMaxU() - upqMain.sprite.getMinU();
-			float sizeV = upqMain.sprite.getMaxV() - upqMain.sprite.getMinV();
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[0].x += amount;
-			upq.vertices[0].u += sizeU * amount;
-			upq.vertices[1].x += amount;
-			upq.vertices[1].u += sizeU * amount;
-			list.add(upq.pack());
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[2].x -= amount;
-			upq.vertices[2].u -= sizeU * amount; 
-			upq.vertices[3].x -= amount;
-			upq.vertices[3].u -= sizeU * amount; 
-			list.add(upq.pack());
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[0].z += amount;
-			upq.vertices[0].v += sizeV * amount; 
-			upq.vertices[3].z += amount;
-			upq.vertices[3].v += sizeV * amount; 
-			list.add(upq.pack());
-
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[1].z -= amount;
-			upq.vertices[1].v -= sizeV * amount; 
-			upq.vertices[2].z -= amount;
-			upq.vertices[2].v -= sizeV * amount; 
-			list.add(upq.pack());				
-		}
-
-		{
-			List<BakedQuad> list = quadMap.computeIfAbsent(null, d -> new ArrayList<BakedQuad>());
-			
-			for(EnumFacing dir: EnumFacing.HORIZONTALS) {
-				if(sides[dir.getIndex()] != null) {
-					UnpackedQuad q = new UnpackedQuad(sides[dir.getIndex()]);
-					EnumFacing CW = dir.rotateY();
-					for(int v = 0; v < 4; v++) {
-						q.vertices[v].x += dir.getOpposite().getFrontOffsetX() * amount;
-						q.vertices[v].y += dir.getOpposite().getFrontOffsetY() * amount;
-						q.vertices[v].z += dir.getOpposite().getFrontOffsetZ() * amount;
-						q.vertices[v].color = 0xFF999999;
-					}
-					q.vertices[0].x -= CW.getFrontOffsetX() * amount2;
-					q.vertices[0].y -= CW.getFrontOffsetY() * amount2;
-					q.vertices[0].z -= CW.getFrontOffsetZ() * amount2;
-					q.vertices[0].u += (q.sprite.getMaxU() - q.sprite.getMinU()) * amount2;
-
-					q.vertices[1].x -= CW.getFrontOffsetX() * amount2;
-					q.vertices[1].y -= CW.getFrontOffsetY() * amount2;
-					q.vertices[1].z -= CW.getFrontOffsetZ() * amount2;
-					q.vertices[1].u += (q.sprite.getMaxU() - q.sprite.getMinU()) * amount2;
-
-					q.vertices[2].x += CW.getFrontOffsetX() * amount2;
-					q.vertices[2].y += CW.getFrontOffsetY() * amount2;
-					q.vertices[2].z += CW.getFrontOffsetZ() * amount2;
-					q.vertices[2].u -= (q.sprite.getMaxU() - q.sprite.getMinU()) * amount2;
-
-					q.vertices[3].x += CW.getFrontOffsetX() * amount2;
-					q.vertices[3].y += CW.getFrontOffsetY() * amount2;
-					q.vertices[3].z += CW.getFrontOffsetZ() * amount2;
-					q.vertices[3].u -= (q.sprite.getMaxU() - q.sprite.getMinU()) * amount2;
-					
-					list.add(q.pack());
+		AxisAlignedBB aabbs[] = { 
+			new AxisAlignedBB(0, 0, 0, 1, 1, min),
+			new AxisAlignedBB(0, 0, max, 1, 1, 1),
+			new AxisAlignedBB(0, 0, min, min, 1, max),
+			new AxisAlignedBB(max, 0, min, 1, 1, max)
+		};
+		
+		for(EnumFacing dir : new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP } ) {
+			BakedQuad side = sides[dir.getIndex()];
+			if(side != null) {
+				for(AxisAlignedBB aabb: aabbs) {
+					quadMap.get(dir).add(new UnpackedQuad(side).crop(aabb).pack());
 				}
 			}
 		}
 		
-		if(sides[EnumFacing.DOWN.getIndex()] != null) {
-			List<BakedQuad> list = quadMap.computeIfAbsent(EnumFacing.DOWN, d -> new ArrayList<BakedQuad>());
-			UnpackedQuad upqMain = new UnpackedQuad(sides[EnumFacing.DOWN.getIndex()]);
-			UnpackedQuad upq;
+		//Populate inside of hole
+		AxisAlignedBB holeAABB = new AxisAlignedBB(min, 0, min, max, 1, max);
 			
-			float sizeU = upqMain.sprite.getMaxU() - upqMain.sprite.getMinU();
-			float sizeV = upqMain.sprite.getMaxV() - upqMain.sprite.getMinV();
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[0].x += amount;
-			upq.vertices[0].u += sizeU * amount; 
-			upq.vertices[1].x += amount;
-			upq.vertices[1].u += sizeU * amount; 
-			list.add(upq.pack());
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[2].x -= amount;
-			upq.vertices[2].u -= sizeU * amount; 
-			upq.vertices[3].x -= amount;
-			upq.vertices[3].u -= sizeU * amount; 
-			list.add(upq.pack());
-			
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[0].z -= amount;
-			upq.vertices[0].v += sizeV * amount; 
-			upq.vertices[3].z -= amount;
-			upq.vertices[3].v += sizeV * amount; 
-			list.add(upq.pack());
-
-			
-			upq = new UnpackedQuad(upqMain);
-			upq.vertices[1].z += amount;
-			upq.vertices[1].v -= sizeV * amount; 
-			upq.vertices[2].z += amount;
-			upq.vertices[2].v -= sizeV * amount; 
-			list.add(upq.pack());
-			
+		for(EnumFacing dir: EnumFacing.HORIZONTALS) {
+			BakedQuad side = sides[dir.getIndex()];
+			if(side != null) {
+				UnpackedQuad upq = new UnpackedQuad(side).crop(holeAABB).move(new Vec3d(dir.getOpposite().getDirectionVec()).scale(radius * 2));
+				upq.color(0xFFBBBBBB);//Fake ambient occlusion inside of donut hole
+				quadMap.get(dir).add(upq.pack());
+			}
 		}
 		
 		return quadMap;

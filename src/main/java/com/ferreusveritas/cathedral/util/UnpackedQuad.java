@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.renderer.vertex.VertexFormatElement.EnumType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.Attributes;
@@ -250,21 +251,112 @@ public class UnpackedQuad {
 		return this;
 	}
 	
-	public void crop(float x1, float y1, float x2, float y2) {
+	public UnpackedQuad move(Vec3d offset) {
+		for(UnpackedVertex v : vertices) {
+			v.x += offset.x;
+			v.y += offset.y;
+			v.z += offset.z;
+		}
+		return this;
+	}
+	
+	public UnpackedQuad color(int color) {
+		for(UnpackedVertex v : vertices) {
+			v.color += color;
+		}
+		return this;
+	}
+	
+	public UnpackedQuad crop(AxisAlignedBB aabb) {
+				
+		UnpackedVertex[] v = new UnpackedVertex[5];
+		v[4] = new UnpackedVertex();//Dummy vertex
 		
-		UnpackedVertex[] v = new UnpackedVertex[4];
+		//Sort the vertices depending on the face. This gives us a
+		//standard and predictable vertex arrangement.
+		int[] sortData = { 0x5401, 0x6732, 0x2046, 0x7513, 0x3102, 0x6457 };
+		//				down	up  	north	south	west	east
+		//		<<	v#	rxyz	rxyz	rxyz	rxyz	rxyz	rxyz
+		//		0	0	0001	0010	0110	0011	0010	0111
+		//		4	1	0000	0011	0100	0001	0000	0101
+		//		8	2	0100	0111	0000	0101	0001	0100
+		//		12	3	0101	0110	0010	0111	0011	0110
 		
-		//Sort the vertices depending on the face
-		int[] data = { 0x5401, 0x6732, 0x2046, 0x7513, 0x3102, 0x6457 };
 		for(int i = 0; i < 4; i++) {
-			int d = (data[face.getIndex()] >> (i * 4)) & 0x7;
+			int d = (sortData[face.getIndex()] >> (i * 4)) & 0x7;
 			v[i] = getClosestVertex( (d >> 2) & 1, (d >> 1) & 1, (d >> 0) & 1, vertices);	
 		}
 		
-		//v[0].x = v[0].x 
-		
-	}
+		int[][] mapping = new int[][]{
+			{ 0x0144, 0x2344, 0x0123, 0x4444, 0x1244, 0x0344 },//D
+			{ 0x0144, 0x2344, 0x4444, 0x0123, 0x0344, 0x1244 },//U
+			{ 0x2344, 0x0144, 0x1244, 0x0344, 0x0123, 0x4444 },//N
+			{ 0x0144, 0x2344, 0x1244, 0x0344, 0x4444, 0x0123 },//S
+			{ 0x0123, 0x4444, 0x1244, 0x0344, 0x0144, 0x2344 },//W
+			{ 0x4444, 0x0123, 0x1244, 0x0344, 0x2344, 0x0123 } //E
+		};
 
+		int[] map = mapping[face.getIndex()];
+		
+		v[nyb(map[0],12)].x = v[nyb(map[0],8)].x = v[nyb(map[0],4)].x = v[nyb(map[0],0)].x = (float) aabb.minX;
+		v[nyb(map[1],12)].x = v[nyb(map[1],8)].x = v[nyb(map[1],4)].x = v[nyb(map[1],0)].x = (float) aabb.maxX;
+		v[nyb(map[2],12)].y = v[nyb(map[2],8)].y = v[nyb(map[2],4)].y = v[nyb(map[2],0)].y = (float) aabb.minY;
+		v[nyb(map[3],12)].y = v[nyb(map[3],8)].y = v[nyb(map[3],4)].y = v[nyb(map[3],0)].y = (float) aabb.maxY;
+		v[nyb(map[4],12)].z = v[nyb(map[4],8)].z = v[nyb(map[4],4)].z = v[nyb(map[4],0)].z = (float) aabb.minZ;
+		v[nyb(map[5],12)].z = v[nyb(map[5],8)].z = v[nyb(map[5],4)].z = v[nyb(map[5],0)].z = (float) aabb.maxZ;
+		
+		switch(face) {
+			case DOWN:// -Y
+				v[0].u = v[1].u = sprite.getInterpolatedU(aabb.minX * 16);
+				v[2].u = v[3].u = sprite.getInterpolatedU(aabb.maxX * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV((1 - aabb.minZ) * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV((1 - aabb.maxZ) * 16);
+				break;
+				
+			case UP:// +Y
+				v[0].u = v[1].u = sprite.getInterpolatedU(aabb.minX * 16);
+				v[2].u = v[3].u = sprite.getInterpolatedU(aabb.maxX * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV(aabb.minZ * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV(aabb.maxZ * 16);
+				break;
+				
+			case NORTH:// -Z
+				v[2].u = v[3].u = sprite.getInterpolatedU((1 - aabb.minX) * 16);
+				v[0].u = v[1].u = sprite.getInterpolatedU((1 - aabb.maxX) * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV((1 - aabb.minY) * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV((1 - aabb.maxY) * 16);
+				break;
+				
+			case SOUTH:// +Z
+				v[0].u = v[1].u = sprite.getInterpolatedU(aabb.minX * 16);
+				v[2].u = v[3].u = sprite.getInterpolatedU(aabb.maxX * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV((1 - aabb.minY) * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV((1 - aabb.maxY) * 16);
+				break;
+				
+			case WEST:// -X
+				v[0].u = v[1].u = sprite.getInterpolatedU(aabb.minZ * 16);
+				v[2].u = v[3].u = sprite.getInterpolatedU(aabb.maxZ * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV((1 - aabb.minY) * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV((1 - aabb.maxY) * 16);
+				break;
+				
+			case EAST:// +X
+				v[2].u = v[3].u = sprite.getInterpolatedU((1 - aabb.minZ) * 16);
+				v[0].u = v[1].u = sprite.getInterpolatedU((1 - aabb.maxZ) * 16);
+				v[1].v = v[2].v = sprite.getInterpolatedV((1 - aabb.minY) * 16);
+				v[0].v = v[3].v = sprite.getInterpolatedV((1 - aabb.maxY) * 16);
+				break;
+		}
+		
+		return this;
+	}
+	
+	@SuppressWarnings("unused")
+	private int nyb(int val, int shift) {
+		return (val >> shift) & 0x0f;
+	}
+	
 	public UnpackedVertex getClosestVertex(float x, float y, float z, UnpackedVertex[] vertices) {
 		float minDelta = 999f;
 		UnpackedVertex minVert = null;
