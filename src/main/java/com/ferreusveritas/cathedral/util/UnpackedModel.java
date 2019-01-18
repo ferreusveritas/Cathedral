@@ -195,7 +195,7 @@ public class UnpackedModel {
 	public UnpackedModel packInto(Predicate<EnumFacing> predicate, Map<EnumFacing, List<BakedQuad>> bqMap) {
 		for(EnumFacing side : anySides) {
 			if(predicate.test(side)) {
-				bqMap.put(side, getBakedQuads(side));
+				bqMap.get(side).addAll(getBakedQuads(side));
 			}
 		}
 		return this;

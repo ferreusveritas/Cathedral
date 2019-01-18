@@ -74,7 +74,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		Map<EnumFacing, List<BakedQuad> > quadMap = UnpackedModel.newBakedStorage();
 		
 		//The horizontal sides
-		fullBlockModel.packInto(e -> e.getAxis().isHorizontal(), quadMap);
+		fullBlockModel.packInto(e -> e != null && e.getAxis().isHorizontal(), quadMap);
 		
 		//Create face with hole in it from 4 quads
 		float radius = texelRadius / 16f;
@@ -90,7 +90,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		
 		for(AxisAlignedBB aabb: aabbs) {
 			UnpackedModel pbm = fullBlockModel.makePartialBlock(aabb);
-			pbm.packInto(e -> e.getAxis().isVertical(), quadMap);
+			pbm.packInto(e -> e != null && e.getAxis().isVertical(), quadMap);
 		}
 		
 		//Populate inside walls of hole
