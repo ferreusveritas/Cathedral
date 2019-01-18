@@ -14,7 +14,7 @@ public class TileEntityDeckPrism extends TileEntity {
 	private EnumDyeColor glassColor;//Can be null for clear glass
 	
 	public TileEntityDeckPrism() {
-		baseBlock = Blocks.STONE.getDefaultState();
+		baseBlock = Blocks.GOLD_ORE.getDefaultState();
 		glassColor = null;//Clear glass
 	}
 	

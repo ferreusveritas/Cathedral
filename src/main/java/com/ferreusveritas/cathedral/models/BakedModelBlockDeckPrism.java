@@ -45,11 +45,14 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			IExtendedBlockState extendedState = ((IExtendedBlockState) state);
 			IBlockState mimicState = extendedState.getValue(MimicProperty.MIMIC);
 			IBakedModel mimicModel = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(mimicState);			
-						
-			Map<EnumFacing, List<BakedQuad> > quadMap = makeDonut(3, isolateCubeSides(mimicModel, mimicState, rand));
 			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
 				quads.addAll(prismModel.getQuads(state, side, rand));
+			}
+			
+			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {				
+				Map<EnumFacing, List<BakedQuad> > quadMap = makeDonut(3, isolateCubeSides(mimicModel, mimicState, rand));
+				
 				List<BakedQuad> q = quadMap.get(side);
 				if(q != null) {
 					quads.addAll(q);
@@ -70,6 +73,22 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>()).addAll(model.getQuads(state, dir, rand));
 		}
 		
+		for(EnumFacing dir: EnumFacing.values()) {
+			if(dir == EnumFacing.EAST) {
+				System.out.println("Face: " + dir);
+				for(BakedQuad bq: quadMap.get(dir)) {
+					System.out.println("light: " + bq.shouldApplyDiffuseLighting());
+					int c = 0;
+					for(int i : bq.getVertexData()) {
+						System.out.print(String.format("%08x ", i));
+						if(++c % 7 == 0) {
+							System.out.println();
+						}
+					}
+				}
+			}
+		}
+		
 		BakedQuad sides[] = new BakedQuad[6];
 		
 		//Pick the best quad for each cube face
@@ -77,7 +96,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			if(quadMap.get(dir).size() > 0) {//The face completely against the side of the block is the ideal choice
 				sides[dir.getIndex()] = quadMap.get(dir).get(0);
 			} else {
-				List<UnpackedQuad> list = quadMap.get(null).stream().map( q -> new UnpackedQuad(q) ).collect(Collectors.toList());
+				List<UnpackedQuad> list = quadMap.get(null).stream().filter( q -> q.getFace() == dir).map( q -> new UnpackedQuad(q) ).collect(Collectors.toList());
 				list.forEach( q -> q.calcArea() );
 				sides[dir.getIndex()] = list.stream().max( (a, b) -> Float.compare(a.area, b.area) ).get().pack();//Find the biggest quad facing in the right direction
 			}
@@ -119,9 +138,10 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			
 			upq = new UnpackedQuad(upqMain);
 			upq.vertices[0].x += amount;
-			upq.vertices[0].u += sizeU * amount; 
+			upq.vertices[0].u += sizeU * amount;
 			upq.vertices[1].x += amount;
-			upq.vertices[1].u += sizeU * amount; 
+			upq.vertices[1].u += sizeU * amount;
+			list.add(upq.pack());
 			
 			upq = new UnpackedQuad(upqMain);
 			upq.vertices[2].x -= amount;

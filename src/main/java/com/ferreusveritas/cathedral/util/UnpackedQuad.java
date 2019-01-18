@@ -25,7 +25,7 @@ public class UnpackedQuad {
 	public EnumFacing face;
 	public int tintIndex;
 	public float area;
-	public boolean applyDiffuseLighting = false;
+	public boolean applyDiffuseLighting = true;
 
 	public static class UnpackedVertex {
 		public float x;
@@ -75,9 +75,9 @@ public class UnpackedQuad {
 		for(int vertexPos = 0; vertexPos < vertexDataIn.length; vertexPos += inQuad.getFormat().getIntegerSize()) {
 			int vfePos = 0;
 			UnpackedQuad.UnpackedVertex outVertex = vertices[vertexNum++];
-			System.out.print(vertexNum + ": ");
+			//System.out.print(vertexNum + ": ");
 			for(VertexFormatElement vfe: inQuad.getFormat().getElements()) {
-				System.out.print(vfe.getUsage() + ":" + vfe.getSize() + " ");
+				//System.out.print(vfe.getUsage() + ":" + vfe.getSize() + " ");
 				switch(vfe.getUsage()) {
 					case POSITION:
 						if(vfe.getType() == EnumType.FLOAT) {
@@ -124,7 +124,7 @@ public class UnpackedQuad {
 				
 				vfePos += vfe.getSize() / 4;//Size is always in bytes but we are dealing with an array of int32s
 			}
-			System.out.println();
+			//System.out.println();
 		}
 	}
 	
@@ -248,6 +248,38 @@ public class UnpackedQuad {
 		}
 		
 		return this;
+	}
+	
+	public void crop(float x1, float y1, float x2, float y2) {
+		
+		UnpackedVertex[] v = new UnpackedVertex[4];
+		
+		//Sort the vertices depending on the face
+		int[] data = { 0x5401, 0x6732, 0x2046, 0x7513, 0x3102, 0x6457 };
+		for(int i = 0; i < 4; i++) {
+			int d = (data[face.getIndex()] >> (i * 4)) & 0x7;
+			v[i] = getClosestVertex( (d >> 2) & 1, (d >> 1) & 1, (d >> 0) & 1, vertices);	
+		}
+		
+		//v[0].x = v[0].x 
+		
+	}
+
+	public UnpackedVertex getClosestVertex(float x, float y, float z, UnpackedVertex[] vertices) {
+		float minDelta = 999f;
+		UnpackedVertex minVert = null;
+		for(UnpackedVertex vert : vertices) {
+			float delX = vert.x - x;
+			float delY = vert.y - y;
+			float delZ = vert.z - z;
+			float delta = delX * delX + delY * delY + delZ * delZ;
+			if(delta < minDelta) {
+				minDelta = delta;
+				minVert = vert;
+			}
+		}
+		
+		return minVert;
 	}
 	
 	public void print() {

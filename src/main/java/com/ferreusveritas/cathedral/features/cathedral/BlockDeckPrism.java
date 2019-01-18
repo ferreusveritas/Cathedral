@@ -107,7 +107,7 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return layer == BlockRenderLayer.TRANSLUCENT;//super.canRenderInLayer(state, layer);//true;//For troubleshooting
+		return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.SOLID;//super.canRenderInLayer(state, layer);//true;//For troubleshooting
 	}
 	
     @SideOnly(Side.CLIENT)
@@ -117,22 +117,22 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
     
     @Override
     public boolean isTranslucent(IBlockState state) {
-    	return true;//super.isTranslucent(state);
+    	return false;//super.isTranslucent(state);
     }
     
 	@Override
 	public boolean isFullCube(IBlockState state) {
-		return false;//super.isFullCube(state);
+		return true;//super.isFullCube(state);
 	}
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
-		return false;//super.isOpaqueCube(state);
+		return true;//super.isOpaqueCube(state);
 	}
 	
 	@Override
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		return true;//super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}
 	
 	@Override
