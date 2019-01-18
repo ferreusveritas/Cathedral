@@ -136,7 +136,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			if(side != null) {
 				UnpackedQuad upq = new UnpackedQuad(side).crop(holeAABB).move(new Vec3d(dir.getOpposite().getDirectionVec()).scale(radius * 2));
 				upq.color(0xFFBBBBBB);//Fake ambient occlusion inside of donut hole
-				quadMap.get(dir).add(upq.pack());
+				quadMap.get(null).add(upq.pack());
 			}
 		}
 		

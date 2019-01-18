@@ -293,7 +293,7 @@ public class UnpackedQuad {
 			{ 0x2344, 0x0144, 0x1244, 0x0344, 0x0123, 0x4444 },//N
 			{ 0x0144, 0x2344, 0x1244, 0x0344, 0x4444, 0x0123 },//S
 			{ 0x0123, 0x4444, 0x1244, 0x0344, 0x0144, 0x2344 },//W
-			{ 0x4444, 0x0123, 0x1244, 0x0344, 0x2344, 0x0123 } //E
+			{ 0x4444, 0x0123, 0x1244, 0x0344, 0x2344, 0x0144 } //E
 		};
 
 		int[] map = mapping[face.getIndex()];
@@ -319,7 +319,7 @@ public class UnpackedQuad {
 				v[0].v = v[3].v = sprite.getInterpolatedV(aabb.minZ * 16);
 				v[1].v = v[2].v = sprite.getInterpolatedV(aabb.maxZ * 16);
 				break;
-				
+			
 			case NORTH:// -Z
 				v[2].u = v[3].u = sprite.getInterpolatedU((1 - aabb.minX) * 16);
 				v[0].u = v[1].u = sprite.getInterpolatedU((1 - aabb.maxX) * 16);
