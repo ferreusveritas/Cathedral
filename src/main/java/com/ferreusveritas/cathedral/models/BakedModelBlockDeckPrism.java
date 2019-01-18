@@ -67,7 +67,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 	}
 	
 	
-	private BakedQuad[] isolateCubeSides(IBakedModel model, IBlockState state, long rand) {
+	private UnpackedQuad[] isolateCubeSides(IBakedModel model, IBlockState state, long rand) {
 
 		//Gather all of the quads from the model
 		Map<EnumFacing, List<BakedQuad> > quadMap = new HashMap<>(); 
@@ -75,43 +75,23 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			quadMap.computeIfAbsent(dir, d -> new ArrayList<BakedQuad>()).addAll(model.getQuads(state, dir, rand));
 		}
 		
-		/*for(EnumFacing dir: EnumFacing.values()) {
-			if(dir == EnumFacing.EAST) {
-				System.out.println("Face: " + dir);
-				for(BakedQuad bq: quadMap.get(dir)) {
-					System.out.println("light: " + bq.shouldApplyDiffuseLighting());
-					int c = 0;
-					for(int i : bq.getVertexData()) {
-						System.out.print(String.format("%08x ", i));
-						if(++c % 7 == 0) {
-							System.out.println();
-						}
-					}
-				}
-			}
-		}*/
-		
-		BakedQuad sides[] = new BakedQuad[6];
+		UnpackedQuad sides[] = new UnpackedQuad[6];
 		
 		//Pick the best quad for each cube face
 		for(EnumFacing dir : EnumFacing.values()) {
 			if(quadMap.get(dir).size() > 0) {//The face completely against the side of the block is the ideal choice
-				sides[dir.getIndex()] = quadMap.get(dir).get(0);
+				sides[dir.getIndex()] = new UnpackedQuad(quadMap.get(dir).get(0)).normalize();
 			} else {
 				List<UnpackedQuad> list = quadMap.get(null).stream().filter( q -> q.getFace() == dir).map( q -> new UnpackedQuad(q) ).collect(Collectors.toList());
 				list.forEach( q -> q.calcArea() );
-				sides[dir.getIndex()] = list.stream().max( (a, b) -> Float.compare(a.area, b.area) ).get().pack();//Find the biggest quad facing in the right direction
+				sides[dir.getIndex()] = list.stream().max( (a, b) -> Float.compare(a.area, b.area) ).get().normalize();//Find the biggest quad facing in the right direction
 			}
-		}
-		
-		for(int i = 0; i < 6; i++) {
-			sides[i] = new UnpackedQuad(sides[i]).normalize().pack();
 		}
 		
 		return sides;
 	}
 	
-	private Map<EnumFacing, List<BakedQuad> > makeDonut(int texelRadius, BakedQuad sides[]) {
+	private Map<EnumFacing, List<BakedQuad> > makeDonut(int texelRadius, UnpackedQuad sides[]) {
 		
 		Map<EnumFacing, List<BakedQuad> > quadMap = new HashMap<>(); 
 		
@@ -121,9 +101,9 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		
 		//The horizontal sides are unchanged and can be added directly
 		for(EnumFacing dir : EnumFacing.HORIZONTALS) {
-			BakedQuad side = sides[dir.getIndex()];
+			UnpackedQuad side = sides[dir.getIndex()];
 			if(side != null) {
-				quadMap.get(dir).add(side);
+				quadMap.get(dir).add(side.pack());
 			}
 		}
 		
@@ -140,7 +120,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		};
 		
 		for(EnumFacing dir : new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP } ) {
-			BakedQuad side = sides[dir.getIndex()];
+			UnpackedQuad side = sides[dir.getIndex()];
 			if(side != null) {
 				for(AxisAlignedBB aabb: aabbs) {
 					quadMap.get(dir).add(new UnpackedQuad(side).crop(aabb).pack());
@@ -152,7 +132,7 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		AxisAlignedBB holeAABB = new AxisAlignedBB(min, 0, min, max, 1, max);
 			
 		for(EnumFacing dir: EnumFacing.HORIZONTALS) {
-			BakedQuad side = sides[dir.getIndex()];
+			UnpackedQuad side = sides[dir.getIndex()];
 			if(side != null) {
 				UnpackedQuad upq = new UnpackedQuad(side).crop(holeAABB).move(new Vec3d(dir.getOpposite().getDirectionVec()).scale(radius * 2));
 				upq.color(0xFFBBBBBB);//Fake ambient occlusion inside of donut hole
