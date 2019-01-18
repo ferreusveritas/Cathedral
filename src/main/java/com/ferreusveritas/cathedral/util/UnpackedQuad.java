@@ -17,8 +17,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.Attributes;
 
-/*
+/**
  * A no nonsense accessible quad object for quick manipulation
+ * 
+ * @author ferreusveritas
  */
 public class UnpackedQuad {
 	public UnpackedVertex vertices[] = new UnpackedVertex[4];
@@ -27,16 +29,6 @@ public class UnpackedQuad {
 	public int tintIndex;
 	public float area;
 	public boolean applyDiffuseLighting = true;
-
-	public static class UnpackedVertex {
-		public float x;
-		public float y;
-		public float z;
-		public int color = 0xFFFFFFFF;
-		public float u;
-		public float v;
-		public byte nx, ny, nz;
-	}
 	
 	public UnpackedQuad() {
 		for(int i = 0; i < 4; i++) {
@@ -75,7 +67,7 @@ public class UnpackedQuad {
 		int vertexNum = 0;
 		for(int vertexPos = 0; vertexPos < vertexDataIn.length; vertexPos += inQuad.getFormat().getIntegerSize()) {
 			int vfePos = 0;
-			UnpackedQuad.UnpackedVertex outVertex = vertices[vertexNum++];
+			UnpackedVertex outVertex = vertices[vertexNum++];
 			//System.out.print(vertexNum + ": ");
 			for(VertexFormatElement vfe: inQuad.getFormat().getElements()) {
 				//System.out.print(vfe.getUsage() + ":" + vfe.getSize() + " ");
@@ -180,6 +172,12 @@ public class UnpackedQuad {
 		return area;
 	}
 	
+	/**
+	 * Takes the quad and stretches it out to fill the side of the block and sets the UV coordinates for the
+	 * texture to be the full texture for the sprite.
+	 * 
+	 * @return
+	 */
 	public UnpackedQuad normalize() {
 
 		{//Snap the corners of the quads texture to the closest corners of the sprite
@@ -260,13 +258,39 @@ public class UnpackedQuad {
 		return this;
 	}
 	
-	public UnpackedQuad color(int color) {
+	public UnpackedQuad color(float srcR, float srcG, float srcB, float srcA) {
 		for(UnpackedVertex v : vertices) {
-			v.color += color;
+			int dstA = (int) (((v.color >> 24) & 0xff) * srcA);
+			int dstR = (int) (((v.color >> 16) & 0xff) * srcR);
+			int dstG = (int) (((v.color >>  8) & 0xff) * srcG);
+			int dstB = (int) (((v.color >>  0) & 0xff) * srcB);
+			v.color = dstA << 24 | dstR << 16 | dstG << 8 | dstB;
 		}
 		return this;
 	}
 	
+	public UnpackedQuad color(float srcR, float srcG, float srcB) {
+		return color(srcR, srcG, srcB, 1.0f);
+	}
+
+	public UnpackedQuad color(float factor) {
+		return color(factor, factor, factor, 1.0f);
+	}
+	
+	public UnpackedQuad color(int color) {
+		float srcA = ((color >> 24) & 0xff) / 255f;
+		float srcR = ((color >> 16) & 0xff) / 255f;
+		float srcG = ((color >>  8) & 0xff) / 255f;
+		float srcB = ((color >>  0) & 0xff) / 255f;
+		return color(srcR, srcG, srcB, srcA);
+	}
+	
+	/**
+	 * This should only be used on a normalized quad
+	 * 
+	 * @param aabb
+	 * @return
+	 */
 	public UnpackedQuad crop(AxisAlignedBB aabb) {
 				
 		UnpackedVertex[] v = new UnpackedVertex[5];
@@ -352,7 +376,6 @@ public class UnpackedQuad {
 		return this;
 	}
 	
-	@SuppressWarnings("unused")
 	private int nyb(int val, int shift) {
 		return (val >> shift) & 0x0f;
 	}
