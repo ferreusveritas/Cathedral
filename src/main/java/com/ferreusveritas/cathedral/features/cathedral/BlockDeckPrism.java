@@ -14,13 +14,16 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -101,8 +104,20 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	}
 	
 	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess access, BlockPos pos) {
+		return getBaseBlock(access, pos).getBoundingBox(access, pos);
+	}
+	
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess access, BlockPos pos) {
+		//IBlockState baseBlock = getBaseBlock(access, pos);
+		//System.out.println("getLightValue: " + pos + " " + baseBlock);
+		return 0;//baseBlock.getBlock().getLightValue(baseBlock);
+	}
+	
+	@Override
 	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return super.getLightOpacity(state, world, pos);//0;
+		return 0;
 	}
 	
 	@Override
@@ -112,22 +127,22 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
-        return super.getBlockLayer();//BlockRenderLayer.CUTOUT;
+        return super.getBlockLayer();
     }
     
     @Override
     public boolean isTranslucent(IBlockState state) {
-    	return false;//super.isTranslucent(state);
+    	return false;
     }
     
 	@Override
 	public boolean isFullCube(IBlockState state) {
-		return true;//super.isFullCube(state);
+		return true;
 	}
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
-		return true;//super.isOpaqueCube(state);
+		return false;
 	}
 	
 	@Override
@@ -158,5 +173,10 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
     @Override
     public float getBlockHardness(IBlockState blockState, World world, BlockPos pos) {
     	return getBaseBlock(world, pos).getBlockHardness(world, pos);
+    }
+    
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     }
 }

@@ -51,8 +51,16 @@ public class UnpackedModel {
 		return this;
 	}
 	
-	public List<UnpackedQuad> getQuads(EnumFacing dir) {
+	public List<UnpackedQuad> getQuadsFromSide(EnumFacing dir) {
 		return upqMap.get(dir);
+	}
+	
+	public List<UnpackedQuad> getQuads() {
+		return getQuads(q -> true);
+	}
+
+	public List<UnpackedQuad> getQuads(Predicate<UnpackedQuad> filter) {
+		return upqMap.values().stream().flatMap(List::stream).filter(filter).collect(Collectors.toList());
 	}
 	
 	
@@ -70,12 +78,12 @@ public class UnpackedModel {
 		for(Entry<EnumFacing, List<UnpackedQuad>> entry : upqMap.entrySet()) {
 			for(UnpackedQuad upq : entry.getValue() ) {
 				for(UnpackedVertex v : upq.vertices) {
-					minX = minX > v.x ? v.x : minX;
-					minY = minY > v.y ? v.y : minY;
-					minZ = minZ > v.z ? v.z : minZ;
-					maxX = maxX < v.x ? v.x : maxX;
-					maxY = maxY < v.y ? v.y : maxY;
-					maxZ = maxZ < v.z ? v.z : maxZ;
+					minX = minX < v.x ? minX : v.x;
+					minY = minY < v.y ? minY : v.y;
+					minZ = minZ < v.z ? minZ : v.z;
+					maxX = maxX > v.x ? maxX : v.x;
+					maxY = maxY > v.y ? maxY : v.y;
+					maxZ = maxZ > v.z ? maxZ : v.z;
 				}
 			}
 		}
@@ -130,6 +138,8 @@ public class UnpackedModel {
 			}
 		}
 		
+		//Since these quads may no longer be touching adjacent blocks they need to be moved to the null side list.
+		
 		if(aabb.minX != 0.0) {
 			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.WEST);
 			upm.upqMap.get(null).addAll(list);
@@ -174,29 +184,23 @@ public class UnpackedModel {
 	// Baked Quad Packing                                         //
 	////////////////////////////////////////////////////////////////
 	
-	public List<BakedQuad> getBakedQuads(EnumFacing side) {
-		return upqMap.get(side).stream().map( upq -> upq.pack()).collect(Collectors.toList());
-	}
-	
 	public Map<EnumFacing, List<BakedQuad>> pack() {
 		return pack( e -> true );
 	}
 	
-	public Map<EnumFacing, List<BakedQuad>> pack(Predicate<EnumFacing> predicate) {
+	public Map<EnumFacing, List<BakedQuad>> pack(Predicate<UnpackedQuad> filter) {
 		Map<EnumFacing, List<BakedQuad>> bqMap = newBakedStorage();
-		packInto(predicate, bqMap);
+		packInto(filter, bqMap);
 		return bqMap;
 	}
-
+	
 	public UnpackedModel packInto(Map<EnumFacing, List<BakedQuad>> bqMap) {
 		return packInto( e -> true, bqMap);
 	}
 	
-	public UnpackedModel packInto(Predicate<EnumFacing> predicate, Map<EnumFacing, List<BakedQuad>> bqMap) {
+	public UnpackedModel packInto(Predicate<UnpackedQuad> filter, Map<EnumFacing, List<BakedQuad>> bqMap) {
 		for(EnumFacing side : anySides) {
-			if(predicate.test(side)) {
-				bqMap.get(side).addAll(getBakedQuads(side));
-			}
+			bqMap.get(side).addAll(upqMap.get(side).stream().filter(filter).map(q -> q.pack()).collect(Collectors.toList()));
 		}
 		return this;
 	}

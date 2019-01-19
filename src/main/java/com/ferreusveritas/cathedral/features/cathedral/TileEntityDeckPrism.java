@@ -5,6 +5,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,7 +16,7 @@ public class TileEntityDeckPrism extends TileEntity {
 	private EnumDyeColor glassColor;//Can be null for clear glass
 	
 	public TileEntityDeckPrism() {
-		baseBlock = Blocks.LOG.getDefaultState();
+		baseBlock = Blocks.STONE.getDefaultState();
 		glassColor = null;//Clear glass
 	}
 	
@@ -31,13 +33,23 @@ public class TileEntityDeckPrism extends TileEntity {
 	}
 	
 	public void setBaseBlock(IBlockState baseBlock) {
-		this.baseBlock = baseBlock;;
+		this.baseBlock = baseBlock;
+		markDirty();
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		
+		readExtraData(compound);
+	}
+	
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		return writeExtraData(compound);
+	}
+	
+	public void readExtraData(NBTTagCompound compound) {
 		if(compound.hasKey("color")) {
 			setGlassColor(EnumDyeColor.byMetadata(compound.getInteger("color")));
 		}
@@ -48,10 +60,7 @@ public class TileEntityDeckPrism extends TileEntity {
 		}
 	}
 	
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
-		
+	public NBTTagCompound writeExtraData(NBTTagCompound compound) {
 		IBlockState state = getBaseBlock();
 		String blockName = Block.REGISTRY.getNameForObject(state.getBlock()).toString();
 		int blockMeta = state.getBlock().getMetaFromState(state);
@@ -64,6 +73,27 @@ public class TileEntityDeckPrism extends TileEntity {
 		compound.setInteger("blockmeta", blockMeta);
 		
 		return compound;
+	}
+	
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(pos, 0, writeToNBT(new NBTTagCompound()));
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
+	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeExtraData(super.getUpdateTag());
+	}
+	
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag) {
+		readExtraData(tag);
+		super.handleUpdateTag(tag);
 	}
 	
 }

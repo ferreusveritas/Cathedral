@@ -8,7 +8,10 @@ import com.ferreusveritas.cathedral.common.blocks.MimicProperty;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
 import com.ferreusveritas.cathedral.util.UnpackedModel;
 import com.ferreusveritas.cathedral.util.UnpackedQuad;
+import com.ferreusveritas.cathedral.util.UnpackedVertex;
 
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -30,9 +33,15 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 	protected IBakedModel prismModel;
 	
 	enum DonutShape {
-		FULL,
-		SLAB_TOP,
-		SLAB_BOTTOM
+		FULL(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 1.0, 1.0)),
+		SLAB_TOP(new AxisAlignedBB(0.0, 0.5, 0.0, 1.0, 1.0, 1.0)),
+		SLAB_BOTTOM(new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
+		
+		public final AxisAlignedBB aabb;
+		
+		DonutShape(AxisAlignedBB aabb) {
+			this.aabb = aabb;
+		}
 	}
 	
 	public BakedModelBlockDeckPrism(IBakedModel prismModel) {
@@ -41,22 +50,39 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 	
 	@Override
 	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-		
 		List<BakedQuad> quads = new ArrayList<BakedQuad>();
 		
 		if (state != null && state.getBlock() instanceof IMimic && state instanceof IExtendedBlockState) {
 			IExtendedBlockState extendedState = ((IExtendedBlockState) state);
+			IBlockState mimicState = extendedState.getValue(MimicProperty.MIMIC);
+			IBakedModel mimicModel = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(mimicState);
+			DonutShape donutShape = getDonutShape(mimicState);
 			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
-				quads.addAll(prismModel.getQuads(state, side, rand));
+				UnpackedModel unpackedModel = new UnpackedModel(prismModel, state, 0);
+				float offset = 1 / 16f;
+				
+				if(side == null) {
+					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face == EnumFacing.UP)) {
+						for(UnpackedVertex v : upq.vertices) {
+							v.y = (float) donutShape.aabb.maxY - offset;
+						}
+					}
+
+					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face == EnumFacing.DOWN)) {
+						for(UnpackedVertex v : upq.vertices) {
+							v.y = (float) donutShape.aabb.minY + offset;
+						}
+					}
+					
+					quads.addAll(unpackedModel.pack().get(null));
+				}
 			}
 			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.SOLID) {
-				IBlockState mimicState = extendedState.getValue(MimicProperty.MIMIC);
-				IBakedModel mimicModel = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(mimicState);
-				UnpackedModel fullBlockModel = new UnpackedModel(mimicModel, mimicState, rand).makeFullBlock();
+				UnpackedModel unpackedModel = new UnpackedModel(mimicModel, mimicState, 0);
 				
-				Map<EnumFacing, List<BakedQuad> > quadMap = makeDonut(fullBlockModel, 3, DonutShape.FULL);
+				Map<EnumFacing, List<BakedQuad> > quadMap = makeDonut(unpackedModel, 3, donutShape);
 				
 				List<BakedQuad> q = quadMap.get(side);
 				if(q != null) {
@@ -69,18 +95,38 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		return quads;
 	}
 	
-	private Map<EnumFacing, List<BakedQuad> > makeDonut(UnpackedModel fullBlockModel, int texelRadius, DonutShape shape) {
+	protected DonutShape getDonutShape(IBlockState state) {
+		DonutShape donutShape = DonutShape.FULL;
+		
+		if(state.getBlock() instanceof BlockSlab) {
+			BlockSlab slab = (BlockSlab) state.getBlock();
+			if(!slab.isDouble()) {
+				if(state.getPropertyKeys().contains(BlockSlab.HALF)) {
+					EnumBlockHalf slabHalf = state.getValue(BlockSlab.HALF);
+					donutShape = slabHalf == EnumBlockHalf.BOTTOM ? DonutShape.SLAB_BOTTOM : DonutShape.SLAB_TOP;
+				}
+			}
+		}
+		
+		return donutShape;
+	}
+	
+	private Map<EnumFacing, List<BakedQuad> > makeDonut(UnpackedModel unpackedModel, int texelRadius, DonutShape shape) {
 		
 		Map<EnumFacing, List<BakedQuad> > quadMap = UnpackedModel.newBakedStorage();
 		
-		//The horizontal sides
-		fullBlockModel.packInto(e -> e != null && e.getAxis().isHorizontal(), quadMap);
+		AxisAlignedBB envelope = shape.aabb;
 		
-		//Create face with hole in it from 4 quads
+		unpackedModel = unpackedModel.makeFullBlock();
+		
+		//The horizontal sides
+		unpackedModel.makePartialBlock(envelope).packInto(q -> q.face.getAxis().isHorizontal(), quadMap);
+		
 		float radius = texelRadius / 16f;
 		float min = 0.5f - radius;
 		float max = 0.5f + radius;
-		
+
+		//Create face with hole in it from 4 quads
 		AxisAlignedBB aabbs[] = { 
 			new AxisAlignedBB(0, 0, 0, 1, 1, min),
 			new AxisAlignedBB(0, 0, max, 1, 1, 1),
@@ -89,17 +135,16 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 		};
 		
 		for(AxisAlignedBB aabb: aabbs) {
-			UnpackedModel pbm = fullBlockModel.makePartialBlock(aabb);
-			pbm.packInto(e -> e != null && e.getAxis().isVertical(), quadMap);
+			unpackedModel.makePartialBlock(aabb.intersect(envelope)).packInto(q -> q.face.getAxis().isVertical(), quadMap);
 		}
 		
 		//Populate inside walls of hole
-		AxisAlignedBB holeAABB = new AxisAlignedBB(min, 0, min, max, 1, max);
-		UnpackedModel pbm = fullBlockModel.makePartialBlock(holeAABB);
+		AxisAlignedBB holeAABB = new AxisAlignedBB(min, 0, min, max, 1, max).intersect(envelope);
+		UnpackedModel pbm = unpackedModel.makePartialBlock(holeAABB);
 		
-		for(UnpackedQuad sideQuad : pbm.getQuads(null)) {
-			sideQuad.move(new Vec3d(sideQuad.face.getOpposite().getDirectionVec()).scale(radius * 2)).color(0.875f);//Fake ambient occlusion inside of donut hole
-			quadMap.get(null).add(sideQuad.pack());//Add to the non-culled list(null) since these quads are interior
+		for(UnpackedQuad quad : pbm.getQuads(q -> q.face.getAxis().isHorizontal())) {
+			quad.move(new Vec3d(quad.face.getOpposite().getDirectionVec()).scale(radius * 2)).color(0.875f);//Fake ambient occlusion inside of donut hole
+			quadMap.get(null).add(quad.pack());//Add to the non-culled list(null) since these quads are interior
 		}
 		
 		return quadMap;

@@ -154,7 +154,7 @@ public class Cathedral implements IFeature {
 		registerMultiTextureItems(registry, (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName(), railingVarious, pillarVarious);
 		registerMultiTextureItems(registry, (stack) -> BlockGlassStained.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), glassStained, panesStained);
 		registerMultiTextureItems(registry, (stack) -> BlockChain.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName(), chainVarious);
-		registry.register( new ItemBlock(deckPrism).setRegistryName(deckPrism.getRegistryName()) );
+		registry.register( new ItemDeckPrism(deckPrism).setRegistryName(deckPrism.getRegistryName()) );
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			registry.register(new ItemBlock(gargoyleBlock).setRegistryName(gargoyleBlock.getRegistryName()));
