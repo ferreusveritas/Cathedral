@@ -9,7 +9,6 @@ import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
 import com.ferreusveritas.cathedral.features.cathedral.BlockDeckPrism;
 import com.ferreusveritas.cathedral.util.UnpackedModel;
 import com.ferreusveritas.cathedral.util.UnpackedQuad;
-import com.ferreusveritas.cathedral.util.UnpackedVertex;
 
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
@@ -67,18 +66,8 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 				UnpackedModel unpackedModel = new UnpackedModel(prismModel, state, 0).color(color.getColorValue() | 0xFF000000);
 				
 				if(side == null) {
-					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face == EnumFacing.UP)) {
-						for(UnpackedVertex v : upq.vertices) {
-							v.y -= 1.0 - (float) donutShape.aabb.maxY;
-						}
-					}
-
-					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face != EnumFacing.UP)) {
-						for(UnpackedVertex v : upq.vertices) {
-							v.y += (float) donutShape.aabb.minY;
-						}
-					}
-					
+					unpackedModel.apply(q -> q.face == EnumFacing.UP, q -> q.move(new Vec3d(0, -(1.0 - donutShape.aabb.maxY), 0)));
+					unpackedModel.apply(q -> q.face != EnumFacing.UP, q -> q.move(new Vec3d(0, donutShape.aabb.minY, 0)));
 					quads.addAll(unpackedModel.pack().get(null));
 				}
 			}

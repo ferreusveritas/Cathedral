@@ -1,13 +1,17 @@
 package com.ferreusveritas.cathedral.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -15,29 +19,27 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class UnpackedModel {
 	
-	public IBakedModel bakedModel;
-	public Map<EnumFacing, List<UnpackedQuad>> upqMap = new HashMap<>();
+	public static final Predicate TRUE = x -> true;
+	public static final Function IDENT = Function.identity();
 	
-	public static final EnumFacing[] anySides = new EnumFacing[] {
-		EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST, null
-	};
+	public final Map<EnumFacing, List<UnpackedQuad>> upqMap;
+	
+	public static final List<EnumFacing> anySides = Lists.newArrayList(new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST, null });
 	
 	private UnpackedModel() {
-		for(EnumFacing dir : anySides) {
-			upqMap.put(dir, new ArrayList<UnpackedQuad>());
-		}
+		upqMap = anySides.stream().collect(Collectors.toMap(IDENT, d -> new ArrayList<>()));
 	}
 	
 	public UnpackedModel(IBakedModel bakedModel, IBlockState state, long rand) {
 		this();
-		this.bakedModel = bakedModel;
 		
 		//Gather all of the quads from the model
 		for(EnumFacing dir : anySides) {
-			upqMap.get(dir).addAll(bakedModel.getQuads(state, dir, rand).stream().map(q -> new UnpackedQuad(q)).collect(Collectors.toList()));
+			upqMap.get(dir).addAll(bakedModel.getQuads(state, dir, rand).stream().map(UnpackedQuad::new).collect(Collectors.toList()));
 		}
 	}
 	
@@ -51,21 +53,35 @@ public class UnpackedModel {
 		return this;
 	}
 	
-	public List<UnpackedQuad> getQuadsFromSide(EnumFacing dir) {
+	public UnpackedModel addQuads(List<UnpackedQuad> quads, EnumFacing side) {
+		upqMap.get(side).addAll(quads);
+		return this;
+	}
+	
+	public List<UnpackedQuad> getQuads(EnumFacing dir) {
 		return upqMap.get(dir);
 	}
 	
 	public List<UnpackedQuad> getQuads() {
-		return getQuads(q -> true);
+		return getQuads(TRUE);
 	}
-
-	public List<UnpackedQuad> getQuads(Predicate<UnpackedQuad> filter) {
+	
+	public List<UnpackedQuad> getQuads(@Nonnull Predicate<UnpackedQuad> filter) {
 		return upqMap.values().stream().flatMap(List::stream).filter(filter).collect(Collectors.toList());
 	}
 	
+	public UnpackedModel apply(Predicate<UnpackedQuad> filter, Consumer<UnpackedQuad> consumer) {
+		getQuads(filter).forEach(consumer);
+		return this;
+	}
+	
+	public UnpackedModel apply(Consumer<UnpackedQuad> consumer) {
+		getQuads().forEach(consumer);
+		return this;
+	}
 	
 	////////////////////////////////////////////////////////////////
-	// Model Manipulation                                        //
+	// Model Manipulation                                         //
 	////////////////////////////////////////////////////////////////
 	
 	public AxisAlignedBB getModelAABB() {
@@ -102,12 +118,11 @@ public class UnpackedModel {
 			if(upqMap.get(dir).size() > 0) {//The face completely against the side of the block is the ideal choice
 				upm.addQuad(new UnpackedQuad(upqMap.get(dir).get(0)).normalize(), dir);
 			} else {
-				List<UnpackedQuad> list = upqMap.get(null).stream().filter( q -> q.face == dir).map( q -> new UnpackedQuad(q) ).collect(Collectors.toList());
-				list.forEach( q -> q.calcArea() );
-				Optional<UnpackedQuad> oq = list.stream().max( (a, b) -> Float.compare(a.area, b.area) );//Find the biggest quad facing in the right direction
-				if(oq.isPresent()) {
-					upm.addQuad(oq.get().normalize(), dir);
-				}
+				getQuads(q -> q.face == dir).stream()
+					.map(UnpackedQuad::new)
+					.peek(UnpackedQuad::calcArea)
+					.max( (a, b) -> Float.compare(a.area, b.area) )//Find the biggest quad facing in the right direction
+					.ifPresent(q -> upm.addQuad(q.normalize(), dir));
 			}
 		}
 		
@@ -123,64 +138,36 @@ public class UnpackedModel {
  	* @param clip set true to clip the input AABB to a single block
  	* @return A new {@link UnpackedModel} that is a block with the dimensions defined by aabb with all of the texture of this model
  	*/
-	public UnpackedModel makePartialBlock(AxisAlignedBB aabb, boolean clip) {
+	public UnpackedModel makePartialBlock(AxisAlignedBB aabb_in, boolean clip) {
 		
-		if(clip) {//Clip the contents to the volume of single block
-			aabb = aabb.intersect(new AxisAlignedBB(BlockPos.ORIGIN));
-		}
-		
-		UnpackedModel upm = makeFullBlock();
-		
-		for(EnumFacing dir : EnumFacing.values()) {
-			List<UnpackedQuad> upqList = upm.upqMap.get(dir);
-			for(UnpackedQuad upq : upqList) {
-				upq.crop(aabb);
-			}
-		}
+		AxisAlignedBB aabb = clip ? aabb_in.intersect(new AxisAlignedBB(BlockPos.ORIGIN)) : aabb_in;
+		UnpackedModel upm = makeFullBlock().apply(q -> q.crop(aabb));
 		
 		//Since these quads may no longer be touching adjacent blocks they need to be moved to the null side list.
 		
-		if(aabb.minX != 0.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.WEST);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
-		}
-		
-		if(aabb.maxX != 1.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.EAST);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
-		}
-		
-		if(aabb.minY != 0.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.DOWN);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
-		}
-		
-		if(aabb.maxY != 1.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.UP);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
-		}
-		
-		if(aabb.minZ != 0.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.NORTH);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
-		}
-		
-		if(aabb.maxZ != 1.0) {
-			List<UnpackedQuad> list = upm.upqMap.get(EnumFacing.SOUTH);
-			upm.upqMap.get(null).addAll(list);
-			list.clear();
+		for(EnumFacing dir: EnumFacing.values()) {
+			double val = (dir.getAxisDirection().getOffset() + 1) >> 1;
+			if(getAABBValue(aabb, dir) != val) {
+				List<UnpackedQuad> list = upm.getQuads(dir);
+				upm.addQuads(list, null);
+				list.clear();
+			}
 		}
 		
 		return upm;
 	}
 	
+	public static double getAABBValue(AxisAlignedBB aabb, EnumFacing dir) {
+		return new double[] { aabb.minY, aabb.maxY, aabb.minZ, aabb.maxZ, aabb.minX, aabb.maxX }[dir.getIndex()];
+	}
+	
 	public UnpackedModel color(int color) {
-		upqMap.values().stream().flatMap(List::stream).forEach(q -> q.color(color));
+		apply(q -> q.color(color));
+		return this;
+	}
+	
+	public UnpackedModel move(Vec3d offset) {
+		apply(q -> q.move(offset));
 		return this;
 	}
 	
@@ -189,7 +176,7 @@ public class UnpackedModel {
 	////////////////////////////////////////////////////////////////
 	
 	public Map<EnumFacing, List<BakedQuad>> pack() {
-		return pack( e -> true );
+		return pack(TRUE);
 	}
 	
 	public Map<EnumFacing, List<BakedQuad>> pack(Predicate<UnpackedQuad> filter) {
@@ -199,7 +186,7 @@ public class UnpackedModel {
 	}
 	
 	public UnpackedModel packInto(Map<EnumFacing, List<BakedQuad>> bqMap) {
-		return packInto( e -> true, bqMap);
+		return packInto(TRUE, bqMap);
 	}
 	
 	public UnpackedModel packInto(Predicate<UnpackedQuad> filter, Map<EnumFacing, List<BakedQuad>> bqMap) {
@@ -210,11 +197,7 @@ public class UnpackedModel {
 	}
 	
 	public static Map<EnumFacing, List<BakedQuad> > newBakedStorage() {
-		Map<EnumFacing, List<BakedQuad> > quadMap = new HashMap<>();
-		for(EnumFacing dir : UnpackedModel.anySides) {
-			quadMap.put(dir, new ArrayList<>());
-		}
-		return quadMap;
+		return anySides.stream().collect(Collectors.toMap(IDENT, d -> new ArrayList<>()));
 	}
 	
 }

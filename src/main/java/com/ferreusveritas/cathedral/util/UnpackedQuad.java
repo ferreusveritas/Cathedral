@@ -397,16 +397,4 @@ public class UnpackedQuad {
 		return minVert;
 	}
 	
-	public void print() {
-		String iconName = sprite.getIconName();
-		System.out.print("Icon: " + iconName + "\n");
-		System.out.print("Face: " + face + "\n");
-		
-		for(int i = 0; i < 4; i++) {
-			System.out.print("Pos:[" + vertices[i].x + ", " + vertices[i].y + ", " + vertices[i].z + "] ");
-			System.out.print(String.format("Color:#%08X ", vertices[i].color) + " UV:[" + vertices[i].u + ", " + vertices[i].v + "] ");
-			System.out.print("Normal:[" + vertices[i].nx + ", " + vertices[i].ny + ", " + vertices[i].nz + "] ");
-			System.out.println();
-		}
-	}
 }

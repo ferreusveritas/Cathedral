@@ -85,8 +85,7 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public IBlockState getMimic(IBlockAccess access, BlockPos pos) {
-		Optional<TileEntityDeckPrism> tile = getDeckPrismTileEntity(access, pos);
-		return tile.isPresent() ? tile.get().getBaseBlock() : Blocks.STONE.getDefaultState(); //Default to stone in cases where the tile entity is AWOL
+		return getDeckPrismTileEntity(access, pos).map(t -> t.getBaseBlock()).orElseGet(() -> Blocks.STONE.getDefaultState());//Default to stone in cases where the tile entity is AWOL
 	}
 	
 	@Override
@@ -95,36 +94,24 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	}
 	
 	public EnumDyeColor getPrismColor(IBlockAccess access, BlockPos pos) {
-		Optional<TileEntityDeckPrism> prismTile = getDeckPrismTileEntity(access, pos);
-		return prismTile.isPresent() ? prismTile.get().getGlassColor() : EnumDyeColor.BLUE;
+		return getDeckPrismTileEntity(access, pos).map(t -> t.getGlassColor()).orElse(EnumDyeColor.WHITE);
 	}
 	
 	public void setPrismColor(World world, BlockPos pos, EnumDyeColor color) {
-		Optional<TileEntityDeckPrism> prismTile = getDeckPrismTileEntity(world, pos);
-		if(prismTile.isPresent()) {
-			prismTile.get().setGlassColor(color);
-		}
+		getDeckPrismTileEntity(world, pos).ifPresent(pt -> pt.setGlassColor(color));
 	}
 	
 	public IBlockState getBaseBlock(IBlockAccess access, BlockPos pos) {
-		Optional<TileEntityDeckPrism> prismTile = getDeckPrismTileEntity(access, pos);
-		return prismTile.isPresent() ? prismTile.get().getBaseBlock() : Blocks.AIR.getDefaultState();
+		return getDeckPrismTileEntity(access, pos).map(pt -> pt.getBaseBlock()).orElse(Blocks.AIR.getDefaultState());
 	}
 	
 	public void setBaseBlock(World world, BlockPos pos, IBlockState baseBlock) {
-		Optional<TileEntityDeckPrism> prismTile = getDeckPrismTileEntity(world, pos);
-		if(prismTile.isPresent()) {
-			prismTile.get().setBaseBlock(baseBlock);
-		}
+		getDeckPrismTileEntity(world, pos).ifPresent(pt -> pt.setBaseBlock(baseBlock));
 	}
 	
 	protected Optional<TileEntityDeckPrism> getDeckPrismTileEntity(IBlockAccess access, BlockPos pos) {
 		TileEntity tile = access.getTileEntity(pos);
-		if(tile instanceof TileEntityDeckPrism) {
-			return Optional.of((TileEntityDeckPrism)tile);
-		}
-		
-		return Optional.empty();
+		return tile instanceof TileEntityDeckPrism ? Optional.of((TileEntityDeckPrism)tile) : Optional.empty();
 	}
 	
 	@Override
