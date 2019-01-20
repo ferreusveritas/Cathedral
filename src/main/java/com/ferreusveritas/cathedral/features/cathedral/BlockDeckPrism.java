@@ -136,7 +136,7 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public boolean isFullCube(IBlockState state) {
-		return true;
+		return false;//If we don't do this then when a players head is in the empty part of a slab then it messes up
 	}
 	
 	@Override
