@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
+import com.ferreusveritas.cathedral.features.cathedral.BlockDeckPrism;
 import com.ferreusveritas.cathedral.util.UnpackedModel;
 import com.ferreusveritas.cathedral.util.UnpackedQuad;
 import com.ferreusveritas.cathedral.util.UnpackedVertex;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -59,7 +61,10 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 			DonutShape donutShape = getDonutShape(mimicState);
 			
 			if(MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT) {
-				UnpackedModel unpackedModel = new UnpackedModel(prismModel, state, 0);
+				
+				EnumDyeColor color = extendedState.getValue(BlockDeckPrism.COLOR);
+				
+				UnpackedModel unpackedModel = new UnpackedModel(prismModel, state, 0).color(color.getColorValue() | 0xFF000000);
 				float offset = 1 / 16f;
 				
 				if(side == null) {

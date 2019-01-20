@@ -149,6 +149,22 @@ tile.cathedral_gargoyle_demon_limestone.name=Limestone Gargoyle
 tile.cathedral_gargoyle_demon_basalt.name=Basalt Gargoyle
 tile.cathedral_gargoyle_demon_dwemer.name=Dwarven Gargoyle
 
+tile.deckprism.white.name=White Deck Prism
+tile.deckprism.orange.name=Orange Deck Prism
+tile.deckprism.magenta.name=Magenta Deck Prism
+tile.deckprism.lightBlue.name=Light Blue Deck Prism
+tile.deckprism.yellow.name=Yellow Deck Prism
+tile.deckprism.lime.name=Lime Deck Prism
+tile.deckprism.pink.name=Pink Deck Prism
+tile.deckprism.gray.name=Gray Deck Prism
+tile.deckprism.silver.name=Light Gray Deck Prism
+tile.deckprism.cyan.name=Cyan Deck Prism
+tile.deckprism.purple.name=Purple Deck Prism
+tile.deckprism.blue.name=Blue Deck Prism
+tile.deckprism.brown.name=Brown Deck Prism
+tile.deckprism.green.name=Green Deck Prism
+tile.deckprism.red.name=Red Deck Prism
+tile.deckprism.black.name=Black Deck Prism
 
 tile.extras_block_stone.paver.name=Stone Paver
 tile.extras_block_stone.knot.name=Stone Knot

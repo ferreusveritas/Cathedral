@@ -89,4 +89,8 @@ public class MimicProperty implements IUnlistedProperty<IBlockState> {
 		IBlockState getMimic(IBlockAccess access, BlockPos pos);
 	}
 	
+	public static interface IMimicProvider {
+		IBlockState getBaseBlock();
+	}
+	
 }

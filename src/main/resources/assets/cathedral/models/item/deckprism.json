@@ -1,0 +1,7 @@
+{
+    "parent":"item/generated",
+    "textures": {
+        "layer0":"cathedral:blocks/cathedral/deckprism",
+        "layer1":"cathedral:blocks/cathedral/deckprism_specular"
+    }
+}

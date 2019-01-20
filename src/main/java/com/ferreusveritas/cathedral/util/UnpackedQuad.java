@@ -264,7 +264,7 @@ public class UnpackedQuad {
 			int dstR = (int) (((v.color >> 16) & 0xff) * srcR);
 			int dstG = (int) (((v.color >>  8) & 0xff) * srcG);
 			int dstB = (int) (((v.color >>  0) & 0xff) * srcB);
-			v.color = dstA << 24 | dstR << 16 | dstG << 8 | dstB;
+			v.color = dstA << 24 | dstB << 16 | dstG << 8 | dstR;
 		}
 		return this;
 	}

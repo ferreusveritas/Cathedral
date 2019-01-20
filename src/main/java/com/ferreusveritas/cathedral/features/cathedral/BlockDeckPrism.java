@@ -9,37 +9,61 @@ import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic {
 	
 	public static final String name = "deckprism";
 	
+	public static final IUnlistedProperty<EnumDyeColor> COLOR = new IUnlistedProperty<EnumDyeColor>() {
+		@Override
+		public String getName() {
+			return "color";
+		}
+
+		@Override
+		public boolean isValid(EnumDyeColor value) {
+			return value != null;
+		}
+
+		@Override
+		public Class<EnumDyeColor> getType() {
+			return EnumDyeColor.class;
+		}
+
+		@Override
+		public String valueToString(EnumDyeColor value) {
+			return value.getDyeColorName();
+		}
+	};
+	
 	public BlockDeckPrism() {
 		super(Material.GLASS);
+		setHardness(1.5f);
+		setResistance(10f);
+		setSoundType(SoundType.GLASS);
 		setRegistryName(new ResourceLocation(ModConstants.MODID, name));
 		setUnlocalizedName(name);
 		setCreativeTab(CathedralMod.tabCathedral);
@@ -47,22 +71,22 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new ExtendedBlockState(this, new IProperty[0], new IUnlistedProperty[] {MimicProperty.MIMIC});
+		return new ExtendedBlockState(this, new IProperty[0], new IUnlistedProperty[] {MimicProperty.MIMIC, COLOR});
 	}
 	
 	@Override
 	public IBlockState getExtendedState(IBlockState state, IBlockAccess access, BlockPos pos) {
-		return state instanceof IExtendedBlockState ? ((IExtendedBlockState)state).withProperty(MimicProperty.MIMIC, getMimic(access, pos)) : state;
+		return state instanceof IExtendedBlockState ? 
+			((IExtendedBlockState)state)
+				.withProperty(MimicProperty.MIMIC, getMimic(access, pos))
+				.withProperty(COLOR, getPrismColor(access, pos))
+			: state;
 	}
 	
 	@Override
 	public IBlockState getMimic(IBlockAccess access, BlockPos pos) {
 		Optional<TileEntityDeckPrism> tile = getDeckPrismTileEntity(access, pos);
-		if(tile.isPresent()) {
-			return tile.get().getBaseBlock();
-		}
-		
-		return Blocks.STONE.getDefaultState(); //Default to stone
+		return tile.isPresent() ? tile.get().getBaseBlock() : Blocks.STONE.getDefaultState(); //Default to stone in cases where the tile entity is AWOL
 	}
 	
 	@Override
@@ -72,7 +96,7 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	public EnumDyeColor getPrismColor(IBlockAccess access, BlockPos pos) {
 		Optional<TileEntityDeckPrism> prismTile = getDeckPrismTileEntity(access, pos);
-		return prismTile.isPresent() ? prismTile.get().getGlassColor() : null;
+		return prismTile.isPresent() ? prismTile.get().getGlassColor() : EnumDyeColor.BLUE;
 	}
 	
 	public void setPrismColor(World world, BlockPos pos, EnumDyeColor color) {
@@ -109,32 +133,20 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	}
 	
 	@Override
-	public int getLightValue(IBlockState state, IBlockAccess access, BlockPos pos) {
-		//IBlockState baseBlock = getBaseBlock(access, pos);
-		//System.out.println("getLightValue: " + pos + " " + baseBlock);
-		return 0;//baseBlock.getBlock().getLightValue(baseBlock);
-	}
-	
-	@Override
 	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return 0;
+		return 0;//This is the entire point of this block
 	}
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.SOLID;//super.canRenderInLayer(state, layer);//true;//For troubleshooting
+		return layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.SOLID;//The donut is rendered in SOLID.  The prism itself is translucent
 	}
 	
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
-        return super.getBlockLayer();
-    }
-    
-    @Override
-    public boolean isTranslucent(IBlockState state) {
-    	return false;
-    }
-    
+	@Override
+	public boolean isTranslucent(IBlockState state) {
+		return false;//Although this block has translucent parts we need this block to render with ambient occlusion
+	}
+	
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return true;
@@ -142,41 +154,33 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
+		return false;//Although this block has translucent parts we need this block to render with ambient occlusion and to disable culling
+	}
+	
+	@Override
+	protected boolean canSilkHarvest() {
+		return false;//No reason to silk harvest this block as the prism is directly obtainable
+	}
+	
+	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+		int meta = getPrismColor(world, pos).getMetadata();
+		world.setBlockState(pos, getBaseBlock(world, pos));
+		Block.spawnAsEntity(world, pos, new ItemStack(Item.getItemFromBlock(this), 1, meta));
 		return false;
 	}
-	
+
 	@Override
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		for(EnumDyeColor color: EnumDyeColor.values()) {
+			items.add(new ItemStack(this, 1, color.getMetadata()));
+		}
 	}
 	
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;//super.getRenderType(state);
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		int meta = getPrismColor(world, pos).getMetadata();
+		return new ItemStack(this, 1, meta);
 	}
-    
-    @Override
-    protected boolean canSilkHarvest() {
-    	return true;
-    }
-    
-    @Override
-    public float getExplosionResistance(Entity exploder) {
-    	return 10.0f;
-    }
-    
-    @Override
-    public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-    	return getBaseBlock(world, pos).getBlock().getExplosionResistance(exploder);
-    }
-    
-    @Override
-    public float getBlockHardness(IBlockState blockState, World world, BlockPos pos) {
-    	return getBaseBlock(world, pos).getBlockHardness(world, pos);
-    }
-    
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-    }
+	
 }

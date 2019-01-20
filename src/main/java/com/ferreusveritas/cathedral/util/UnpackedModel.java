@@ -179,6 +179,10 @@ public class UnpackedModel {
 		return upm;
 	}
 	
+	public UnpackedModel color(int color) {
+		upqMap.values().stream().flatMap(List::stream).forEach(q -> q.color(color));
+		return this;
+	}
 	
 	////////////////////////////////////////////////////////////////
 	// Baked Quad Packing                                         //

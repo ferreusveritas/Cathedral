@@ -17,11 +17,10 @@
 				"origin": [ 5, 1, 5 ],
 				"axis": "y",
 				"angle": 0
-			},
-			"__gr_name": "prism"
+			}
 		}
 	],
 	"textures": {
-		"glass": "minecraft:blocks/glass_light_blue"
+		"glass": "minecraft:blocks/glass_white"
 	}
 }

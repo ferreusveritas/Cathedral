@@ -1,5 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimicProvider;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -10,14 +12,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class TileEntityDeckPrism extends TileEntity {
+public class TileEntityDeckPrism extends TileEntity implements IMimicProvider {
 	
 	private IBlockState baseBlock;
 	private EnumDyeColor glassColor;//Can be null for clear glass
 	
 	public TileEntityDeckPrism() {
 		baseBlock = Blocks.STONE.getDefaultState();
-		glassColor = null;//Clear glass
+		glassColor = EnumDyeColor.WHITE;
 	}
 	
 	public EnumDyeColor getGlassColor() {
@@ -28,6 +30,7 @@ public class TileEntityDeckPrism extends TileEntity {
 		this.glassColor = color;
 	}
 	
+	@Override
 	public IBlockState getBaseBlock() {
 		return baseBlock;
 	}
@@ -50,9 +53,7 @@ public class TileEntityDeckPrism extends TileEntity {
 	}
 	
 	public void readExtraData(NBTTagCompound compound) {
-		if(compound.hasKey("color")) {
-			setGlassColor(EnumDyeColor.byMetadata(compound.getInteger("color")));
-		}
+		setGlassColor(EnumDyeColor.byMetadata(compound.getInteger("color")));
 		
 		Block block = Block.REGISTRY.getObject(new ResourceLocation(compound.getString("blockname")));
 		if(block != Blocks.AIR) {
@@ -65,10 +66,7 @@ public class TileEntityDeckPrism extends TileEntity {
 		String blockName = Block.REGISTRY.getNameForObject(state.getBlock()).toString();
 		int blockMeta = state.getBlock().getMetaFromState(state);
 		
-		if(getGlassColor() != null) {
-			compound.setInteger("color", getGlassColor().getMetadata());
-		}
-		
+		compound.setInteger("color", getGlassColor().getMetadata());
 		compound.setString("blockname", blockName);
 		compound.setInteger("blockmeta", blockMeta);
 		

@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -255,6 +256,7 @@ public class Cathedral implements IFeature {
 	public void registerColorHandlers() {
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler( (state, world, pos, tint) -> state.getValue(BlockChain.VARIANT).getColor(), new Block[] {chainVarious});
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler( ( stack,  tint) -> BlockChain.EnumType.byMetadata(stack.getItemDamage()).getColor(), new Item[] {Item.getItemFromBlock(chainVarious)});
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler( ( stack,  tint) -> tint == 0 ? EnumDyeColor.byMetadata(stack.getMetadata()).getColorValue() : 0xFFFFFFFF, new Item[] {Item.getItemFromBlock(deckPrism)});
 	}
 	
 	@Override
@@ -269,6 +271,7 @@ public class Cathedral implements IFeature {
 		Lists.newArrayList(EnumMaterial.values()).forEach(type -> reg.accept(railingVarious, type) );
 		Lists.newArrayList(BlockChain.EnumType.values()).forEach(type -> reg.accept(chainVarious, type) );
 		Lists.newArrayList(EnumMaterial.values()).forEach(type -> reg.accept(pillarVarious, type) );
+		Lists.newArrayList(EnumDyeColor.values()).forEach(color -> ModelHelper.regModel(Item.getItemFromBlock(deckPrism), color.getDyeDamage()));
 		
 		for(BlockGargoyle gargoyleBlock : gargoyleDemon) {
 			ModelHelper.regModel(gargoyleBlock);
@@ -277,7 +280,7 @@ public class Cathedral implements IFeature {
 		setupCustomModel(railingVarious, RAILING, resloc -> new ModelBlockRailing(resloc));
 		setupCustomModel(pillarVarious, PILLAR, resloc -> new ModelBlockPillar(resloc));
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	public void setupCustomModel(Block block, String resName, @Nonnull Function<ResourceLocation, IModel> loader) {
 		ModelLoaderRegistry.registerLoader(new ModelLoaderKeyed(resName, loader));
