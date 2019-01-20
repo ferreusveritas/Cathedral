@@ -150,6 +150,26 @@ public class Cathedral implements IFeature {
 		}
 	}
 	
+	public void deckPrismRecipe(EnumDyeColor color, IForgeRegistry<IRecipe> registry) {
+		
+        String[] dyes = { "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "LightGray", "Gray", "Pink", "Lime", "Yellow", "LightBlue", "Magenta", "Orange", "White" };
+		
+		String oreName = "blockGlass" + dyes[color.getDyeDamage()];
+		if(OreDictionary.doesOreNameExist(oreName)){
+			registry.register( 
+				new ShapedOreRecipe(
+					null,
+					new ItemStack(deckPrism, 4, color.getMetadata()),
+					new Object[]{
+						"ooo",
+						" o ",
+						'o', oreName
+					}
+				).setRegistryName("deckPrism_" + color.getName())
+			);
+		}
+	}
+	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		registerMultiTextureItems(registry, (stack) -> EnumMaterial.byMetadata(stack.getMetadata()).getUnlocalizedName(), railingVarious, pillarVarious);
@@ -222,6 +242,11 @@ public class Cathedral implements IFeature {
 		//Chains
 		for(BlockChain.EnumType type: BlockChain.EnumType.values()) {
 			chainRecipe(type, registry);
+		}
+
+		//Deck Prisms
+		for(EnumDyeColor color: EnumDyeColor.values()) {
+			deckPrismRecipe(color, registry);
 		}
 		
 		//Allow exchange for BRONZE -> DWEMER(or GOLD -> DWEMER) chain in cases where Dwemer and Dawnstone aren't available
