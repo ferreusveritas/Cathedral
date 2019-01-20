@@ -65,18 +65,17 @@ public class BakedModelBlockDeckPrism implements IBakedModel {
 				EnumDyeColor color = extendedState.getValue(BlockDeckPrism.COLOR);
 				
 				UnpackedModel unpackedModel = new UnpackedModel(prismModel, state, 0).color(color.getColorValue() | 0xFF000000);
-				float offset = 1 / 16f;
 				
 				if(side == null) {
 					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face == EnumFacing.UP)) {
 						for(UnpackedVertex v : upq.vertices) {
-							v.y = (float) donutShape.aabb.maxY - offset;
+							v.y -= 1.0 - (float) donutShape.aabb.maxY;
 						}
 					}
 
-					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face == EnumFacing.DOWN)) {
+					for(UnpackedQuad upq : unpackedModel.getQuads(q -> q.face != EnumFacing.UP)) {
 						for(UnpackedVertex v : upq.vertices) {
-							v.y = (float) donutShape.aabb.minY + offset;
+							v.y += (float) donutShape.aabb.minY;
 						}
 					}
 					
