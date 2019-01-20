@@ -8,13 +8,19 @@ import com.ferreusveritas.cathedral.common.blocks.MimicProperty;
 import com.ferreusveritas.cathedral.common.blocks.MimicProperty.IMimic;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleDigging;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -22,6 +28,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,9 +36,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic {
 	
@@ -170,4 +180,81 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 		return new ItemStack(this, 1, meta);
 	}
 	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
+		IBlockState state = Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, getPrismColor(world, pos));
+		
+		TextureAtlasSprite texture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
+		
+		if (!state.getBlock().isAir(state, world, pos)) {
+			for (int x = 0; x < 4; ++x) {
+				for (int y = 0; y < 4; ++y) {
+					for (int z = 0; z < 4; ++z) {
+						double delX = ((double) x + 0.5D) / 4.0D;
+						double delY = ((double) y + 0.5D) / 4.0D;
+						double delZ = ((double) z + 0.5D) / 4.0D;
+						
+						ParticleDigging particle = (ParticleDigging) manager.spawnEffectParticle(EnumParticleTypes.BLOCK_CRACK.getParticleID(), (double) pos.getX() + delX, (double) pos.getY() + delY, (double) pos.getZ() + delZ, delX - 0.5D, delY - 0.5D, delZ - 0.5D, Block.getStateId(state));
+						if (particle != null) {
+							particle.setBlockPos(pos).setParticleTexture(texture);
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager manager) {
+		
+		BlockPos pos = target.getBlockPos();
+		if(pos != BlockPos.ORIGIN) {
+			IBlockState particlesState = Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, getPrismColor(world, pos));
+			
+			if(target.sideHit != null && target.sideHit.getAxis().isHorizontal()) {
+				particlesState = getBaseBlock(world, pos);
+			} else {
+				double xx = Math.abs(target.hitVec.x % 1.0);
+				double zz = Math.abs(target.hitVec.z % 1.0);
+				if(xx < 0.3125 || xx > 0.6875 || zz < 0.3125 || zz > 0.6875) {
+					particlesState = getBaseBlock(world, pos);
+				}
+			}
+			
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			AxisAlignedBB aabb = state.getBoundingBox(world, pos);
+			double xpos = (double)x + world.rand.nextDouble() * (aabb.maxX - aabb.minX - 0.2) + 0.1 + aabb.minX;
+			double ypos = (double)y + world.rand.nextDouble() * (aabb.maxY - aabb.minY - 0.2) + 0.1 + aabb.minY;
+			double zpos = (double)z + world.rand.nextDouble() * (aabb.maxZ - aabb.minZ - 0.2) + 0.1 + aabb.minZ;
+			
+			switch(target.sideHit) {
+				case DOWN:  ypos = (double)y + aabb.minY - 0.1; break;
+				case UP:    ypos = (double)y + aabb.maxY + 0.1; break;
+				case NORTH: zpos = (double)z + aabb.minZ - 0.1; break;
+				case SOUTH: zpos = (double)z + aabb.maxZ + 0.1; break;
+				case WEST:  xpos = (double)x + aabb.minX - 0.1; break;
+				case EAST:  xpos = (double)x + aabb.maxX + 0.1; break;
+			}
+			
+			ParticleDigging particle = (ParticleDigging) manager.spawnEffectParticle(EnumParticleTypes.BLOCK_CRACK.getParticleID(), xpos, ypos, zpos, 0.0, 0.0, 0.0, Block.getStateId(particlesState));
+			if(particle != null) {
+				particle.setBlockPos(pos).multiplyVelocity(0.2f).multipleParticleScaleBy(0.6F);
+			}
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public boolean addLandingEffects(IBlockState state, WorldServer world, BlockPos pos, IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles) {
+		state = Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, getPrismColor(world, pos));
+		world.spawnParticle(EnumParticleTypes.BLOCK_DUST, entity.posX, entity.posY, entity.posZ, numberOfParticles, 0.0D, 0.0D, 0.0D, 0.15D, Block.getStateId(state));
+		return true;
+	}
 }
