@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -24,14 +23,13 @@ import net.minecraft.util.math.Vec3d;
 public class UnpackedModel {
 	
 	public static final Predicate TRUE = x -> true;
-	public static final Function IDENT = Function.identity();
 	
 	public final Map<EnumFacing, List<UnpackedQuad>> upqMap;
 	
 	public static final List<EnumFacing> anySides = Lists.newArrayList(new EnumFacing[] { EnumFacing.DOWN, EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST, null });
 	
 	private UnpackedModel() {
-		upqMap = anySides.stream().collect(Collectors.toMap(IDENT, d -> new ArrayList<>()));
+		upqMap = anySides.stream().collect(Collectors.toMap(d -> d, d -> new ArrayList<>()));
 	}
 	
 	public UnpackedModel(IBakedModel bakedModel, IBlockState state, long rand) {
@@ -197,7 +195,7 @@ public class UnpackedModel {
 	}
 	
 	public static Map<EnumFacing, List<BakedQuad> > newBakedStorage() {
-		return anySides.stream().collect(Collectors.toMap(IDENT, d -> new ArrayList<>()));
+		return anySides.stream().collect(Collectors.toMap(d -> d, d -> new ArrayList<>()));
 	}
 	
 }
