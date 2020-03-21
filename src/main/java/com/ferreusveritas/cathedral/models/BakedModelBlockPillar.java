@@ -2,13 +2,7 @@ package com.ferreusveritas.cathedral.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.function.Function;
-
 import com.ferreusveritas.cathedral.features.cathedral.BlockPillar;
-import com.google.common.collect.ImmutableMap;
-
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;

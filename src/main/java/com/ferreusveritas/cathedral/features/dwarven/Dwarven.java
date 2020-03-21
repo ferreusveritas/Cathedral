@@ -199,7 +199,7 @@ public class Dwarven implements IFeature {
 				"x",
 				"x",
 				"x",
-				'x', new ItemStack(blockCarved, 1, 11)
+				'x', new ItemStack(blockCarved, 1, 8)
 			);
 		
 		//Recipe for Dwarven Short Door
@@ -209,7 +209,7 @@ public class Dwarven implements IFeature {
 				new ItemStack(((BlockShortDoor)doorNormal).getDoorItem(), 1), 
 				"x",
 				"x",
-				'x', new ItemStack(blockCarved, 1, 11)
+				'x', new ItemStack(blockCarved, 1, 8)
 			);
 
 		//Recipe for Dwarven Catwalk
