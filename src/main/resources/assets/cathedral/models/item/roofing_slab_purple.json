@@ -1,0 +1,8 @@
+{
+    "parent": "cathedral:block/roofing/shingles_half_slab",
+    "textures": {
+        "bottom": "cathedral:blocks/roofing/shingles_purple",
+        "top": "cathedral:blocks/roofing/shingles_purple",
+        "side": "cathedral:blocks/roofing/shingles_purple"
+	}
+}

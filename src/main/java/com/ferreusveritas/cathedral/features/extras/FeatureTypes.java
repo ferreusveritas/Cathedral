@@ -10,7 +10,11 @@ public class FeatureTypes {
 	
 	public static enum EnumStoneType implements StandardEnum {
 		PAVER,
-		KNOT;
+		KNOT,
+		EMBEDDED,
+		PILLAR,
+		VAULT,
+		METALKNOT;
 		
 		@Override
 		public int getMetadata() {

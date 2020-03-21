@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+	        "top": "cathedral:blocks/roofing/shingles_brown",
+    	    "front": "cathedral:blocks/roofing/shingles_brown",
+	        "side": "cathedral:blocks/roofing/shingles_brown",
+			"particle": "cathedral:blocks/roofing/shingles_brown"
+        }
+    },
+    "variants": {
+        "facing=north": { "model": "cathedral:roofing/shingles_block" },
+        "facing=south": { "model": "cathedral:roofing/shingles_block", "y": 180 },
+        "facing=west":  { "model": "cathedral:roofing/shingles_block", "y": 270 },
+        "facing=east":  { "model": "cathedral:roofing/shingles_block", "y": 90 }
+    }
+}

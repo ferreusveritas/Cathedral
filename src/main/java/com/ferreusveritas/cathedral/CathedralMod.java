@@ -91,7 +91,7 @@ public class CathedralMod {
 	public static final CreativeTabs tabRoofing = new CreativeTabs("tabRoofing") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(roofing.roofingShinglesNatural, 1);
+			return new ItemStack(roofing.roofingShinglesStairsNatural, 1);
 		}
 	};
 	

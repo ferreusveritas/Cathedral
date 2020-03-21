@@ -57,7 +57,9 @@ public class TileEntityDeckPrism extends TileEntity implements IMimicProvider {
 		
 		Block block = Block.REGISTRY.getObject(new ResourceLocation(compound.getString("blockname")));
 		if(block != Blocks.AIR) {
-			setBaseBlock(block.getStateFromMeta(compound.getInteger("blockmeta")));
+			int metadata = compound.getInteger("blockmeta");
+			IBlockState state = block.getStateFromMeta(metadata);
+			setBaseBlock(state);
 		}
 	}
 	

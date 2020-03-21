@@ -136,6 +136,13 @@ public class BlockPillar extends Block {
 	}
 	
 	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	
+	
+	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
 		return blockState.getValue(EnumMaterial.VARIANT).getHardness();
 	}

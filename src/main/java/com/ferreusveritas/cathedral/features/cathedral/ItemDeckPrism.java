@@ -1,5 +1,7 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
+import com.ferreusveritas.cathedral.features.roofing.BlockShinglesSlab;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
@@ -87,7 +89,7 @@ public class ItemDeckPrism extends ItemBlock {
 		
 		Block block = state.getBlock();
 		
-		if(state.isNormalCube() || block instanceof BlockSlab) {
+		if(state.isNormalCube() || block instanceof BlockSlab || block instanceof BlockShinglesSlab) {
 			
 			return 	block != Blocks.BEDROCK &&
 					state.getMaterial() != Material.LEAVES &&

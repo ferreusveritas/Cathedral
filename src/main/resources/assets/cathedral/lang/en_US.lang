@@ -77,21 +77,6 @@ tile.basalt_dwemercatwalk.name=Dwarven Catwalk
 item.tile.dwemer_door_normal.name=Short Dwarven Door
 item.tile.dwemer_door_tall.name=Tall Dwarven Door
 
-tile.basalt_fantasy-brick-stairs.name=Fantasy Brick Stairs
-tile.basalt_fantasy-disarray-stairs.name=Fantasy Disarray Stairs
-tile.basalt_fantasy-damaged-stairs.name=Fantasy Damaged Stairs
-tile.basalt_endstone-brick-stairs.name=Endstone Brick Stairs
-tile.basalt_endstone-checkered-stairs.name=Endstone Checkered Stairs
-
-tile.basalt_fantasy.fantasypillarlarge.name=Purpled Fantasy Large Pillar
-tile.basalt_fantasy.fantasyknot.name=Purpled Fantasy Carved Knot
-tile.basalt_fantasy.fantasyembedded.name=Purpled Fantasy Embedded Plate
-tile.basalt_fantasy.fantasy2pillarlarge.name=Fantasy Large Pillar
-tile.basalt_fantasy.fantasy2knot.name=Fantasy Carved Knot
-tile.basalt_fantasy.fantasy2embedded.name=Fantasy Embedded Plate
-
-
-
 tile.basalt_extraslabs.fantasy-brick.name=Fantasy Brick Slab
 tile.basalt_extraslabs.fantasy-damaged.name=Fantasy Damaged Slab
 tile.basalt_extraslabs.fantasy-disarray.name=Fantasy Disarray Slab
@@ -168,6 +153,10 @@ tile.deckprism.black.name=Black Deck Prism
 
 tile.extras_block_stone.paver.name=Stone Paver
 tile.extras_block_stone.knot.name=Stone Knot
+tile.extras_block_stone.embedded.name=Stone Embedded
+tile.extras_block_stone.pillar.name=Stone Pillar
+tile.extras_block_stone.vault.name=Stone Vault
+tile.extras_block_stone.metalknot.name=Stone Metal Knot
 
 tile.extras_block_endstone.paver.name=Endstone Paver 
 tile.extras_block_endstone.checkered.name=Endstone Checkered Tiles
@@ -209,6 +198,43 @@ tile.roofing_shingles_light_blue.name=Light Blue Terra Cotta Roof
 tile.roofing_shingles_magenta.name=Magenta Terra Cotta Roof
 tile.roofing_shingles_orange.name=Orange Terra Cotta Roof
 tile.roofing_shingles_white.name=White Terra Cotta Roof
+
+tile.roofing_block_natural.name=Natural Terra Cotta Block
+tile.roofing_block_black.name=Black Terra Cotta Block
+tile.roofing_block_red.name=Red Terra Cotta Block
+tile.roofing_block_green.name=Green Terra Cotta Block
+tile.roofing_block_brown.name=Brown Terra Cotta Block
+tile.roofing_block_blue.name=Blue Terra Cotta Block
+tile.roofing_block_purple.name=Purple Terra Cotta Block
+tile.roofing_block_cyan.name=Cyan Terra Cotta Block
+tile.roofing_block_silver.name=Light Gray Terra Cotta Block
+tile.roofing_block_gray.name=Gray Terra Cotta Block
+tile.roofing_block_pink.name=Pink Terra Cotta Block
+tile.roofing_block_lime.name=Lime Terra Cotta Block
+tile.roofing_block_yellow.name=Yellow Terra Cotta Block
+tile.roofing_block_light_blue.name=Light Blue Terra Cotta Block
+tile.roofing_block_magenta.name=Magenta Terra Cotta Block
+tile.roofing_block_orange.name=Orange Terra Cotta Block
+tile.roofing_block_white.name=White Terra Cotta Block
+
+tile.roofing_slab_natural.name=Natural Terra Cotta Slab
+tile.roofing_slab_black.name=Black Terra Cotta Slab
+tile.roofing_slab_red.name=Red Terra Cotta Slab
+tile.roofing_slab_green.name=Green Terra Cotta Slab
+tile.roofing_slab_brown.name=Brown Terra Cotta Slab
+tile.roofing_slab_blue.name=Blue Terra Cotta Slab
+tile.roofing_slab_purple.name=Purple Terra Cotta Slab
+tile.roofing_slab_cyan.name=Cyan Terra Cotta Slab
+tile.roofing_slab_silver.name=Light Gray Terra Cotta Slab
+tile.roofing_slab_gray.name=Gray Terra Cotta Slab
+tile.roofing_slab_pink.name=Pink Terra Cotta Slab
+tile.roofing_slab_lime.name=Lime Terra Cotta Slab
+tile.roofing_slab_yellow.name=Yellow Terra Cotta Slab
+tile.roofing_slab_light_blue.name=Light Blue Terra Cotta Slab
+tile.roofing_slab_magenta.name=Magenta Terra Cotta Slab
+tile.roofing_slab_orange.name=Orange Terra Cotta Slab
+tile.roofing_slab_white.name=White Terra Cotta Slab
+
 
 tile.chisel.stainedglass.name=Stained Cathedral Glass
 tile.cathedral_glass_stained.firetaijitu.name=Fire Taijitu Cathedral Glass

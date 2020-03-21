@@ -160,6 +160,12 @@ public class BlockDeckPrism extends Block implements ITileEntityProvider, IMimic
 	}
 	
 	@Override
+	public int getLightValue(IBlockState state, IBlockAccess access, BlockPos pos) {
+		IBlockState baseState = getBaseBlock(access, pos);
+		return baseState.getBlock().getLightValue(state);
+	}
+	
+	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		int meta = getPrismColor(world, pos).getMetadata();
 		world.setBlockState(pos, getBaseBlock(world, pos));

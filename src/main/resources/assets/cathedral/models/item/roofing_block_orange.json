@@ -1,0 +1,8 @@
+{
+    "parent": "cathedral:block/roofing/shingles_block",
+    "textures": {
+        "top": "cathedral:blocks/roofing/shingles_orange",
+        "front": "cathedral:blocks/roofing/shingles_orange",
+        "side": "cathedral:blocks/roofing/shingles_orange"
+	}
+}

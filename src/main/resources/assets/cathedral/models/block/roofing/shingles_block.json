@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "cathedral:blocks/roofing/shingles_natural",
+        "front": "cathedral:blocks/roofing/shingles_natural",
+        "side": "cathedral:blocks/roofing/shingles_natural"
+    }
+}
+

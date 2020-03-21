@@ -1,0 +1,20 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+    	"textures": {
+	        "bottom": "cathedral:blocks/roofing/shingles_yellow",
+	        "top": "cathedral:blocks/roofing/shingles_yellow",
+	        "side": "cathedral:blocks/roofing/shingles_yellow"
+	    }
+    },
+    "variants": {
+        "facing=north,half=bottom": { "model": "cathedral:roofing/shingles_half_slab" },
+        "facing=south,half=bottom": { "model": "cathedral:roofing/shingles_half_slab", "y": 180 },
+        "facing=west,half=bottom":  { "model": "cathedral:roofing/shingles_half_slab", "y": 270 },
+        "facing=east,half=bottom":  { "model": "cathedral:roofing/shingles_half_slab", "y": 90 },
+        "facing=north,half=top": { "model": "cathedral:roofing/shingles_upper_slab" },
+        "facing=south,half=top": { "model": "cathedral:roofing/shingles_upper_slab", "y": 180 },
+        "facing=west,half=top":  { "model": "cathedral:roofing/shingles_upper_slab", "y": 270 },
+        "facing=east,half=top":  { "model": "cathedral:roofing/shingles_upper_slab", "y": 90 }
+    }
+}

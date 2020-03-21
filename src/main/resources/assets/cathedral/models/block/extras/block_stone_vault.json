@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "cathedral:blocks/extras/block_stone_paver",
+        "side": "cathedral:blocks/extras/block_stone_vault"
+    }
+}

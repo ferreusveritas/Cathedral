@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cathedral:roofing/shingles_block" },
+        "facing=south": { "model": "cathedral:roofing/shingles_block", "y": 180 },
+        "facing=west":  { "model": "cathedral:roofing/shingles_block", "y": 270 },
+        "facing=east":  { "model": "cathedral:roofing/shingles_block", "y": 90 }
+    }
+}
