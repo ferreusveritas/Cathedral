@@ -47,6 +47,8 @@ public class BlockShingles extends BlockStairs {
 		this.useNeighborBrightness = true;
 		//setDefaultState(getDefaultState().withProperty(FORM, EnumForm.STAIRS));
 		this.color = color;
+		setHardness(1.5F);
+		setResistance(10.0F);
 		setCreativeTab(CathedralMod.tabRoofing);
 	}
 

@@ -6,6 +6,7 @@ import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -78,6 +79,22 @@ public class BlockTallDoor extends Block {
 		}
 	}
 	
+	public BlockPos getPartnerPos(IBlockState state, IBlockAccess source, BlockPos pos) {
+		
+		state = state.getActualState(source, pos);
+		EnumFacing enumfacing = state.getValue(BlockDoor.FACING);
+		boolean hingeOnRight = state.getValue(BlockDoor.HINGE) == BlockDoor.EnumHingePosition.RIGHT;
+		
+		switch (enumfacing) {
+			default:
+			case EAST:  return hingeOnRight ? pos.north() : pos.south();
+			case SOUTH: return hingeOnRight ? pos.east() : pos.west();
+			case WEST:  return hingeOnRight ? pos.south() : pos.north();
+			case NORTH: return hingeOnRight ? pos.west() : pos.east();
+		}
+		
+	}
+	
 	// Gets the localized name of this block. Used for the statistics page.
 	@Override
 	public String getLocalizedName() {
@@ -131,27 +148,40 @@ public class BlockTallDoor extends Block {
 			return false;
 		}
 		else {
-			state = iblockstate.cycleProperty(BlockDoor.OPEN);
-			worldIn.setBlockState(bottomPos, state, 10);
-			worldIn.markBlockRangeForRenderUpdate(bottomPos, pos);
-			worldIn.playEvent(playerIn, state.getValue(BlockDoor.OPEN).booleanValue() ? this.getOpenSound() : this.getCloseSound(), pos, 0);
+			setDoorAjar(worldIn, pos, !isDoorAjar(state, worldIn, pos));
 			return true;
 		}
 	}
 	
-	public void toggleDoor(World worldIn, BlockPos pos, boolean open) {
+	public void setDoorAjar(World worldIn, BlockPos pos, boolean open) {
 		IBlockState iblockstate = worldIn.getBlockState(pos);
 		
 		if (iblockstate.getBlock() == this) {
 			BlockPos bottomPos = getBottomPos(pos, iblockstate);
-			IBlockState iblockstate1 = pos == bottomPos ? iblockstate : worldIn.getBlockState(bottomPos);
+			IBlockState bottomState = pos == bottomPos ? iblockstate : worldIn.getBlockState(bottomPos);
 			
-			if (iblockstate1.getBlock() == this && iblockstate1.getValue(BlockDoor.OPEN).booleanValue() != open) {
-				worldIn.setBlockState(bottomPos, iblockstate1.withProperty(BlockDoor.OPEN, Boolean.valueOf(open)), 10);
-				worldIn.markBlockRangeForRenderUpdate(bottomPos, pos);
+			if (bottomState.getBlock() == this && bottomState.getValue(BlockDoor.OPEN).booleanValue() != open) {
+				worldIn.setBlockState(bottomPos, bottomState.withProperty(BlockDoor.OPEN, Boolean.valueOf(open)), 10);
+				worldIn.markBlockRangeForRenderUpdate(bottomPos, bottomPos.up(2));
 				worldIn.playEvent((EntityPlayer)null, open ? this.getOpenSound() : this.getCloseSound(), pos, 0);
+				
+				//Check if this door is part of a pair and activate the other door in kind
+				BlockPos partnerPos = getPartnerPos(bottomState, worldIn, bottomPos);
+				IBlockState partnerState = worldIn.getBlockState(partnerPos);
+				if(partnerState.getBlock() == this) {
+					BlockTallDoor partnerBlock = (BlockTallDoor) partnerState.getBlock();
+					boolean isPartnerOpen = partnerBlock.isDoorAjar(partnerState, worldIn, partnerPos);
+					if(isPartnerOpen != open) {
+						partnerBlock.setDoorAjar(worldIn, partnerPos, open);
+					}
+				}
 			}
 		}
+	}
+	
+	public boolean isDoorAjar(IBlockState state, IBlockAccess access, BlockPos pos) {
+		IBlockState actualState = getActualState(state, access, pos);
+		return actualState.getBlock() == this ? actualState.getValue(BlockDoor.OPEN).booleanValue() : false;
 	}
 	
 	/**
@@ -160,65 +190,73 @@ public class BlockTallDoor extends Block {
 	 * block, etc.
 	 */
 	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock, BlockPos fromPos) {
 				
-		if(state.getValue(THIRD) == EnumDoorThird.LOWER) {
+		if(state.getValue(THIRD) == EnumDoorThird.LOWER) {//Only process the message on the lower block
 			boolean invalid = false;
 			BlockPos lowerPos = pos;
 			BlockPos middlePos = pos.up();
 			BlockPos upperPos = pos.up(2);
+			BlockPos underPos = pos.down();
 			IBlockState lowerState = state;
-			IBlockState middleState = worldIn.getBlockState(middlePos);
-			IBlockState upperState = worldIn.getBlockState(upperPos);
+			IBlockState middleState = world.getBlockState(middlePos);
+			IBlockState upperState = world.getBlockState(upperPos);
 			
 			if (upperState.getBlock() != this ) {
-				worldIn.setBlockToAir(middlePos);
-				worldIn.setBlockToAir(lowerPos);
+				world.setBlockToAir(middlePos);
+				world.setBlockToAir(lowerPos);
 				invalid = true;
 			}
 			
 			if (middleState.getBlock() != this) {
-				worldIn.setBlockToAir(upperPos);
-				worldIn.setBlockToAir(lowerPos);
+				world.setBlockToAir(upperPos);
+				world.setBlockToAir(lowerPos);
 				invalid = true;
 			}
 			
-			if (!worldIn.getBlockState(lowerPos.down()).isSideSolid(worldIn,  lowerPos.down(), EnumFacing.UP)) {
-				worldIn.setBlockToAir(lowerPos);
+			IBlockState underState = world.getBlockState(underPos);
+			
+			if (!underState.isSideSolid(world, underPos, EnumFacing.UP) && !(underState.getBlock() instanceof BlockStairs)) {
+				world.setBlockToAir(lowerPos);
 				invalid = true;
 				
 				if (middleState.getBlock() == this) {
-					worldIn.setBlockToAir(middlePos);
+					world.setBlockToAir(middlePos);
 				}
 				
 				if (upperState.getBlock() == this) {
-					worldIn.setBlockToAir(upperPos);
+					world.setBlockToAir(upperPos);
+				}
+
+				if (!world.isRemote) {
+					this.dropBlockAsItem(world, pos, state, 0);
 				}
 				
 			}
 			
 			if (!invalid) {
-				boolean isPowered = worldIn.isBlockPowered(lowerPos) || worldIn.isBlockPowered(middlePos) || worldIn.isBlockPowered(upperPos);
+				boolean isPoweredWorld = world.isBlockPowered(lowerPos) || world.isBlockPowered(middlePos) || world.isBlockPowered(upperPos);
+				boolean isPoweredState = upperState.getValue(BlockDoor.POWERED).booleanValue();
 				
-				if (blockIn != this && (isPowered || blockIn.getDefaultState().canProvidePower()) && isPowered != upperState.getValue(BlockDoor.POWERED).booleanValue()) {
-					worldIn.setBlockState(upperPos, upperState.withProperty(BlockDoor.POWERED, Boolean.valueOf(isPowered)), 2);
+				if (neighborBlock != this && (isPoweredWorld || neighborBlock.getDefaultState().canProvidePower()) && isPoweredWorld != isPoweredState) {
+					world.setBlockState(upperPos, upperState.withProperty(BlockDoor.POWERED, Boolean.valueOf(isPoweredWorld)), 2);
 					
-					if (isPowered != lowerState.getValue(BlockDoor.OPEN).booleanValue()) {
-						worldIn.setBlockState(lowerPos, lowerState.withProperty(BlockDoor.OPEN, Boolean.valueOf(isPowered)), 2);
-						worldIn.markBlockRangeForRenderUpdate(lowerPos, lowerPos);
-						worldIn.playEvent((EntityPlayer)null, isPowered ? this.getOpenSound() : this.getCloseSound(), lowerPos, 0);
+					boolean isOpen = lowerState.getValue(BlockDoor.OPEN).booleanValue();
+					
+					if (isPoweredWorld != isOpen) {
+						setDoorAjar(world, lowerPos, isPoweredWorld);
 					}
 				}
 			}
 		} else { //Pass message down to the proper door block
 			BlockPos blockpos = pos.down(state.getValue(THIRD).ordinal());
-			IBlockState iblockstate = worldIn.getBlockState(blockpos);
+			IBlockState iblockstate = world.getBlockState(blockpos);
 						
 			if (iblockstate.getBlock() != this) {
-				worldIn.setBlockToAir(pos);
+				world.setBlockToAir(pos);
 			}
 			else {
-				iblockstate.neighborChanged(worldIn, blockpos, blockIn, fromPos);
+				iblockstate.neighborChanged(world, blockpos, neighborBlock, fromPos);
 			}
 		}
 		
@@ -238,11 +276,10 @@ public class BlockTallDoor extends Block {
 		}
 		else {
 			IBlockState state = worldIn.getBlockState(pos.down());
-			return (state.isTopSolid() || state.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID)
+			return (state.isTopSolid() || state.getBlockFaceShape(worldIn, pos.down(), EnumFacing.UP) == BlockFaceShape.SOLID || state.getBlock() instanceof BlockStairs)
 					&& super.canPlaceBlockAt(worldIn, pos) 
 					&& super.canPlaceBlockAt(worldIn, pos.up())
 					&& super.canPlaceBlockAt(worldIn, pos.up(2));
-			
 		}
 	}
 	

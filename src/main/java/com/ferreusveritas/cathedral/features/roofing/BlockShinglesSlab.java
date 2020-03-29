@@ -37,6 +37,8 @@ public class BlockShinglesSlab extends BlockHorizontal {
 		setRegistryName(name);
 		setUnlocalizedName(name);
 		this.color = color;
+		setHardness(1.5F);
+		setResistance(10.0F);
 		setCreativeTab(CathedralMod.tabRoofing);
 	}
 
