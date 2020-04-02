@@ -235,9 +235,10 @@ tile.roofing_slab_magenta.name=Magenta Terracotta Slab
 tile.roofing_slab_orange.name=Orange Terracotta Slab
 tile.roofing_slab_white.name=White Terracotta Slab
 
-
 tile.chisel.stainedglass.name=Stained Cathedral Glass
 tile.cathedral_glass_stained.firetaijitu.name=Fire Taijitu Cathedral Glass
 tile.cathedral_glass_stained.amberrhombus.name=Amber Rhombus Cathedral Glass
 tile.cathedral_pane_stained.firetaijitu.name=Fire Taijitu Cathedral Glass Pane
 tile.cathedral_pane_stained.amberrhombus.name=Amber Rhombus Cathedral Glass Pane
+
+tile.grassolantern.name=Grass o'Lantern

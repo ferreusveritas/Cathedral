@@ -1,6 +1,5 @@
 package com.ferreusveritas.cathedral.proxy;
 
-
 import com.ferreusveritas.cathedral.features.cathedral.ModelBakeEventListener;
 
 import net.minecraft.client.Minecraft;
@@ -18,23 +17,12 @@ public class ClientProxy extends CommonProxy {
 	public void registerClientEventHandlers() {
 		MinecraftForge.EVENT_BUS.register(new ModelBakeEventListener());
 	}
-	
+
 	@Override
 	public void init() {
-		/*
-		RenderingRegistry.registerBlockHandler(new RendererShortDoor());
-		RenderingRegistry.registerBlockHandler(new RendererTallDoor());
-		RenderingRegistry.registerBlockHandler(new RendererBars());
-		RenderingRegistry.registerBlockHandler(new RendererChain());
-		RenderingRegistry.registerBlockHandler(new RendererRoofTiles());
-		RenderingRegistry.registerBlockHandler(new RendererStoneRailing());
-		RenderingRegistry.registerBlockHandler(new RendererGargoyle());
-		
-		MinecraftForgeClient.registerItemRenderer(Dwemer.tallDoorItem, new RendererItemDoor(3, 4f/16f, "tall"));
-		MinecraftForgeClient.registerItemRenderer(Dwemer.shortDoorItem, new RendererItemDoor(2, 3f/16f, "short"));
-		*/
+		super.init();
 	}
-	
+
 	@Override
 	public void registerModels() {}
 
@@ -47,5 +35,5 @@ public class ClientProxy extends CommonProxy {
 	public World getClientWorld() {
 		return Minecraft.getMinecraft().world;
 	}
-	
+
 }
