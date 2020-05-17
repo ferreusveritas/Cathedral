@@ -1,0 +1,65 @@
+{
+    "textures": {
+    	"rail": "blocks/stone",
+        "particle": "blocks/stone"
+    },
+    "elements": [
+        {   "from": [ 5, 0, 5 ],
+            "to": [ 11, 1, 11 ],
+            "faces": {
+                "down":  { "texture": "#default" },
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "lower base"
+        },
+        {   "from": [ 6, 1, 6 ],
+            "to": [ 10, 2, 10 ],
+            "faces": {
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "upper base"
+        },
+        {   "from": [ 7, 2, 7 ],
+            "to": [ 9, 7, 9 ],
+            "faces": {
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "body"
+        },
+        {   "from": [ 6, 6, 6.5 ],
+            "to": [ 9, 9, 9.5 ],
+      		"rotation": { "origin": [ 8, 7, 8 ], "axis": "z", "angle": -45, "rescale": false },
+            "faces": {
+                "up":    { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "down":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "north": { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "south": { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "west":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "east":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" }
+            },
+            "__comment": "head"
+        },
+        {   "from": [ 7.5, 9, 7.5 ],
+            "to": [ 8.5, 10, 8.5 ],
+            "faces": {
+                "up":    { "uv": [ 0, 0, 1, 1 ], "texture": "#default" },
+                "north": { "uv": [ 0, 0, 1, 1 ], "texture": "#default" },
+                "south": { "uv": [ 0, 0, 1, 1 ], "texture": "#default" },
+                "west":  { "uv": [ 0, 0, 1, 1 ], "texture": "#default" },
+                "east":  { "uv": [ 0, 0, 1, 1 ], "texture": "#default" }
+            },
+            "__comment": "pinnacle"
+        }
+    ]
+}

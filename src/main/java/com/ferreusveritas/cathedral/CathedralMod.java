@@ -7,9 +7,11 @@ import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
 import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
+import com.ferreusveritas.cathedral.features.chess.Chess;
 import com.ferreusveritas.cathedral.features.dwarven.Dwarven;
 import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
 import com.ferreusveritas.cathedral.features.extras.Extras;
+import com.ferreusveritas.cathedral.features.lectern.Lectern;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
 import com.ferreusveritas.cathedral.proxy.CommonProxy;
 
@@ -39,6 +41,8 @@ public class CathedralMod {
 	public static Dwarven dwarven;
 	public static Extras extras;
 	public static Roofing roofing;
+	public static Lectern lectern;
+	public static Chess chess;
 	
 	public static ArrayList<IFeature> features = new ArrayList();
 	
@@ -48,13 +52,17 @@ public class CathedralMod {
 		dwarven = new Dwarven();
 		extras = new Extras();
 		roofing = new Roofing();
+		lectern = new Lectern();
+		chess = new Chess();
 		
 		Collections.addAll(features,
 			cathedral,
 			basalt,
 			dwarven,
 			extras,
-			roofing
+			roofing,
+			lectern,
+			chess
 		);
 		
 	}
@@ -110,6 +118,7 @@ public class CathedralMod {
 		features.forEach(f -> f.registerColorHandlers());
 		
 		proxy.init();
+		proxy.registerTileEntities();
 	}
 	
 	@Mod.EventHandler

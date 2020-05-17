@@ -3,6 +3,7 @@ package com.ferreusveritas.cathedral.features.roofing;
 import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
@@ -81,4 +82,14 @@ public class BlockShinglesHorizontal extends BlockHorizontal {
 		return false;
 	}
 
+	@Override
+	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		
+		if(color != null) {
+			return MapColor.BLOCK_COLORS[color.getMetadata()];
+		}
+		
+		return MapColor.RED_STAINED_HARDENED_CLAY;
+	}
+	
 }

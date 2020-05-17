@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cathedral:lectern/lectern" },
+        "facing=south": { "model": "cathedral:lectern/lectern", "y": 180 },
+        "facing=west":  { "model": "cathedral:lectern/lectern", "y": 270 },
+        "facing=east":  { "model": "cathedral:lectern/lectern", "y": 90 }
+    }
+}

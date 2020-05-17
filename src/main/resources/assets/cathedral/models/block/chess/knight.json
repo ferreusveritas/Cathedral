@@ -1,0 +1,79 @@
+{
+    "textures": {
+    	"rail": "blocks/stone",
+        "particle": "blocks/stone"
+    },
+    "elements": [
+        {   "from": [ 5, 0, 5 ],
+            "to": [ 11, 1, 11 ],
+            "faces": {
+                "down":  { "texture": "#default" },
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "lower base"
+        },
+        {   "from": [ 6, 1, 6 ],
+            "to": [ 10, 2, 10 ],
+            "faces": {
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "upper base"
+        },
+        {   "from": [ 6, 1, 7 ],
+            "to": [ 9, 6, 9 ],
+      		"rotation": { "origin": [ 9, 2, 8 ], "axis": "z", "angle": -45, "rescale": false },
+            "faces": {
+                "down":  { "texture": "#default" },
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "body"
+        },
+        {   "from": [ 8, 5, 6.5 ],
+            "to": [ 11, 8, 9.5 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "up":    { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" },
+                "east":  { "uv": [ 0, 0, 3, 3 ], "texture": "#default" }
+            },
+            "__comment": "head"
+        },
+        {   "from": [ 6, 6, 6.5 ],
+            "to": [ 8, 8, 9.5 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 2, 3 ], "texture": "#default" },
+                "up":    { "uv": [ 0, 0, 2, 3 ], "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "uv": [ 0, 0, 3, 2 ], "texture": "#default" }
+            },
+            "__comment": "mouth"
+        },
+        {   "from": [ 9, 4, 7.5 ],
+            "to": [ 12, 9, 8.5 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 3, 1 ], "texture": "#default" },
+                "up":    { "uv": [ 0, 0, 3, 1 ], "texture": "#default" },
+                "north": { "texture": "#default" },
+                "south": { "texture": "#default" },
+                "west":  { "uv": [ 0, 0, 1, 5 ], "texture": "#default" },
+                "east":  { "uv": [ 0, 0, 1, 5 ], "texture": "#default" }
+            },
+            "__comment": "mane"
+        }
+    ]
+}

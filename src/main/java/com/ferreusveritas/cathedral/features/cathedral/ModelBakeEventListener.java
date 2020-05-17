@@ -17,6 +17,7 @@ public class ModelBakeEventListener {
 	@SubscribeEvent
 	public void onModelBakeEvent(ModelBakeEvent event) {
 		
+		//Here we'll take the baked prism model and hijack it.  Wrapping it in another BakedModel implementation.
 		Block block = CathedralMod.cathedral.deckPrism;
 		IBakedModel model = event.getModelRegistry().getObject(new ModelResourceLocation(block.getRegistryName(), "normal"));
 		if (model instanceof IBakedModel) {
