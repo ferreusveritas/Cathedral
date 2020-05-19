@@ -193,6 +193,20 @@ tile.extras_stairs_limestone_bricks.name=Limestone Bricks Stairs
 tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
 tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
 
+tile.extras_slab_marble.raw.name=Marble Raw Slab
+tile.extras_slab_marble.smalltiles.name=Marble Small Tiles Slab
+tile.extras_slab_marble.layers.name=Marble Layers Slab
+tile.extras_slab_marble.bricks.name=Marble Bricks Slab
+tile.extras_slab_marble.smallbricks.name=Marble Small Bricks Slab
+tile.extras_slab_marble.tiles.name=Marble Tiles Slab
+
+tile.extras_stairs_marble_raw.name=Marble Raw Stairs
+tile.extras_stairs_marble_smalltiles.name=Marble Small Tiles Stairs
+tile.extras_stairs_marble_layers.name=Marble Layers Stairs
+tile.extras_stairs_marble_bricks.name=Marble Bricks Stairs
+tile.extras_stairs_marble_smallbricks.name=Marble Small Bricks Stairs
+tile.extras_stairs_marble_tiles.name=Marble Tiles Stairs
+
 item.claytile.name=Unfired Clay Tile
 item.firedtile.name=Fired Clay Tile
 

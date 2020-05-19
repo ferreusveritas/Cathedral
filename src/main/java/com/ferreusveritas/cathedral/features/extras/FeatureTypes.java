@@ -145,4 +145,50 @@ public class FeatureTypes {
 		}
 	}
 	
+	
+	public static enum EnumMarbleSlabType implements IStringSerializable {
+
+		RAW("raw", new ResourceLocation("chisel", "marble2"), 7),
+		SMALLTILES("smalltiles", new ResourceLocation("chisel", "marble"), 8),
+		LAYERS("layers", new ResourceLocation("chisel", "marble"), 15),
+		BRICKS("bricks", new ResourceLocation("chisel", "marble2"), 0),
+		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "marble2"), 1),
+		TILES("tiles", new ResourceLocation("chisel", "marble2"), 3);
+		
+		private ResourceLocation baseResourceLocation;
+		private String name;
+		private int baseMeta;
+		
+		EnumMarbleSlabType(String name, ResourceLocation baseResourceLocation, int baseMeta) {
+			this.name = name;
+			this.baseResourceLocation = baseResourceLocation;
+			this.baseMeta = baseMeta;
+		}
+
+		public int getMetadata() {
+			return ordinal();
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		public static EnumMarbleSlabType byMetadata(int meta) {
+			return values()[meta];
+		}
+
+		public String getUnlocalizedName() {
+			return name;
+		}
+		
+		public ResourceLocation getBaseResourceLocation() {
+			return baseResourceLocation;
+		}
+	
+		public int getBaseMeta() {
+			return baseMeta;
+		}
+	}
+	
 }

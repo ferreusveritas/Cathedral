@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "variants": {
+     "variant": {
+     	"raw"			: { "textures": { 	"side": 	"chisel:blocks/marble/raw",
+											"top": 		"chisel:blocks/marble/raw",
+											"bottom": 	"chisel:blocks/marble/raw" } },
+     
+		"smalltiles"	: { "textures": { 	"side": 	"chisel:blocks/marble/tiles-small",
+											"top": 		"chisel:blocks/marble/tiles-small",
+											"bottom": 	"chisel:blocks/marble/tiles-small" } },
+											
+		"layers"		: { "textures": {	"side": 	"chisel:blocks/marble/layers",
+											"top": 		"chisel:blocks/marble/raw",
+											"bottom": 	"chisel:blocks/marble/raw" } },
+
+		"bricks"		: { "textures": {	"side": 	"chisel:blocks/marble/bricks-solid",
+											"top": 		"chisel:blocks/marble/bricks-solid",
+											"bottom": 	"chisel:blocks/marble/bricks-solid" } },
+
+		"smallbricks"	: { "textures": {	"side": 	"chisel:blocks/marble/bricks-small",
+											"top": 		"chisel:blocks/marble/bricks-small",
+											"bottom": 	"chisel:blocks/marble/bricks-small" } },
+
+		"tiles"			: { "textures": {	"side": 	"chisel:blocks/marble/tiles-medium",
+											"top": 		"chisel:blocks/marble/tiles-medium",
+											"bottom": 	"chisel:blocks/marble/tiles-medium" } }
+	},
+  
+	"half": {
+		"top": { "submodel": "upper_slab" },
+		"bottom" : { "submodel": "half_slab" }
+	}
+}
+}
