@@ -1,0 +1,20 @@
+{
+	"elements": [
+		{
+			"__name": "connect",
+			"from": [ 6, 0, 13 ],
+			"to": [ 10, 16, 16 ],
+			"faces": {
+				"down" : { "texture": "#default", "cullface": "down" },
+				"up"   : { "texture": "#default", "cullface": "up" },
+				"south": { "uv": [ 6,  0, 10, 16 ], "texture": "#default" },
+				"west" : { "uv": [ 5,  0,  8, 16 ], "texture": "#default" },
+				"east" : { "uv": [ 8,  0, 11, 16 ], "texture": "#default" }
+			}
+		}
+	],
+	"textures": {
+		"default": "blocks/stone",
+		"shaftside": "blocks/stone"
+	}
+}

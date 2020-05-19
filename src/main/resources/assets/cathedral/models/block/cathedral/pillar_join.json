@@ -8,6 +8,7 @@
 				"down" : { "texture": "#default", "cullface": "down" },
 				"up"   : { "texture": "#default", "cullface": "up" },
 				"north": { "uv": [ 1,  0, 15, 16 ], "texture": "#shaftside" },
+				"south": { "uv": [ 1,  0, 15, 16 ], "texture": "#default",  "cullface": "south"},
 				"west" : { "uv": [ 5,  0,  8, 16 ], "texture": "#shaftside" },
 				"east" : { "uv": [ 8,  0, 11, 16 ], "texture": "#shaftside" }
 			}

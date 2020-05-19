@@ -1,0 +1,30 @@
+{
+    "textures": {
+    	"rail": "blocks/stone",
+        "particle": "blocks/stone"
+    },
+    "elements": [
+        {   "from": [ 4.99, 0, 8 ],
+            "to": [ 11.01, 4, 16 ],
+            "faces": {
+                "down":  { "texture": "#default", "cullface": "down" },
+                "up":    { "texture": "#default" },
+                "north": { "texture": "#default", "cullface": "north" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "wall"
+        },
+        {   "from": [ 4.99, 13, 8 ],
+            "to": [ 11.01, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#default" },
+                "up":    { "texture": "#default", "cullface": "up" },
+                "north": { "texture": "#default", "cullface": "north" },
+                "west":  { "texture": "#default" },
+                "east":  { "texture": "#default" }
+            },
+            "__comment": "wall"
+        }
+    ]
+}

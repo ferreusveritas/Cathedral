@@ -2,11 +2,11 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "side": "chisel:blocks/endstone/layers",
-            "top": "cathedral:blocks/extras/block_endstone_slabs_end",
-            "bottom": "cathedral:blocks/extras/block_endstone_slabs_end",
-			"particle": "cathedral:blocks/extras/block_endstone_slabs_end"
-        }
+            "side": "chisel:blocks/limestone/bricks-small",
+            "top": "chisel:blocks/limestone/bricks-small",
+            "bottom": "chisel:blocks/limestone/bricks-small",
+			"particle": "chisel:blocks/limestone/bricks-small"
+		}
     },
     "variants": {
         "facing=east,half=bottom,shape=straight":		{ "model": "stairs" },

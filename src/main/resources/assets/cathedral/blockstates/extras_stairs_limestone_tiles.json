@@ -2,10 +2,10 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "side": "chisel:blocks/endstone/layers",
-            "top": "cathedral:blocks/extras/block_endstone_slabs_end",
-            "bottom": "cathedral:blocks/extras/block_endstone_slabs_end",
-			"particle": "cathedral:blocks/extras/block_endstone_slabs_end"
+            "side": "chisel:blocks/limestone/tiles-medium",
+            "top": "chisel:blocks/limestone/tiles-medium",
+            "bottom": "chisel:blocks/limestone/tiles-medium",
+			"particle": "chisel:blocks/limestone/tiles-medium"
         }
     },
     "variants": {

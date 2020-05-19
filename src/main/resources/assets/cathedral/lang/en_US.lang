@@ -167,6 +167,8 @@ tile.extras_slab_endstone.bricks.name=Endstone Bricks Slab
 tile.extras_slab_endstone.smallbricks.name=Endstone Small Bricks Slab
 tile.extras_slab_endstone.tiles.name=Endstone Tiles Slab
 tile.extras_slab_endstone.slabs.name=Endstone Slab
+tile.extras_slab_endstone.checkered.name=Endstone Checkered Slab
+
 
 tile.extras_stairs_endstone_raw.name=Endstone Raw Stairs
 tile.extras_stairs_endstone_smalltiles.name=Endstone Small Tiles Stairs
@@ -176,6 +178,20 @@ tile.extras_stairs_endstone_smallbricks.name=Endstone Small Bricks Stairs
 tile.extras_stairs_endstone_tiles.name=Endstone Tiles Stairs
 tile.extras_stairs_endstone_slabs.name=Endstone Slabs Stairs
 tile.extras_stairs_endstone_checkered.name=Endstone Checkered Stairs
+
+tile.extras_slab_limestone.raw.name=Limestone Raw Slab
+tile.extras_slab_limestone.smalltiles.name=Limestone Small Tiles Slab
+tile.extras_slab_limestone.layers.name=Limestone Layers Slab
+tile.extras_slab_limestone.bricks.name=Limestone Bricks Slab
+tile.extras_slab_limestone.smallbricks.name=Limestone Small Bricks Slab
+tile.extras_slab_limestone.tiles.name=Limestone Tiles Slab
+
+tile.extras_stairs_limestone_raw.name=Limestone Raw Stairs
+tile.extras_stairs_limestone_smalltiles.name=Limestone Small Tiles Stairs
+tile.extras_stairs_limestone_layers.name=Limestone Layers Stairs
+tile.extras_stairs_limestone_bricks.name=Limestone Bricks Stairs
+tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
+tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
 
 item.claytile.name=Unfired Clay Tile
 item.firedtile.name=Fired Clay Tile

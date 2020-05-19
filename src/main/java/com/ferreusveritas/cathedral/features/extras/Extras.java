@@ -10,6 +10,7 @@ import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneSlabType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneType;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumLimestoneSlabType;
 import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
@@ -44,12 +45,16 @@ public class Extras implements IFeature {
 	public Block slabEndstone;
 	public Block slabEndstoneDouble;
 
-	public Block blockGrassOLantern;
-
-	public IBlockState grassBlockState;
+	public Block slabLimestone;
+	public Block slabLimestoneDouble;
 	
 	public ArrayList<Block> stairsEndstone = new ArrayList<>();
+	public ArrayList<Block> stairsLimestone = new ArrayList<>();
 
+	public Block blockGrassOLantern;
+	public IBlockState grassBlockState;
+
+	
 	@Override
 	public String getName() {
 		return featureName;
@@ -73,6 +78,9 @@ public class Extras implements IFeature {
 				.setHardness(1.5f)
 				.setResistance(30.0f);
 
+		
+		////// Endstone //////
+		
 		blockEndstone = new BlockMultiVariant<EnumEndStoneType>(Material.ROCK, EnumEndStoneType.class, featureObjectName(BlockForm.BLOCK, "endstone")) {
 			@Override
 			public void makeVariantProperty() {
@@ -96,6 +104,23 @@ public class Extras implements IFeature {
 			stairsEndstone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "endstone_" + type.getName() ), blockEndstone.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
 		}
 
+		
+		////// Limestone //////
+		
+		slabLimestone = new BlockSlabLimestone(featureObjectName(BlockForm.SLAB, "limestone"))
+				.setCreativeTab(CathedralMod.tabCathedral)
+				.setHardness(3.0f)
+				.setResistance(45.0f);
+
+		slabLimestoneDouble = new BlockDoubleSlabLimestone(featureObjectName(BlockForm.DOUBLESLAB, "limestone"))
+				.setCreativeTab(CathedralMod.tabCathedral)
+				.setHardness(3.0f)
+				.setResistance(45.0f);
+		
+		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
+			stairsLimestone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "limestone_" + type.getName() ), Blocks.COBBLESTONE.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
+		}
+		
 		blockGrassOLantern = new BlockGrassOLantern();
 
 	}
@@ -107,14 +132,17 @@ public class Extras implements IFeature {
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.registerAll(
-				blockStone,
-				blockEndstone,
-				slabEndstone,
-				slabEndstoneDouble,
-				blockGrassOLantern
-				);
+			blockStone,
+			blockEndstone,
+			slabEndstone,
+			slabEndstoneDouble,
+			slabLimestone,
+			slabLimestoneDouble,
+			blockGrassOLantern
+		);
 
 		registry.registerAll(stairsEndstone.toArray(new Block[0]));
+		registry.registerAll(stairsLimestone.toArray(new Block[0]));
 	}
 
 	@Override
@@ -131,6 +159,16 @@ public class Extras implements IFeature {
 		for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
 			registry.register(new ItemBlock(stairsEndstone.get(type.ordinal())).setRegistryName(stairsEndstone.get(type.ordinal()).getRegistryName()));
 		}
+
+		//Limestone Slabs
+		ItemSlab itemSlabLimestone = new ItemSlab(slabLimestone, (BlockSlab)slabLimestone, (BlockSlab)slabLimestoneDouble);
+		itemSlabLimestone.setRegistryName(slabLimestone.getRegistryName());
+		registry.register(itemSlabLimestone);
+		
+		//Limestone Stairs
+		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
+			registry.register(new ItemBlock(stairsLimestone.get(type.ordinal())).setRegistryName(stairsLimestone.get(type.ordinal()).getRegistryName()));
+		}
 		
 		registry.register(new ItemBlock(blockGrassOLantern).setRegistryName(blockGrassOLantern.getRegistryName()));
 		
@@ -146,6 +184,10 @@ public class Extras implements IFeature {
 		return new ItemStack(Blocks.END_STONE);
 	}
 
+	public static ItemStack getRawLimestone() {
+		return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
+	}
+	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
 
@@ -200,9 +242,15 @@ public class Extras implements IFeature {
 			ModelHelper.regModel(Item.getItemFromBlock(slabEndstone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabEndstone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
 
+		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
+			ModelHelper.regModel(Item.getItemFromBlock(slabLimestone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabLimestone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
+		}
+		
 		ModelHelper.regModel(blockGrassOLantern);
 		
 		stairsEndstone.forEach(s -> ModelHelper.regModel(s));
+		stairsLimestone.forEach(s -> ModelHelper.regModel(s));
+
 	}
 
 	@Override
@@ -222,8 +270,14 @@ public class Extras implements IFeature {
 			addChiselVariation("endstoneslab", slabEndstone, type.getMetadata());
 		}
 
+		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
+			addChiselVariation("limestoneslab", slabLimestone, type.getMetadata());
+		}
+		
 		stairsEndstone.forEach(s -> addChiselVariation("endstonestairs", s, 0));
 
+		stairsLimestone.forEach(s -> addChiselVariation("limestonestairs", s, 0));
+		
 	}
 
 	@Override

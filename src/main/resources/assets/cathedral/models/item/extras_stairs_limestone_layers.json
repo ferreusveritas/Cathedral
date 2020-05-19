@@ -1,0 +1,8 @@
+{
+	"parent": "block/stairs",
+	"textures": {
+		"bottom": "chisel:blocks/limestone/raw",
+		"top": "chisel:blocks/limestone/raw",
+		"side": "chisel:blocks/limestone/layers"
+	}
+}

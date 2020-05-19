@@ -3,9 +3,11 @@ package com.ferreusveritas.cathedral.features.cathedral;
 import com.ferreusveritas.cathedral.CathedralMod;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -30,13 +32,13 @@ public class BlockPillar extends Block {
 	public static final String name = "pillar";
 	
 	public static final IUnlistedProperty CONNECTIONS[] = { 
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.DOWN.getName())),
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.UP.getName())),
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.NORTH.getName())),
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.SOUTH.getName())),
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.WEST.getName())),
-			new Properties.PropertyAdapter<Boolean>(PropertyBool.create(EnumFacing.EAST.getName()))
-		};
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.DOWN.getName(), PillarConnectionType.class)),
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.UP.getName(), PillarConnectionType.class)),
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.NORTH.getName(), PillarConnectionType.class)),
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.SOUTH.getName(), PillarConnectionType.class)),
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.WEST.getName(), PillarConnectionType.class)),
+		new Properties.PropertyAdapter<PillarConnectionType>(PropertyEnum.<PillarConnectionType>create(EnumFacing.EAST.getName(), PillarConnectionType.class))
+	};
 	
 	public BlockPillar() {
 		this(name);
@@ -74,7 +76,7 @@ public class BlockPillar extends Block {
 			IExtendedBlockState retval = (IExtendedBlockState) state;
 			
 			for (EnumFacing dir : EnumFacing.VALUES) {
-				retval = retval.withProperty(CONNECTIONS[dir.getIndex()], canPillarConnectTo(world, pos, dir));
+				retval = retval.withProperty(CONNECTIONS[dir.getIndex()], getPillarConnectionType(world, pos, dir));
 			}
 			return retval;
 		}
@@ -82,29 +84,54 @@ public class BlockPillar extends Block {
 		return state;
 	}
 	
-	private boolean canPillarConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+	private PillarConnectionType getPillarConnectionType(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		BlockPos other = pos.offset(facing);
-		Block block = world.getBlockState(other).getBlock();
+		IBlockState otherState = world.getBlockState(other);
+		Block otherBlock = otherState.getBlock();
 		
-		if(block instanceof BlockPillar) {
-			return true;//Pillars always connect to pillars
+		if(otherBlock instanceof BlockPillar) {
+			return PillarConnectionType.Pillar;//Pillars always connect to pillars
 		}
 		
 		if(facing.getAxis() == Axis.Y) {
-			return false;//Pillars only connect to pillars on the up/down axis
+			return PillarConnectionType.Solid;//Pillars only connect to pillars on the up/down axis
+		} else {
+			if(otherBlock instanceof BlockRailing) {
+				return PillarConnectionType.Rail;
+			}
 		}
 		
-		return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
+		if(isExceptionBlockForAttachWithPiston(otherBlock)) {
+			return PillarConnectionType.None;
+		}
+
+		BlockFaceShape blockfaceshape = otherState.getBlockFaceShape(world, pos, facing.getOpposite());
+		
+		if(blockfaceshape == BlockFaceShape.SOLID) {
+			return PillarConnectionType.Solid;
+		}
+
+		if(blockfaceshape == BlockFaceShape.MIDDLE_POLE_THIN) {
+			return PillarConnectionType.Pane;
+		}
+		
+		return PillarConnectionType.None;
 	}
 	
-	private boolean canConnectTo(IBlockAccess worldIn, BlockPos pos, EnumFacing facing) {
-		IBlockState iblockstate = worldIn.getBlockState(pos);
-		Block block = iblockstate.getBlock();
-		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, pos, facing);
-		return !isExceptionBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID;
+	@Override
+	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+		BlockPos otherPos = pos.offset(facing);
+		IBlockState otherState = world.getBlockState(otherPos);
+		BlockFaceShape faceShape = otherState.getBlockFaceShape(world, otherPos, facing.getOpposite());
+		return faceShape == BlockFaceShape.MIDDLE_POLE_THIN;
 	}
 	
 	protected static boolean isExceptionBlockForAttachWithPiston(Block block) {
+		
+		if(block instanceof BlockGlass || block instanceof BlockStainedGlass) {
+			return false;
+		}
+		
 		return Block.isExceptBlockForAttachWithPiston(block)
 				|| block == Blocks.BARRIER
 				|| block == Blocks.MELON_BLOCK
@@ -114,7 +141,7 @@ public class BlockPillar extends Block {
 	
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-		return face.getAxis() == Axis.Y ? BlockFaceShape.CENTER_BIG : BlockFaceShape.UNDEFINED;
+		return face.getAxis() == Axis.Y ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
 	}
 	
 	@Override

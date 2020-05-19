@@ -151,6 +151,9 @@ public class BlockRailing extends Block {
 	private boolean canConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		IBlockState iblockstate = world.getBlockState(pos);
 		Block block = iblockstate.getBlock();
+		if(block instanceof BlockPillar) {
+			return true;
+		}
 		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(world, pos, facing);
 		boolean flag = blockfaceshape == BlockFaceShape.MIDDLE_POLE_THICK || blockfaceshape == BlockFaceShape.MIDDLE_POLE && block instanceof BlockFenceGate;
 		return !isExceptionBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID || flag;
@@ -173,7 +176,7 @@ public class BlockRailing extends Block {
 	private boolean canRailConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		BlockPos other = pos.offset(facing);
 		Block block = world.getBlockState(other).getBlock();
-		return block.canBeConnectedTo(world, other, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
+		return block.canBeConnectedTo(world, pos, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
 	}
 	
 	@Override

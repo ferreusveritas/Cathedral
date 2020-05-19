@@ -26,6 +26,9 @@ public class ModelBlockPillar implements IModel {
 	private IModel modelBase;
 	private IModel modelHead;
 	private IModel modelJoin;
+	private IModel modelPane;
+	private IModel modelRail;
+
 	private EnumMaterial material;
 	
 	public ModelBlockPillar(ResourceLocation modelLocation) {
@@ -35,6 +38,8 @@ public class ModelBlockPillar implements IModel {
 			modelBase  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_base"));
 			modelHead  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_head"));
 			modelJoin  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_join"));
+			modelPane  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_pane"));
+			modelRail  = ModelLoaderRegistry.getModel(new ResourceLocation(modelLocation.getResourceDomain(), "block/cathedral/pillar_rail"));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -86,15 +91,19 @@ public class ModelBlockPillar implements IModel {
 		IBakedModel bakedHead  = modelHead .retexture(textures).bake(state, format, bakedTextureGetter);
 		
 		IBakedModel bakedJoins[] = new IBakedModel[4];
+		IBakedModel bakedPanes[] = new IBakedModel[4];
+		IBakedModel bakedRails[] = new IBakedModel[4];
 		
 		for(EnumFacing dir : EnumFacing.HORIZONTALS) {
 			int i = dir.getHorizontalIndex();
 			bakedJoins[i] = modelJoin.uvlock(true).retexture(textures).bake(ModelRotation.getModelRotation(0, i * 90), format, bakedTextureGetter);
+			bakedPanes[i] = modelPane.uvlock(true).retexture(textures).bake(ModelRotation.getModelRotation(0, i * 90), format, bakedTextureGetter);
+			bakedRails[i] = modelRail.uvlock(true).retexture(textures).bake(ModelRotation.getModelRotation(0, i * 90), format, bakedTextureGetter);
 		}
 		
 		TextureAtlasSprite particleSprite = bakedTextureGetter.apply(material.getFlatTexture());
 		
-		return new BakedModelBlockPillar(bakedShaft, bakedBase, bakedHead, bakedJoins, particleSprite);
+		return new BakedModelBlockPillar(bakedShaft, bakedBase, bakedHead, bakedJoins, bakedPanes, bakedRails, particleSprite);
 	}
 	
 }

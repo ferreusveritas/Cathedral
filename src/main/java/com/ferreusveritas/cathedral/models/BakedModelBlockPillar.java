@@ -3,6 +3,8 @@ package com.ferreusveritas.cathedral.models;
 import java.util.ArrayList;
 import java.util.List;
 import com.ferreusveritas.cathedral.features.cathedral.BlockPillar;
+import com.ferreusveritas.cathedral.features.cathedral.PillarConnectionType;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -18,22 +20,27 @@ public class BakedModelBlockPillar implements IBakedModel {
 	IBakedModel bakedBase;
 	IBakedModel bakedHead;
 	IBakedModel bakedJoins[];
+	IBakedModel bakedPanes[];
+	IBakedModel bakedRails[];
+
 	
 	TextureAtlasSprite particleSprite;
 	
-	public BakedModelBlockPillar(IBakedModel bakedShaft, IBakedModel bakedBase, IBakedModel bakedHead, IBakedModel[] bakedJoins, TextureAtlasSprite particleSprite) {
+	public BakedModelBlockPillar(IBakedModel bakedShaft, IBakedModel bakedBase, IBakedModel bakedHead, IBakedModel[] bakedJoins, IBakedModel[] bakedPanes, IBakedModel[] bakedRails, TextureAtlasSprite particleSprite) {
 		this.bakedShaft = bakedShaft;
 		this.bakedBase  = bakedBase;
 		this.bakedHead  = bakedHead;
 		this.bakedJoins = bakedJoins;
+		this.bakedPanes = bakedPanes;
+		this.bakedRails = bakedRails;
 		this.particleSprite = particleSprite;
 	}
 	
-	private boolean sideGetter(EnumFacing facing, IExtendedBlockState exState) {
+	private PillarConnectionType sideGetter(EnumFacing facing, IExtendedBlockState exState) {
 		int index = facing.getIndex();
 		IUnlistedProperty property = BlockPillar.CONNECTIONS[index];
-		Object val = exState.getValue(property);
-		return val != null ? (boolean)val : false;
+		PillarConnectionType val = (PillarConnectionType) exState.getValue(property);
+		return val != null ? val : PillarConnectionType.None;
 	}
 	
 	@Override
@@ -44,24 +51,35 @@ public class BakedModelBlockPillar implements IBakedModel {
 		if(state instanceof IExtendedBlockState) {
 			IExtendedBlockState exState = (IExtendedBlockState) state;
 			
-			boolean up = sideGetter(EnumFacing.UP, exState);
-			boolean down = sideGetter(EnumFacing.DOWN, exState);
+			PillarConnectionType up = sideGetter(EnumFacing.UP, exState);
+			PillarConnectionType down = sideGetter(EnumFacing.DOWN, exState);
 			
 			quadsList.addAll(bakedShaft.getQuads(exState, side, rand));
 			
-			if(!up) {
+			if(up != PillarConnectionType.Pillar) {
 				quadsList.addAll(bakedHead.getQuads(exState, side, rand));
 			}
 			
-			if(!down) {
+			if(down != PillarConnectionType.Pillar) {
 				quadsList.addAll(bakedBase.getQuads(exState, side, rand));
 			}
 			
 			for(EnumFacing dir: EnumFacing.HORIZONTALS) {
-				if(sideGetter(dir, exState)) {
-					if(!(side == EnumFacing.UP && !up)) {
+				PillarConnectionType type = sideGetter(dir, exState);
+				switch(type) {
+					case Solid:
+					case Pillar:
 						quadsList.addAll(bakedJoins[dir.getHorizontalIndex()].getQuads(exState, side, rand));
-					}
+						break;
+					case Pane:
+						quadsList.addAll(bakedPanes[dir.getHorizontalIndex()].getQuads(exState, side, rand));
+						break;
+					case Rail:
+						quadsList.addAll(bakedRails[dir.getHorizontalIndex()].getQuads(exState, side, rand));
+						break;
+					case None:
+					default:
+						break;
 				}
 			}
 		}
