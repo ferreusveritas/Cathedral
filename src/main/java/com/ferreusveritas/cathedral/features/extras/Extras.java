@@ -234,7 +234,7 @@ public class Extras implements IFeature {
 		//Basalt Ore Dictionary Registrations
 		tryRegisterBlockOre(endstoneOre, getRawEndstone());
 
-		//Basalt Slab and Stairs Recipes
+		//Endstone Slab and Stairs Recipes
 		for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
 			Block baseBlock = Block.REGISTRY.getObject(type.getBaseResourceLocation());
 			if(baseBlock != Blocks.AIR) {
@@ -259,6 +259,56 @@ public class Extras implements IFeature {
 			}
 		}
 
+		//Limestone Slab and Stairs Recipes
+		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
+			Block baseBlock = Block.REGISTRY.getObject(type.getBaseResourceLocation());
+			if(baseBlock != Blocks.AIR) {
+				ItemStack baseItemBlock = new ItemStack(baseBlock, 1, type.getBaseMeta());
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, slabLimestone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()),
+						null,
+						new ItemStack(slabLimestone, 6, type.getMetadata()), //Output
+						"xxx",
+						'x', baseItemBlock
+						);
+
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, stairsLimestone.get(type.getMetadata()).getRegistryName().getResourcePath()),
+						null,
+						new ItemStack(stairsLimestone.get(type.getMetadata()), 8), //Output
+						"x  ",
+						"xx ",
+						"xxx",
+						'x', baseItemBlock
+						);
+			}
+		}
+		
+		//Marble Slab and Stairs Recipes
+		for(EnumMarbleSlabType type: EnumMarbleSlabType.values()) {
+			Block baseBlock = Block.REGISTRY.getObject(type.getBaseResourceLocation());
+			if(baseBlock != Blocks.AIR) {
+				ItemStack baseItemBlock = new ItemStack(baseBlock, 1, type.getBaseMeta());
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, slabMarble.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()),
+						null,
+						new ItemStack(slabMarble, 6, type.getMetadata()), //Output
+						"xxx",
+						'x', baseItemBlock
+						);
+
+				GameRegistry.addShapedRecipe(
+						new ResourceLocation(ModConstants.MODID, stairsMarble.get(type.getMetadata()).getRegistryName().getResourcePath()),
+						null,
+						new ItemStack(stairsMarble.get(type.getMetadata()), 8), //Output
+						"x  ",
+						"xx ",
+						"xxx",
+						'x', baseItemBlock
+						);
+			}
+		}
+		
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, blockGrassOLantern.getRegistryName().getResourcePath()),
 				null,
