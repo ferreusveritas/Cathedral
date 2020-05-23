@@ -33,6 +33,8 @@ public class BlockSlabCheckered extends BlockSlab {
 
         this.setDefaultState(iblockstate.withProperty(VARIANT, BlockSlabCheckered.EnumType.NORMAL));
 		
+		this.useNeighborBrightness = true;
+        
 		setRegistryName(name);
 		setUnlocalizedName(name);
 	}

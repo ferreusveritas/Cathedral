@@ -153,7 +153,8 @@ public class FeatureTypes {
 		LAYERS("layers", new ResourceLocation("chisel", "marble"), 15),
 		BRICKS("bricks", new ResourceLocation("chisel", "marble2"), 0),
 		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "marble2"), 1),
-		TILES("tiles", new ResourceLocation("chisel", "marble2"), 3);
+		TILES("tiles", new ResourceLocation("chisel", "marble2"), 3),
+		MARBLEPILLAR("pillar", new ResourceLocation("chisel", "marblepillar"), 15);
 		
 		private ResourceLocation baseResourceLocation;
 		private String name;

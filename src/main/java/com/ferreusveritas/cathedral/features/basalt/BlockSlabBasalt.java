@@ -33,6 +33,8 @@ public class BlockSlabBasalt extends BlockSlab {
 		
 		this.setDefaultState(iblockstate.withProperty(VARIANT, BlockSlabBasalt.EnumType.BRICKS));
 		
+		this.useNeighborBrightness = true;
+		
 		setRegistryName(name);
 		setUnlocalizedName(name);
 	}

@@ -24,7 +24,12 @@
 
 		"tiles"			: { "textures": {	"side": 	"chisel:blocks/marble/tiles-medium",
 											"top": 		"chisel:blocks/marble/tiles-medium",
-											"bottom": 	"chisel:blocks/marble/tiles-medium" } }
+											"bottom": 	"chisel:blocks/marble/tiles-medium" } },
+
+		"pillar"		: { "textures": {	"side": 	"chisel:blocks/marblepillar/ornamental-side",
+											"top": 		"chisel:blocks/marblepillar/ornamental-top",
+											"bottom": 	"chisel:blocks/marblepillar/ornamental-top" } }
+
 	},
   
 	"half": {

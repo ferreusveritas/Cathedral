@@ -32,6 +32,8 @@ public class BlockSlabLimestone extends BlockSlab {
 		
 		this.setDefaultState(iblockstate.withProperty(VARIANT, EnumLimestoneSlabType.BRICKS));
 		
+		this.useNeighborBrightness = true;
+		
 		setRegistryName(name);
 		setUnlocalizedName(name);
 	}

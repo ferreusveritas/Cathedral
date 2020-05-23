@@ -4,6 +4,7 @@ public class BlockDoubleSlabBasalt extends BlockSlabBasalt {
 
 	public BlockDoubleSlabBasalt(String name) {
 		super(name);
+		this.useNeighborBrightness = false;
 	}
 
 	@Override

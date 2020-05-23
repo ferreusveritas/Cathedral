@@ -167,16 +167,17 @@ public class BlockRailing extends Block {
 				|| block == Blocks.LIT_PUMPKIN;
 	}
 	
+	//Determines if another block can connect to this block
 	@Override
 	public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
-		Block connector = world.getBlockState(pos.offset(facing)).getBlock();
-		return connector instanceof BlockWall || connector instanceof BlockFenceGate || connector instanceof BlockRailing;
+		Block other = world.getBlockState(pos.offset(facing)).getBlock();//The block that's asking
+		return other instanceof BlockWall || other instanceof BlockFenceGate || other instanceof BlockRailing;
 	}
 	
 	private boolean canRailConnectTo(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		BlockPos other = pos.offset(facing);
 		Block block = world.getBlockState(other).getBlock();
-		return block.canBeConnectedTo(world, pos, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
+		return (block instanceof BlockRailing) || block.canBeConnectedTo(world, pos, facing.getOpposite()) || canConnectTo(world, other, facing.getOpposite());
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ public class BlockDoubleSlabEndstone extends BlockSlabEndstone {
 
 	public BlockDoubleSlabEndstone(String name) {
 		super(name);
+		this.useNeighborBrightness = false;
 	}
 
 	@Override

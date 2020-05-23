@@ -31,6 +31,8 @@ public class BlockSlabMarble extends BlockSlab {
 		}
 		
 		this.setDefaultState(iblockstate.withProperty(VARIANT, EnumMarbleSlabType.BRICKS));
+
+		this.useNeighborBrightness = true;
 		
 		setRegistryName(name);
 		setUnlocalizedName(name);
