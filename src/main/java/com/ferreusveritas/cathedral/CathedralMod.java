@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "required-after:chisel;after:thermalfoundation")
+@Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "required-after:chisel;after:thermalfoundation;after:quark")
 public class CathedralMod {
 
 	public static Cathedral cathedral;

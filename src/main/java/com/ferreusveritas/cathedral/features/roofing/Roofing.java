@@ -127,14 +127,15 @@ public class Roofing implements IFeature {
 				'x', new ItemStack(firedTile)
 			);
 		
-		GameRegistry.addShapedRecipe(
+		//Moved to PostInit to avoid problems with Quark's automatic stair recipe feature
+		/*GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "roof_stairs_natural"),//Name
 				null,//Group
 				new ItemStack(stairs, 4),//Output
 				"x ",
 				"xx",
 				'x', new ItemStack(block)
-			);
+			);*/
 		
 		GameRegistry.addShapedRecipe(
 				new ResourceLocation(ModConstants.MODID, "roof_slab_natural"),//Name
@@ -203,14 +204,15 @@ public class Roofing implements IFeature {
 					'x', new ItemStack(firedTile)
 				);
 			
-			GameRegistry.addShapedRecipe(
+			//Moved to PostInit to avoid problems with Quark's automatic stair recipe feature
+			/*GameRegistry.addShapedRecipe(
 					new ResourceLocation(ModConstants.MODID, "roof_stairs_" + colorName),//Name
 					null,//Group
 					new ItemStack(stairs, 4),//Output
 					"x ",
 					"xx",
 					'x', new ItemStack(block)
-				);
+				);*/
 			
 			GameRegistry.addShapedRecipe(
 					new ResourceLocation(ModConstants.MODID, "roof_slab_" + colorName),//Name
@@ -270,6 +272,33 @@ public class Roofing implements IFeature {
 	public void init() {}
 
 	@Override
-	public void postInit() {}
+	public void postInit() {
+		BlockShinglesHorizontal block = roofingShinglesHorizontalNatural;
+		BlockShinglesStairs stairs = roofingShinglesStairsNatural;
+		
+		GameRegistry.addShapedRecipe(
+			new ResourceLocation(ModConstants.MODID, "roof_stairs_natural"),//Name
+			null,//Group
+			new ItemStack(stairs, 4),//Output
+			"x ",
+			"xx",
+			'x', new ItemStack(block)
+		);
+		
+		for(EnumDyeColor color: EnumDyeColor.values()) {
+			String colorName = color.getName();
+			block = roofingShinglesHorizontalColored[color.getMetadata()];
+			stairs = roofingShinglesStairsColored[color.getMetadata()];
+			
+			GameRegistry.addShapedRecipe(
+				new ResourceLocation(ModConstants.MODID, "roof_stairs_" + colorName),//Name
+				null,//Group
+				new ItemStack(stairs, 4),//Output
+				"x ",
+				"xx",
+				'x', new ItemStack(block)
+			);
+		}
+	}
 	
 }
