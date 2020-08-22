@@ -1,0 +1,6 @@
+{   
+	"parent": "cathedral:item/railing",
+    "textures": {
+        "rail": "cathedral:blocks/cathedral/railing_mossycobble_bevel"
+    }
+}

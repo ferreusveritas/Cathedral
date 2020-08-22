@@ -1,0 +1,8 @@
+{
+	"parent": "block/half_slab",
+	"textures": {
+		"bottom": "chisel:blocks/cobblestone/bricks-solid",
+		"top": "chisel:blocks/cobblestone/bricks-solid",
+		"side": "chisel:blocks/cobblestone/bricks-solid"
+	}
+}

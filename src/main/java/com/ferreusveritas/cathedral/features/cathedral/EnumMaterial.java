@@ -27,7 +27,9 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 	MARBLE        (9, "marble", 1.5f),
 	LIMESTONE     (10, "limestone", 2.0f),
 	BASALT        (11, "basalt", 2.5f),
-	DWEMER        (12, "dwemer", 2.5f);
+	DWEMER        (12, "dwemer", 2.5f),
+	COBBLESTONE   (13, "cobblestone", 2.0f),
+	MOSSYCOBBLE   (14, "mossycobble", 2.0f);
 	
 	private final int meta;
 	private final String name;
@@ -96,6 +98,8 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case LIMESTONE:    return 10.0f;
 			case BASALT:       return 20.0f;
 			case DWEMER:       return 20.0f;
+			case COBBLESTONE:  return 10.0f;
+			case MOSSYCOBBLE:  return 10.0f;
 			default:           return 1.5f;
 		}
 	}
@@ -115,6 +119,8 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case LIMESTONE:    return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
 			case BASALT:       return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7);
 			case DWEMER:       return new ItemStack(CathedralMod.dwarven.blockCarved, 1, EnumCarvedType.PANEL.getMetadata());
+			case COBBLESTONE:  return new ItemStack(Blocks.COBBLESTONE);
+			case MOSSYCOBBLE:  return new ItemStack(Blocks.MOSSY_COBBLESTONE);
 			default:           return ItemStack.EMPTY;
 		}
 	}
@@ -134,6 +140,8 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case LIMESTONE:    return new ResourceLocation("chisel:blocks/limestone/raw");
 			case BASALT:       return new ResourceLocation("chisel:blocks/basalt/raw");
 			case DWEMER:       return new ResourceLocation("chisel:blocks/basalt/raw");
+			case COBBLESTONE:  return new ResourceLocation("chisel:blocks/cobblestone/raw");
+			case MOSSYCOBBLE:  return new ResourceLocation("cathedral:blocks/cathedral/railing_mossycobble_raw");
 			default:           return new ResourceLocation("blocks/dirt");
 		}
 	}
@@ -153,6 +161,8 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case LIMESTONE:    return new ResourceLocation("chisel:blocks/limestone/tiles-large");
 			case BASALT:       return new ResourceLocation("cathedral:blocks/basalt/block_carved_paver");
 			case DWEMER:       return new ResourceLocation("cathedral:blocks/dwemer/block_carved_panel");
+			case COBBLESTONE:  return new ResourceLocation("chisel:blocks/cobblestone/tiles-large");
+			case MOSSYCOBBLE:  return new ResourceLocation("cathedral:blocks/cathedral/railing_mossycobble_bevel");
 			default:           return new ResourceLocation("blocks/dirt");
 		}
 	}

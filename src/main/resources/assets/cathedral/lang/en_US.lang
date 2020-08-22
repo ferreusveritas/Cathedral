@@ -96,6 +96,9 @@ tile.cathedral_railing_various.marble.name=Marble Railing
 tile.cathedral_railing_various.limestone.name=Limestone Railing
 tile.cathedral_railing_various.basalt.name=Basalt Railing
 tile.cathedral_railing_various.dwemer.name=Dwarven Railing
+tile.cathedral_railing_various.cobblestone.name=Cobblestone Railing
+tile.cathedral_railing_various.mossycobble.name=Mossy Cobblestone Railing
+
 
 tile.cathedral_pillar_various.stone.name=Stone Pillar
 tile.cathedral_pillar_various.sandstone.name=Sandstone Pillar
@@ -110,6 +113,8 @@ tile.cathedral_pillar_various.marble.name=Marble Pillar
 tile.cathedral_pillar_various.limestone.name=Limestone Pillar
 tile.cathedral_pillar_various.basalt.name=Basalt Pillar
 tile.cathedral_pillar_various.dwemer.name=Dwarven Pillar
+tile.cathedral_pillar_various.cobblestone.name=Cobblestone Pillar
+tile.cathedral_pillar_various.mossycobble.name=Mossy Cobblestone Pillar
 
 
 tile.cathedral_chain_various.iron.name=Iron Chain
@@ -133,6 +138,8 @@ tile.cathedral_gargoyle_demon_marble.name=Marble Gargoyle
 tile.cathedral_gargoyle_demon_limestone.name=Limestone Gargoyle
 tile.cathedral_gargoyle_demon_basalt.name=Basalt Gargoyle
 tile.cathedral_gargoyle_demon_dwemer.name=Dwarven Gargoyle
+tile.cathedral_gargoyle_demon_cobblestone.name=Cobblestone Gargoyle
+tile.cathedral_gargoyle_demon_mossycobble.name=Mossy Cobblestone Gargoyle
 
 tile.deckprism.white.name=White Deck Prism
 tile.deckprism.orange.name=Orange Deck Prism
@@ -192,6 +199,20 @@ tile.extras_stairs_limestone_layers.name=Limestone Layers Stairs
 tile.extras_stairs_limestone_bricks.name=Limestone Bricks Stairs
 tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
 tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
+
+tile.extras_slab_cobblestone.raw.name=Cobblestone Raw Slab
+tile.extras_slab_cobblestone.smalltiles.name=Cobblestone Small Tiles Slab
+tile.extras_slab_cobblestone.layers.name=Cobblestone Layers Slab
+tile.extras_slab_cobblestone.bricks.name=Cobblestone Bricks Slab
+tile.extras_slab_cobblestone.smallbricks.name=Cobblestone Small Bricks Slab
+tile.extras_slab_cobblestone.tiles.name=Cobblestone Tiles Slab
+
+tile.extras_stairs_cobblestone_raw.name=Cobblestone Raw Stairs
+tile.extras_stairs_cobblestone_smalltiles.name=Cobblestone Small Tiles Stairs
+tile.extras_stairs_cobblestone_layers.name=Cobblestone Layers Stairs
+tile.extras_stairs_cobblestone_bricks.name=Cobblestone Bricks Stairs
+tile.extras_stairs_cobblestone_smallbricks.name=Cobblestone Small Bricks Stairs
+tile.extras_stairs_cobblestone_tiles.name=Cobblestone Tiles Stairs
 
 tile.extras_slab_marble.raw.name=Marble Raw Slab
 tile.extras_slab_marble.smalltiles.name=Marble Small Tiles Slab

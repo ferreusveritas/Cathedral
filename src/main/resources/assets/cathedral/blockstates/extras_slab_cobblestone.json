@@ -1,0 +1,35 @@
+{
+  "forge_marker": 1,
+  "variants": {
+     "variant": {
+     	"raw"			: { "textures": { 	"side": 	"chisel:blocks/cobblestone/raw",
+											"top": 		"chisel:blocks/cobblestone/raw",
+											"bottom": 	"chisel:blocks/cobblestone/raw" } },
+     
+		"smalltiles"	: { "textures": { 	"side": 	"chisel:blocks/cobblestone/tiles-small",
+											"top": 		"chisel:blocks/cobblestone/tiles-small",
+											"bottom": 	"chisel:blocks/cobblestone/tiles-small" } },
+											
+		"layers"		: { "textures": {	"side": 	"chisel:blocks/cobblestone/layers",
+											"top": 		"chisel:blocks/cobblestone/raw",
+											"bottom": 	"chisel:blocks/cobblestone/raw" } },
+
+		"bricks"		: { "textures": {	"side": 	"chisel:blocks/cobblestone/bricks-solid",
+											"top": 		"chisel:blocks/cobblestone/bricks-solid",
+											"bottom": 	"chisel:blocks/cobblestone/bricks-solid" } },
+
+		"smallbricks"	: { "textures": {	"side": 	"chisel:blocks/cobblestone/bricks-small",
+											"top": 		"chisel:blocks/cobblestone/bricks-small",
+											"bottom": 	"chisel:blocks/cobblestone/bricks-small" } },
+
+		"tiles"			: { "textures": {	"side": 	"chisel:blocks/cobblestone/tiles-medium",
+											"top": 		"chisel:blocks/cobblestone/tiles-medium",
+											"bottom": 	"chisel:blocks/cobblestone/tiles-medium" } }
+	},
+  
+	"half": {
+		"top": { "submodel": "upper_slab" },
+		"bottom" : { "submodel": "half_slab" }
+	}
+}
+}
