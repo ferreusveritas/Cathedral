@@ -9,11 +9,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class WrittenBookHandler implements IBookReadHandler {
-
+	
 	public boolean isReadable(ItemStack itemStack) {
 		return itemStack.getItem() instanceof ItemWrittenBook;
 	}
-
+	
 	@Override
 	public void read(EntityPlayer player, ItemStack bookStack, BlockPos lecternPos) {
 		if(isReadable(bookStack)) {

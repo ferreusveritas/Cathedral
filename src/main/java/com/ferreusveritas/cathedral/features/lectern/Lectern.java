@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -28,21 +30,21 @@ public class Lectern implements IFeature {
 	
 	@Override
 	public void preInit() { }
-
+	
 	@Override
 	public void createBlocks() {
 		blockLectern = new BlockLectern("lectern");
 	}
-
+	
 	@Override
 	public void createItems() {
 	}
-
+	
 	@Override
 	public void registerBlocks(IForgeRegistry<Block> registry) {
 		registry.register(blockLectern);
 	}
-
+	
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		registry.register(new ItemBlock(blockLectern).setRegistryName(blockLectern.getRegistryName()));
@@ -53,15 +55,15 @@ public class Lectern implements IFeature {
 		
 		//Lectern
 		GameRegistry.addShapedRecipe(
-			new ResourceLocation(ModConstants.MODID, "lectern"),
-			null,//Group
-			new ItemStack(blockLectern),
-			"sss",
-			" b ",
-			" s ",
-			's', "slabWood",
-			'b', new ItemStack(Blocks.BOOKSHELF)
-		);
+				new ResourceLocation(ModConstants.MODID, "lectern"),
+				null,//Group
+				new ItemStack(blockLectern),
+				"sss",
+				" b ",
+				" s ",
+				's', "slabWood",
+				'b', new ItemStack(Blocks.BOOKSHELF)
+				);
 		
 	}
 	
@@ -69,13 +71,22 @@ public class Lectern implements IFeature {
 	public void registerModels(ModelRegistryEvent event) {
 		ModelHelper.regModel(Item.getItemFromBlock(blockLectern));
 	}
-
+	
 	@Override
 	public void init() { }
 	
 	@Override
 	public void postInit() {
 		BookManager.add(new WrittenBookHandler());
+		
+		if (Loader.isModLoaded("patchouli")) {
+			initPatchouliCompat();
+		}
+	}
+	
+	@Optional.Method(modid = "patchouli")
+	public static void initPatchouliCompat() {
+		BookManager.add(new PatchouliBookHandler());
 	}
 	
 }
