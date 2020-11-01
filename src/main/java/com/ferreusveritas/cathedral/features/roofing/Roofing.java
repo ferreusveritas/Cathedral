@@ -1,12 +1,12 @@
 package com.ferreusveritas.cathedral.features.roofing;
 
-import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -33,9 +33,19 @@ public class Roofing implements IFeature {
 	public BlockShinglesSlab roofingShinglesSlabNatural;
 	public BlockShinglesSlab roofingShinglesSlabColored[] = new BlockShinglesSlab[EnumDyeColor.values().length];
 
-	
 	public Item clayTile;
 	public Item firedTile;
+	
+	public final CreativeTabs tabRoofing;
+
+	public Roofing() {
+		tabRoofing = new CreativeTabs("tabRoofing") {
+			@Override
+			public ItemStack getTabIconItem() {
+				return new ItemStack(roofingShinglesStairsNatural, 1);
+			}
+		};
+	}
 	
 	@Override
 	public String getName() {
@@ -64,11 +74,11 @@ public class Roofing implements IFeature {
 		clayTile = new Item()
 				.setRegistryName("claytile")
 				.setUnlocalizedName("claytile")
-				.setCreativeTab(CathedralMod.tabRoofing);
+				.setCreativeTab(tabRoofing);
 		firedTile = new Item()
 				.setRegistryName("firedtile")
 				.setUnlocalizedName("firedtile")
-				.setCreativeTab(CathedralMod.tabRoofing);
+				.setCreativeTab(tabRoofing);
 	}
 
 	@Override

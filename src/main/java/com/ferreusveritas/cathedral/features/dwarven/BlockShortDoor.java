@@ -28,7 +28,7 @@ public class BlockShortDoor extends BlockDoor {
 		super(materialIn);
 		setRegistryName(name);
 		setUnlocalizedName(name);
-		setCreativeTab(CathedralMod.tabDwemer);
+		setCreativeTab(CathedralMod.dwarven.tabDwemer);
 	}
 
 	public BlockShortDoor setDoorItem(ItemDoor doorItem) {

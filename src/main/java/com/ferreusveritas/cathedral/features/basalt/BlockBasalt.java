@@ -26,9 +26,9 @@ public class BlockBasalt extends Block {
 		super(Material.ROCK);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CathedralMod.tabBasalt);
-		setHardness(CathedralMod.basalt.basaltHardness);
-		setResistance(CathedralMod.basalt.basaltResistance);
+		setCreativeTab(CathedralMod.basalt.tabBasalt);
+		setHardness(CathedralMod.basaltHardness);
+		setResistance(CathedralMod.basaltResistance);
 	}
 	
 	@Override

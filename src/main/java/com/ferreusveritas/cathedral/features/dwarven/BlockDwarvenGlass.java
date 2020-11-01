@@ -24,7 +24,7 @@ public class BlockDwarvenGlass extends BlockMultiVariant<EnumGlassType> {
 		super(Material.GLASS, EnumGlassType.class, name);
 		setHardness(0.3F); 
 		setSoundType(SoundType.GLASS);
-		setCreativeTab(CathedralMod.tabDwemer);
+		setCreativeTab(CathedralMod.dwarven.tabDwemer);
 	}
 	
 	@Override

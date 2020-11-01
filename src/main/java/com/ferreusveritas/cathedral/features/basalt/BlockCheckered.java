@@ -25,9 +25,9 @@ public class BlockCheckered extends Block {
 		super(Material.ROCK);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CathedralMod.tabBasalt);
-		setHardness((CathedralMod.basalt.basaltHardness + CathedralMod.basalt.marbleHardness) / 2F);
-		setResistance((CathedralMod.basalt.basaltResistance + CathedralMod.basalt.marbleResistance) / 2F);
+		setCreativeTab(CathedralMod.basalt.tabBasalt);
+		setHardness((CathedralMod.basaltHardness + CathedralMod.marbleHardness) / 2F);
+		setResistance((CathedralMod.basaltResistance + CathedralMod.marbleResistance) / 2F);
 	}
 	
 	@Override

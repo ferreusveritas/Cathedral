@@ -1,15 +1,12 @@
 package com.ferreusveritas.cathedral;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.features.basalt.Basalt;
-import com.ferreusveritas.cathedral.features.basalt.BlockBasalt;
 import com.ferreusveritas.cathedral.features.cathedral.Cathedral;
 import com.ferreusveritas.cathedral.features.chess.Chess;
 import com.ferreusveritas.cathedral.features.dwarven.Dwarven;
-import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType;
 import com.ferreusveritas.cathedral.features.extras.Extras;
 import com.ferreusveritas.cathedral.features.lectern.Lectern;
 import com.ferreusveritas.cathedral.features.roofing.Roofing;
@@ -22,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -35,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = ModConstants.MODID, version = ModConstants.VERSION, dependencies = "required-after:chisel;after:thermalfoundation;after:quark;after:patchouli")
 public class CathedralMod {
-
+	
 	public static Cathedral cathedral;
 	public static Basalt basalt;
 	public static Dwarven dwarven;
@@ -46,25 +44,38 @@ public class CathedralMod {
 	
 	public static ArrayList<IFeature> features = new ArrayList();
 	
+	public final static float basaltHardness = 2.5f;
+	public final static float basaltResistance = 20f;
+	public final static float marbleHardness = 2.0f;
+	public final static float marbleResistance = 10f;
+	
 	static {
-		cathedral = new Cathedral();
-		basalt = new Basalt();
-		dwarven = new Dwarven();
-		extras = new Extras();
-		roofing = new Roofing();
-		lectern = new Lectern();
-		chess = new Chess();
+		cathedral = CathedralConfig.cathedralFeature ? new Cathedral() : null;
+		basalt = CathedralConfig.cathedralFeature ? new Basalt() : null;
+		dwarven = CathedralConfig.cathedralFeature ? new Dwarven() : null;
+		extras = CathedralConfig.extrasFeature ? new Extras() : null;
+		roofing = CathedralConfig.roofingFeature ? new Roofing() : null;
+		lectern = CathedralConfig.lecternFeature ? new Lectern() : null;
+		chess = CathedralConfig.chessFeature ? new Chess() : null;
 		
-		Collections.addAll(features,
-			cathedral,
-			basalt,
-			dwarven,
-			extras,
-			roofing,
-			lectern,
-			chess
-		);
+		addFeatures(
+				cathedral,
+				basalt,
+				dwarven,
+				extras,
+				roofing,
+				lectern,
+				chess
+			);
 		
+	}
+	
+	private static void addFeatures(IFeature ... featuresToAdd) {
+		for(IFeature feature : featuresToAdd) {
+			if(feature != null) {
+				features.add(feature);
+			}
+		}
 	}
 	
 	@Instance(ModConstants.MODID)
@@ -73,35 +84,22 @@ public class CathedralMod {
 	@SidedProxy(clientSide = "com.ferreusveritas.cathedral.proxy.ClientProxy", serverSide = "com.ferreusveritas.cathedral.proxy.CommonProxy")
 	public static CommonProxy proxy;
 	
-	public static final CreativeTabs tabBasalt = new CreativeTabs("tabBasalt") {		
-		@SideOnly(Side.CLIENT)
-		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(basalt.blockCarved, 1, BlockBasalt.EnumType.POISON.getMetadata());
-		}
-	};
+	public static boolean usesCathedralItems() {
+		return 
+				CathedralConfig.cathedralFeature ||
+				CathedralConfig.basaltFeature ||
+				CathedralConfig.extrasFeature ||
+				CathedralConfig.lecternFeature ||
+				CathedralConfig.chessFeature;
+	}
 	
-	public static final CreativeTabs tabCathedral = new CreativeTabs("tabCathedral") {
+	public static final CreativeTabs tabCathedral = usesCathedralItems() ? new CreativeTabs("tabCathedral") {
 		@SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
 			return new ItemStack(cathedral.railingVarious);
 		}
-	};
-	
-	public static final CreativeTabs tabDwemer = new CreativeTabs("tabDwemer") {
-		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(dwarven.blockCarved, 1, EnumCarvedType.EMBEDDED.getMetadata());
-		}
-	};
-	
-	public static final CreativeTabs tabRoofing = new CreativeTabs("tabRoofing") {
-		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(roofing.roofingShinglesStairsNatural, 1);
-		}
-	};
+	} : null;
 	
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent e){
@@ -154,6 +152,39 @@ public class CathedralMod {
 		@SubscribeEvent
 		public static void newRegistry(RegistryEvent.NewRegistry event) {
 		}
+	}
+	
+	@Config(modid=ModConstants.MODID)
+	public static class CathedralConfig{
+		
+		@Config.Name("Cathedral Blocks")
+		@Config.Comment("Railing, Gargoyles, Chains, Stained Glass, Deck Prisms, Pillars")
+		public static boolean cathedralFeature = true;
+		
+		@Config.Name("Basalt Blocks")
+		@Config.Comment("Basalt blocks, Checkered Marble and Basalt blocks")
+		public static boolean basaltFeature = true;
+		
+		@Config.Name("Dwarven Blocks")
+		@Config.Comment("Dwarven Style Blocks, Dwarven Doors, Dwarven Bars")
+		public static boolean dwarvenFeature = true;
+		
+		@Config.Name("Extra Blocks")
+		@Config.Comment("Extra Stone Blocks, Grass O' Lanterns, Various Slabs")
+		public static boolean extrasFeature = true;
+		
+		@Config.Name("Roofing Blocks")
+		@Config.Comment("Teracotta tile roofing blocks")
+		public static boolean roofingFeature = true;
+		
+		@Config.Name("Lectern")
+		@Config.Comment("A lectern that provides a lockable book stand that can be read in place")
+		public static boolean lecternFeature = true;
+		
+		@Config.Name("Chess")
+		@Config.Comment("Chess piece blocks(available with setblock command only)")
+		public static boolean chessFeature = true;
+		
 	}
 	
 }

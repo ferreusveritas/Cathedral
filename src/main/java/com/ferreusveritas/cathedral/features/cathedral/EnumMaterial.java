@@ -118,7 +118,7 @@ public enum EnumMaterial implements IStringSerializable, IVariantEnumType {
 			case MARBLE:       return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "marble2")), 1, 7);
 			case LIMESTONE:    return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
 			case BASALT:       return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "basalt2")), 1, 7);
-			case DWEMER:       return new ItemStack(CathedralMod.dwarven.blockCarved, 1, EnumCarvedType.PANEL.getMetadata());
+			case DWEMER:       return CathedralMod.dwarven != null ? new ItemStack(CathedralMod.dwarven.blockCarved, 1, EnumCarvedType.PANEL.getMetadata()) : new ItemStack(Blocks.GOLD_BLOCK);
 			case COBBLESTONE:  return new ItemStack(Blocks.COBBLESTONE);
 			case MOSSYCOBBLE:  return new ItemStack(Blocks.MOSSY_COBBLESTONE);
 			default:           return ItemStack.EMPTY;

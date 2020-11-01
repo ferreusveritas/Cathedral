@@ -40,7 +40,7 @@ public class BlockShinglesSlab extends BlockHorizontal {
 		this.color = color;
 		setHardness(1.5F);
 		setResistance(10.0F);
-		setCreativeTab(CathedralMod.tabRoofing);
+		setCreativeTab(CathedralMod.roofing.tabRoofing);
 	}
 
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

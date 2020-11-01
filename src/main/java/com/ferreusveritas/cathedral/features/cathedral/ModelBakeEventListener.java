@@ -17,15 +17,16 @@ public class ModelBakeEventListener {
 	@SubscribeEvent
 	public void onModelBakeEvent(ModelBakeEvent event) {
 		
-		//Here we'll take the baked prism model and hijack it.  Wrapping it in another BakedModel implementation.
-		Block block = CathedralMod.cathedral.deckPrism;
-		IBakedModel model = event.getModelRegistry().getObject(new ModelResourceLocation(block.getRegistryName(), "normal"));
-		if (model instanceof IBakedModel) {
-			IBakedModel prismModel = (IBakedModel) model;
-			BakedModelBlockDeckPrism newPrismModel = new BakedModelBlockDeckPrism(prismModel);
-			event.getModelRegistry().putObject(new ModelResourceLocation(block.getRegistryName(), "normal"), newPrismModel);
+		if(CathedralMod.cathedral != null) {
+			//Here we'll take the baked prism model and hijack it.  Wrapping it in another BakedModel implementation.
+			Block block = CathedralMod.cathedral.deckPrism;
+			IBakedModel model = event.getModelRegistry().getObject(new ModelResourceLocation(block.getRegistryName(), "normal"));
+			if (model instanceof IBakedModel) {
+				IBakedModel prismModel = (IBakedModel) model;
+				BakedModelBlockDeckPrism newPrismModel = new BakedModelBlockDeckPrism(prismModel);
+				event.getModelRegistry().putObject(new ModelResourceLocation(block.getRegistryName(), "normal"), newPrismModel);
+			}
 		}
-		
 	}
 	
 }

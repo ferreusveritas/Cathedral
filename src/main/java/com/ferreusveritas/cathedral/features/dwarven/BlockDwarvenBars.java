@@ -34,7 +34,7 @@ public class BlockDwarvenBars extends BlockPane {
 		setSoundType(SoundType.METAL);
 		setResistance(20.0F);
 		setHardness(2.5F);
-		setCreativeTab(CathedralMod.tabDwemer);
+		setCreativeTab(CathedralMod.dwarven.tabDwemer);
 	}
 	
 	public BlockDwarvenBars(){

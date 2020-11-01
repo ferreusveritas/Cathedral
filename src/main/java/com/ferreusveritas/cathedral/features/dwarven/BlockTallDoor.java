@@ -45,7 +45,7 @@ public class BlockTallDoor extends Block {
 		super(materialIn);
 		setRegistryName(name);
 		setUnlocalizedName(name);
-		setCreativeTab(CathedralMod.tabDwemer);
+		setCreativeTab(CathedralMod.dwarven.tabDwemer);
 		this.setDefaultState(this.blockState.getBaseState()
 				.withProperty(BlockDoor.FACING, EnumFacing.NORTH)
 				.withProperty(BlockDoor.OPEN, Boolean.valueOf(false))
