@@ -8,25 +8,25 @@
 	},
 	"variants": {
 		"normal": [{}],
-		"facing=north,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 180 },
-		"facing=east,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 270 },
-		"facing=south,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 0 },
-		"facing=west,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 90 },
+		"facing=north,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 180, "custom": { "ambient": false } },
+		"facing=east,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 270, "custom": { "ambient": false } },
+		"facing=south,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 0, "custom": { "ambient": false } },
+		"facing=west,mount=ceiling": { "model": "cathedral:gargoyle_ceiling.obj", "y": 90, "custom": { "ambient": false } },
 		
-		"facing=north,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 180 },
-		"facing=east,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 270 },
-		"facing=south,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 0 },
-		"facing=west,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 90 },
+		"facing=north,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 180, "custom": { "ambient": false } },
+		"facing=east,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 270, "custom": { "ambient": false } },
+		"facing=south,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 0, "custom": { "ambient": false } },
+		"facing=west,mount=wall": { "model": "cathedral:gargoyle_wall.obj", "y": 90, "custom": { "ambient": false } },
 		
-		"facing=north,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 180 },
-		"facing=east,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 270 },
-		"facing=south,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 0 },
-		"facing=west,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 90 },
+		"facing=north,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 180, "custom": { "ambient": false } },
+		"facing=east,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 270, "custom": { "ambient": false } },
+		"facing=south,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 0, "custom": { "ambient": false } },
+		"facing=west,mount=floor": { "model": "cathedral:gargoyle_floor.obj", "y": 90, "custom": { "ambient": false } },
 		
-		"facing=north,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 180 },
-		"facing=east,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 270 },
-		"facing=south,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 0 },
-		"facing=west,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 90 },
+		"facing=north,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 180, "custom": { "ambient": false } },
+		"facing=east,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 270, "custom": { "ambient": false } },
+		"facing=south,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 0, "custom": { "ambient": false } },
+		"facing=west,mount=fence": { "model": "cathedral:gargoyle_floor.obj", "y": 90, "custom": { "ambient": false } },
 
 		"inventory": [{
 			"transform": "forge:default-item"

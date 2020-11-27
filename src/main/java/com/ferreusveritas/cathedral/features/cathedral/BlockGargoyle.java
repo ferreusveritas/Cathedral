@@ -31,14 +31,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockGargoyle extends Block {
-
-	public static final String name = "gargoyle";
-
-    public static final PropertyDirection FACING = BlockHorizontal.FACING;
-    public static final PropertyEnum<EnumMount> MOUNT = PropertyEnum.<EnumMount>create("mount", EnumMount.class);
 	
-    private EnumMaterial enumMaterial;
-    
+	public static final String name = "gargoyle";
+	
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyEnum<EnumMount> MOUNT = PropertyEnum.<EnumMount>create("mount", EnumMount.class);
+	
+	private EnumMaterial enumMaterial;
+	
 	public BlockGargoyle(EnumMaterial material) {
 		this(name, material);
 	}
@@ -58,7 +58,7 @@ public class BlockGargoyle extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FACING, MOUNT});
+		return new BlockStateContainer(this, new IProperty[] {FACING, MOUNT});
 	}
 	
 	/** Convert the given metadata into a BlockState for this Block */
@@ -66,14 +66,14 @@ public class BlockGargoyle extends Block {
 	public IBlockState getStateFromMeta(int meta) {
 		int facingNum = meta & 3;
 		int mountNum = (meta >> 2) & 3;
-				
+		
 		return getDefaultState().withProperty(FACING, EnumFacing.HORIZONTALS[facingNum]).withProperty(MOUNT, EnumMount.values()[mountNum]);
 	}
 	
 	/** Convert the BlockState into the correct metadata value */
 	@Override
 	public int getMetaFromState(IBlockState state) {
-
+		
 		int facingNum = 0;
 		
 		switch(state.getValue(FACING)) {
@@ -96,14 +96,14 @@ public class BlockGargoyle extends Block {
 	
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        IBlockState iblockstate = super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
-        
-        switch(facing) {
+		IBlockState iblockstate = super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
+		
+		switch(facing) {
 			case UP:	iblockstate = iblockstate.withProperty(MOUNT, EnumMount.FLOOR).withProperty(FACING, placer.getHorizontalFacing().getOpposite()); break;
 			case DOWN:	iblockstate = iblockstate.withProperty(MOUNT, EnumMount.CEILING).withProperty(FACING, placer.getHorizontalFacing().getOpposite()); break;
 			default: 	iblockstate = iblockstate.withProperty(MOUNT, EnumMount.WALL).withProperty(FACING, facing); break;
-        }
-        
+		}
+		
 		return iblockstate;
 	}
 	
@@ -116,7 +116,7 @@ public class BlockGargoyle extends Block {
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-
+	
 	/** Used to determine ambient occlusion and culling when rebuilding chunks for render */
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
@@ -140,21 +140,21 @@ public class BlockGargoyle extends Block {
 		TextureAtlasSprite texture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
 		
 		if (!state.getBlock().isAir(state, world, pos)) {
-            for (int j = 0; j < 4; ++j) {
-                for (int k = 0; k < 4; ++k) {
-                    for (int l = 0; l < 4; ++l) {
-                    	double d0 = ((double) j + 0.5D) / 4.0D;
-                        double d1 = ((double) k + 0.5D) / 4.0D;
-                        double d2 = ((double) l + 0.5D) / 4.0D;
-                    	
-                        ParticleDigging particle = (ParticleDigging) manager.spawnEffectParticle(EnumParticleTypes.BLOCK_CRACK.getParticleID(), (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, Block.getStateId(state));
-                    	if (particle != null) {
-                    		particle.setParticleTexture(texture);
-            				particle.setBlockPos(pos);
-                    	}
-                    }
-                }
-            }
+			for (int j = 0; j < 4; ++j) {
+				for (int k = 0; k < 4; ++k) {
+					for (int l = 0; l < 4; ++l) {
+						double d0 = ((double) j + 0.5D) / 4.0D;
+						double d1 = ((double) k + 0.5D) / 4.0D;
+						double d2 = ((double) l + 0.5D) / 4.0D;
+						
+						ParticleDigging particle = (ParticleDigging) manager.spawnEffectParticle(EnumParticleTypes.BLOCK_CRACK.getParticleID(), (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, Block.getStateId(state));
+						if (particle != null) {
+							particle.setParticleTexture(texture);
+							particle.setBlockPos(pos);
+						}
+					}
+				}
+			}
 		}
 		
 		return true;
@@ -173,27 +173,27 @@ public class BlockGargoyle extends Block {
 		if(block != Blocks.AIR) {
 			state = block.getDefaultState();
 		}
-
+		
 		worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, entity.posX, entity.posY, entity.posZ, numberOfParticles, 0.0D, 0.0D, 0.0D, 0.15D, Block.getStateId(state));
 		return true;
 	}
 	
-    public static enum EnumMount implements IStringSerializable {
-    	CEILING("ceiling"),
-    	WALL("wall"),
-    	FLOOR("floor"),
-    	FENCE("fence");
-
-    	String name;
-    	
-    	private EnumMount(String name) {
-    		this.name = name;
+	public static enum EnumMount implements IStringSerializable {
+		CEILING("ceiling"),
+		WALL("wall"),
+		FLOOR("floor"),
+		FENCE("fence");
+		
+		String name;
+		
+		private EnumMount(String name) {
+			this.name = name;
 		}
-    	
+		
 		@Override
 		public String getName() {
 			return name;
 		}
-    }
+	}
 	
 }

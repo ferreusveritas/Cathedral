@@ -18,10 +18,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 
 public class BlockGlassStained extends BlockGlass {
-
+	
 	public static final String name = "stainedglass";
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
-
+	
 	public BlockGlassStained() {
 		this(name);
 	}
