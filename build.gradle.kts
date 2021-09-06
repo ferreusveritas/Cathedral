@@ -2,12 +2,17 @@ import org.apache.tools.ant.filters.ReplaceTokens
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
+fun property(key: String) = project.findProperty(key).toString()
+
 plugins {
     id("java")
     id("net.minecraftforge.gradle")
 }
 
-fun property(key: String) = project.findProperty(key).toString()
+repositories {
+    maven("https://maven.tterrag.com/")
+    maven("https://maven.blamejared.com")
+}
 
 val modName = property("modName")
 val modId = property("modId")
@@ -22,6 +27,7 @@ group = property("group")
 
 minecraft {
     mappings("snapshot", mappingsVersion)
+    accessTransformer(file("src/main/resources/META-INF/accesstransformer.cfg"))
 
     runs {
         create("client") {
@@ -51,7 +57,11 @@ minecraft {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:${mcVersion}-${forgeVersion}")
+    minecraft("net.minecraftforge:forge:$mcVersion-$forgeVersion")
+
+    runtimeOnly("team.chisel.ctm:CTM:MC1.12.2-1.0.2.31")
+    runtimeOnly("team.chisel:Chisel:MC1.12.2-1.0.2.45")
+    implementation("vazkii.patchouli:Patchouli:1.0-19.96")
 }
 
 // Workaround for resources issue. Use gradle tasks rather than generated runs for now.
