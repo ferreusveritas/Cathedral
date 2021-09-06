@@ -167,7 +167,8 @@ public class Extras implements IFeature {
 		
 		////// Grass o'Lantern //////
 		
-		blockGrassOLantern = new BlockGrassOLantern();
+		blockGrassOLantern = new BlockGrassOLantern()
+				.setHardness(0.6f);
 
 	}
 
