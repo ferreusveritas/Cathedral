@@ -26,6 +26,8 @@ tile.basalt_stairs_carved_smallbricks.name=Basalt Small Bricks Stairs
 tile.basalt_stairs_carved_tiles.name=Basalt Tiles Stairs
 tile.basalt_stairs_carved_slabs.name=Basalt Slabs Stairs
 
+tile.basalt_wall_bricks.name=Basalt Brick Wall
+
 
 tile.basalt_block_checkered.normal.name=Checkered
 tile.basalt_block_checkered.border.name=Checkered Border

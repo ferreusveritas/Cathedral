@@ -1,7 +1,5 @@
 package com.ferreusveritas.cathedral.features.basalt;
 
-import java.util.ArrayList;
-
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
@@ -9,16 +7,11 @@ import com.ferreusveritas.cathedral.compat.CompatThermalExpansion;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemMultiTexture;
-import net.minecraft.item.ItemSlab;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -30,6 +23,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.ArrayList;
+
 public class Basalt implements IFeature {
 	
 	public static final String featureName = "basalt";
@@ -38,12 +33,14 @@ public class Basalt implements IFeature {
 	public Block slabCarved;
 	public Block slabCarvedDouble;
 	public ArrayList<Block> stairsCarved = new ArrayList<>();
+
+	public Block brickWall;
 	
 	public Block blockCheckered;
 	public Block slabCheckered;
 	public Block slabCheckeredDouble;
 	public ArrayList<Block> stairsCheckered = new ArrayList<>();
-	
+
 	public final CreativeTabs tabBasalt;
 	
 	public Basalt() {
@@ -85,6 +82,11 @@ public class Basalt implements IFeature {
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			stairsCarved.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState()).setCreativeTab(tabBasalt));
 		}
+
+		brickWall = new BlockBrickWallBasalt(blockCarved, featureName + "_wall_bricks")
+				.setCreativeTab(tabBasalt)
+				.setHardness(CathedralMod.basaltHardness)
+				.setResistance(CathedralMod.basaltResistance);
 		
 		//Create checkered blocks		
 		blockCheckered = new BlockCheckered(featureObjectName(BlockForm.BLOCK, "checkered"));
@@ -102,7 +104,7 @@ public class Basalt implements IFeature {
 		for(BlockSlabCheckered.EnumType type: BlockSlabCheckered.EnumType.values()) {
 			stairsCheckered.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "checkered_" + type.getName() ), blockCheckered.getDefaultState()).setCreativeTab(tabBasalt));
 		}
-		
+
 	}
 	
 	@Override
@@ -115,7 +117,8 @@ public class Basalt implements IFeature {
 		registry.registerAll(
 				blockCarved,
 				slabCarved,
-				slabCarvedDouble
+				slabCarvedDouble,
+				brickWall
 				);
 		
 		registry.registerAll(stairsCarved.toArray(new Block[0]));
@@ -148,8 +151,10 @@ public class Basalt implements IFeature {
 		for(BlockSlabBasalt.EnumType type: BlockSlabBasalt.EnumType.values()) {
 			registry.register(new ItemBlock(stairsCarved.get(type.ordinal())).setRegistryName(stairsCarved.get(type.ordinal()).getRegistryName()));
 		}
-		
-		
+
+		//Basalt Wall
+		registry.register(new ItemBlock(brickWall).setRegistryName(brickWall.getRegistryName()));
+
 		//Checkered Blocks
 		registry.register(new ItemMultiTexture(blockCheckered, blockCheckered, new ItemMultiTexture.Mapper() {
 			public String apply(ItemStack stack) {
@@ -187,6 +192,10 @@ public class Basalt implements IFeature {
 	
 	public static ItemStack getRawBasalt() {
 		return getItemBlockStack("chisel", "basalt2", 7);
+	}
+
+	public static ItemStack getBasaltBricks() {
+		return getItemBlockStack("chisel", "basalt2", 0);
 	}
 	
 	public static ItemStack getRawMarble() {
@@ -229,6 +238,15 @@ public class Basalt implements IFeature {
 						);
 			}
 		}
+
+		GameRegistry.addShapedRecipe(
+				brickWall.getRegistryName(),
+				null,
+				new ItemStack(brickWall, 6, 0),
+				"xxx",
+				"xxx",
+				'x', getBasaltBricks()
+		);
 		
 		//Checkered Tile Recipes
 		for( boolean flip: new boolean[] { false, true } ) {
@@ -282,8 +300,10 @@ public class Basalt implements IFeature {
 		}
 		
 		stairsCarved.forEach(s -> ModelHelper.regModel(s));
-		
-		
+
+		ModelHelper.regModel(Item.getItemFromBlock(brickWall), 0, brickWall.getRegistryName());
+
+
 		for(BlockCheckered.EnumType type: BlockCheckered.EnumType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(blockCheckered), type.getMetadata(), new ResourceLocation(ModConstants.MODID, blockCheckered.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
