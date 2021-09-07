@@ -2,6 +2,7 @@ package com.ferreusveritas.cathedral.features.basalt;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
+import com.ferreusveritas.cathedral.common.blocks.BlockBaseWall;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.compat.CompatThermalExpansion;
 import com.ferreusveritas.cathedral.features.BlockForm;
@@ -83,7 +84,7 @@ public class Basalt implements IFeature {
 			stairsCarved.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "carved_" + type.getName() ), blockCarved.getDefaultState()).setCreativeTab(tabBasalt));
 		}
 
-		brickWall = new BlockBrickWallBasalt(blockCarved, featureName + "_wall_bricks")
+		brickWall = new BlockBaseWall(blockCarved, featureName + "_wall_bricks")
 				.setCreativeTab(tabBasalt)
 				.setHardness(CathedralMod.basaltHardness)
 				.setResistance(CathedralMod.basaltResistance);

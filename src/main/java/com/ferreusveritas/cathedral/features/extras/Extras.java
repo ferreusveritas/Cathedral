@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
+import com.ferreusveritas.cathedral.common.blocks.BlockBaseWall;
 import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.BlockForm;
@@ -37,6 +38,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import static com.ferreusveritas.cathedral.features.basalt.Basalt.getItemBlockStack;
+
 public class Extras implements IFeature {
 
 	public static final String featureName = "extras";
@@ -49,6 +52,7 @@ public class Extras implements IFeature {
 
 	public Block slabLimestone;
 	public Block slabLimestoneDouble;
+	public Block brickWallLimestone;
 
 	public Block slabCobblestone;
 	public Block slabCobblestoneDouble;
@@ -130,7 +134,12 @@ public class Extras implements IFeature {
 		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
 			stairsLimestone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "limestone_" + type.getName() ), Blocks.COBBLESTONE.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
 		}
-				
+
+		brickWallLimestone = new BlockBaseWall(slabLimestone, featureName + "_limestone_wall_bricks")
+				.setCreativeTab(CathedralMod.tabCathedral)
+				.setHardness(2.0f)
+				.setResistance(10.0f);
+
 		
 		////// Cobblestone //////
 		
@@ -185,6 +194,7 @@ public class Extras implements IFeature {
 			slabEndstoneDouble,
 			slabLimestone,
 			slabLimestoneDouble,
+			brickWallLimestone,
 			slabCobblestone,
 			slabCobblestoneDouble,
 			slabMarble,
@@ -223,6 +233,9 @@ public class Extras implements IFeature {
 			registry.register(new ItemBlock(stairsLimestone.get(type.ordinal())).setRegistryName(stairsLimestone.get(type.ordinal()).getRegistryName()));
 		}
 
+		//Limestone Wall
+		registry.register(new ItemBlock(brickWallLimestone).setRegistryName(brickWallLimestone.getRegistryName()));
+
 		//Cobblestone Slabs
 		ItemSlab itemSlabCobblestone = new ItemSlab(slabCobblestone, (BlockSlab)slabCobblestone, (BlockSlab)slabCobblestoneDouble);
 		itemSlabCobblestone.setRegistryName(slabCobblestone.getRegistryName());
@@ -259,6 +272,10 @@ public class Extras implements IFeature {
 
 	public static ItemStack getRawLimestone() {
 		return new ItemStack(Block.REGISTRY.getObject(new ResourceLocation("chisel", "limestone2")), 1, 7);
+	}
+
+	public static ItemStack getLimestoneBricks() {
+		return getItemBlockStack("chisel", "limestone2", 1);
 	}
 	
 	@Override
@@ -318,6 +335,16 @@ public class Extras implements IFeature {
 						);
 			}
 		}
+
+		//Limestone Wall
+		GameRegistry.addShapedRecipe(
+				brickWallLimestone.getRegistryName(),
+				null,
+				new ItemStack(brickWallLimestone, 6, 0),
+						"xxx",
+				"xxx",
+				'x', getLimestoneBricks()
+		);
 		
 		//Cobblestone Slab and Stairs Recipes
 		for(EnumCobblestoneSlabType type: EnumCobblestoneSlabType.values()) {
@@ -393,6 +420,7 @@ public class Extras implements IFeature {
 		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabLimestone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabLimestone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
 		}
+		ModelHelper.regModel(Item.getItemFromBlock(brickWallLimestone), 0, brickWallLimestone.getRegistryName());
 
 		for(EnumCobblestoneSlabType type: EnumCobblestoneSlabType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabCobblestone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabCobblestone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));

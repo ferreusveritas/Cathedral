@@ -1,4 +1,4 @@
-package com.ferreusveritas.cathedral.features.basalt;
+package com.ferreusveritas.cathedral.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
@@ -11,9 +11,9 @@ import net.minecraft.util.NonNullList;
 /**
  * @author Harley O'Connor
  */
-public class BlockBrickWallBasalt extends BlockWall {
+public class BlockBaseWall extends BlockWall {
 
-    public BlockBrickWallBasalt(Block modelBlock, String name) {
+    public BlockBaseWall(Block modelBlock, String name) {
         super(modelBlock);
 
         // Re-construct state container to remove unneeded variant property.
@@ -26,7 +26,7 @@ public class BlockBrickWallBasalt extends BlockWall {
         this.setRegistryName(name);
     }
 
-    private BlockStateContainer newBlockState() {
+    protected BlockStateContainer newBlockState() {
         return new BlockStateContainer(this, UP, NORTH, EAST, WEST, SOUTH);
     }
 
@@ -43,6 +43,11 @@ public class BlockBrickWallBasalt extends BlockWall {
     @Override
     public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> stacks) {
         stacks.add(new ItemStack(this));
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return 0;
     }
 
 }

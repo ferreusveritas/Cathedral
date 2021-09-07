@@ -5,7 +5,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "cathedral:basalt/block_bricks_wall_post"
+        "model": "cathedral:extras/block_limestone_bricks_wall_post"
       }
     },
     {
@@ -13,7 +13,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "cathedral:basalt/block_bricks_wall_side",
+        "model": "cathedral:extras/block_limestone_bricks_wall_side",
         "uvlock": true
       }
     },
@@ -22,7 +22,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "cathedral:basalt/block_bricks_wall_side",
+        "model": "cathedral:extras/block_limestone_bricks_wall_side",
         "y": 90,
         "uvlock": true
       }
@@ -32,7 +32,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "cathedral:basalt/block_bricks_wall_side",
+        "model": "cathedral:extras/block_limestone_bricks_wall_side",
         "y": 180,
         "uvlock": true
       }
@@ -42,7 +42,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "cathedral:basalt/block_bricks_wall_side",
+        "model": "cathedral:extras/block_limestone_bricks_wall_side",
         "y": 270,
         "uvlock": true
       }
