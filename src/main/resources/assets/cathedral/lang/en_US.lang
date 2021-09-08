@@ -179,6 +179,12 @@ tile.extras_slab_endstone.slabs.name=Endstone Slab
 tile.extras_slab_endstone.checkered.name=Endstone Checkered Slab
 
 
+tile.extras_stairs_stone_raw.name=Stone Raw Stairs
+tile.extras_stairs_stone_smalltiles.name=Stone Small Tiles Stairs
+tile.extras_stairs_stone_layers.name=Stone Layers Stairs
+tile.extras_stairs_stone_smallbricks.name=Stone Small Bricks Stairs
+tile.extras_stairs_stone_tiles.name=Stone Tiles Stairs
+
 tile.extras_stairs_endstone_raw.name=Endstone Raw Stairs
 tile.extras_stairs_endstone_smalltiles.name=Endstone Small Tiles Stairs
 tile.extras_stairs_endstone_layers.name=Endstone Layers Stairs

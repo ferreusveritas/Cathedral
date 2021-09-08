@@ -1,7 +1,5 @@
 package com.ferreusveritas.cathedral.features.extras;
 
-import java.util.ArrayList;
-
 import com.ferreusveritas.cathedral.CathedralMod;
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.BlockBaseWall;
@@ -9,14 +7,8 @@ import com.ferreusveritas.cathedral.common.blocks.BlockMultiVariant;
 import com.ferreusveritas.cathedral.common.blocks.BlockStairsGeneric;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumCobblestoneSlabType;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneSlabType;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumEndStoneType;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumLimestoneSlabType;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumMarbleSlabType;
-import com.ferreusveritas.cathedral.features.extras.FeatureTypes.EnumStoneType;
+import com.ferreusveritas.cathedral.features.extras.FeatureTypes.*;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -32,11 +24,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 import static com.ferreusveritas.cathedral.features.basalt.Basalt.getItemBlockStack;
 
@@ -59,7 +54,8 @@ public class Extras implements IFeature {
 	
 	public Block slabMarble;
 	public Block slabMarbleDouble;
-	
+
+	public ArrayList<Block> stairsStone = new ArrayList<>();
 	public ArrayList<Block> stairsEndstone = new ArrayList<>();
 	public ArrayList<Block> stairsLimestone = new ArrayList<>();
 	public ArrayList<Block> stairsCobblestone = new ArrayList<>();
@@ -91,6 +87,10 @@ public class Extras implements IFeature {
 		}.setCreativeTab(CathedralMod.tabCathedral)
 				.setHardness(1.5f)
 				.setResistance(30.0f);
+
+		for (FeatureTypes.EnumStoneStairType type: FeatureTypes.EnumStoneStairType.values()) {
+			stairsStone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "stone_" + type.getName()), blockStone.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
+		}
 
 		
 		////// Endstone //////
@@ -156,7 +156,7 @@ public class Extras implements IFeature {
 		for(EnumCobblestoneSlabType type: EnumCobblestoneSlabType.values()) {
 			stairsCobblestone.add(new BlockStairsGeneric(featureObjectName(BlockForm.STAIRS, "cobblestone_" + type.getName() ), Blocks.COBBLESTONE.getDefaultState()).setCreativeTab(CathedralMod.tabCathedral));
 		}
-		
+
 		////// Marble //////
 		
 		slabMarble = new BlockSlabMarble(featureObjectName(BlockForm.SLAB, "marble"))
@@ -202,6 +202,7 @@ public class Extras implements IFeature {
 			blockGrassOLantern
 		);
 
+		registry.registerAll(stairsStone.toArray(new Block[0]));
 		registry.registerAll(stairsEndstone.toArray(new Block[0]));
 		registry.registerAll(stairsLimestone.toArray(new Block[0]));
 		registry.registerAll(stairsCobblestone.toArray(new Block[0]));
@@ -211,6 +212,13 @@ public class Extras implements IFeature {
 	@Override
 	public void registerItems(IForgeRegistry<Item> registry) {
 		registry.register(((BlockMultiVariant<EnumStoneType>)blockStone).getItemMultiTexture());
+
+		//Stone Stairs
+		for (FeatureTypes.EnumStoneStairType type: FeatureTypes.EnumStoneStairType.values()) {
+			final Block stairBlock = stairsStone.get(type.ordinal());
+			registry.register(new ItemBlock(stairBlock).setRegistryName(stairBlock.getRegistryName()));
+		}
+
 		registry.register(((BlockMultiVariant<EnumEndStoneType>)blockEndstone).getItemMultiTexture());
 
 		//Endstone Slabs
@@ -280,6 +288,26 @@ public class Extras implements IFeature {
 	
 	@Override
 	public void registerRecipes(IForgeRegistry<IRecipe> registry) {
+
+		//Stone Stairs Recipes
+		for(FeatureTypes.EnumStoneStairType type: FeatureTypes.EnumStoneStairType.values()) {
+			final Block baseBlock = ForgeRegistries.BLOCKS.getValue(type.getBaseResourceLocation());
+
+			if (baseBlock == null) {
+				throw new RuntimeException("Base block for stone stairs with name \"" + baseBlock.getRegistryName() + "\" did not exist.");
+			}
+
+			final Block stairsBlock = stairsStone.get(type.ordinal());
+			GameRegistry.addShapedRecipe(
+					new ResourceLocation(ModConstants.MODID, stairsBlock.getRegistryName().getResourcePath()),
+					null,
+					new ItemStack(stairsBlock, 8), //Output
+					"x  ",
+					"xx ",
+					"xxx",
+					'x', new ItemStack(baseBlock, 1, type.getBaseMeta())
+			);
+		}
 
 		String endstoneOre = "blockEndstone";
 
@@ -431,11 +459,12 @@ public class Extras implements IFeature {
 		}
 		
 		ModelHelper.regModel(blockGrassOLantern);
-		
-		stairsEndstone.forEach(s -> ModelHelper.regModel(s));
-		stairsLimestone.forEach(s -> ModelHelper.regModel(s));
-		stairsCobblestone.forEach(s -> ModelHelper.regModel(s));
-		stairsMarble.forEach(s -> ModelHelper.regModel(s));
+
+		stairsStone.forEach(ModelHelper::regModel);
+		stairsEndstone.forEach(ModelHelper::regModel);
+		stairsLimestone.forEach(ModelHelper::regModel);
+		stairsCobblestone.forEach(ModelHelper::regModel);
+		stairsMarble.forEach(ModelHelper::regModel);
 
 	}
 
@@ -463,7 +492,10 @@ public class Extras implements IFeature {
 		for(EnumMarbleSlabType type: EnumMarbleSlabType.values()) {
 			addChiselVariation("marbleslab", slabMarble, type.getMetadata());
 		}
-		
+
+		addChiselVariation("stonebrickstairs", Blocks.STONE_BRICK_STAIRS, 0);
+		stairsStone.forEach(s -> addChiselVariation("stonebrickstairs", s, 0));
+
 		stairsEndstone.forEach(s -> addChiselVariation("endstonestairs", s, 0));
 
 		stairsLimestone.forEach(s -> addChiselVariation("limestonestairs", s, 0));

@@ -1,0 +1,8 @@
+{
+	"parent": "block/stairs",
+	"textures": {
+		"bottom": "chisel:blocks/stone/tiles-medium",
+		"top": "chisel:blocks/stone/tiles-medium",
+		"side": "chisel:blocks/stone/tiles-medium"
+	}
+}

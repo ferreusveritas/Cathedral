@@ -1,7 +1,6 @@
 package com.ferreusveritas.cathedral.features.extras;
 
 import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
-
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -31,7 +30,51 @@ public class FeatureTypes {
 		}
 	
 	}
-	
+
+	public static enum EnumStoneStairType implements IStringSerializable {
+
+		RAW("raw", new ResourceLocation("stone"), 0),
+		SMALLTILES("smalltiles", new ResourceLocation("chisel", "stonebrick"), 8),
+		LAYERS("layers", new ResourceLocation("chisel", "stonebrick"), 15),
+		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "stonebrick2"), 0),
+		TILES("tiles", new ResourceLocation("chisel", "stonebrick2"), 1);
+
+		private final ResourceLocation baseResourceLocation;
+		private final String name;
+		private final int baseMeta;
+
+		EnumStoneStairType(String name, ResourceLocation baseResourceLocation, int baseMeta) {
+			this.name = name;
+			this.baseResourceLocation = baseResourceLocation;
+			this.baseMeta = baseMeta;
+		}
+
+		public int getMetadata() {
+			return ordinal();
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		public static EnumStoneStairType byMetadata(int meta) {
+			return values()[meta];
+		}
+
+		public String getUnlocalizedName() {
+			return name;
+		}
+
+		public ResourceLocation getBaseResourceLocation() {
+			return baseResourceLocation;
+		}
+
+		public int getBaseMeta() {
+			return baseMeta;
+		}
+	}
+
 	public static enum EnumEndStoneType implements StandardEnum {
 		PAVER,
 		CHECKERED;
