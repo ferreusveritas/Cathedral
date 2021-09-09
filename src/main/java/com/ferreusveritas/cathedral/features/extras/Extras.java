@@ -49,6 +49,7 @@ public class Extras implements IFeature {
 	public Block slabLimestoneDouble;
 	public Block brickWallLimestone;
 
+	public Block blockCobblestone;
 	public Block slabCobblestone;
 	public Block slabCobblestoneDouble;
 	
@@ -142,7 +143,16 @@ public class Extras implements IFeature {
 
 		
 		////// Cobblestone //////
-		
+
+		blockCobblestone = new BlockMultiVariant<EnumCobblestoneType>(Material.ROCK, EnumCobblestoneType.class, featureObjectName(BlockForm.BLOCK, "cobblestone")) {
+			@Override
+			public void makeVariantProperty() {
+				variant = PropertyEnum.create("variant", EnumCobblestoneType.class);
+			}
+		}.setCreativeTab(CathedralMod.tabCathedral)
+				.setHardness(2.0f)
+				.setResistance(10.0f);
+
 		slabCobblestone = new BlockSlabCobblestone(featureObjectName(BlockForm.SLAB, "cobblestone"))
 				.setCreativeTab(CathedralMod.tabCathedral)
 				.setHardness(2.0f)
@@ -195,6 +205,7 @@ public class Extras implements IFeature {
 			slabLimestone,
 			slabLimestoneDouble,
 			brickWallLimestone,
+			blockCobblestone,
 			slabCobblestone,
 			slabCobblestoneDouble,
 			slabMarble,
@@ -248,6 +259,8 @@ public class Extras implements IFeature {
 		ItemSlab itemSlabCobblestone = new ItemSlab(slabCobblestone, (BlockSlab)slabCobblestone, (BlockSlab)slabCobblestoneDouble);
 		itemSlabCobblestone.setRegistryName(slabCobblestone.getRegistryName());
 		registry.register(itemSlabCobblestone);
+
+		registry.register(((BlockMultiVariant<EnumCobblestoneType>) blockCobblestone).getItemMultiTexture());
 		
 		//Cobblestone Stairs
 		for(EnumCobblestoneSlabType type: EnumCobblestoneSlabType.values()) {
@@ -440,6 +453,7 @@ public class Extras implements IFeature {
 	public void registerModels(ModelRegistryEvent event) {
 		((BlockMultiVariant<EnumStoneType>)blockStone).registerItemModels();
 		((BlockMultiVariant<EnumEndStoneType>)blockEndstone).registerItemModels();
+		((BlockMultiVariant<EnumEndStoneType>)blockCobblestone).registerItemModels();
 
 		for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
 			ModelHelper.regModel(Item.getItemFromBlock(slabEndstone), type.getMetadata(), new ResourceLocation(ModConstants.MODID, slabEndstone.getRegistryName().getResourcePath() + "." + type.getUnlocalizedName()));
@@ -481,6 +495,11 @@ public class Extras implements IFeature {
 			addChiselVariation("endstone", blockEndstone, type.getMetadata());
 		}
 
+		//Add chisel variations for Cobblestone Blocks
+		for(EnumCobblestoneType type: EnumCobblestoneType.values()) {
+			addChiselVariation("cobblestone", blockCobblestone, type.getMetadata());
+		}
+
 		for(EnumEndStoneSlabType type: EnumEndStoneSlabType.values()) {
 			addChiselVariation("endstoneslab", slabEndstone, type.getMetadata());
 		}
@@ -488,7 +507,12 @@ public class Extras implements IFeature {
 		for(EnumLimestoneSlabType type: EnumLimestoneSlabType.values()) {
 			addChiselVariation("limestoneslab", slabLimestone, type.getMetadata());
 		}
-		
+
+		addChiselVariation("cobblestoneslab", Blocks.STONE_SLAB, 3);
+		for(EnumCobblestoneSlabType type: EnumCobblestoneSlabType.values()) {
+			addChiselVariation("cobblestoneslab", slabCobblestone, type.getMetadata());
+		}
+
 		for(EnumMarbleSlabType type: EnumMarbleSlabType.values()) {
 			addChiselVariation("marbleslab", slabMarble, type.getMetadata());
 		}
@@ -499,6 +523,9 @@ public class Extras implements IFeature {
 		stairsEndstone.forEach(s -> addChiselVariation("endstonestairs", s, 0));
 
 		stairsLimestone.forEach(s -> addChiselVariation("limestonestairs", s, 0));
+
+		addChiselVariation("cobblestonestairs", Blocks.STONE_STAIRS, 0);
+		stairsCobblestone.forEach(s -> addChiselVariation("cobblestonestairs", s, 0));
 	
 		stairsMarble.forEach(s -> addChiselVariation("marblestairs", s, 0));
 		

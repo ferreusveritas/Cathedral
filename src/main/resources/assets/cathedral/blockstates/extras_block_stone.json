@@ -5,6 +5,7 @@
 		"variant=embedded"	:{"model": "cathedral:extras/block_stone_embedded"},
 		"variant=pillar"	:{"model": "cathedral:extras/block_stone_pillar"},
 		"variant=vault"		:{"model": "cathedral:extras/block_stone_vault"},
-		"variant=metalknot"	:{"model": "cathedral:extras/block_stone_metalknot"}
+		"variant=metalknot"	:{"model": "cathedral:extras/block_stone_metalknot"},
+		"variant=raw"	    :{"model": "cathedral:extras/block_stone_raw"}
     }
 }

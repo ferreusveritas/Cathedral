@@ -166,9 +166,11 @@ tile.extras_block_stone.embedded.name=Stone Embedded
 tile.extras_block_stone.pillar.name=Stone Pillar
 tile.extras_block_stone.vault.name=Stone Vault
 tile.extras_block_stone.metalknot.name=Stone Metal Knot
+tile.extras_block_stone.raw.name=Stone Raw
 
 tile.extras_block_endstone.paver.name=Endstone Paver 
 tile.extras_block_endstone.checkered.name=Endstone Checkered Tiles
+tile.extras_block_endstone.smooth.name=Endstone Smooth
 tile.extras_slab_endstone.raw.name=Endstone Raw Slab
 tile.extras_slab_endstone.smalltiles.name=Endstone Small Tiles Slab
 tile.extras_slab_endstone.layers.name=Endstone Layers Slab
@@ -209,6 +211,8 @@ tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
 tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
 
 tile.extras_limestone_wall_bricks.name=Limestone Brick Wall
+
+tile.extras_block_cobblestone.raw.name=Cobblestone Raw
 
 tile.extras_slab_cobblestone.raw.name=Cobblestone Raw Slab
 tile.extras_slab_cobblestone.smalltiles.name=Cobblestone Small Tiles Slab
