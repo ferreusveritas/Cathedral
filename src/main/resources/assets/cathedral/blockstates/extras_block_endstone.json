@@ -1,6 +1,7 @@
 {
     "variants": {
     	"variant=paver"		:{"model": "cathedral:extras/block_endstone_paver"},
-		"variant=checkered" :{"model": "cathedral:extras/block_endstone_checkered"}
+		"variant=checkered" :{"model": "cathedral:extras/block_endstone_checkered"},
+        "variant=smooth"    :{"model": "cathedral:extras/block_endstone_smooth"}
     }
 }

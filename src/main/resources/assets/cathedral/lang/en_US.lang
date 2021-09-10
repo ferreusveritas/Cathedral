@@ -26,6 +26,8 @@ tile.basalt_stairs_carved_smallbricks.name=Basalt Small Bricks Stairs
 tile.basalt_stairs_carved_tiles.name=Basalt Tiles Stairs
 tile.basalt_stairs_carved_slabs.name=Basalt Slabs Stairs
 
+tile.basalt_wall_bricks.name=Basalt Brick Wall
+
 
 tile.basalt_block_checkered.normal.name=Checkered
 tile.basalt_block_checkered.border.name=Checkered Border
@@ -164,9 +166,11 @@ tile.extras_block_stone.embedded.name=Stone Embedded
 tile.extras_block_stone.pillar.name=Stone Pillar
 tile.extras_block_stone.vault.name=Stone Vault
 tile.extras_block_stone.metalknot.name=Stone Metal Knot
+tile.extras_block_stone.raw.name=Stone Raw
 
 tile.extras_block_endstone.paver.name=Endstone Paver 
 tile.extras_block_endstone.checkered.name=Endstone Checkered Tiles
+tile.extras_block_endstone.smooth.name=Endstone Smooth
 tile.extras_slab_endstone.raw.name=Endstone Raw Slab
 tile.extras_slab_endstone.smalltiles.name=Endstone Small Tiles Slab
 tile.extras_slab_endstone.layers.name=Endstone Layers Slab
@@ -176,6 +180,12 @@ tile.extras_slab_endstone.tiles.name=Endstone Tiles Slab
 tile.extras_slab_endstone.slabs.name=Endstone Slab
 tile.extras_slab_endstone.checkered.name=Endstone Checkered Slab
 
+
+tile.extras_stairs_stone_raw.name=Stone Raw Stairs
+tile.extras_stairs_stone_smalltiles.name=Stone Small Tiles Stairs
+tile.extras_stairs_stone_layers.name=Stone Layers Stairs
+tile.extras_stairs_stone_smallbricks.name=Stone Small Bricks Stairs
+tile.extras_stairs_stone_tiles.name=Stone Tiles Stairs
 
 tile.extras_stairs_endstone_raw.name=Endstone Raw Stairs
 tile.extras_stairs_endstone_smalltiles.name=Endstone Small Tiles Stairs
@@ -199,6 +209,10 @@ tile.extras_stairs_limestone_layers.name=Limestone Layers Stairs
 tile.extras_stairs_limestone_bricks.name=Limestone Bricks Stairs
 tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
 tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
+
+tile.extras_limestone_wall_bricks.name=Limestone Brick Wall
+
+tile.extras_block_cobblestone.raw.name=Cobblestone Raw
 
 tile.extras_slab_cobblestone.raw.name=Cobblestone Raw Slab
 tile.extras_slab_cobblestone.smalltiles.name=Cobblestone Small Tiles Slab

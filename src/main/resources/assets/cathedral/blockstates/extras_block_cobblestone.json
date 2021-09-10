@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "variant=raw"    :{"model": "cathedral:extras/block_cobblestone_raw"}
+    }
+}
