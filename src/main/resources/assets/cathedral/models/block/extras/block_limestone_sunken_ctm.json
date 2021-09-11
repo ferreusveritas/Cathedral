@@ -1,0 +1,7 @@
+{
+    "parent": "chisel:block/cube_ctm",
+    "textures": {
+        "all": "cathedral:blocks/extras/block_limestone_sunken",
+        "connected_tex": "cathedral:blocks/extras/block_limestone_sunken_ctm"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_top",
+    "textures": {
+        "top": "cathedral:blocks/extras/block_limestone_vault_top",
+        "side": "cathedral:blocks/extras/block_limestone_vault"
+    }
+}

@@ -160,6 +160,7 @@ tile.deckprism.green.name=Green Deck Prism
 tile.deckprism.red.name=Red Deck Prism
 tile.deckprism.black.name=Black Deck Prism
 
+
 tile.extras_block_stone.paver.name=Stone Paver
 tile.extras_block_stone.knot.name=Stone Knot
 tile.extras_block_stone.embedded.name=Stone Embedded
@@ -168,9 +169,16 @@ tile.extras_block_stone.vault.name=Stone Vault
 tile.extras_block_stone.metalknot.name=Stone Metal Knot
 tile.extras_block_stone.raw.name=Stone Raw
 
-tile.extras_block_endstone.paver.name=Endstone Paver 
+
+tile.extras_block_endstone.paver.name=Endstone Paver
 tile.extras_block_endstone.checkered.name=Endstone Checkered Tiles
 tile.extras_block_endstone.smooth.name=Endstone Smooth
+tile.extras_block_endstone.poison.name=Endstone Poison
+tile.extras_block_endstone.sunken_ctm.name=Endstone Sunken
+tile.extras_block_endstone.sunken_tile.name=Endstone Sunken Tile
+tile.extras_block_endstone.vault.name=Endstone Vault
+tile.extras_block_endstone.knot.name=Endstone Knot
+
 tile.extras_slab_endstone.raw.name=Endstone Raw Slab
 tile.extras_slab_endstone.smalltiles.name=Endstone Small Tiles Slab
 tile.extras_slab_endstone.layers.name=Endstone Layers Slab
@@ -195,6 +203,14 @@ tile.extras_stairs_endstone_smallbricks.name=Endstone Small Bricks Stairs
 tile.extras_stairs_endstone_tiles.name=Endstone Tiles Stairs
 tile.extras_stairs_endstone_slabs.name=Endstone Slabs Stairs
 tile.extras_stairs_endstone_checkered.name=Endstone Checkered Stairs
+
+
+tile.extras_block_limestone.paver.name=Limestone Paver
+tile.extras_block_limestone.poison.name=Limestone Poison
+tile.extras_block_limestone.sunken_ctm.name=Limestone Sunken
+tile.extras_block_limestone.sunken_tile.name=Limestone Sunken Tile
+tile.extras_block_limestone.vault.name=Limestone Vault
+tile.extras_block_limestone.knot.name=Limestone Knot
 
 tile.extras_slab_limestone.raw.name=Limestone Raw Slab
 tile.extras_slab_limestone.smalltiles.name=Limestone Small Tiles Slab
