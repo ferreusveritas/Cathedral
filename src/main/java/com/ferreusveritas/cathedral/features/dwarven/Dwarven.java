@@ -9,7 +9,6 @@ import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumCarvedType
 import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumGlassType;
 import com.ferreusveritas.cathedral.features.dwarven.FeatureTypes.EnumLightType;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
@@ -25,13 +24,14 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import static com.ferreusveritas.cathedral.util.InterModCommsUtils.addChiselVariation;
 
 public class Dwarven implements IFeature {
 	
@@ -260,11 +260,7 @@ public class Dwarven implements IFeature {
 			addChiselVariation("dwemerbars", barsNormal, type.getMetadata());
 		}
 	}
-	
-	private void addChiselVariation(String group, Block block, int meta) {
-		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
-	}
-	
+
 	@Override
 	public void postInit() {}
 }

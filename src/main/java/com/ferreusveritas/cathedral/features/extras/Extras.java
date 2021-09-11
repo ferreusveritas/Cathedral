@@ -23,7 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,6 +33,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.ArrayList;
 
 import static com.ferreusveritas.cathedral.features.basalt.Basalt.getItemBlockStack;
+import static com.ferreusveritas.cathedral.util.InterModCommsUtils.addChiselVariation;
 
 public class Extras implements IFeature {
 
@@ -539,10 +539,6 @@ public class Extras implements IFeature {
 		});
 		
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler( ( stack,  tint) -> tint == 0 ? 0xFF88DD00 : 0xFFFFFFFF, new Item[] {Item.getItemFromBlock(blockGrassOLantern)});
-	}
-	
-	private void addChiselVariation(String group, Block block, int meta) {
-		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
 	}
 
 	@Override

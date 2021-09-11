@@ -16,7 +16,6 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,6 +24,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
+
+import static com.ferreusveritas.cathedral.util.InterModCommsUtils.addChiselVariation;
 
 public class Basalt implements IFeature {
 	
@@ -349,11 +350,7 @@ public class Basalt implements IFeature {
 			}
 		}
 	}
-	
-	private void addChiselVariation(String group, Block block, int meta) {
-		FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + block.getRegistryName() + "|" + meta);
-	}
-	
+
 	@Override
 	public void postInit() {}
 }
