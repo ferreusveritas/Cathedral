@@ -2,7 +2,7 @@ package com.ferreusveritas.cathedral.common.blocks;
 
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
-
+import com.ferreusveritas.cathedral.util.InterModCommsUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -14,7 +14,6 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public abstract class BlockMultiVariant<E extends Enum<E> & StandardEnum> extends Block {
 	
@@ -78,9 +77,8 @@ public abstract class BlockMultiVariant<E extends Enum<E> & StandardEnum> extend
 	}
 	
 	public void addChiselVariation(String group) {
-		for(E type: values) {
-			FMLInterModComms.sendMessage("chisel", "variation:add", group + "|" + getRegistryName() + "|" + type.getMetadata());
-
+		for (E type: values) {
+			InterModCommsUtils.addChiselVariation(group, this, type.getMetadata());
 		}
 	}
 	

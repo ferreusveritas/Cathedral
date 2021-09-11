@@ -1,7 +1,5 @@
 package com.ferreusveritas.cathedral.features.cathedral;
 
-import java.util.function.BiConsumer;
-
 import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.features.BlockForm;
 import com.ferreusveritas.cathedral.features.IFeature;
@@ -10,8 +8,8 @@ import com.ferreusveritas.cathedral.models.ModelBlockPillar;
 import com.ferreusveritas.cathedral.models.ModelBlockRailing;
 import com.ferreusveritas.cathedral.models.ModelUtils;
 import com.ferreusveritas.cathedral.proxy.ModelHelper;
+import com.ferreusveritas.cathedral.util.InterModCommsUtils;
 import com.google.common.collect.Lists;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -22,10 +20,11 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.function.BiConsumer;
 
 public class Cathedral implements IFeature {
 	
@@ -108,7 +107,10 @@ public class Cathedral implements IFeature {
 	@Override
 	public void init() {
 		//Add chisel variations for Stained Glass Blocks
-		Lists.newArrayList(BlockGlassStained.EnumType.values()).forEach(type -> FMLInterModComms.sendMessage("chisel", "variation:add", "cathedralglass" + "|" + glassStained.getRegistryName() + "|" + type.getMetadata()));
+		Lists.newArrayList(BlockGlassStained.EnumType.values())
+				.forEach(type ->
+						InterModCommsUtils.addChiselVariation("cathedralglass", glassStained, type.getMetadata())
+				);
 	}
 	
 	@Override
