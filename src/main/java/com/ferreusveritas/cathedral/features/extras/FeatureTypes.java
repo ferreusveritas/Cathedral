@@ -1,5 +1,6 @@
 package com.ferreusveritas.cathedral.features.extras;
 
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
@@ -180,7 +181,8 @@ public class FeatureTypes {
 		LAYERS("layers", new ResourceLocation("chisel", "limestone"), 15),
 		BRICKS("bricks", new ResourceLocation("chisel", "limestone2"), 0),
 		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "limestone2"), 1),
-		TILES("tiles", new ResourceLocation("chisel", "limestone2"), 3);
+		TILES("tiles", new ResourceLocation("chisel", "limestone2"), 3),
+		SLABS("slabs", new ResourceLocation(ModConstants.MODID, "extras_block_endstone"), 0);
 		
 		private ResourceLocation baseResourceLocation;
 		private String name;

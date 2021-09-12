@@ -218,6 +218,7 @@ tile.extras_slab_limestone.layers.name=Limestone Layers Slab
 tile.extras_slab_limestone.bricks.name=Limestone Bricks Slab
 tile.extras_slab_limestone.smallbricks.name=Limestone Small Bricks Slab
 tile.extras_slab_limestone.tiles.name=Limestone Tiles Slab
+tile.extras_slab_limestone.slabs.name=Limestone Slab
 
 tile.extras_stairs_limestone_raw.name=Limestone Raw Stairs
 tile.extras_stairs_limestone_smalltiles.name=Limestone Small Tiles Stairs
@@ -225,6 +226,7 @@ tile.extras_stairs_limestone_layers.name=Limestone Layers Stairs
 tile.extras_stairs_limestone_bricks.name=Limestone Bricks Stairs
 tile.extras_stairs_limestone_smallbricks.name=Limestone Small Bricks Stairs
 tile.extras_stairs_limestone_tiles.name=Limestone Tiles Stairs
+tile.extras_stairs_limestone_slabs.name=Limestone Slabs Stairs
 
 tile.extras_limestone_wall_bricks.name=Limestone Brick Wall
 
