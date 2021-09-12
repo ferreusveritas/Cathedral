@@ -1,7 +1,6 @@
 {
-    "parent": "chisel:block/cube_ctm",
+    "parent": "block/cube_all",
     "textures": {
-        "all": "cathedral:blocks/extras/block_endstone_knot",
-        "connected_tex": "cathedral:blocks/extras/block_endstone_knot_ctm"
+        "all": "cathedral:blocks/extras/block_endstone_knot"
     }
 }
