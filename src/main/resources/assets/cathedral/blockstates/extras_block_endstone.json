@@ -1,7 +1,12 @@
 {
     "variants": {
-    	"variant=paver"		:{"model": "cathedral:extras/block_endstone_paver"},
-		"variant=checkered" :{"model": "cathedral:extras/block_endstone_checkered"},
-        "variant=smooth"    :{"model": "cathedral:extras/block_endstone_smooth"}
+    	"variant=paver"		 : { "model": "cathedral:extras/block_endstone_paver"       },
+		"variant=checkered"  : { "model": "cathedral:extras/block_endstone_checkered"   },
+        "variant=smooth"     : { "model": "cathedral:extras/block_endstone_smooth"      },
+        "variant=poison"     : { "model": "cathedral:extras/block_endstone_poison"      },
+        "variant=sunken_ctm" : { "model": "cathedral:extras/block_endstone_sunken_ctm"  },
+        "variant=sunken_tile": { "model": "cathedral:extras/block_endstone_sunken_tile" },
+        "variant=vault"      : { "model": "cathedral:extras/block_endstone_vault"       },
+        "variant=knot"       : { "model": "cathedral:extras/block_endstone_knot"        }
     }
 }

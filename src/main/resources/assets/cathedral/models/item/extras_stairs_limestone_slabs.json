@@ -1,0 +1,8 @@
+{
+	"parent": "block/stairs",
+	"textures": {
+		"bottom": "cathedral:blocks/extras/block_limestone_paver",
+		"top": "cathedral:blocks/extras/block_limestone_paver",
+		"side": "cathedral:blocks/extras/block_limestone_slabs"
+	}
+}

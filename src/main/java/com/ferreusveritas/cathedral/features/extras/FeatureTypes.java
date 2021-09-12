@@ -1,5 +1,6 @@
 package com.ferreusveritas.cathedral.features.extras;
 
+import com.ferreusveritas.cathedral.ModConstants;
 import com.ferreusveritas.cathedral.common.blocks.StandardEnum;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
@@ -79,7 +80,12 @@ public class FeatureTypes {
 	public static enum EnumEndStoneType implements StandardEnum {
 		PAVER,
 		CHECKERED,
-		SMOOTH; // Uses "raw" textures.
+		SMOOTH, // Uses "raw" textures.
+		POISON,
+		SUNKEN_CTM,
+		SUNKEN_TILE,
+		VAULT,
+		KNOT;
 		
 		@Override
 		public int getMetadata() {
@@ -143,8 +149,31 @@ public class FeatureTypes {
 			return baseMeta;
 		}
 	}
-	
-	
+
+	public static enum EnumLimestoneType implements StandardEnum {
+		PAVER,
+		POISON,
+		SUNKEN_CTM,
+		SUNKEN_TILE,
+		VAULT,
+		KNOT;
+
+		@Override
+		public int getMetadata() {
+			return ordinal();
+		}
+
+		@Override
+		public String toString() {
+			return getName();
+		}
+
+		public static EnumLimestoneType byMetadata(int meta) {
+			return values()[MathHelper.clamp(meta, 0, values().length - 1)];
+		}
+
+	}
+
 	public static enum EnumLimestoneSlabType implements IStringSerializable {
 
 		RAW("raw", new ResourceLocation("chisel", "limestone2"), 7),
@@ -152,7 +181,8 @@ public class FeatureTypes {
 		LAYERS("layers", new ResourceLocation("chisel", "limestone"), 15),
 		BRICKS("bricks", new ResourceLocation("chisel", "limestone2"), 0),
 		SMALLBRICKS("smallbricks", new ResourceLocation("chisel", "limestone2"), 1),
-		TILES("tiles", new ResourceLocation("chisel", "limestone2"), 3);
+		TILES("tiles", new ResourceLocation("chisel", "limestone2"), 3),
+		SLABS("slabs", new ResourceLocation(ModConstants.MODID, "extras_block_endstone"), 0);
 		
 		private ResourceLocation baseResourceLocation;
 		private String name;

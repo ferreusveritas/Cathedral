@@ -1,0 +1,10 @@
+{
+	"variants": {
+    	"variant=paver"		 : { "model": "cathedral:extras/block_limestone_paver"       },
+		"variant=poison"	 : { "model": "cathedral:extras/block_limestone_poison"      },
+		"variant=sunken_ctm" : { "model": "cathedral:extras/block_limestone_sunken_ctm"  },
+		"variant=sunken_tile": { "model": "cathedral:extras/block_limestone_sunken_tile" },
+		"variant=vault"	     : { "model": "cathedral:extras/block_limestone_vault"       },
+		"variant=knot"		 : { "model": "cathedral:extras/block_limestone_knot"        }
+    }
+}

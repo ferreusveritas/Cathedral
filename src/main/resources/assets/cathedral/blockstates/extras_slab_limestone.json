@@ -5,11 +5,11 @@
      	"raw"			: { "textures": { 	"side": 	"chisel:blocks/limestone/raw",
 											"top": 		"chisel:blocks/limestone/raw",
 											"bottom": 	"chisel:blocks/limestone/raw" } },
-     
+
 		"smalltiles"	: { "textures": { 	"side": 	"chisel:blocks/limestone/tiles-small",
 											"top": 		"chisel:blocks/limestone/tiles-small",
 											"bottom": 	"chisel:blocks/limestone/tiles-small" } },
-											
+
 		"layers"		: { "textures": {	"side": 	"chisel:blocks/limestone/layers",
 											"top": 		"chisel:blocks/limestone/raw",
 											"bottom": 	"chisel:blocks/limestone/raw" } },
@@ -24,9 +24,13 @@
 
 		"tiles"			: { "textures": {	"side": 	"chisel:blocks/limestone/tiles-medium",
 											"top": 		"chisel:blocks/limestone/tiles-medium",
-											"bottom": 	"chisel:blocks/limestone/tiles-medium" } }
-	},
-  
+											"bottom": 	"chisel:blocks/limestone/tiles-medium" } },
+
+		 "slabs"		: { "textures": {	"side": 	"cathedral:blocks/extras/block_limestone_slabs",
+			 								"top": 		"cathedral:blocks/extras/block_limestone_paver",
+			 								"bottom": 	"cathedral:blocks/extras/block_limestone_paver" } }
+	 },
+
 	"half": {
 		"top": { "submodel": "upper_slab" },
 		"bottom" : { "submodel": "half_slab" }
