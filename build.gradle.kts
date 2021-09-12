@@ -108,7 +108,8 @@ tasks.jar {
         "Implementation-Title" to project.name,
         "Implementation-Version" to project.version,
         "Implementation-Vendor" to "ferreusveritas",
-        "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        "Implementation-Timestamp" to DateTimeFormatter.ISO_INSTANT.format(Instant.now()),
+        "FMLAT" to "accesstransformer.cfg"
     )
 
     archiveBaseName.set(modName)
